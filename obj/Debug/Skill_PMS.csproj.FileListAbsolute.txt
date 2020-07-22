@@ -1,0 +1,9 @@
+F:\Skill_PMS\bin\Debug\Skill_PMS.exe.config
+F:\Skill_PMS\bin\Debug\Skill_PMS.exe
+F:\Skill_PMS\bin\Debug\Skill_PMS.pdb
+F:\Skill_PMS\obj\Debug\Skill_PMS.csprojAssemblyReference.cache
+F:\Skill_PMS\obj\Debug\Skill_PMS.Properties.Resources.resources
+F:\Skill_PMS\obj\Debug\Skill_PMS.csproj.GenerateResource.cache
+F:\Skill_PMS\obj\Debug\Skill_PMS.csproj.CoreCompileInputs.cache
+F:\Skill_PMS\obj\Debug\Skill_PMS.exe
+F:\Skill_PMS\obj\Debug\Skill_PMS.pdb
