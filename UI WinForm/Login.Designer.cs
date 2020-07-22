@@ -106,6 +106,7 @@
             this.Txt_Usr.TabIndex = 12;
             this.Txt_Usr.Text = "10000015";
             this.Txt_Usr.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            this.Txt_Usr.TextChanged += new System.EventHandler(this.Txt_Usr_TextChanged);
             // 
             // lblusr
             // 
@@ -146,6 +147,7 @@
             this.Btn_Login.TabIndex = 14;
             this.Btn_Login.Text = "Sign_In";
             this.Btn_Login.UseVisualStyleBackColor = true;
+            this.Btn_Login.Click += new System.EventHandler(this.Btn_Login_Click);
             // 
             // Login
             // 
@@ -162,8 +164,11 @@
             this.Controls.Add(this.lblpss);
             this.Controls.Add(this.Btn_Clear);
             this.Controls.Add(this.Btn_Login);
+            this.MaximizeBox = false;
             this.Name = "Login";
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Skill_PMS Login";
+            this.Load += new System.EventHandler(this.Login_Load);
             this.ResumeLayout(false);
             this.PerformLayout();
 

@@ -21,3 +21,9 @@ F:\Skill_Soft\Skill_PMS\bin\Debug\EntityFramework.SqlServer.dll
 F:\Skill_Soft\Skill_PMS\bin\Debug\EntityFramework.xml
 F:\Skill_Soft\Skill_PMS\bin\Debug\EntityFramework.SqlServer.xml
 F:\Skill_Soft\Skill_PMS\obj\Debug\Skill_PMS.csproj.CopyComplete
+F:\Skill_Soft\Skill_PMS\obj\Debug\Skill_PMS.Migrations.CreateUserPriceAttendenceJobModel.resources
+F:\Skill_Soft\Skill_PMS\obj\Debug\Skill_PMS.Migrations.addpasswordfieldinusermodel.resources
+F:\Skill_Soft\Skill_PMS\obj\Debug\Skill_PMS.Add_Job.resources
+F:\Skill_Soft\Skill_PMS\obj\Debug\Skill_PMS.UI_WinForm.CS_Panel.Edit_Job.resources
+F:\Skill_Soft\Skill_PMS\obj\Debug\Skill_PMS.Migrations.addDatetoattendenceModel.resources
+F:\Skill_Soft\Skill_PMS\obj\Debug\Skill_PMS.Migrations.addStatustoattendenceModel.resources
