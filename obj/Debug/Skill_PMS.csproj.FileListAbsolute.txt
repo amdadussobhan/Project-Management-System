@@ -7,3 +7,17 @@ F:\Skill_PMS\obj\Debug\Skill_PMS.csproj.GenerateResource.cache
 F:\Skill_PMS\obj\Debug\Skill_PMS.csproj.CoreCompileInputs.cache
 F:\Skill_PMS\obj\Debug\Skill_PMS.exe
 F:\Skill_PMS\obj\Debug\Skill_PMS.pdb
+F:\Skill_Soft\Skill_PMS\obj\Debug\Skill_PMS.Login.resources
+F:\Skill_Soft\Skill_PMS\obj\Debug\Skill_PMS.Properties.Resources.resources
+F:\Skill_Soft\Skill_PMS\obj\Debug\Skill_PMS.csproj.GenerateResource.cache
+F:\Skill_Soft\Skill_PMS\obj\Debug\Skill_PMS.csproj.CoreCompileInputs.cache
+F:\Skill_Soft\Skill_PMS\obj\Debug\Skill_PMS.exe
+F:\Skill_Soft\Skill_PMS\obj\Debug\Skill_PMS.pdb
+F:\Skill_Soft\Skill_PMS\bin\Debug\Skill_PMS.exe.config
+F:\Skill_Soft\Skill_PMS\bin\Debug\Skill_PMS.exe
+F:\Skill_Soft\Skill_PMS\bin\Debug\Skill_PMS.pdb
+F:\Skill_Soft\Skill_PMS\bin\Debug\EntityFramework.dll
+F:\Skill_Soft\Skill_PMS\bin\Debug\EntityFramework.SqlServer.dll
+F:\Skill_Soft\Skill_PMS\bin\Debug\EntityFramework.xml
+F:\Skill_Soft\Skill_PMS\bin\Debug\EntityFramework.SqlServer.xml
+F:\Skill_Soft\Skill_PMS\obj\Debug\Skill_PMS.csproj.CopyComplete
