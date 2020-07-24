@@ -51,7 +51,8 @@
             this.Cmb_Shift.Location = new System.Drawing.Point(279, 91);
             this.Cmb_Shift.Name = "Cmb_Shift";
             this.Cmb_Shift.Size = new System.Drawing.Size(214, 30);
-            this.Cmb_Shift.TabIndex = 21;
+            this.Cmb_Shift.TabIndex = 2;
+            this.Cmb_Shift.Text = "Morning";
             // 
             // Txt_Designation
             // 
@@ -82,7 +83,7 @@
             this.Lnk_Change_Pass.Location = new System.Drawing.Point(367, 129);
             this.Lnk_Change_Pass.Name = "Lnk_Change_Pass";
             this.Lnk_Change_Pass.Size = new System.Drawing.Size(130, 18);
-            this.Lnk_Change_Pass.TabIndex = 16;
+            this.Lnk_Change_Pass.TabIndex = 5;
             this.Lnk_Change_Pass.TabStop = true;
             this.Lnk_Change_Pass.Text = "Change Password";
             // 
@@ -93,8 +94,8 @@
             this.Txt_Pss.Name = "Txt_Pss";
             this.Txt_Pss.PasswordChar = '*';
             this.Txt_Pss.Size = new System.Drawing.Size(172, 29);
-            this.Txt_Pss.TabIndex = 13;
-            this.Txt_Pss.Text = "121";
+            this.Txt_Pss.TabIndex = 1;
+            this.Txt_Pss.Text = "123";
             this.Txt_Pss.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             // 
             // Txt_Usr
@@ -103,7 +104,7 @@
             this.Txt_Usr.Location = new System.Drawing.Point(94, 54);
             this.Txt_Usr.Name = "Txt_Usr";
             this.Txt_Usr.Size = new System.Drawing.Size(172, 29);
-            this.Txt_Usr.TabIndex = 12;
+            this.Txt_Usr.TabIndex = 0;
             this.Txt_Usr.Text = "10000015";
             this.Txt_Usr.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             this.Txt_Usr.TextChanged += new System.EventHandler(this.Txt_Usr_TextChanged);
@@ -134,7 +135,7 @@
             this.Btn_Clear.Location = new System.Drawing.Point(10, 152);
             this.Btn_Clear.Name = "Btn_Clear";
             this.Btn_Clear.Size = new System.Drawing.Size(180, 35);
-            this.Btn_Clear.TabIndex = 15;
+            this.Btn_Clear.TabIndex = 4;
             this.Btn_Clear.Text = "Clear";
             this.Btn_Clear.UseVisualStyleBackColor = true;
             // 
@@ -144,7 +145,7 @@
             this.Btn_Login.Location = new System.Drawing.Point(298, 155);
             this.Btn_Login.Name = "Btn_Login";
             this.Btn_Login.Size = new System.Drawing.Size(195, 35);
-            this.Btn_Login.TabIndex = 14;
+            this.Btn_Login.TabIndex = 3;
             this.Btn_Login.Text = "Sign_In";
             this.Btn_Login.UseVisualStyleBackColor = true;
             this.Btn_Login.Click += new System.EventHandler(this.Btn_Login_Click);

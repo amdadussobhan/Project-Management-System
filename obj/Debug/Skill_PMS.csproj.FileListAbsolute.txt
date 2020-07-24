@@ -27,3 +27,11 @@ F:\Skill_Soft\Skill_PMS\obj\Debug\Skill_PMS.Add_Job.resources
 F:\Skill_Soft\Skill_PMS\obj\Debug\Skill_PMS.UI_WinForm.CS_Panel.Edit_Job.resources
 F:\Skill_Soft\Skill_PMS\obj\Debug\Skill_PMS.Migrations.addDatetoattendenceModel.resources
 F:\Skill_Soft\Skill_PMS\obj\Debug\Skill_PMS.Migrations.addStatustoattendenceModel.resources
+F:\Skill_Soft\Skill_PMS\obj\Debug\Skill_PMS.Migrations.addTypeinJobModel.resources
+F:\Skill_Soft\Skill_PMS\obj\Debug\Skill_PMS.Migrations.addDateinJobModel.resources
+F:\Skill_Soft\Skill_PMS\obj\Debug\Skill_PMS.UI_WinForm.CS_Panel.Dashboard.resources
+F:\Skill_Soft\Skill_PMS\obj\Debug\Skill_PMS.Migrations.changerelationofattendenceModel.resources
+F:\Skill_Soft\Skill_PMS\obj\Debug\Skill_PMS.Migrations.changeDatefieldattendencejobModel.resources
+F:\Skill_Soft\Skill_PMS\obj\Debug\Skill_PMS.Migrations.changefloattodouble.resources
+F:\Skill_Soft\Skill_PMS\obj\Debug\Skill_PMS.Migrations.dividedpricemodeltotimemodel.resources
+F:\Skill_Soft\Skill_PMS\obj\Debug\Skill_PMS.Migrations.moveratefieldjobs.resources

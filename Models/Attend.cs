@@ -6,11 +6,11 @@ using System.Threading.Tasks;
 
 namespace Skill_PMS.Models
 {
-    class Attendence
+    public class Attend
     {
         public int ID { get; set; }
-        public int User { get; set; }
-        public DateTime Date { get; set; }
+        public User User { get; set; }
+        public DateTime Attend_Date { get; set; }
         public DateTime Login { get; set; }
         public DateTime Logout { get; set; }
         public string Status { get; set; }

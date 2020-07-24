@@ -1,5 +1,6 @@
 ﻿using Skill_PMS.Data;
 using Skill_PMS.Models;
+using Skill_PMS.UI_WinForm.CS_Panel;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -39,18 +40,28 @@ namespace Skill_PMS
             {
                 if (user.Password == Txt_Pss.Text)
                 {
-                    Add_Job add_job = new Add_Job(user);
-
-                    Attendence attendence = new Attendence();
-                    attendence.User = user.ID;
-                    attendence.Date= DateTime.Now.Date;
-                    attendence.Login = DateTime.Now;
+                    Attend attendence = new Attend();
+                    attendence =  DB.Attends
+                           .SqlQuery("Select * From attends where User_ID = ' " + user.ID + " ' and Attend_Date = ' " + DateTime.Now.Date + " ' ")
+                           .FirstOrDefault<Attend>();
+                    if(attendence == null) {
+                        attendence = new Attend();
+                        attendence.User = user;
+                        attendence.Attend_Date = DateTime.Now.Date;
+                        attendence.Login = DateTime.Now;
+                        DB.Attends.Add(attendence);
+                    }
                     attendence.Logout = DateTime.Now;
                     attendence.Status = "Running";
-                    DB.Attendences.Add(attendence);
                     DB.SaveChanges();
 
-                    add_job.Show();
+                    if (user.Role == "CS")
+                    {
+                        Dashboard dashboard = new Dashboard();
+                        Dashboard.User = user;
+                        Dashboard.Attend = attendence;
+                        dashboard.Show();
+                    }
                     this.Hide();
                 }
             }
@@ -65,7 +76,10 @@ namespace Skill_PMS
             {
                 if (user.Employee_ID == user_txt)
                 {
-                    user = DB.Users.Find(Convert.ToDouble(Txt_Usr.Text)); 
+                    user = DB.Users
+                        .Where(s => s.Employee_ID == user_txt)
+                        .FirstOrDefault<User>();
+
                     Txt_Name.Text = user.Full_Name;
                     Txt_Designation.Text = user.Designation;
                 }

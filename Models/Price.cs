@@ -6,24 +6,22 @@ using System.Threading.Tasks;
 
 namespace Skill_PMS.Models
 {
-    class PriceTime
+    class Price
     {
         public int ID { get; set; }
-        public float Price { get; set; }
-        public float Time { get; set; }
-        public float CP_Price { get; set; }
-        public float RET_Price { get; set; }
-        public float SHA_Price { get; set; }
-        public float MSK_Price { get; set; }
-        public float CC_Price { get; set; }
-        public float NJ_Price { get; set; }
-        public float LIQ_Price { get; set; }
-        public float CP_Time { get; set; }
-        public float RET_Time { get; set; }
-        public float SHA_Time { get; set; }
-        public float MSK_Time { get; set; }
-        public float CC_Time { get; set; }
-        public float NJ_Time { get; set; }
-        public float LIQ_Time { get; set; }
+        public double Amount { get; set; }
+        public double Taka { get; set; }
+        public Rate Rate { get; set; }
+        public string Client { get; set; }
+        public string Category { get; set; }
+        public double CP_Price { get; set; }
+        public double RET_Price { get; set; }
+        public double SHA_Price { get; set; }
+        public double MSK_Price { get; set; }
+        public double CC_Price { get; set; }
+        public double NJ_Price { get; set; }
+        public double LIQ_Price { get; set; }
+        public double AI_Price { get; set; }
+        public double QC_Price { get; set; }
     }
 }

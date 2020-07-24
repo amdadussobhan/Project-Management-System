@@ -16,9 +16,11 @@ namespace Skill_PMS.Data
         }
 
         public DbSet<User> Users { get; set; }
-        public DbSet<Attendence> Attendences { get; set; }
-        public DbSet<PriceTime> PriceTimes { get; set; }
-        public DbSet<Production_Log> Production_Logs { get; set; }
+        public DbSet<Attend> Attends { get; set; }
+        public DbSet<Price> Prices { get; set; }
+        public DbSet<Rate> Rates { get; set; }
+        public DbSet<Time> Times { get; set; }
+        public DbSet<Log> Logs { get; set; }
         public DbSet<Job> Jobs { get; set; }
     }
 }

@@ -64,11 +64,47 @@
     <Compile Include="Migrations\202007221540410_add Status to attendence Model.designer.cs">
       <DependentUpon>202007221540410_add Status to attendence Model.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202007230900308_add Type in Job Model.cs" />
+    <Compile Include="Migrations\202007230900308_add Type in Job Model.designer.cs">
+      <DependentUpon>202007230900308_add Type in Job Model.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202007231007594_add Date in Job Model.cs" />
+    <Compile Include="Migrations\202007231007594_add Date in Job Model.designer.cs">
+      <DependentUpon>202007231007594_add Date in Job Model.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202007231304230_change relation of attendence Model.cs" />
+    <Compile Include="Migrations\202007231304230_change relation of attendence Model.designer.cs">
+      <DependentUpon>202007231304230_change relation of attendence Model.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202007231338423_change Date field attendence, job Model.cs" />
+    <Compile Include="Migrations\202007231338423_change Date field attendence, job Model.designer.cs">
+      <DependentUpon>202007231338423_change Date field attendence, job Model.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202007241241241_change float to double.cs" />
+    <Compile Include="Migrations\202007241241241_change float to double.designer.cs">
+      <DependentUpon>202007241241241_change float to double.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202007241410225_divided price model to time model.cs" />
+    <Compile Include="Migrations\202007241410225_divided price model to time model.designer.cs">
+      <DependentUpon>202007241410225_divided price model to time model.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202007241601503_move rate field jobs.cs" />
+    <Compile Include="Migrations\202007241601503_move rate field jobs.designer.cs">
+      <DependentUpon>202007241601503_move rate field jobs.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Rate.cs" />
+    <Compile Include="Models\Time.cs" />
     <Compile Include="UI WinForm\CS Panel\Add_Job.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="UI WinForm\CS Panel\Add_Job.Designer.cs">
       <DependentUpon>Add_Job.cs</DependentUpon>
+    </Compile>
+    <Compile Include="UI WinForm\CS Panel\Dashboard.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="UI WinForm\CS Panel\Dashboard.Designer.cs">
+      <DependentUpon>Dashboard.cs</DependentUpon>
     </Compile>
     <Compile Include="UI WinForm\CS Panel\Edit_Job.cs">
       <SubType>Form</SubType>
@@ -91,22 +127,52 @@
       <DependentUpon>202007221401547_add password field in user model.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
-    <Compile Include="Models\Attendence.cs" />
+    <Compile Include="Models\Attend.cs" />
     <Compile Include="Models\Job.cs" />
     <Compile Include="Models\Price.cs" />
-    <Compile Include="Models\Production_Log.cs" />
+    <Compile Include="Models\Log.cs" />
     <Compile Include="Models\User.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Data\SkillContext.cs" />
+    <Compile Include="UI WinForm\Production\SI Panel\Dashboard.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="UI WinForm\Production\SI Panel\Dashboard.Designer.cs">
+      <DependentUpon>Dashboard.cs</DependentUpon>
+    </Compile>
     <EmbeddedResource Include="Migrations\202007221537401_add Date to attendence Model.resx">
       <DependentUpon>202007221537401_add Date to attendence Model.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202007221540410_add Status to attendence Model.resx">
       <DependentUpon>202007221540410_add Status to attendence Model.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202007230900308_add Type in Job Model.resx">
+      <DependentUpon>202007230900308_add Type in Job Model.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202007231007594_add Date in Job Model.resx">
+      <DependentUpon>202007231007594_add Date in Job Model.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202007231304230_change relation of attendence Model.resx">
+      <DependentUpon>202007231304230_change relation of attendence Model.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202007231338423_change Date field attendence, job Model.resx">
+      <DependentUpon>202007231338423_change Date field attendence, job Model.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202007241241241_change float to double.resx">
+      <DependentUpon>202007241241241_change float to double.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202007241410225_divided price model to time model.resx">
+      <DependentUpon>202007241410225_divided price model to time model.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202007241601503_move rate field jobs.resx">
+      <DependentUpon>202007241601503_move rate field jobs.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="UI WinForm\CS Panel\Add_Job.resx">
       <DependentUpon>Add_Job.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UI WinForm\CS Panel\Dashboard.resx">
+      <DependentUpon>Dashboard.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="UI WinForm\CS Panel\Edit_Job.resx">
       <DependentUpon>Edit_Job.cs</DependentUpon>
@@ -148,7 +214,6 @@
     <Folder Include="UI WinForm\HR Panel\" />
     <Folder Include="UI WinForm\Production\Designer\" />
     <Folder Include="UI WinForm\Production\QC Panel\" />
-    <Folder Include="UI WinForm\Production\SI Panel\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">

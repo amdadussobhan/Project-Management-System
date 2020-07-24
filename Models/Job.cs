@@ -9,6 +9,7 @@ namespace Skill_PMS.Models
     class Job
     {
         public int ID { get; set; }
+        public string JobID { get; set; }
         public string Client { get; set; }
         public string Category { get; set; }
         public string Folder { get; set; }
@@ -19,11 +20,13 @@ namespace Skill_PMS.Models
         public string OutputLocation { get; set; }
         public string Service { get; set; }
         public string Status { get; set; }
-        public float JobTime { get; set; }
-        public float ProTime { get; set; }
-        public float InputAmount { get; set; }
-        public float OutputAmount { get; set; }
-        public PriceTime PriceTime { get; set; }
+        public string Type { get; set; }
+        public double JobTime { get; set; }
+        public double ProTime { get; set; }
+        public double InputAmount { get; set; }
+        public double OutputAmount { get; set; }
+        public Price Price { get; set; }
+        public Time Time { get; set; }
         public User Receiver { get; set; }
         public User Sender { get; set; }
     }
