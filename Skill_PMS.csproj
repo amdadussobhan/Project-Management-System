@@ -56,44 +56,21 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Migrations\202007221537401_add Date to attendence Model.cs" />
-    <Compile Include="Migrations\202007221537401_add Date to attendence Model.designer.cs">
-      <DependentUpon>202007221537401_add Date to attendence Model.cs</DependentUpon>
+    <Compile Include="Controller\Common.cs" />
+    <Compile Include="Migrations\202007250829478_initial model created.cs" />
+    <Compile Include="Migrations\202007250829478_initial model created.designer.cs">
+      <DependentUpon>202007250829478_initial model created.cs</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\202007221540410_add Status to attendence Model.cs" />
-    <Compile Include="Migrations\202007221540410_add Status to attendence Model.designer.cs">
-      <DependentUpon>202007221540410_add Status to attendence Model.cs</DependentUpon>
+    <Compile Include="Migrations\202007250853298_add image filed of log model.cs" />
+    <Compile Include="Migrations\202007250853298_add image filed of log model.designer.cs">
+      <DependentUpon>202007250853298_add image filed of log model.cs</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\202007230900308_add Type in Job Model.cs" />
-    <Compile Include="Migrations\202007230900308_add Type in Job Model.designer.cs">
-      <DependentUpon>202007230900308_add Type in Job Model.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\202007231007594_add Date in Job Model.cs" />
-    <Compile Include="Migrations\202007231007594_add Date in Job Model.designer.cs">
-      <DependentUpon>202007231007594_add Date in Job Model.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\202007231304230_change relation of attendence Model.cs" />
-    <Compile Include="Migrations\202007231304230_change relation of attendence Model.designer.cs">
-      <DependentUpon>202007231304230_change relation of attendence Model.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\202007231338423_change Date field attendence, job Model.cs" />
-    <Compile Include="Migrations\202007231338423_change Date field attendence, job Model.designer.cs">
-      <DependentUpon>202007231338423_change Date field attendence, job Model.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\202007241241241_change float to double.cs" />
-    <Compile Include="Migrations\202007241241241_change float to double.designer.cs">
-      <DependentUpon>202007241241241_change float to double.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\202007241410225_divided price model to time model.cs" />
-    <Compile Include="Migrations\202007241410225_divided price model to time model.designer.cs">
-      <DependentUpon>202007241410225_divided price model to time model.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\202007241601503_move rate field jobs.cs" />
-    <Compile Include="Migrations\202007241601503_move rate field jobs.designer.cs">
-      <DependentUpon>202007241601503_move rate field jobs.cs</DependentUpon>
+    <Compile Include="Migrations\202007251111213_replace jobtime field with model.cs" />
+    <Compile Include="Migrations\202007251111213_replace jobtime field with model.designer.cs">
+      <DependentUpon>202007251111213_replace jobtime field with model.cs</DependentUpon>
     </Compile>
     <Compile Include="Models\Rate.cs" />
-    <Compile Include="Models\Time.cs" />
+    <Compile Include="Models\Pro_Time_Price.cs" />
     <Compile Include="UI WinForm\CS Panel\Add_Job.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -118,18 +95,10 @@
     <Compile Include="UI WinForm\Login.Designer.cs">
       <DependentUpon>Login.cs</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\202007221056134_Create, User, Price, Attendence, Job Model.cs" />
-    <Compile Include="Migrations\202007221056134_Create, User, Price, Attendence, Job Model.designer.cs">
-      <DependentUpon>202007221056134_Create, User, Price, Attendence, Job Model.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\202007221401547_add password field in user model.cs" />
-    <Compile Include="Migrations\202007221401547_add password field in user model.designer.cs">
-      <DependentUpon>202007221401547_add password field in user model.cs</DependentUpon>
-    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\Attend.cs" />
     <Compile Include="Models\Job.cs" />
-    <Compile Include="Models\Price.cs" />
+    <Compile Include="Models\Actual_Time_Price.cs" />
     <Compile Include="Models\Log.cs" />
     <Compile Include="Models\User.cs" />
     <Compile Include="Program.cs" />
@@ -141,32 +110,14 @@
     <Compile Include="UI WinForm\Production\SI Panel\Dashboard.Designer.cs">
       <DependentUpon>Dashboard.cs</DependentUpon>
     </Compile>
-    <EmbeddedResource Include="Migrations\202007221537401_add Date to attendence Model.resx">
-      <DependentUpon>202007221537401_add Date to attendence Model.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\202007250829478_initial model created.resx">
+      <DependentUpon>202007250829478_initial model created.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\202007221540410_add Status to attendence Model.resx">
-      <DependentUpon>202007221540410_add Status to attendence Model.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\202007250853298_add image filed of log model.resx">
+      <DependentUpon>202007250853298_add image filed of log model.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\202007230900308_add Type in Job Model.resx">
-      <DependentUpon>202007230900308_add Type in Job Model.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\202007231007594_add Date in Job Model.resx">
-      <DependentUpon>202007231007594_add Date in Job Model.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\202007231304230_change relation of attendence Model.resx">
-      <DependentUpon>202007231304230_change relation of attendence Model.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\202007231338423_change Date field attendence, job Model.resx">
-      <DependentUpon>202007231338423_change Date field attendence, job Model.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\202007241241241_change float to double.resx">
-      <DependentUpon>202007241241241_change float to double.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\202007241410225_divided price model to time model.resx">
-      <DependentUpon>202007241410225_divided price model to time model.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\202007241601503_move rate field jobs.resx">
-      <DependentUpon>202007241601503_move rate field jobs.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\202007251111213_replace jobtime field with model.resx">
+      <DependentUpon>202007251111213_replace jobtime field with model.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="UI WinForm\CS Panel\Add_Job.resx">
       <DependentUpon>Add_Job.cs</DependentUpon>
@@ -180,12 +131,6 @@
     <EmbeddedResource Include="UI WinForm\Login.resx">
       <DependentUpon>Login.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\202007221056134_Create, User, Price, Attendence, Job Model.resx">
-      <DependentUpon>202007221056134_Create, User, Price, Attendence, Job Model.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\202007221401547_add password field in user model.resx">
-      <DependentUpon>202007221401547_add password field in user model.cs</DependentUpon>
-    </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
@@ -196,6 +141,7 @@
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
     <None Include="packages.config" />
+    <None Include="Properties\DataSources\Skill_PMS.Models.Job.datasource" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>

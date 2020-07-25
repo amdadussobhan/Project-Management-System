@@ -50,16 +50,6 @@
             this.Tbc_CS_Panel = new System.Windows.Forms.TabControl();
             this.tabPage2 = new System.Windows.Forms.TabPage();
             this.Dgv_New_Job = new System.Windows.Forms.DataGridView();
-            this.Column8 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Column25 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Column26 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Column34 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Column27 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Column35 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Column36 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Column28 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Column13 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Column14 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.tabPage3 = new System.Windows.Forms.TabPage();
             this.Dgv_Running_Job = new System.Windows.Forms.DataGridView();
             this.Column29 = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -225,6 +215,15 @@
             this.Btn_Shift_Plan = new System.Windows.Forms.Button();
             this.BTN_Sub_Folder = new System.Windows.Forms.Button();
             this.Btn_Add_New_Job = new System.Windows.Forms.Button();
+            this.Column8 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Column25 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Column26 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Column27 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Column35 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Column36 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Column28 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Column13 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Column14 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Tbc_CS_Panel.SuspendLayout();
             this.tabPage2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.Dgv_New_Job)).BeginInit();
@@ -309,7 +308,6 @@
             this.Column8,
             this.Column25,
             this.Column26,
-            this.Column34,
             this.Column27,
             this.Column35,
             this.Column36,
@@ -333,65 +331,6 @@
             this.Dgv_New_Job.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
             this.Dgv_New_Job.Size = new System.Drawing.Size(1350, 555);
             this.Dgv_New_Job.TabIndex = 22;
-            // 
-            // Column8
-            // 
-            this.Column8.HeaderText = "SL";
-            this.Column8.Name = "Column8";
-            this.Column8.Width = 50;
-            // 
-            // Column25
-            // 
-            this.Column25.HeaderText = "Job_ID";
-            this.Column25.Name = "Column25";
-            this.Column25.Width = 250;
-            // 
-            // Column26
-            // 
-            this.Column26.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
-            this.Column26.HeaderText = "Folder";
-            this.Column26.Name = "Column26";
-            // 
-            // Column34
-            // 
-            this.Column34.HeaderText = "Service";
-            this.Column34.Name = "Column34";
-            this.Column34.Width = 250;
-            // 
-            // Column27
-            // 
-            this.Column27.HeaderText = "Amount";
-            this.Column27.Name = "Column27";
-            // 
-            // Column35
-            // 
-            this.Column35.HeaderText = "Job_Time";
-            this.Column35.Name = "Column35";
-            this.Column35.Width = 120;
-            // 
-            // Column36
-            // 
-            this.Column36.HeaderText = "Total_Time";
-            this.Column36.Name = "Column36";
-            this.Column36.Width = 120;
-            // 
-            // Column28
-            // 
-            this.Column28.HeaderText = "Delivery";
-            this.Column28.Name = "Column28";
-            this.Column28.Width = 200;
-            // 
-            // Column13
-            // 
-            this.Column13.HeaderText = "Edit";
-            this.Column13.Name = "Column13";
-            this.Column13.Width = 60;
-            // 
-            // Column14
-            // 
-            this.Column14.HeaderText = "Delete";
-            this.Column14.Name = "Column14";
-            this.Column14.Width = 80;
             // 
             // tabPage3
             // 
@@ -2241,6 +2180,59 @@
             this.Btn_Add_New_Job.UseVisualStyleBackColor = true;
             this.Btn_Add_New_Job.Click += new System.EventHandler(this.Btn_Add_New_Job_Click);
             // 
+            // Column8
+            // 
+            this.Column8.HeaderText = "SL";
+            this.Column8.Name = "Column8";
+            this.Column8.Width = 50;
+            // 
+            // Column25
+            // 
+            this.Column25.HeaderText = "Job_ID";
+            this.Column25.Name = "Column25";
+            this.Column25.Width = 250;
+            // 
+            // Column26
+            // 
+            this.Column26.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
+            this.Column26.HeaderText = "Folder";
+            this.Column26.Name = "Column26";
+            // 
+            // Column27
+            // 
+            this.Column27.HeaderText = "Amount";
+            this.Column27.Name = "Column27";
+            // 
+            // Column35
+            // 
+            this.Column35.HeaderText = "Job_Time";
+            this.Column35.Name = "Column35";
+            this.Column35.Width = 120;
+            // 
+            // Column36
+            // 
+            this.Column36.HeaderText = "Total_Time";
+            this.Column36.Name = "Column36";
+            this.Column36.Width = 120;
+            // 
+            // Column28
+            // 
+            this.Column28.HeaderText = "Delivery";
+            this.Column28.Name = "Column28";
+            this.Column28.Width = 200;
+            // 
+            // Column13
+            // 
+            this.Column13.HeaderText = "Edit";
+            this.Column13.Name = "Column13";
+            this.Column13.Width = 60;
+            // 
+            // Column14
+            // 
+            this.Column14.HeaderText = "Delete";
+            this.Column14.Name = "Column14";
+            this.Column14.Width = 80;
+            // 
             // Dashboard
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -2292,16 +2284,6 @@
         private System.Windows.Forms.TabControl Tbc_CS_Panel;
         private System.Windows.Forms.TabPage tabPage2;
         private System.Windows.Forms.DataGridView Dgv_New_Job;
-        private System.Windows.Forms.DataGridViewTextBoxColumn Column8;
-        private System.Windows.Forms.DataGridViewTextBoxColumn Column25;
-        private System.Windows.Forms.DataGridViewTextBoxColumn Column26;
-        private System.Windows.Forms.DataGridViewTextBoxColumn Column34;
-        private System.Windows.Forms.DataGridViewTextBoxColumn Column27;
-        private System.Windows.Forms.DataGridViewTextBoxColumn Column35;
-        private System.Windows.Forms.DataGridViewTextBoxColumn Column36;
-        private System.Windows.Forms.DataGridViewTextBoxColumn Column28;
-        private System.Windows.Forms.DataGridViewTextBoxColumn Column13;
-        private System.Windows.Forms.DataGridViewTextBoxColumn Column14;
         private System.Windows.Forms.TabPage tabPage3;
         private System.Windows.Forms.DataGridView Dgv_Running_Job;
         private System.Windows.Forms.DataGridViewTextBoxColumn Column29;
@@ -2467,5 +2449,14 @@
         private System.Windows.Forms.Button Btn_Shift_Plan;
         private System.Windows.Forms.Button BTN_Sub_Folder;
         private System.Windows.Forms.Button Btn_Add_New_Job;
+        private System.Windows.Forms.DataGridViewTextBoxColumn Column8;
+        private System.Windows.Forms.DataGridViewTextBoxColumn Column25;
+        private System.Windows.Forms.DataGridViewTextBoxColumn Column26;
+        private System.Windows.Forms.DataGridViewTextBoxColumn Column27;
+        private System.Windows.Forms.DataGridViewTextBoxColumn Column35;
+        private System.Windows.Forms.DataGridViewTextBoxColumn Column36;
+        private System.Windows.Forms.DataGridViewTextBoxColumn Column28;
+        private System.Windows.Forms.DataGridViewTextBoxColumn Column13;
+        private System.Windows.Forms.DataGridViewTextBoxColumn Column14;
     }
 }

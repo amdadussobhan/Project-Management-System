@@ -7,13 +7,13 @@ namespace Skill_PMS.Migrations
     using System.Resources;
     
     [GeneratedCode("EntityFramework.Migrations", "6.4.4")]
-    public sealed partial class addDateinJobModel : IMigrationMetadata
+    public sealed partial class replacejobtimefieldwithmodel : IMigrationMetadata
     {
-        private readonly ResourceManager Resources = new ResourceManager(typeof(addDateinJobModel));
+        private readonly ResourceManager Resources = new ResourceManager(typeof(replacejobtimefieldwithmodel));
         
         string IMigrationMetadata.Id
         {
-            get { return "202007231007594_add Date in Job Model"; }
+            get { return "202007251111213_replace jobtime field with model"; }
         }
         
         string IMigrationMetadata.Source

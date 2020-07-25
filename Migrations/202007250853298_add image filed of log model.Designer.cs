@@ -7,13 +7,13 @@ namespace Skill_PMS.Migrations
     using System.Resources;
     
     [GeneratedCode("EntityFramework.Migrations", "6.4.4")]
-    public sealed partial class addpasswordfieldinusermodel : IMigrationMetadata
+    public sealed partial class addimagefiledoflogmodel : IMigrationMetadata
     {
-        private readonly ResourceManager Resources = new ResourceManager(typeof(addpasswordfieldinusermodel));
+        private readonly ResourceManager Resources = new ResourceManager(typeof(addimagefiledoflogmodel));
         
         string IMigrationMetadata.Id
         {
-            get { return "202007221401547_add password field in user model"; }
+            get { return "202007250853298_add image filed of log model"; }
         }
         
         string IMigrationMetadata.Source

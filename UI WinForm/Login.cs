@@ -15,7 +15,7 @@ namespace Skill_PMS
 {
     public partial class Login : Form
     {
-        User user = new User();
+        User User = new User();
         SkillContext DB = new SkillContext();
         public Login()
         {
@@ -24,12 +24,15 @@ namespace Skill_PMS
 
         private void Login_Load(object sender, EventArgs e)
         {
-            user.Full_Name = "AMDADUS SOBHAN";
-            user.Employee_ID= "10000015";
-            user.Short_Name= "SBN";
-            user.Shift = "Morning";
-            user.Password = "123";
-            user.Role = "CS";
+            User.Full_Name = "AMDADUS SOBHAN";
+            User.Designation= "IT Executive";
+            User.Employee_ID= "10000015";
+            User.Short_Name= "SBN";
+            User.Shift = "Morning";
+            User.Password = "123";
+            User.Role = "CS";
+            //DB.Users.Add(User);
+            //DB.SaveChanges();
 
             check_user();
         }
@@ -38,15 +41,15 @@ namespace Skill_PMS
         {
             if (Cmb_Shift.Text != "")
             {
-                if (user.Password == Txt_Pss.Text)
+                if (User.Password == Txt_Pss.Text)
                 {
                     Attend attendence = new Attend();
                     attendence =  DB.Attends
-                           .SqlQuery("Select * From attends where User_ID = ' " + user.ID + " ' and Attend_Date = ' " + DateTime.Now.Date + " ' ")
+                           .SqlQuery("Select * From attends where User_ID = ' " + User.ID + " ' and Attend_Date = ' " + DateTime.Now.Date + " ' ")
                            .FirstOrDefault<Attend>();
                     if(attendence == null) {
                         attendence = new Attend();
-                        attendence.User = user;
+                        attendence.User = User;
                         attendence.Attend_Date = DateTime.Now.Date;
                         attendence.Login = DateTime.Now;
                         DB.Attends.Add(attendence);
@@ -55,10 +58,10 @@ namespace Skill_PMS
                     attendence.Status = "Running";
                     DB.SaveChanges();
 
-                    if (user.Role == "CS")
+                    if (User.Role == "CS")
                     {
                         Dashboard dashboard = new Dashboard();
-                        Dashboard.User = user;
+                        Dashboard.User = User;
                         Dashboard.Attend = attendence;
                         dashboard.Show();
                     }
@@ -74,14 +77,14 @@ namespace Skill_PMS
             string user_txt = Txt_Usr.Text;
             if (user_txt != null & user_txt != "" & user_txt != " ")
             {
-                if (user.Employee_ID == user_txt)
+                if (User.Employee_ID == user_txt)
                 {
-                    user = DB.Users
+                    User = DB.Users
                         .Where(s => s.Employee_ID == user_txt)
                         .FirstOrDefault<User>();
 
-                    Txt_Name.Text = user.Full_Name;
-                    Txt_Designation.Text = user.Designation;
+                    Txt_Name.Text = User.Full_Name;
+                    Txt_Designation.Text = User.Designation;
                 }
             }
             else

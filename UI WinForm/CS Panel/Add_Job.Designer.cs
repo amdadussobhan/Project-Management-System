@@ -57,11 +57,12 @@
             // Lbl_Total_Time
             // 
             this.Lbl_Total_Time.AutoSize = true;
-            this.Lbl_Total_Time.Font = new System.Drawing.Font("Microsoft Sans Serif", 13F);
+            this.Lbl_Total_Time.Font = new System.Drawing.Font("Microsoft Sans Serif", 15F);
             this.Lbl_Total_Time.Location = new System.Drawing.Point(489, 406);
             this.Lbl_Total_Time.Name = "Lbl_Total_Time";
-            this.Lbl_Total_Time.Size = new System.Drawing.Size(0, 22);
+            this.Lbl_Total_Time.Size = new System.Drawing.Size(23, 25);
             this.Lbl_Total_Time.TabIndex = 244;
+            this.Lbl_Total_Time.Text = "0";
             // 
             // label1
             // 
@@ -83,6 +84,7 @@
             this.Btn_Open_Folder.TabIndex = 10;
             this.Btn_Open_Folder.Text = "Open";
             this.Btn_Open_Folder.UseVisualStyleBackColor = false;
+            this.Btn_Open_Folder.Click += new System.EventHandler(this.Btn_Open_Folder_Click);
             // 
             // Txt_Folder
             // 
@@ -121,6 +123,7 @@
             this.Cmb_Currency.Name = "Cmb_Currency";
             this.Cmb_Currency.Size = new System.Drawing.Size(94, 30);
             this.Cmb_Currency.TabIndex = 9;
+            this.Cmb_Currency.TextChanged += new System.EventHandler(this.Cmb_Currency_TextChanged);
             // 
             // Txt_Price
             // 
@@ -196,6 +199,7 @@
             this.Txt_Job_Location.Size = new System.Drawing.Size(688, 27);
             this.Txt_Job_Location.TabIndex = 7;
             this.Txt_Job_Location.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            this.Txt_Job_Location.TextChanged += new System.EventHandler(this.Txt_Job_Location_TextChanged);
             // 
             // Btn_Submit_Job
             // 
@@ -238,6 +242,7 @@
             this.Txt_Job_Time.Size = new System.Drawing.Size(232, 30);
             this.Txt_Job_Time.TabIndex = 3;
             this.Txt_Job_Time.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            this.Txt_Job_Time.TextChanged += new System.EventHandler(this.Txt_Job_Time_TextChanged);
             // 
             // Txt_Amount
             // 
@@ -247,6 +252,7 @@
             this.Txt_Amount.Size = new System.Drawing.Size(232, 30);
             this.Txt_Amount.TabIndex = 4;
             this.Txt_Amount.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            this.Txt_Amount.TextChanged += new System.EventHandler(this.Txt_Amount_TextChanged);
             // 
             // Txt_Job_ID
             // 

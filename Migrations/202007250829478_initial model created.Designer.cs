@@ -7,13 +7,13 @@ namespace Skill_PMS.Migrations
     using System.Resources;
     
     [GeneratedCode("EntityFramework.Migrations", "6.4.4")]
-    public sealed partial class changerelationofattendenceModel : IMigrationMetadata
+    public sealed partial class initialmodelcreated : IMigrationMetadata
     {
-        private readonly ResourceManager Resources = new ResourceManager(typeof(changerelationofattendenceModel));
+        private readonly ResourceManager Resources = new ResourceManager(typeof(initialmodelcreated));
         
         string IMigrationMetadata.Id
         {
-            get { return "202007231304230_change relation of attendence Model"; }
+            get { return "202007250829478_initial model created"; }
         }
         
         string IMigrationMetadata.Source

@@ -17,5 +17,6 @@ namespace Skill_PMS.Models
         public double Job_Time { get; set; }
         public double Pro_Time { get; set; }
         public string Service { get; set; }
+        public string Image { get; set; }
     }
 }

@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Skill_PMS.Models
 {
-    class Rate
+    public class Rate
     {
         public int ID { get; set; }
         public string Currency { get; set; }
