@@ -1,6 +1,7 @@
 ﻿using Skill_PMS.Data;
 using Skill_PMS.Models;
 using Skill_PMS.UI_WinForm.CS_Panel;
+using Skill_PMS.UI_WinForm.Production.SI_Panel;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -60,10 +61,16 @@ namespace Skill_PMS
 
                     if (User.Role == "CS")
                     {
-                        Dashboard dashboard = new Dashboard();
-                        Dashboard.User = User;
-                        Dashboard.Attend = attendence;
-                        dashboard.Show();
+                        CS_Dashboard CS_Dashboard = new CS_Dashboard();
+                        CS_Dashboard.User = User;
+                        CS_Dashboard.Attend = attendence;
+                        CS_Dashboard.Show();
+                    }else if (User.Role == "SI")
+                    {
+                        SI_Dashboard SI_Dashboard = new SI_Dashboard();
+                        SI_Dashboard.User = User;
+                        SI_Dashboard.Attend = attendence;
+                        SI_Dashboard.Show();
                     }
                     this.Hide();
                 }

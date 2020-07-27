@@ -23,8 +23,10 @@ F:\Skill_Soft\Skill_PMS\bin\Debug\EntityFramework.SqlServer.xml
 F:\Skill_Soft\Skill_PMS\obj\Debug\Skill_PMS.csproj.CopyComplete
 F:\Skill_Soft\Skill_PMS\obj\Debug\Skill_PMS.Add_Job.resources
 F:\Skill_Soft\Skill_PMS\obj\Debug\Skill_PMS.UI_WinForm.CS_Panel.Edit_Job.resources
-F:\Skill_Soft\Skill_PMS\obj\Debug\Skill_PMS.UI_WinForm.CS_Panel.Dashboard.resources
 F:\Skill_Soft\Skill_PMS\obj\Debug\Skill_PMS.Migrations.initialmodelcreated.resources
 F:\Skill_Soft\Skill_PMS\obj\Debug\Skill_PMS.Migrations.addimagefiledoflogmodel.resources
 F:\Skill_Soft\Skill_PMS\obj\Debug\Skill_PMS.Migrations.replacejobtimefieldwithmodel.resources
 F:\Skill_Soft\Skill_PMS\obj\Debug\Skill_PMS.csprojAssemblyReference.cache
+F:\Skill_Soft\Skill_PMS\obj\Debug\Skill_PMS.Migrations.modifytimefiledinjobsmodel.resources
+F:\Skill_Soft\Skill_PMS\obj\Debug\Skill_PMS.UI_WinForm.CS_Panel.CS_Dashboard.resources
+F:\Skill_Soft\Skill_PMS\obj\Debug\Skill_PMS.UI_WinForm.Production.SI_Panel.SI_Dashboard.resources

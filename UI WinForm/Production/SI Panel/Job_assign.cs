@@ -10,9 +10,9 @@ using System.Windows.Forms;
 
 namespace Skill_PMS.UI_WinForm.Production.SI_Panel
 {
-    public partial class Dashboard : Form
+    public partial class Job_assign : Form
     {
-        public Dashboard()
+        public Job_assign()
         {
             InitializeComponent();
         }

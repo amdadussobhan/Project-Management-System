@@ -16,6 +16,7 @@ namespace Skill_PMS.Models
         public DateTime Incoming { get; set; }
         public DateTime Delivery { get; set; }
         public double InputAmount { get; set; }
+        public double Pro_Done { get; set; }
         public double OutputAmount { get; set; }
         public string InputLocation { get; set; }
         public string WorkingLocation { get; set; }
