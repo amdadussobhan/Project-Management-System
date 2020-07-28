@@ -19,12 +19,14 @@ namespace Skill_PMS
 {
     public partial class Add_Job : Form
     {
-        Job Job = new Job();
-        Actual_Time_Price Actual_Time_Price = new Actual_Time_Price();
-        Rate Rate = new Rate();
+        Job job = new Job();
+        Actual_Price_Time actual_price_time = new Actual_Price_Time();
+        Rate rate = new Rate();
         SkillContext DB = new SkillContext();
 
-        double Price_Rate = 1;
+        double Price_Rate = 0;
+        string ID = "", Job_ID = "";
+        string Date = DateTime.Now.ToString("yyMMdd");
 
         public User User { get; set; }
 
@@ -35,24 +37,6 @@ namespace Skill_PMS
 
         private void Add_Job_Load(object sender, EventArgs e)
         {
-            Rate.Currency = "BDT";
-            //DB.Rates.Add(Rate);
-
-            Actual_Time_Price.Time= 5;
-            Actual_Time_Price.Price = 0.6;
-            Actual_Time_Price.Client = "CL";
-            Actual_Time_Price.Category = "Mango";
-            Actual_Time_Price.Rate = Rate;
-            //DB.Actual_Time_Prices.Add(Actual_Time_Price);
-
-            Job.Client = "CL";
-            Job.Category = "Mango";
-            Job.Incoming = DateTime.Now;
-            Job.Delivery = DateTime.Now;
-            //DB.Jobs.Add(Job);
-
-            //DB.SaveChanges();
-
             var Clients = DB.Jobs.Select(x => x.Client).Distinct();
             foreach (var Client in Clients)
                 Cmb_Client.Items.Add(Client);
@@ -61,12 +45,31 @@ namespace Skill_PMS
             foreach (var Rate in Rates)
                 Cmb_Currency.Items.Add(Rate);
 
-            Txt_Folder.Text = Job.Folder;
+            Dtp_Delivery.Value = DateTime.Now.AddHours(1);
+            Create_Job_ID();
+        }
+
+        void Create_Job_ID()
+        {
+            Check_Todays_Max_ID();
+            Job_ID = Date + ID + "_" + Cmb_Client.Text;
+            Txt_Job_ID.Text = Job_ID;
+        }
+
+        void Check_Todays_Max_ID()
+        {
+            int Count = DB.Jobs
+                .SqlQuery("Select * From Jobs where Date = ' " + DateTime.Now.Date + " ' ")
+                .Count();
+
+            ID = ++Count + "";
+            if (Count < 10)
+                ID = "0" + Count;
         }
 
         void Check_Catagory()
         {
-            var Categories = DB.Actual_Time_Prices
+            var Categories = DB.Actual_Price_Times
                 .Where(x => x.Client == Cmb_Client.Text)
                 .Select(x => x.Category).Distinct();
             foreach (var Category in Categories)
@@ -75,67 +78,103 @@ namespace Skill_PMS
             }
         }
 
+        bool Job_Validate()
+        {
+            if (string.IsNullOrEmpty(Cmb_Client.Text))
+            {
+                MessageBox.Show("Invalid Client Name Entered.!!! Please Enter Correct Client Name", "Invalid Client Name Entered", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return false;
+            }
+
+            if (string.IsNullOrEmpty(Txt_Amount.Text))
+            {
+                MessageBox.Show("Invalid Job Amount Entered.!!! Please Enter Correct Job Amount", "Invalid Job Amount Entered", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return false;
+            }
+
+            if (string.IsNullOrEmpty(Txt_Location.Text))
+            {
+                MessageBox.Show("Invalid Folder Location Entered.!!! Please Enter Correct Folder Location", "Invalid Location Entered", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return false;
+            }
+
+            return true;
+        }
+
         private void Btn_Submit_Job_Click(object sender, EventArgs e)
         {
-            Rate.Currency = Cmb_Currency.Text;
-            DB.Rates.AddOrUpdate(Rate);
+            if (Job_Validate()) { 
+                rate.Currency = Cmb_Currency.Text;
+                DB.Rates.AddOrUpdate(rate);
 
-            Actual_Time_Price.Client = Cmb_Client.Text;
-            Actual_Time_Price.Category = Cmb_Catagory.Text;
-            Actual_Time_Price.Rate = Rate;
-            Actual_Time_Price.Time = Convert.ToDouble(Txt_Job_Time.Text);
-            Actual_Time_Price.Price = Convert.ToDouble(Txt_Price.Text);
-            Actual_Time_Price.Taka = Convert.ToDouble(Txt_Price.Text) * Price_Rate;
-            DB.Actual_Time_Prices.AddOrUpdate(Actual_Time_Price);
+                string Client = Cmb_Client.Text;
+                string Catagory = Cmb_Catagory.Text;
+                double Time = Convert.ToDouble(Txt_Job_Time.Text);
+                double Price = Convert.ToDouble(Txt_Price.Text);
+                double Taka = Convert.ToDouble(Txt_Price.Text) * Price_Rate;
 
-            Job.JobID = Txt_Job_ID.Text;
-            Job.Client = Cmb_Client.Text;
-            Job.Category = Cmb_Catagory.Text;
-            Job.Type = Cmb_Job_Type.Text;
-            Job.Folder = Txt_Folder.Text;
-            Job.Status = "New";
-            Job.InputAmount = Convert.ToDouble(Txt_Amount.Text);
-            Job.InputLocation = Txt_Job_Location.Text;
-            Job.Actual_Time_Price = Actual_Time_Price;
-            Job.Incoming = DateTime.Now;
-            Job.Delivery = Dtp_Delivery.Value;
-            Job.Receiver = User;
-            DB.Jobs.Add(Job);
+                actual_price_time.Client = Client;
+                actual_price_time.Category = Catagory;
+                actual_price_time.Rate = rate;
+                actual_price_time.Time = Time;
+                actual_price_time.Price = Price;
+                actual_price_time.Taka = Taka;
+                DB.Actual_Price_Times.AddOrUpdate(actual_price_time);
+            
+                Check_Todays_Max_ID();
+                job.JobID = Job_ID;
+                job.Client = Client;
+                job.Category = Catagory;
+                job.Type = Cmb_Job_Type.Text;
+                job.Folder = Txt_Folder.Text;
+                job.Status = "New";
+                job.InputAmount = Convert.ToDouble(Txt_Amount.Text);
+                job.InputLocation = Txt_Location.Text;
+                job.Price = Price;
+                job.Taka= Taka;
+                job.Actual_Time = Time;
+                job.Date = DateTime.Now.Date;
+                job.Incoming = DateTime.Now;
+                job.Delivery = Dtp_Delivery.Value;
+                job.Receiver = User;
+                job.Actual_Price_Times = actual_price_time;
+                DB.Jobs.Add(job);
 
-            DB.SaveChanges();
-
-            this.Hide();
+                DB.SaveChanges();
+                this.Hide();
+            }
         }
 
         private void Cmb_Client_TextChanged(object sender, EventArgs e)
         {
             Check_Catagory();
+            Create_Job_ID();
         }
 
         private void Cmb_Catagory_TextChanged(object sender, EventArgs e)
         {
-            var Actual_Time_Prices = DB.Actual_Time_Prices
+            var Actual_Price_Times = DB.Actual_Price_Times
                 .Where(x => x.Client == Cmb_Client.Text & x.Category == Cmb_Catagory.Text)
                 .Include(c => c.Rate)
-                .FirstOrDefault<Actual_Time_Price>();
+                .FirstOrDefault<Actual_Price_Time>();
 
-            if(Actual_Time_Prices != null) { 
-                Actual_Time_Price = Actual_Time_Prices;
-                Txt_Price.Text = Actual_Time_Prices.Price + "";
-                Txt_Job_Time.Text = Actual_Time_Prices.Time + "";
+            if(Actual_Price_Times != null) { 
+                actual_price_time = Actual_Price_Times;
+                Txt_Price.Text = Actual_Price_Times.Price + "";
+                Txt_Job_Time.Text = Actual_Price_Times.Time + "";
 
-                if (Actual_Time_Prices.Rate != null)
+                if (Actual_Price_Times.Rate != null)
                 {
-                    Rate = Actual_Time_Prices.Rate;
-                    Price_Rate = Rate.Amount;
-                    Cmb_Currency.Text = Actual_Time_Prices.Rate.Currency + "";
+                    rate = Actual_Price_Times.Rate;
+                    Price_Rate = rate.Amount;
+                    Cmb_Currency.Text = Actual_Price_Times.Rate.Currency + "";
                 }
             }
         }
 
         private void Txt_Job_Location_TextChanged(object sender, EventArgs e)
         {
-            string location = Txt_Job_Location.Text;
+            string location = Txt_Location.Text;
             if (Directory.Exists(location))
                 Txt_Folder.Text = Path.GetFileName(location);
             else
@@ -144,7 +183,7 @@ namespace Skill_PMS
 
         private void Btn_Open_Folder_Click(object sender, EventArgs e)
         {
-            string location = Txt_Job_Location.Text;
+            string location = Txt_Location.Text;
             if (Directory.Exists(location))
                 Process.Start(location);
             else
@@ -159,9 +198,9 @@ namespace Skill_PMS
 
             if (Rates != null)
             {
-                Rate = Rates;
-                Actual_Time_Price.Rate = Rates;
-                Price_Rate = Rate.Amount;
+                rate = Rates;
+                actual_price_time.Rate = Rates;
+                Price_Rate = rate.Amount;
             }
         }
 

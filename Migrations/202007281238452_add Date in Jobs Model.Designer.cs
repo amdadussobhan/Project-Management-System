@@ -7,13 +7,13 @@ namespace Skill_PMS.Migrations
     using System.Resources;
     
     [GeneratedCode("EntityFramework.Migrations", "6.4.4")]
-    public sealed partial class initialmodelcreated : IMigrationMetadata
+    public sealed partial class addDateinJobsModel : IMigrationMetadata
     {
-        private readonly ResourceManager Resources = new ResourceManager(typeof(initialmodelcreated));
+        private readonly ResourceManager Resources = new ResourceManager(typeof(addDateinJobsModel));
         
         string IMigrationMetadata.Id
         {
-            get { return "202007250829478_initial model created"; }
+            get { return "202007281238452_add Date in Jobs Model"; }
         }
         
         string IMigrationMetadata.Source

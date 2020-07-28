@@ -20,8 +20,8 @@ namespace Skill_PMS.UI_WinForm.CS_Panel
         SkillContext DB = new SkillContext();
         Common Common = new Common();
 
-        static public User User { get; set; }
-        static public Attend Attend = new Attend();
+        public static User User { get; set; }
+        public static Attend Attend = new Attend();
         public CS_Dashboard()
         {
             InitializeComponent();
@@ -46,6 +46,7 @@ namespace Skill_PMS.UI_WinForm.CS_Panel
         private void Btn_Add_New_Job_Click(object sender, EventArgs e)
         {
             Add_Job add_Job = new Add_Job();
+            add_Job.User = User;
             add_Job.Show();
         }
 
@@ -57,13 +58,12 @@ namespace Skill_PMS.UI_WinForm.CS_Panel
 
             var Jobs = DB.Jobs
                 .Where(x => x.Status== "New")
-                .Include(x => x.Actual_Time_Price)
                 .ToList();
 
             int SL = 1;
             foreach (var Job in Jobs)
             {
-                Dgv_New_Job.Rows.Add(SL++, Job.JobID , Job.Folder, Job.InputAmount, Job.Actual_Time_Price.Time, Job.Actual_Time_Price.Time * Job.InputAmount, Job.Incoming, Job.Delivery, "Edit", "Delete");
+                Dgv_New_Job.Rows.Add(SL++, Job.JobID , Job.Folder, Job.InputAmount, Job.Actual_Time, Job.Actual_Time * Job.InputAmount, Job.Incoming, Job.Delivery, "Edit", "Delete");
             }
 
             Common.Row_Color_By_Delivery(Dgv_New_Job, "Column28");
@@ -77,13 +77,12 @@ namespace Skill_PMS.UI_WinForm.CS_Panel
 
             var Jobs = DB.Jobs
                 .Where(x => x.Status == "Pro")
-                .Include(x => x.Pro_Time_Price)
                 .ToList();
 
             int SL = 1;
             foreach (var Job in Jobs)
             {
-                Dgv_Running_Job.Rows.Add(SL++, Job.JobID, Job.Folder, Job.InputAmount, Job.Pro_Done, Job.Service, Job.Pro_Time_Price.Target_Time, Job.Pro_Time_Price.Pro_Time, Job.Delivery, "Edit");
+                Dgv_Running_Job.Rows.Add(SL++, Job.JobID, Job.Folder, Job.InputAmount, Job.Pro_Done, Job.Service, Job.Actual_Time, Job.Pro_Time, Job.Delivery, "Edit");
             }
 
             Common.Row_Color_By_Delivery(Dgv_Running_Job, "Column33");
@@ -97,13 +96,12 @@ namespace Skill_PMS.UI_WinForm.CS_Panel
 
             var Jobs = DB.Jobs
                 .Where(x => x.Status == "QC")
-                .Include(x => x.Pro_Time_Price)
                 .ToList();
 
             int SL = 1;
             foreach (var Job in Jobs)
             {
-                Dgv_QC_Job.Rows.Add(SL++, Job.JobID, Job.Folder, Job.InputAmount, Job.Pro_Done, Job.OutputAmount, Job.Service, Job.Pro_Time_Price.Target_Time, Job.Pro_Time_Price.Pro_Time, Job.Delivery, "Edit");
+                Dgv_QC_Job.Rows.Add(SL++, Job.JobID, Job.Folder, Job.InputAmount, Job.Pro_Done, Job.OutputAmount, Job.Service, Job.Actual_Time, Job.Pro_Time, Job.Delivery, "Edit");
             }
 
             Common.Row_Color_By_Delivery(Dgv_QC_Job, "Column9");
@@ -117,13 +115,12 @@ namespace Skill_PMS.UI_WinForm.CS_Panel
 
             var Jobs = DB.Jobs
                 .Where(x => x.Status == "Ready")
-                .Include(x => x.Pro_Time_Price)
                 .ToList();
 
             int SL = 1;
             foreach (var Job in Jobs)
             {
-                Dgv_Ready_Job.Rows.Add(SL++, Job.JobID, Job.Folder, Job.InputAmount, Job.OutputAmount, Job.Service, Job.Pro_Time_Price.Target_Time, Job.Pro_Time_Price.Pro_Time, Job.Delivery, "Edit");
+                Dgv_Ready_Job.Rows.Add(SL++, Job.JobID, Job.Folder, Job.InputAmount, Job.OutputAmount, Job.Service, Job.Actual_Time, Job.Pro_Time, Job.Delivery, "Edit");
             }
 
             Common.Row_Color_By_Delivery(Dgv_Ready_Job, "Column9");
@@ -137,13 +134,12 @@ namespace Skill_PMS.UI_WinForm.CS_Panel
 
             var Jobs = DB.Jobs
                 .Where(x => x.Status == "Done")
-                .Include(x => x.Pro_Time_Price)
                 .ToList();
 
             int SL = 1;
             foreach (var Job in Jobs)
             {
-                Dgv_QC_Job.Rows.Add(SL++, Job.JobID, Job.Folder, Job.InputAmount, Job.Service, Job.Pro_Time_Price.Target_Time, Job.Pro_Time_Price.Target_Time * Job.InputAmount, Job.Delivery, "Edit");
+                Dgv_QC_Job.Rows.Add(SL++, Job.JobID, Job.Folder, Job.InputAmount, Job.Service, Job.Actual_Time, Job.Pro_Time, Job.Delivery, "Edit");
             }
 
             Common.Row_Color_By_Delivery(Dgv_QC_Job, "Column9");

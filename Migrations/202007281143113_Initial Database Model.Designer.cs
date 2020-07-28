@@ -7,13 +7,13 @@ namespace Skill_PMS.Migrations
     using System.Resources;
     
     [GeneratedCode("EntityFramework.Migrations", "6.4.4")]
-    public sealed partial class addimagefiledoflogmodel : IMigrationMetadata
+    public sealed partial class InitialDatabaseModel : IMigrationMetadata
     {
-        private readonly ResourceManager Resources = new ResourceManager(typeof(addimagefiledoflogmodel));
+        private readonly ResourceManager Resources = new ResourceManager(typeof(InitialDatabaseModel));
         
         string IMigrationMetadata.Id
         {
-            get { return "202007250853298_add image filed of log model"; }
+            get { return "202007281143113_Initial Database Model"; }
         }
         
         string IMigrationMetadata.Source

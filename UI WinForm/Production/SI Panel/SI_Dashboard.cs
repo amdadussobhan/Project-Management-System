@@ -42,13 +42,13 @@ namespace Skill_PMS.UI_WinForm.Production.SI_Panel
 
             var Jobs = DB.Jobs
                 .Where(x => x.Status == "New")
-                .Include(x => x.Actual_Time_Price)
+                .Include(x => x.Actual_Price_Times)
                 .ToList();
 
             int SL = 1;
             foreach (var Job in Jobs)
             {
-                Dgv_New_Job.Rows.Add(SL++, Job.JobID, Job.Folder, Job.InputAmount, Job.Actual_Time_Price.Time, Job.Actual_Time_Price.Time * Job.InputAmount, Job.Incoming, Job.Delivery);
+                Dgv_New_Job.Rows.Add(SL++, Job.JobID, Job.Folder, Job.InputAmount, Job.Actual_Time, Job.Actual_Time * Job.InputAmount, Job.Incoming, Job.Delivery);
             }
 
             Common.Row_Color_By_Delivery(Dgv_New_Job, "Column28");
@@ -62,13 +62,12 @@ namespace Skill_PMS.UI_WinForm.Production.SI_Panel
 
             var Jobs = DB.Jobs
                 .Where(x => x.Status == "Pro")
-                .Include(x => x.Pro_Time_Price)
                 .ToList();
 
             int SL = 1;
             foreach (var Job in Jobs)
             {
-                Dgv_Running_Job.Rows.Add(SL++, Job.JobID, Job.Folder, Job.InputAmount, Job.Pro_Done, Job.Service, Job.Pro_Time_Price.Target_Time, Job.Pro_Time_Price.Pro_Time, Job.Delivery, "Edit");
+                Dgv_Running_Job.Rows.Add(SL++, Job.JobID, Job.Folder, Job.InputAmount, Job.Pro_Done, Job.Service, Job.Target_Time, Job.Pro_Time, Job.Delivery, "Edit");
             }
 
             Common.Row_Color_By_Delivery(Dgv_Running_Job, "Column33");
@@ -82,13 +81,12 @@ namespace Skill_PMS.UI_WinForm.Production.SI_Panel
 
             var Jobs = DB.Jobs
                 .Where(x => x.Status == "QC")
-                .Include(x => x.Pro_Time_Price)
                 .ToList();
 
             int SL = 1;
             foreach (var Job in Jobs)
             {
-                Dgv_QC_Job.Rows.Add(SL++, Job.JobID, Job.Folder, Job.InputAmount, Job.Pro_Done, Job.OutputAmount, Job.Service, Job.Pro_Time_Price.Target_Time, Job.Pro_Time_Price.Pro_Time, Job.Delivery, "Edit");
+                Dgv_QC_Job.Rows.Add(SL++, Job.JobID, Job.Folder, Job.InputAmount, Job.Pro_Done, Job.OutputAmount, Job.Service, Job.Target_Time, Job.Pro_Time, Job.Delivery, "Edit");
             }
 
             Common.Row_Color_By_Delivery(Dgv_QC_Job, "Column9");
@@ -102,13 +100,12 @@ namespace Skill_PMS.UI_WinForm.Production.SI_Panel
 
             var Jobs = DB.Jobs
                 .Where(x => x.Status == "Ready")
-                .Include(x => x.Pro_Time_Price)
                 .ToList();
 
             int SL = 1;
             foreach (var Job in Jobs)
             {
-                Dgv_Ready_Job.Rows.Add(SL++, Job.JobID, Job.Folder, Job.InputAmount, Job.OutputAmount, Job.Service, Job.Pro_Time_Price.Target_Time, Job.Pro_Time_Price.Pro_Time, Job.Delivery, "Edit");
+                Dgv_Ready_Job.Rows.Add(SL++, Job.JobID, Job.Folder, Job.InputAmount, Job.OutputAmount, Job.Service, Job.Target_Time, Job.Pro_Time, Job.Delivery, "Edit");
             }
 
             Common.Row_Color_By_Delivery(Dgv_Ready_Job, "Column9");
@@ -122,13 +119,12 @@ namespace Skill_PMS.UI_WinForm.Production.SI_Panel
 
             var Jobs = DB.Jobs
                 .Where(x => x.Status == "Done")
-                .Include(x => x.Pro_Time_Price)
                 .ToList();
 
             int SL = 1;
             foreach (var Job in Jobs)
             {
-                Dgv_QC_Job.Rows.Add(SL++, Job.JobID, Job.Folder, Job.InputAmount, Job.Service, Job.Pro_Time_Price.Target_Time, Job.Pro_Time_Price.Target_Time * Job.InputAmount, Job.Delivery, "Edit");
+                Dgv_QC_Job.Rows.Add(SL++, Job.JobID, Job.Folder, Job.InputAmount, Job.Service, Job.Target_Time, Job.Pro_Time, Job.Delivery, "Edit");
             }
 
             Common.Row_Color_By_Delivery(Dgv_QC_Job, "Column9");
@@ -176,6 +172,24 @@ namespace Skill_PMS.UI_WinForm.Production.SI_Panel
 
                 case 6:
                     break;
+            }
+        }
+
+        private void Dgv_New_Job_CellContentClick(object sender, DataGridViewCellEventArgs e)
+        {
+            if (Dgv_New_Job.Columns[Dgv_New_Job.CurrentCell.ColumnIndex].HeaderText.Contains("Job_ID"))
+            {
+                Job_assign job_assign = new Job_assign();
+                if (Dgv_New_Job.Rows[e.RowIndex].Cells[e.ColumnIndex].Value != null)
+                {
+                    job_assign.job.JobID = Dgv_New_Job.Rows[e.RowIndex].Cells[e.ColumnIndex].Value.ToString();
+                }
+
+                if (!String.IsNullOrWhiteSpace(Dgv_New_Job.CurrentCell.EditedFormattedValue.ToString()))
+                {
+                    job_assign.User = User;
+                    job_assign.Show();
+                }
             }
         }
     }

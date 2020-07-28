@@ -41,7 +41,7 @@
             this.Cmb_Client = new System.Windows.Forms.ComboBox();
             this.Cmb_Job_Type = new System.Windows.Forms.ComboBox();
             this.label24 = new System.Windows.Forms.Label();
-            this.Txt_Job_Location = new System.Windows.Forms.TextBox();
+            this.Txt_Location = new System.Windows.Forms.TextBox();
             this.Btn_Submit_Job = new System.Windows.Forms.Button();
             this.label9 = new System.Windows.Forms.Label();
             this.Dtp_Delivery = new System.Windows.Forms.DateTimePicker();
@@ -68,7 +68,7 @@
             // 
             this.label1.AutoSize = true;
             this.label1.Font = new System.Drawing.Font("Microsoft Sans Serif", 16F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label1.Location = new System.Drawing.Point(355, 404);
+            this.label1.Location = new System.Drawing.Point(355, 405);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(125, 26);
             this.label1.TabIndex = 243;
@@ -78,9 +78,9 @@
             // 
             this.Btn_Open_Folder.BackColor = System.Drawing.Color.Khaki;
             this.Btn_Open_Folder.Font = new System.Drawing.Font("Microsoft Sans Serif", 13F);
-            this.Btn_Open_Folder.Location = new System.Drawing.Point(614, 397);
+            this.Btn_Open_Folder.Location = new System.Drawing.Point(614, 401);
             this.Btn_Open_Folder.Name = "Btn_Open_Folder";
-            this.Btn_Open_Folder.Size = new System.Drawing.Size(117, 40);
+            this.Btn_Open_Folder.Size = new System.Drawing.Size(117, 35);
             this.Btn_Open_Folder.TabIndex = 10;
             this.Btn_Open_Folder.Text = "Open";
             this.Btn_Open_Folder.UseVisualStyleBackColor = false;
@@ -109,7 +109,7 @@
             // 
             this.label10.AutoSize = true;
             this.label10.Font = new System.Drawing.Font("Microsoft Sans Serif", 16F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label10.Location = new System.Drawing.Point(68, 404);
+            this.label10.Location = new System.Drawing.Point(68, 405);
             this.label10.Name = "label10";
             this.label10.Size = new System.Drawing.Size(74, 26);
             this.label10.TabIndex = 233;
@@ -119,7 +119,7 @@
             // 
             this.Cmb_Currency.Font = new System.Drawing.Font("Microsoft Sans Serif", 13.5F);
             this.Cmb_Currency.FormattingEnabled = true;
-            this.Cmb_Currency.Location = new System.Drawing.Point(254, 402);
+            this.Cmb_Currency.Location = new System.Drawing.Point(254, 403);
             this.Cmb_Currency.Name = "Cmb_Currency";
             this.Cmb_Currency.Size = new System.Drawing.Size(94, 30);
             this.Cmb_Currency.TabIndex = 9;
@@ -128,7 +128,7 @@
             // Txt_Price
             // 
             this.Txt_Price.Font = new System.Drawing.Font("Microsoft Sans Serif", 15F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.Txt_Price.Location = new System.Drawing.Point(156, 402);
+            this.Txt_Price.Location = new System.Drawing.Point(156, 403);
             this.Txt_Price.Name = "Txt_Price";
             this.Txt_Price.Size = new System.Drawing.Size(90, 30);
             this.Txt_Price.TabIndex = 8;
@@ -191,23 +191,23 @@
             this.label24.TabIndex = 224;
             this.label24.Text = "Type :";
             // 
-            // Txt_Job_Location
+            // Txt_Location
             // 
-            this.Txt_Job_Location.Font = new System.Drawing.Font("Microsoft Sans Serif", 13F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.Txt_Job_Location.Location = new System.Drawing.Point(158, 340);
-            this.Txt_Job_Location.Name = "Txt_Job_Location";
-            this.Txt_Job_Location.Size = new System.Drawing.Size(688, 27);
-            this.Txt_Job_Location.TabIndex = 7;
-            this.Txt_Job_Location.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
-            this.Txt_Job_Location.TextChanged += new System.EventHandler(this.Txt_Job_Location_TextChanged);
+            this.Txt_Location.Font = new System.Drawing.Font("Microsoft Sans Serif", 13F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.Txt_Location.Location = new System.Drawing.Point(158, 340);
+            this.Txt_Location.Name = "Txt_Location";
+            this.Txt_Location.Size = new System.Drawing.Size(688, 27);
+            this.Txt_Location.TabIndex = 7;
+            this.Txt_Location.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            this.Txt_Location.TextChanged += new System.EventHandler(this.Txt_Job_Location_TextChanged);
             // 
             // Btn_Submit_Job
             // 
             this.Btn_Submit_Job.BackColor = System.Drawing.Color.MediumSeaGreen;
-            this.Btn_Submit_Job.Font = new System.Drawing.Font("Microsoft Sans Serif", 16F);
-            this.Btn_Submit_Job.Location = new System.Drawing.Point(737, 397);
+            this.Btn_Submit_Job.Font = new System.Drawing.Font("Microsoft Sans Serif", 13F);
+            this.Btn_Submit_Job.Location = new System.Drawing.Point(737, 401);
             this.Btn_Submit_Job.Name = "Btn_Submit_Job";
-            this.Btn_Submit_Job.Size = new System.Drawing.Size(109, 40);
+            this.Btn_Submit_Job.Size = new System.Drawing.Size(109, 35);
             this.Btn_Submit_Job.TabIndex = 11;
             this.Btn_Submit_Job.Text = "Submit";
             this.Btn_Submit_Job.UseVisualStyleBackColor = false;
@@ -325,7 +325,7 @@
             this.Controls.Add(this.Cmb_Client);
             this.Controls.Add(this.Cmb_Job_Type);
             this.Controls.Add(this.label24);
-            this.Controls.Add(this.Txt_Job_Location);
+            this.Controls.Add(this.Txt_Location);
             this.Controls.Add(this.Btn_Submit_Job);
             this.Controls.Add(this.label9);
             this.Controls.Add(this.Dtp_Delivery);
@@ -360,7 +360,7 @@
         private System.Windows.Forms.ComboBox Cmb_Client;
         private System.Windows.Forms.ComboBox Cmb_Job_Type;
         private System.Windows.Forms.Label label24;
-        private System.Windows.Forms.TextBox Txt_Job_Location;
+        private System.Windows.Forms.TextBox Txt_Location;
         private System.Windows.Forms.Button Btn_Submit_Job;
         private System.Windows.Forms.Label label9;
         private System.Windows.Forms.DateTimePicker Dtp_Delivery;

@@ -57,24 +57,16 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Controller\Common.cs" />
-    <Compile Include="Migrations\202007250829478_initial model created.cs" />
-    <Compile Include="Migrations\202007250829478_initial model created.designer.cs">
-      <DependentUpon>202007250829478_initial model created.cs</DependentUpon>
+    <Compile Include="Migrations\202007281143113_Initial Database Model.cs" />
+    <Compile Include="Migrations\202007281143113_Initial Database Model.designer.cs">
+      <DependentUpon>202007281143113_Initial Database Model.cs</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\202007250853298_add image filed of log model.cs" />
-    <Compile Include="Migrations\202007250853298_add image filed of log model.designer.cs">
-      <DependentUpon>202007250853298_add image filed of log model.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\202007251111213_replace jobtime field with model.cs" />
-    <Compile Include="Migrations\202007251111213_replace jobtime field with model.designer.cs">
-      <DependentUpon>202007251111213_replace jobtime field with model.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\202007271145118_modify time filed in jobs model.cs" />
-    <Compile Include="Migrations\202007271145118_modify time filed in jobs model.designer.cs">
-      <DependentUpon>202007271145118_modify time filed in jobs model.cs</DependentUpon>
+    <Compile Include="Migrations\202007281238452_add Date in Jobs Model.cs" />
+    <Compile Include="Migrations\202007281238452_add Date in Jobs Model.designer.cs">
+      <DependentUpon>202007281238452_add Date in Jobs Model.cs</DependentUpon>
     </Compile>
     <Compile Include="Models\Rate.cs" />
-    <Compile Include="Models\Pro_Time_Price.cs" />
+    <Compile Include="Models\Target_Pro_Time.cs" />
     <Compile Include="UI WinForm\CS Panel\Add_Job.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -102,7 +94,7 @@
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\Attend.cs" />
     <Compile Include="Models\Job.cs" />
-    <Compile Include="Models\Actual_Time_Price.cs" />
+    <Compile Include="Models\Actual_Price_Time.cs" />
     <Compile Include="Models\Log.cs" />
     <Compile Include="Models\User.cs" />
     <Compile Include="Program.cs" />
@@ -120,17 +112,11 @@
     <Compile Include="UI WinForm\Production\SI Panel\SI_Dashboard.Designer.cs">
       <DependentUpon>SI_Dashboard.cs</DependentUpon>
     </Compile>
-    <EmbeddedResource Include="Migrations\202007250829478_initial model created.resx">
-      <DependentUpon>202007250829478_initial model created.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\202007281143113_Initial Database Model.resx">
+      <DependentUpon>202007281143113_Initial Database Model.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\202007250853298_add image filed of log model.resx">
-      <DependentUpon>202007250853298_add image filed of log model.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\202007251111213_replace jobtime field with model.resx">
-      <DependentUpon>202007251111213_replace jobtime field with model.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\202007271145118_modify time filed in jobs model.resx">
-      <DependentUpon>202007271145118_modify time filed in jobs model.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\202007281238452_add Date in Jobs Model.resx">
+      <DependentUpon>202007281238452_add Date in Jobs Model.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="UI WinForm\CS Panel\Add_Job.resx">
       <DependentUpon>Add_Job.cs</DependentUpon>
