@@ -28,6 +28,16 @@ namespace Skill_PMS.UI_WinForm.Production.SI_Panel
             InitializeComponent();
         }
 
+        private static SI_Dashboard instance;
+        public static SI_Dashboard getInstance()
+        {
+            if (instance == null || instance.IsDisposed)
+                instance = new SI_Dashboard();
+            else
+                instance.BringToFront();
+            return instance;
+        }
+
         private void SI_Dashboard_Load(object sender, EventArgs e)
         {
             this.Text = "SI Panel - " + user.Full_Name;
@@ -156,16 +166,6 @@ namespace Skill_PMS.UI_WinForm.Production.SI_Panel
                 case 4:
                     Check_Done_Job();
                     break;
-
-                case 5:
-                //Dtp_Job_Assign_From.Value = DateTime.Now;
-                //Cmb_Job_Assign_Shift.Text = con.Check_Shift();
-                //if (assign_check)
-                //    Check_Assign();
-                //break;
-
-                case 6:
-                    break;
             }
         }
 
@@ -183,6 +183,39 @@ namespace Skill_PMS.UI_WinForm.Production.SI_Panel
                 {
                     job_assign.user = user;
                     job_assign.Show();
+                }
+            }
+        }
+
+        private void Dgv_Running_Job_CellContentClick(object sender, DataGridViewCellEventArgs e)
+        {
+            if (Dgv_Running_Job.Columns[Dgv_Running_Job.CurrentCell.ColumnIndex].HeaderText.Contains("Job_ID"))
+            {
+                Job_assign job_assign = new Job_assign();
+                if (Dgv_Running_Job.Rows[e.RowIndex].Cells[e.ColumnIndex].Value != null)
+                {
+                    job_assign.job.JobID = Dgv_Running_Job.Rows[e.RowIndex].Cells[e.ColumnIndex].Value.ToString();
+                }
+
+                if (!String.IsNullOrWhiteSpace(Dgv_Running_Job.CurrentCell.EditedFormattedValue.ToString()))
+                {
+                    job_assign.user = user;
+                    job_assign.Show();
+                }
+            }
+
+            if (Dgv_Running_Job.Columns[Dgv_Running_Job.CurrentCell.ColumnIndex].HeaderText.Contains("Folder"))
+            {
+                Productivity view_productivity = Productivity.getInstance();
+                if (Dgv_Running_Job.Rows[e.RowIndex].Cells[e.ColumnIndex].Value != null)
+                {
+                    view_productivity.job.JobID = Dgv_Running_Job.Rows[e.RowIndex].Cells[1].Value.ToString();
+                }
+
+                if (!String.IsNullOrWhiteSpace(Dgv_Running_Job.CurrentCell.EditedFormattedValue.ToString()))
+                {
+                    Productivity.user = user;
+                    view_productivity.Show();
                 }
             }
         }

@@ -1,4 +1,5 @@
-﻿using Skill_PMS.Data;
+﻿using Skill_PMS.Controller;
+using Skill_PMS.Data;
 using Skill_PMS.Models;
 using System;
 using System.Collections.Generic;
@@ -10,6 +11,7 @@ using System.Drawing;
 using System.IO;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
@@ -21,6 +23,7 @@ namespace Skill_PMS.UI_WinForm.Production.Designer
 
         public Job job = new Job();
         Log log = new Log();
+        Common common = new Common();
         public User user { get; set; }
 
         string My_Service = "";
@@ -36,9 +39,19 @@ namespace Skill_PMS.UI_WinForm.Production.Designer
             InitializeComponent();
         }
 
+        private static Processing instance;
+        public static Processing getInstance()
+        {
+            if (instance == null || instance.IsDisposed)
+                instance = new Processing();
+            else
+                instance.BringToFront();
+            return instance;
+        }
+
         private void Processing_Load(object sender, EventArgs e)
         {
-            this.Name = "Processing - " + user.Full_Name;
+            this.Text = "Processing - " + user.Full_Name;
 
             job = DB.Jobs
                 .Where(x => x.JobID == job.JobID)
@@ -90,6 +103,7 @@ namespace Skill_PMS.UI_WinForm.Production.Designer
             int SL = 1;
             DGV_Files.DataSource = null;
             DGV_Files.Rows.Clear();
+            common.Dgv_Size(DGV_Files, 11);
 
             File_Amount = files.Count();
 
@@ -102,6 +116,7 @@ namespace Skill_PMS.UI_WinForm.Production.Designer
                     files_name[i++] = name;
                     DGV_Files.Rows.Add(SL++, name, "X");
 
+                    log = new Log();
                     log.Job_ID = job.ID;
                     log.Image = name;
                     log.Job_Time = My_Time;
@@ -129,6 +144,8 @@ namespace Skill_PMS.UI_WinForm.Production.Designer
                         Open.StartInfo.Arguments = file;
                         Open.Start();
                     }
+
+                    Thread.Sleep(500);
                 }
 
                 DB.SaveChanges();
@@ -340,14 +357,47 @@ namespace Skill_PMS.UI_WinForm.Production.Designer
 
         private void Btn_Cancel_Click(object sender, EventArgs e)
         {
+            Reset_Process();
+            Clear_Job();
+        }
+
+        void Reset_Process()
+        {
             DGV_Files.DataSource = null;
             DGV_Files.Rows.Clear();
             DGV_Files.AllowDrop = true;
             Check_Service();
             Tmr_Count.Stop();
 
+            var timespan = TimeSpan.FromSeconds(0);
+            Lbl_Count.Text = timespan.ToString(@"h\:mm\:ss");
+
             Btn_Pause.Enabled = false;
             Btn_Save.Enabled = false;
+        }
+
+        void Clear_Job()
+        {
+            foreach (string file in files_name)
+            {
+                Remove_File(file);
+                if (File_Amount == 0)
+                    break;
+            }
+            DB.SaveChanges();
+        }
+
+        void Remove_File(string file)
+        {
+            log = DB.Logs
+                .Where(x => x.Job_ID == job.ID & x.Image == file & x.Status == "Running" & x.User_ID == user.ID & x.Service == My_Service)
+                .FirstOrDefault<Log>();
+
+            if (log != null)
+                DB.Logs.Remove(log);
+
+            if (--File_Amount == 0)
+                Reset_Process();
         }
 
         private void Btn_My_Folder_Click(object sender, EventArgs e)
@@ -356,6 +406,35 @@ namespace Skill_PMS.UI_WinForm.Production.Designer
                 Process.Start(My_Folder);
             else
                 MessageBox.Show("My Folder doesn't Exist. Please Start Job First then try again...", "My Folder Not Found", MessageBoxButtons.OK, MessageBoxIcon.Error);
+        }
+
+        private void Processing_FormClosed(object sender, FormClosedEventArgs e)
+        {
+            Clear_Job();
+            Dashboard dashboard = Dashboard.getInstance();
+            dashboard.Show();
+        }
+
+        private void DGV_Files_CellContentClick(object sender, DataGridViewCellEventArgs e)
+        {
+            string file_name = "";
+            if (DGV_Files.Columns[DGV_Files.CurrentCell.ColumnIndex].HeaderText.Contains("X"))
+            {
+                if (DGV_Files.Rows[e.RowIndex].Cells[e.ColumnIndex].Value != null)
+                {
+                    file_name = DGV_Files.Rows[e.RowIndex].Cells[1].Value.ToString();
+                }
+
+                if (!String.IsNullOrWhiteSpace(DGV_Files.CurrentCell.EditedFormattedValue.ToString()))
+                {
+                    if (!string.IsNullOrEmpty(file_name))
+                    {
+                        DGV_Files.Rows.RemoveAt(e.RowIndex);
+                        Remove_File(file_name);
+                        DB.SaveChanges();
+                    }
+                }
+            }
         }
 
         private void Btn_Pause_Click(object sender, EventArgs e)
@@ -417,19 +496,14 @@ namespace Skill_PMS.UI_WinForm.Production.Designer
                     DB.Logs.AddOrUpdate(log);
                 }
 
-                if (File_Amount-- == 1)
+                if (--File_Amount == 0)
                     break;
             }
+            job.Pro_Done += File_Amount;
+            job.Pro_Time += Pro_Time / 2;
+            DB.Jobs.AddOrUpdate(job);
             DB.SaveChanges();
-
-
-            DGV_Files.DataSource = null;
-            DGV_Files.Rows.Clear();
-            DGV_Files.AllowDrop = true;
-            Check_Service();
-
-            Btn_Pause.Enabled = false;
-            Btn_Save.Enabled = false;
+            Reset_Process();            
         }
 
         private void Btn_Instruction_Click(object sender, EventArgs e)

@@ -27,6 +27,16 @@ namespace Skill_PMS.UI_WinForm.Production.Designer
             Tbc_Designer.SelectedIndex = 1;
         }
 
+        private static Dashboard instance;
+        public static Dashboard getInstance()
+        {
+            if (instance == null || instance.IsDisposed)
+                instance = new Dashboard();
+            else
+                instance.BringToFront();
+            return instance;
+        }
+
         private void BTN_Performance_Click(object sender, EventArgs e)
         {
 
@@ -49,7 +59,7 @@ namespace Skill_PMS.UI_WinForm.Production.Designer
 
         private void Dashboard_Load(object sender, EventArgs e)
         {
-            this.Text = "SI Panel - " + user.Full_Name;
+            this.Text = "Dashboard - " + user.Full_Name;
             Check_New_Job();
         }
 
@@ -81,7 +91,7 @@ namespace Skill_PMS.UI_WinForm.Production.Designer
         {
             if (Dgv_New_Job.Columns[Dgv_New_Job.CurrentCell.ColumnIndex].HeaderText.Contains("Job_ID"))
             {
-                Processing processing = new Processing();
+                Processing processing = Processing.getInstance();
                 if (Dgv_New_Job.Rows[e.RowIndex].Cells[e.ColumnIndex].Value != null)
                 {
                     processing.job.JobID = Dgv_New_Job.Rows[e.RowIndex].Cells[e.ColumnIndex].Value.ToString();
@@ -89,6 +99,7 @@ namespace Skill_PMS.UI_WinForm.Production.Designer
 
                 if (!String.IsNullOrWhiteSpace(Dgv_New_Job.CurrentCell.EditedFormattedValue.ToString()))
                 {
+                    this.Hide();
                     processing.user = user;
                     processing.Show();
                 }

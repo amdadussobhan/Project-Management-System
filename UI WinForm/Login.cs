@@ -1,6 +1,7 @@
 ﻿using Skill_PMS.Data;
 using Skill_PMS.Models;
 using Skill_PMS.UI_WinForm.CS_Panel;
+using Skill_PMS.UI_WinForm.HR_Panel;
 using Skill_PMS.UI_WinForm.Production.Designer;
 using Skill_PMS.UI_WinForm.Production.SI_Panel;
 using System;
@@ -61,18 +62,23 @@ namespace Skill_PMS
                     DB.SaveChanges();
 
                     if (user.Role == "CS"){
-                        CS_Dashboard CS_Dashboard = new CS_Dashboard();
-                        CS_Dashboard.User = user;
+                        CS_Dashboard cs_dashboard = CS_Dashboard.getInstance();
+                        CS_Dashboard.user = user;
                         CS_Dashboard.Attend = attendence;
-                        CS_Dashboard.Show();
+                        cs_dashboard.Show();
                     }
                     else if (user.Role == "SI"){
-                        SI_Dashboard SI_Dashboard = new SI_Dashboard();
+                        SI_Dashboard si_dashboard = SI_Dashboard.getInstance();
                         SI_Dashboard.user = user;
                         SI_Dashboard.attend = attendence;
-                        SI_Dashboard.Show();
+                        si_dashboard.Show();
+                    }else if (user.Role == "HR"){
+                        HR_Dashboard hr_dashboard = HR_Dashboard.getInstance();
+                        HR_Dashboard.user = user;
+                        HR_Dashboard.attend = attendence;
+                        hr_dashboard.Show();
                     }else{
-                        Dashboard dashboard = new Dashboard();
+                        Dashboard dashboard = Dashboard.getInstance();
                         Dashboard.user = user;
                         Dashboard.attend = attendence;
                         dashboard.Show();

@@ -32,6 +32,16 @@ namespace Skill_PMS.UI_WinForm.Production.SI_Panel
             InitializeComponent();
         }
 
+        private static Job_assign instance;
+        public static Job_assign getInstance()
+        {
+            if (instance == null || instance.IsDisposed)
+                instance = new Job_assign();
+            else
+                instance.BringToFront();
+            return instance;
+        }
+
         private void Chk_CP_CheckedChanged(object sender, EventArgs e)
         {
             if (Chk_CP.Checked)
@@ -319,8 +329,11 @@ namespace Skill_PMS.UI_WinForm.Production.SI_Panel
                 job.Service = Job_Service;
                 job.SI_ID = user.ID;
 
-                if(price_time != null)
-                    job.Price_Times_ID = price_time.ID;
+                if (Chk_Remember.Checked)
+                {
+                    if (price_time != null)
+                        job.Price_Times_ID = price_time.ID;
+                }
 
                 DB.Jobs.AddOrUpdate(job);
                 DB.SaveChanges();
@@ -341,7 +354,7 @@ namespace Skill_PMS.UI_WinForm.Production.SI_Panel
 
         private void Job_assign_Load(object sender, EventArgs e)
         {
-            this.Name = "Job assign - " + user.Full_Name;
+            this.Text = "Job assign - " + user.Full_Name;
               
             job = DB.Jobs
                 .Where(x => x.JobID == job.JobID)
@@ -356,6 +369,7 @@ namespace Skill_PMS.UI_WinForm.Production.SI_Panel
             Lbl_Total_Time.Text = job.Type + "";
             Txt_Folder.Text = job.Folder + "";
             Txt_Location.Text = job.InputLocation + "";
+            Cmb_Category.Text = job.Category;
 
             var Categories = DB.Price_Times
                 .Where(x => x.Client == job.Client)

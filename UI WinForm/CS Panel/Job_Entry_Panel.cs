@@ -17,26 +17,39 @@ using System.Windows.Forms;
 
 namespace Skill_PMS
 {
-    public partial class Add_Job : Form
+    public partial class Job_Entry_Panel : Form
     {
-        Job job = new Job();
+        public Job job = new Job();
         Price_Time price_time = new Price_Time();
         Rate rate = new Rate();
         SkillContext DB = new SkillContext();
 
+        bool isModified = false;
         double Price_Rate = 0;
         string ID = "", Job_ID = "";
         string Date = DateTime.Now.ToString("yyMMdd");
 
         public User user { get; set; }
 
-        public Add_Job()
+        public Job_Entry_Panel()
         {
             InitializeComponent();
         }
 
+        private static Job_Entry_Panel instance;
+        public static Job_Entry_Panel getInstance()
+        {
+            if (instance == null || instance.IsDisposed)
+                instance = new Job_Entry_Panel();
+            else
+                instance.BringToFront();
+            return instance;
+        }
+
         private void Add_Job_Load(object sender, EventArgs e)
         {
+            this.Text = "New Job - " + user.Full_Name;
+
             var Clients = DB.Jobs.Select(x => x.Client).Distinct();
             foreach (var Client in Clients)
                 Cmb_Client.Items.Add(Client);
@@ -45,8 +58,29 @@ namespace Skill_PMS
             foreach (var Rate in Rates)
                 Cmb_Currency.Items.Add(Rate);
 
-            Dtp_Delivery.Value = DateTime.Now.AddHours(1);
-            Create_Job_ID();
+            if (job != null & job.JobID != null)
+            {
+                isModified = true;
+
+                job = DB.Jobs
+                    .Where(x => x.JobID == job.JobID)
+                    .FirstOrDefault<Job>();
+
+                Txt_Job_ID.Text = job.JobID;
+                Cmb_Client.Text = job.Client;
+                Cmb_Catagory.Text = job.Category;
+                Cmb_Job_Type.Text = job.Type;
+                if (string.IsNullOrEmpty(Txt_Job_Time.Text))
+                    Txt_Job_Time.Text = job.Actual_Time + "";
+                Txt_Amount.Text = job.InputAmount + "";
+                Dtp_Delivery.Value = job.Delivery;
+                Txt_Location.Text = job.InputLocation;
+            }
+            else
+            {
+                Dtp_Delivery.Value = DateTime.Now.AddHours(1);
+                Create_Job_ID();
+            }           
         }
 
         void Create_Job_ID()
@@ -103,12 +137,15 @@ namespace Skill_PMS
 
         private void Btn_Submit_Job_Click(object sender, EventArgs e)
         {
-            if (Job_Validated()) {
-                if (rate == null)
+            if (Job_Validated())
+            {
+                string Currency = Cmb_Currency.Text;
+                if (!string.IsNullOrEmpty(Currency))
                 {
-                    if (!string.IsNullOrEmpty(Cmb_Currency.Text))
+                    Currency = Currency.ToUpper();
+                    if (rate.ID == 0)
                     {
-                        rate.Currency = Cmb_Currency.Text;
+                        rate.Currency = Currency;
                         DB.Rates.AddOrUpdate(rate);
                         DB.SaveChanges();
                     }
@@ -138,24 +175,34 @@ namespace Skill_PMS
                     DB.SaveChanges();
                 }
 
-                Check_Todays_Max_ID();
-                job.JobID = Job_ID;
+                if (isModified)
+                {
+                    string Job_ID_Partial = job.JobID.Split('_')[0];
+                    Job_ID = Job_ID_Partial + "_" + Client;
+                }
+                else
+                {
+                    Check_Todays_Max_ID();
+                    job.JobID = Job_ID;
+                    job.Status = "New";
+                    job.Date = DateTime.Now.Date;
+                    job.Incoming = DateTime.Now;
+                }
+
                 job.Client = Client;
                 job.Category = Catagory;
                 job.Type = Cmb_Job_Type.Text;
                 job.Folder = Txt_Folder.Text;
-                job.Status = "New";
                 job.InputAmount = Convert.ToDouble(Txt_Amount.Text);
                 job.InputLocation = Txt_Location.Text;
                 job.Price = Price;
-                job.Taka= Taka;
+                job.Taka = Taka;
+                job.Currency = Currency;
                 job.Actual_Time = Time;
-                job.Date = DateTime.Now.Date;
-                job.Incoming = DateTime.Now;
                 job.Delivery = Dtp_Delivery.Value;
                 job.Receiver_ID = user.ID;
 
-                if(price_time != null)
+                if (price_time != null)
                     job.Price_Times_ID = price_time.ID;
 
                 DB.Jobs.AddOrUpdate(job);

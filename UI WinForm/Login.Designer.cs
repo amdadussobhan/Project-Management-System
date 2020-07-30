@@ -45,9 +45,10 @@
             this.Cmb_Shift.Font = new System.Drawing.Font("Microsoft Sans Serif", 13.3F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.Cmb_Shift.FormattingEnabled = true;
             this.Cmb_Shift.Items.AddRange(new object[] {
-            "Night",
+            "Morning",
             "Evening",
-            "Morning"});
+            "Night",
+            ""});
             this.Cmb_Shift.Location = new System.Drawing.Point(279, 91);
             this.Cmb_Shift.Name = "Cmb_Shift";
             this.Cmb_Shift.Size = new System.Drawing.Size(214, 30);
@@ -105,7 +106,7 @@
             this.Txt_Usr.Name = "Txt_Usr";
             this.Txt_Usr.Size = new System.Drawing.Size(172, 29);
             this.Txt_Usr.TabIndex = 0;
-            this.Txt_Usr.Text = "10000017";
+            this.Txt_Usr.Text = "10000018";
             this.Txt_Usr.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             this.Txt_Usr.TextChanged += new System.EventHandler(this.Txt_Usr_TextChanged);
             // 

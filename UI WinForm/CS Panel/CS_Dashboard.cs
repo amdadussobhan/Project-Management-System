@@ -1,6 +1,7 @@
 ﻿using Skill_PMS.Controller;
 using Skill_PMS.Data;
 using Skill_PMS.Models;
+using Skill_PMS.UI_WinForm.Production.SI_Panel;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -20,16 +21,26 @@ namespace Skill_PMS.UI_WinForm.CS_Panel
         SkillContext DB = new SkillContext();
         Common Common = new Common();
 
-        public static User User { get; set; }
+        public static User user { get; set; }
         public static Attend Attend = new Attend();
         public CS_Dashboard()
         {
             InitializeComponent();
         }
 
+        private static CS_Dashboard instance;
+        public static CS_Dashboard getInstance()
+        {
+            if (instance == null || instance.IsDisposed)
+                instance = new CS_Dashboard();
+            else
+                instance.BringToFront();
+            return instance;
+        }
+
         private void Dashboard_Load(object sender, EventArgs e)
         {
-            this.Text = "CS Panel - " + User.Full_Name;
+            this.Text = "CS Panel - " + user.Full_Name;
             Check_New_Job();
         }
 
@@ -45,8 +56,8 @@ namespace Skill_PMS.UI_WinForm.CS_Panel
 
         private void Btn_Add_New_Job_Click(object sender, EventArgs e)
         {
-            Add_Job add_Job = new Add_Job();
-            add_Job.user = User;
+            Job_Entry_Panel add_Job = new Job_Entry_Panel();
+            add_Job.user = user;
             add_Job.Show();
         }
 
@@ -167,16 +178,44 @@ namespace Skill_PMS.UI_WinForm.CS_Panel
                 case 4:
                     Check_Done_Job();
                     break;
+            }
+        }
 
-                case 5:
-                    //Dtp_Job_Assign_From.Value = DateTime.Now;
-                    //Cmb_Job_Assign_Shift.Text = con.Check_Shift();
-                    //if (assign_check)
-                    //    Check_Assign();
-                    //break;
+        private void Dgv_New_Job_CellContentClick(object sender, DataGridViewCellEventArgs e)
+        {
 
-                case 6:
-                    break;
+            if (Dgv_New_Job.Columns[Dgv_New_Job.CurrentCell.ColumnIndex].HeaderText.Contains("Job_ID"))
+            {
+                Job_Entry_Panel job_entry_panel = Job_Entry_Panel.getInstance();
+                if (Dgv_New_Job.Rows[e.RowIndex].Cells[e.ColumnIndex].Value != null)
+                {
+                    job_entry_panel.job.JobID = Dgv_New_Job.Rows[e.RowIndex].Cells[e.ColumnIndex].Value.ToString();
+                }
+
+                if (!String.IsNullOrWhiteSpace(Dgv_New_Job.CurrentCell.EditedFormattedValue.ToString()))
+                {
+                    job_entry_panel.user = user;
+                    job_entry_panel.Show();
+                }
+            }
+        }
+
+        private void Dgv_Running_Job_CellContentClick(object sender, DataGridViewCellEventArgs e)
+        {
+
+            if (Dgv_New_Job.Columns[Dgv_New_Job.CurrentCell.ColumnIndex].HeaderText.Contains("Folder"))
+            {
+                Productivity productivity = Productivity.getInstance();
+                if (Dgv_New_Job.Rows[e.RowIndex].Cells[e.ColumnIndex].Value != null)
+                {
+                    productivity.job.JobID = Dgv_New_Job.Rows[e.RowIndex].Cells[1].Value.ToString();
+                }
+
+                if (!String.IsNullOrWhiteSpace(Dgv_New_Job.CurrentCell.EditedFormattedValue.ToString()))
+                {
+                    Productivity.user = user;
+                    productivity.Show();
+                }
             }
         }
     }

@@ -16,6 +16,7 @@ namespace Skill_PMS.Data
         public DbSet<Rate> Rates { get; set; }
         public DbSet<Log> Logs { get; set; }
         public DbSet<Job> Jobs { get; set; }
+        public DbSet<Production> Productions { get; set; }
 
         public SkillContext() : base("SkillContext")
         {

@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Skill_PMS.Models
 {
-    class Log
+    public class Log
     {
         public int ID { get; set; }
         public int User_ID { get; set; }

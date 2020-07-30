@@ -65,12 +65,21 @@
     <Compile Include="Migrations\202007292225207_add Efficiency to model.designer.cs">
       <DependentUpon>202007292225207_add Efficiency to model.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202007300329146_add currency in jobs model.cs" />
+    <Compile Include="Migrations\202007300329146_add currency in jobs model.designer.cs">
+      <DependentUpon>202007300329146_add currency in jobs model.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202007300830072_add HR Panel and Production Model.cs" />
+    <Compile Include="Migrations\202007300830072_add HR Panel and Production Model.designer.cs">
+      <DependentUpon>202007300830072_add HR Panel and Production Model.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Production.cs" />
     <Compile Include="Models\Rate.cs" />
-    <Compile Include="UI WinForm\CS Panel\Add_Job.cs">
+    <Compile Include="UI WinForm\CS Panel\Job_Entry_Panel.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="UI WinForm\CS Panel\Add_Job.Designer.cs">
-      <DependentUpon>Add_Job.cs</DependentUpon>
+    <Compile Include="UI WinForm\CS Panel\Job_Entry_Panel.Designer.cs">
+      <DependentUpon>Job_Entry_Panel.cs</DependentUpon>
     </Compile>
     <Compile Include="UI WinForm\CS Panel\CS_Dashboard.cs">
       <SubType>Form</SubType>
@@ -78,11 +87,11 @@
     <Compile Include="UI WinForm\CS Panel\CS_Dashboard.Designer.cs">
       <DependentUpon>CS_Dashboard.cs</DependentUpon>
     </Compile>
-    <Compile Include="UI WinForm\CS Panel\Edit_Job.cs">
+    <Compile Include="UI WinForm\HR Panel\HR_Dashboard.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="UI WinForm\CS Panel\Edit_Job.Designer.cs">
-      <DependentUpon>Edit_Job.cs</DependentUpon>
+    <Compile Include="UI WinForm\HR Panel\HR_Dashboard.Designer.cs">
+      <DependentUpon>HR_Dashboard.cs</DependentUpon>
     </Compile>
     <Compile Include="UI WinForm\Login.cs">
       <SubType>Form</SubType>
@@ -123,20 +132,32 @@
     <Compile Include="UI WinForm\Production\SI Panel\SI_Dashboard.Designer.cs">
       <DependentUpon>SI_Dashboard.cs</DependentUpon>
     </Compile>
+    <Compile Include="UI WinForm\Common\Productivity.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="UI WinForm\Common\Productivity.Designer.cs">
+      <DependentUpon>Productivity.cs</DependentUpon>
+    </Compile>
     <EmbeddedResource Include="Migrations\202007291410591_initial Database setup.resx">
       <DependentUpon>202007291410591_initial Database setup.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202007292225207_add Efficiency to model.resx">
       <DependentUpon>202007292225207_add Efficiency to model.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="UI WinForm\CS Panel\Add_Job.resx">
-      <DependentUpon>Add_Job.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\202007300329146_add currency in jobs model.resx">
+      <DependentUpon>202007300329146_add currency in jobs model.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202007300830072_add HR Panel and Production Model.resx">
+      <DependentUpon>202007300830072_add HR Panel and Production Model.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UI WinForm\CS Panel\Job_Entry_Panel.resx">
+      <DependentUpon>Job_Entry_Panel.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="UI WinForm\CS Panel\CS_Dashboard.resx">
       <DependentUpon>CS_Dashboard.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="UI WinForm\CS Panel\Edit_Job.resx">
-      <DependentUpon>Edit_Job.cs</DependentUpon>
+    <EmbeddedResource Include="UI WinForm\HR Panel\HR_Dashboard.resx">
+      <DependentUpon>HR_Dashboard.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="UI WinForm\Login.resx">
       <DependentUpon>Login.cs</DependentUpon>
@@ -162,6 +183,9 @@
     <EmbeddedResource Include="UI WinForm\Production\SI Panel\SI_Dashboard.resx">
       <DependentUpon>SI_Dashboard.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="UI WinForm\Common\Productivity.resx">
+      <DependentUpon>Productivity.cs</DependentUpon>
+    </EmbeddedResource>
     <None Include="packages.config" />
     <None Include="Properties\DataSources\Skill_PMS.Models.Job.datasource" />
     <None Include="Properties\Settings.settings">
@@ -178,8 +202,6 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="UI WinForm\Common\" />
-    <Folder Include="UI WinForm\HR Panel\" />
     <Folder Include="UI WinForm\Production\QC Panel\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
