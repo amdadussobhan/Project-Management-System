@@ -7,13 +7,13 @@ namespace Skill_PMS.Migrations
     using System.Resources;
     
     [GeneratedCode("EntityFramework.Migrations", "6.4.4")]
-    public sealed partial class InitialDatabaseModel : IMigrationMetadata
+    public sealed partial class initialDatabasesetup : IMigrationMetadata
     {
-        private readonly ResourceManager Resources = new ResourceManager(typeof(InitialDatabaseModel));
+        private readonly ResourceManager Resources = new ResourceManager(typeof(initialDatabasesetup));
         
         string IMigrationMetadata.Id
         {
-            get { return "202007281143113_Initial Database Model"; }
+            get { return "202007291410591_initial Database setup"; }
         }
         
         string IMigrationMetadata.Source

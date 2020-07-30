@@ -20,8 +20,8 @@ namespace Skill_PMS.UI_WinForm.Production.SI_Panel
         SkillContext DB = new SkillContext();
         Common Common = new Common();
 
-        static public User User { get; set; }
-        static public Attend Attend = new Attend();
+        static public User user { get; set; }
+        static public Attend attend = new Attend();
 
         public SI_Dashboard()
         {
@@ -30,9 +30,9 @@ namespace Skill_PMS.UI_WinForm.Production.SI_Panel
 
         private void SI_Dashboard_Load(object sender, EventArgs e)
         {
-            this.Text = "SI Panel - " + User.Full_Name;
+            this.Text = "SI Panel - " + user.Full_Name;
             Check_New_Job();
-        }
+        }        
 
         void Check_New_Job()
         {
@@ -42,7 +42,6 @@ namespace Skill_PMS.UI_WinForm.Production.SI_Panel
 
             var Jobs = DB.Jobs
                 .Where(x => x.Status == "New")
-                .Include(x => x.Actual_Price_Times)
                 .ToList();
 
             int SL = 1;
@@ -67,7 +66,7 @@ namespace Skill_PMS.UI_WinForm.Production.SI_Panel
             int SL = 1;
             foreach (var Job in Jobs)
             {
-                Dgv_Running_Job.Rows.Add(SL++, Job.JobID, Job.Folder, Job.InputAmount, Job.Pro_Done, Job.Service, Job.Target_Time, Job.Pro_Time, Job.Delivery, "Edit");
+                Dgv_Running_Job.Rows.Add(SL++, Job.JobID, Job.Folder, Job.InputAmount, Job.Pro_Done, Job.Service, Job.Target_Time, Job.Pro_Time, Job.Delivery);
             }
 
             Common.Row_Color_By_Delivery(Dgv_Running_Job, "Column33");
@@ -132,12 +131,7 @@ namespace Skill_PMS.UI_WinForm.Production.SI_Panel
 
         private void SI_Dashboard_FormClosed(object sender, FormClosedEventArgs e)
         {
-            Attend.Logout = DateTime.Now;
-            Attend.Status = "Logout";
-            Attend.Workingtime = Convert.ToInt32((Attend.Logout - Attend.Login).TotalMinutes);
-            DB.Attends.AddOrUpdate(Attend);
-            DB.SaveChanges();
-            Application.Exit();
+            Common.Logout(attend);
         }
 
         private void Tbc_CS_Panel_SelectedIndexChanged(object sender, EventArgs e)
@@ -187,7 +181,7 @@ namespace Skill_PMS.UI_WinForm.Production.SI_Panel
 
                 if (!String.IsNullOrWhiteSpace(Dgv_New_Job.CurrentCell.EditedFormattedValue.ToString()))
                 {
-                    job_assign.User = User;
+                    job_assign.user = user;
                     job_assign.Show();
                 }
             }

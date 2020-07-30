@@ -29,3 +29,27 @@ F:\Skill_Soft\Skill_PMS\obj\Debug\Skill_PMS.UI_WinForm.Production.SI_Panel.Job_a
 F:\Skill_Soft\Skill_PMS\obj\Debug\Skill_PMS.Migrations.InitialDatabaseModel.resources
 F:\Skill_Soft\Skill_PMS\obj\Debug\Skill_PMS.Migrations.addDateinJobsModel.resources
 F:\Skill_Soft\Skill_PMS\obj\Debug\Skill_PMS.csprojAssemblyReference.cache
+F:\Skill Soft\Skill_PMS\bin\Debug\Skill_PMS.exe.config
+F:\Skill Soft\Skill_PMS\bin\Debug\Skill_PMS.exe
+F:\Skill Soft\Skill_PMS\bin\Debug\Skill_PMS.pdb
+F:\Skill Soft\Skill_PMS\bin\Debug\EntityFramework.dll
+F:\Skill Soft\Skill_PMS\bin\Debug\EntityFramework.SqlServer.dll
+F:\Skill Soft\Skill_PMS\bin\Debug\EntityFramework.xml
+F:\Skill Soft\Skill_PMS\bin\Debug\EntityFramework.SqlServer.xml
+F:\Skill Soft\Skill_PMS\obj\Debug\Skill_PMS.Add_Job.resources
+F:\Skill Soft\Skill_PMS\obj\Debug\Skill_PMS.UI_WinForm.CS_Panel.CS_Dashboard.resources
+F:\Skill Soft\Skill_PMS\obj\Debug\Skill_PMS.UI_WinForm.CS_Panel.Edit_Job.resources
+F:\Skill Soft\Skill_PMS\obj\Debug\Skill_PMS.Login.resources
+F:\Skill Soft\Skill_PMS\obj\Debug\Skill_PMS.Properties.Resources.resources
+F:\Skill Soft\Skill_PMS\obj\Debug\Skill_PMS.UI_WinForm.Production.SI_Panel.Job_assign.resources
+F:\Skill Soft\Skill_PMS\obj\Debug\Skill_PMS.UI_WinForm.Production.SI_Panel.SI_Dashboard.resources
+F:\Skill Soft\Skill_PMS\obj\Debug\Skill_PMS.csproj.GenerateResource.cache
+F:\Skill Soft\Skill_PMS\obj\Debug\Skill_PMS.csproj.CoreCompileInputs.cache
+F:\Skill Soft\Skill_PMS\obj\Debug\Skill_PMS.csproj.CopyComplete
+F:\Skill Soft\Skill_PMS\obj\Debug\Skill_PMS.exe
+F:\Skill Soft\Skill_PMS\obj\Debug\Skill_PMS.pdb
+F:\Skill Soft\Skill_PMS\obj\Debug\Skill_PMS.Migrations.initialDatabasesetup.resources
+F:\Skill Soft\Skill_PMS\obj\Debug\Skill_PMS.csprojAssemblyReference.cache
+F:\Skill Soft\Skill_PMS\obj\Debug\Skill_PMS.UI_WinForm.Production.Designer.Dashboard.resources
+F:\Skill Soft\Skill_PMS\obj\Debug\Skill_PMS.UI_WinForm.Production.Designer.Processing.resources
+F:\Skill Soft\Skill_PMS\obj\Debug\Skill_PMS.Migrations.addEfficiencytomodel.resources

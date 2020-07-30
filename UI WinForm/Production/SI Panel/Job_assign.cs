@@ -20,13 +20,12 @@ namespace Skill_PMS.UI_WinForm.Production.SI_Panel
     {
         SkillContext DB = new SkillContext();
         public Job job = new Job();
-        public Target_Pro_Time target_pro_time = new Target_Pro_Time();
+        public Price_Time price_time = new Price_Time();
 
-        double Job_Time;
         string Job_Service;
-        double cp = 0, ret = 0, msk = 0, nj = 0, ai = 0, cc = 0, liq = 0, sha = 0;
+        double Job_Time, cp = 0, ret = 0, msk = 0, nj = 0, ai = 0, cc = 0, liq = 0, sha = 0;
 
-        public User User { get; set; }
+        public User user { get; set; }
 
         public Job_assign()
         {
@@ -35,12 +34,11 @@ namespace Skill_PMS.UI_WinForm.Production.SI_Panel
 
         private void Chk_CP_CheckedChanged(object sender, EventArgs e)
         {
-            if (Chk_CP.Checked == true)
+            if (Chk_CP.Checked)
             {
-                if(target_pro_time != null)
-                    cp = target_pro_time.CP_Time;
                 Txt_CP.Enabled = true;
-                Txt_CP.Text = cp + "";
+                if (price_time != null)
+                    Txt_CP.Text = price_time.CP_Time + "";
             }
             else
             {
@@ -48,18 +46,15 @@ namespace Skill_PMS.UI_WinForm.Production.SI_Panel
                 Txt_CP.Text = "";
                 Txt_CP.Enabled = false;
             }
-
-            Check_Time_Service();
         }
 
         private void Chk_RET_CheckedChanged(object sender, EventArgs e)
         {
-            if (Chk_RET.Checked == true)
+            if (Chk_RET.Checked)
             {
-                if (target_pro_time != null)
-                    ret = target_pro_time.RET_Time;
                 Txt_RET.Enabled = true;
-                Txt_RET.Text = ret + "";
+                if (price_time != null)
+                    Txt_RET.Text = price_time.RET_Time + "";
             }
             else
             {
@@ -67,18 +62,15 @@ namespace Skill_PMS.UI_WinForm.Production.SI_Panel
                 Txt_RET.Text = "";
                 Txt_RET.Enabled = false;
             }
-
-            Check_Time_Service();
         }
 
         private void Chk_NJ_CheckedChanged(object sender, EventArgs e)
         {
-            if (Chk_NJ.Checked == true)
+            if (Chk_NJ.Checked)
             {
-                if (target_pro_time != null)
-                    nj = target_pro_time.NJ_Time;
                 Txt_NJ.Enabled = true;
-                Txt_NJ.Text = nj + "";
+                if (price_time != null)
+                    Txt_NJ.Text = price_time.NJ_Time + "";
             }
             else
             {
@@ -86,19 +78,15 @@ namespace Skill_PMS.UI_WinForm.Production.SI_Panel
                 Txt_NJ.Text = "";
                 Txt_NJ.Enabled = false;
             }
-
-            Check_Time_Service();
         }
 
         private void Chk_MSK_CheckedChanged(object sender, EventArgs e)
         {
-            if (Chk_MSK.Checked == true)
+            if (Chk_MSK.Checked)
             {
-                if (target_pro_time != null)
-                    msk = target_pro_time.MSK_Time;
-                msk = job.MSK_Time;
                 Txt_MSK.Enabled = true;
-                Txt_MSK.Text = msk + "";
+                if (price_time != null)
+                    Txt_MSK.Text = price_time.MSK_Time + "";
             }
             else
             {
@@ -106,19 +94,15 @@ namespace Skill_PMS.UI_WinForm.Production.SI_Panel
                 Txt_MSK.Text = "";
                 Txt_MSK.Enabled = false;
             }
-
-            Check_Time_Service();
         }
 
         private void Chk_SHA_CheckedChanged(object sender, EventArgs e)
         {
-            if (Chk_SHA.Checked == true)
+            if (Chk_SHA.Checked)
             {
-                if (target_pro_time != null)
-                    sha = target_pro_time.SHA_Time;
-                sha = job.SHA_Time;
                 Txt_SHA.Enabled = true;
-                Txt_SHA.Text = sha + "";
+                if (price_time != null)
+                    Txt_SHA.Text = price_time.SHA_Time + "";
             }
             else
             {
@@ -126,19 +110,15 @@ namespace Skill_PMS.UI_WinForm.Production.SI_Panel
                 Txt_SHA.Text = "";
                 Txt_SHA.Enabled = false;
             }
-
-            Check_Time_Service();
         }
 
         private void Chk_LIQ_CheckedChanged(object sender, EventArgs e)
         {
-            if (Chk_LIQ.Checked == true)
+            if (Chk_LIQ.Checked)
             {
-                if (target_pro_time != null)
-                    liq = target_pro_time.LIQ_Time;
-                liq = job.LIQ_Time;
                 Txt_LIQ.Enabled = true;
-                Txt_LIQ.Text = liq + "";
+                if (price_time != null)
+                    Txt_LIQ.Text = price_time.LIQ_Time + "";
             }
             else
             {
@@ -146,19 +126,15 @@ namespace Skill_PMS.UI_WinForm.Production.SI_Panel
                 Txt_LIQ.Text = "";
                 Txt_LIQ.Enabled = false;
             }
-
-            Check_Time_Service();
         }
 
         private void Chk_CC_CheckedChanged(object sender, EventArgs e)
         {
-            if (Chk_CC.Checked == true)
+            if (Chk_CC.Checked)
             {
-                if (target_pro_time != null)
-                    cc = target_pro_time.CC_Time;
-                cc = job.CC_Time;
                 Txt_CC.Enabled = true;
-                Txt_CC.Text = cc + "";
+                if (price_time != null)
+                    Txt_CC.Text = price_time.CC_Time + "";
             }
             else
             {
@@ -166,19 +142,15 @@ namespace Skill_PMS.UI_WinForm.Production.SI_Panel
                 Txt_CC.Text = "";
                 Txt_CC.Enabled = false;
             }
-
-            Check_Time_Service();
         }
 
         private void Chk_AI_CheckedChanged(object sender, EventArgs e)
         {
-            if (Chk_AI.Checked == true)
+            if (Chk_AI.Checked)
             {
-                if (target_pro_time != null)
-                    ai = target_pro_time.AI_Time;
-                ai = job.AI_Time;
                 Txt_AI.Enabled = true;
-                Txt_AI.Text = ai + "";
+                if (price_time != null)
+                    Txt_AI.Text = price_time.AI_Time + "";
             }
             else
             {
@@ -186,8 +158,6 @@ namespace Skill_PMS.UI_WinForm.Production.SI_Panel
                 Txt_AI.Text = "";
                 Txt_AI.Enabled = false;
             }
-
-            Check_Time_Service();
         }
 
         private void Txt_CP_TextChanged(object sender, EventArgs e)
@@ -267,25 +237,60 @@ namespace Skill_PMS.UI_WinForm.Production.SI_Panel
             Check_Time_Service();
         }
 
+        private void Btn_Reset_Click(object sender, EventArgs e)
+        {
+            Cmb_Category.Text = "";
+        }
+
+        bool Job_Validated()
+        {
+            if (string.IsNullOrEmpty(Job_Service))
+            {
+                MessageBox.Show("Job Service is empty.!!! Please Select Proper Job Service", "Job Service is empty", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return false;
+            }
+
+            if (Job_Time == 0)
+            {
+                MessageBox.Show("Job Time is empty.!!! Please Enter Proper Job Time", "Job Time is empty", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return false;
+            }
+
+            if (string.IsNullOrEmpty(Txt_Location.Text))
+            {
+                MessageBox.Show("Invalid Folder Location Entered.!!! Please Enter Correct Folder Location", "Invalid Location Entered", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return false;
+            }
+
+            if (Chk_Remember.Checked & string.IsNullOrEmpty(Cmb_Category.Text))
+            {
+                MessageBox.Show("Job Category is empty.!!! Please Enter Correct Job Category", "Job Category is empty", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return false;
+            }
+
+            return true;
+        }
+
         private void Btn_Save_Click(object sender, EventArgs e)
         {
-            if(Job_Time != 0 & !string.IsNullOrEmpty(Job_Service))
+            if(Job_Validated())
             {
-                if(Chk_Save_Time.Checked == true) { 
-                    if(target_pro_time == null) { 
-                        target_pro_time.Time = Job_Time;
-                        target_pro_time.Client = job.Client;
-                        target_pro_time.Category = job.Category;
+                if(Chk_Remember.Checked) { 
+                    if(price_time == null) {
+                        price_time.Client = job.Client;
+                        price_time.Category = job.Category;
                     }
-                    target_pro_time.CP_Time = cp;
-                    target_pro_time.RET_Time = ret;
-                    target_pro_time.MSK_Time = msk;
-                    target_pro_time.SHA_Time = sha;
-                    target_pro_time.NJ_Time = nj;
-                    target_pro_time.CC_Time = cc;
-                    target_pro_time.LIQ_Time = liq;
-                    target_pro_time.AI_Time = ai;
-                    DB.Target_Pro_Times.AddOrUpdate(target_pro_time);
+                    price_time.Target_Time = Job_Time;
+                    price_time.CP_Time = cp;
+                    price_time.RET_Time = ret;
+                    price_time.MSK_Time = msk;
+                    price_time.SHA_Time = sha;
+                    price_time.NJ_Time = nj;
+                    price_time.CC_Time = cc;
+                    price_time.LIQ_Time = liq;
+                    price_time.AI_Time = ai;
+                    DB.Price_Times.AddOrUpdate(price_time);
+                    DB.SaveChanges();
                 }
 
                 job.CP_Time = cp;
@@ -312,10 +317,10 @@ namespace Skill_PMS.UI_WinForm.Production.SI_Panel
                 job.Target_Time = Job_Time;
                 job.Status = "Pro";
                 job.Service = Job_Service;
-                job.Shift_Incharge = User;
+                job.SI_ID = user.ID;
 
-                if(target_pro_time != null)
-                    job.Target_Pro_Times = target_pro_time;
+                if(price_time != null)
+                    job.Price_Times_ID = price_time.ID;
 
                 DB.Jobs.AddOrUpdate(job);
                 DB.SaveChanges();
@@ -336,6 +341,8 @@ namespace Skill_PMS.UI_WinForm.Production.SI_Panel
 
         private void Job_assign_Load(object sender, EventArgs e)
         {
+            this.Name = "Job assign - " + user.Full_Name;
+              
             job = DB.Jobs
                 .Where(x => x.JobID == job.JobID)
                 .FirstOrDefault<Job>();
@@ -349,20 +356,23 @@ namespace Skill_PMS.UI_WinForm.Production.SI_Panel
             Lbl_Total_Time.Text = job.Type + "";
             Txt_Folder.Text = job.Folder + "";
             Txt_Location.Text = job.InputLocation + "";
-            Cmb_Category.Text = job.Category + "";
 
-            var Categories = DB.Target_Pro_Times.Select(x => x.Category).Distinct();
+            var Categories = DB.Price_Times
+                .Where(x => x.Client == job.Client)
+                .Select(x => x.Category)
+                .Distinct();
+
             foreach (var Category in Categories)
                 Cmb_Category.Items.Add(Category);
         }
 
         private void Cmb_Category_TextChanged(object sender, EventArgs e)
         {
-            var Target_Pro_Times = DB.Target_Pro_Times
+            var price_time = DB.Price_Times
                 .Where(x => x.Client == job.Client & x.Category == Cmb_Category.Text)
-                .FirstOrDefault<Target_Pro_Time>();
+                .FirstOrDefault<Price_Time>();
 
-            Fill_Service_Time(Target_Pro_Times);
+            Fill_Service_Time(price_time);
         }
 
         void Check_Time_Service()
@@ -370,49 +380,49 @@ namespace Skill_PMS.UI_WinForm.Production.SI_Panel
             Job_Time = 0;
             Job_Service = "";
 
-            if (Chk_CP.Checked == true)
+            if (Chk_CP.Checked)
             {
                 Job_Time += cp;
                 Job_Service += "CP+";
             }
 
-            if (Chk_RET.Checked == true)
+            if (Chk_RET.Checked)
             {
                 Job_Time += ret;
                 Job_Service += "RET+";
             }
 
-            if (Chk_MSK.Checked == true)
+            if (Chk_MSK.Checked)
             {
                 Job_Time += msk;
                 Job_Service += "MSK+";
             }
 
-            if (Chk_SHA.Checked == true)
+            if (Chk_SHA.Checked)
             {
                 Job_Time += sha;
                 Job_Service += "SHA+";
             }
 
-            if (Chk_LIQ.Checked == true)
+            if (Chk_LIQ.Checked)
             {
                 Job_Time += liq;
                 Job_Service += "LIQ+";
             }
 
-            if (Chk_NJ.Checked == true)
+            if (Chk_NJ.Checked)
             {
                 Job_Time += nj;
                 Job_Service += "NJ+";
             }
 
-            if (Chk_CC.Checked == true)
+            if (Chk_CC.Checked)
             {
                 Job_Time += cc;
                 Job_Service += "CC+";
             }
 
-            if (Chk_AI.Checked == true)
+            if (Chk_AI.Checked)
             {
                 Job_Time += ai;
                 Job_Service += "AI+";
@@ -424,51 +434,62 @@ namespace Skill_PMS.UI_WinForm.Production.SI_Panel
             Lbl_Service.Text = Job_Service;
         }
 
-        void Fill_Service_Time(Target_Pro_Time target_pro_time)
+        void Fill_Service_Time(Price_Time price_times)
         {
-            if (target_pro_time != null)
+            if (price_times != null)
             {
-                this.target_pro_time = target_pro_time;
+                this.price_time = price_times;
 
-                if (target_pro_time.CP_Time != 0)
+                if (price_times.CP_Time != 0)
                     Chk_CP.Checked = true;
                 else
                     Chk_CP.Checked = false;
 
-                if (target_pro_time.RET_Time != 0)
+                if (price_times.RET_Time != 0)
                     Chk_RET.Checked = true;
                 else
                     Chk_RET.Checked = false;
 
-                if (target_pro_time.NJ_Time != 0)
+                if (price_times.NJ_Time != 0)
                     Chk_NJ.Checked = true;
                 else
                     Chk_NJ.Checked = false;
 
-                if (target_pro_time.MSK_Time != 0)
+                if (price_times.MSK_Time != 0)
                     Chk_MSK.Checked = true;
                 else
                     Chk_MSK.Checked = false;
 
-                if (target_pro_time.SHA_Time != 0)
+                if (price_times.SHA_Time != 0)
                     Chk_SHA.Checked = true;
                 else
                     Chk_SHA.Checked = false;
 
-                if (target_pro_time.LIQ_Time != 0)
+                if (price_times.LIQ_Time != 0)
                     Chk_LIQ.Checked = true;
                 else
                     Chk_LIQ.Checked = false;
 
-                if (target_pro_time.CC_Time != 0)
+                if (price_times.CC_Time != 0)
                     Chk_CC.Checked = true;
                 else
                     Chk_CC.Checked = false;
 
-                if (target_pro_time.AI_Time != 0)
+                if (price_times.AI_Time != 0)
                     Chk_AI.Checked = true;
                 else
                     Chk_AI.Checked = false;
+            }
+            else
+            {
+                Chk_CP.Checked = false;
+                Chk_RET.Checked = false;
+                Chk_MSK.Checked = false;
+                Chk_SHA.Checked = false;
+                Chk_LIQ.Checked = false;
+                Chk_CC.Checked = false;
+                Chk_NJ.Checked = false;
+                Chk_AI.Checked = false;
             }
         }
 

@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
             this.Btn_Save = new System.Windows.Forms.Button();
             this.Txt_CC = new System.Windows.Forms.TextBox();
             this.Chk_RET = new System.Windows.Forms.CheckBox();
@@ -70,7 +71,9 @@
             this.label10 = new System.Windows.Forms.Label();
             this.Btn_Open_Folder = new System.Windows.Forms.Button();
             this.Txt_Folder = new System.Windows.Forms.TextBox();
-            this.Chk_Save_Time = new System.Windows.Forms.CheckBox();
+            this.Chk_Remember = new System.Windows.Forms.CheckBox();
+            this.jobBindingSource = new System.Windows.Forms.BindingSource(this.components);
+            ((System.ComponentModel.ISupportInitialize)(this.jobBindingSource)).BeginInit();
             this.SuspendLayout();
             // 
             // Btn_Save
@@ -447,6 +450,7 @@
             this.Btn_Reset.TabIndex = 339;
             this.Btn_Reset.Text = "Reset";
             this.Btn_Reset.UseVisualStyleBackColor = false;
+            this.Btn_Reset.Click += new System.EventHandler(this.Btn_Reset_Click);
             // 
             // Txt_AI
             // 
@@ -512,18 +516,20 @@
             this.Txt_Folder.TabIndex = 334;
             this.Txt_Folder.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             // 
-            // Chk_Save_Time
+            // Chk_Remember
             // 
-            this.Chk_Save_Time.AutoSize = true;
-            this.Chk_Save_Time.Checked = true;
-            this.Chk_Save_Time.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.Chk_Save_Time.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F);
-            this.Chk_Save_Time.Location = new System.Drawing.Point(627, 375);
-            this.Chk_Save_Time.Name = "Chk_Save_Time";
-            this.Chk_Save_Time.Size = new System.Drawing.Size(107, 24);
-            this.Chk_Save_Time.TabIndex = 345;
-            this.Chk_Save_Time.Text = "Remember";
-            this.Chk_Save_Time.UseVisualStyleBackColor = true;
+            this.Chk_Remember.AutoSize = true;
+            this.Chk_Remember.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F);
+            this.Chk_Remember.Location = new System.Drawing.Point(627, 375);
+            this.Chk_Remember.Name = "Chk_Remember";
+            this.Chk_Remember.Size = new System.Drawing.Size(107, 24);
+            this.Chk_Remember.TabIndex = 345;
+            this.Chk_Remember.Text = "Remember";
+            this.Chk_Remember.UseVisualStyleBackColor = true;
+            // 
+            // jobBindingSource
+            // 
+            this.jobBindingSource.DataSource = typeof(Skill_PMS.Models.Job);
             // 
             // Job_assign
             // 
@@ -531,7 +537,7 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.SystemColors.ActiveBorder;
             this.ClientSize = new System.Drawing.Size(970, 475);
-            this.Controls.Add(this.Chk_Save_Time);
+            this.Controls.Add(this.Chk_Remember);
             this.Controls.Add(this.Btn_Open_Folder);
             this.Controls.Add(this.label10);
             this.Controls.Add(this.Cmb_Category);
@@ -579,6 +585,7 @@
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Job_assign";
             this.Load += new System.EventHandler(this.Job_assign_Load);
+            ((System.ComponentModel.ISupportInitialize)(this.jobBindingSource)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -628,6 +635,7 @@
         private System.Windows.Forms.Label label10;
         private System.Windows.Forms.Button Btn_Open_Folder;
         private System.Windows.Forms.TextBox Txt_Folder;
-        private System.Windows.Forms.CheckBox Chk_Save_Time;
+        private System.Windows.Forms.CheckBox Chk_Remember;
+        private System.Windows.Forms.BindingSource jobBindingSource;
     }
 }

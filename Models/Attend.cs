@@ -9,7 +9,7 @@ namespace Skill_PMS.Models
     public class Attend
     {
         public int ID { get; set; }
-        public User User { get; set; }
+        public int User_ID { get; set; }
         public DateTime Attend_Date { get; set; }
         public DateTime Login { get; set; }
         public DateTime Logout { get; set; }
