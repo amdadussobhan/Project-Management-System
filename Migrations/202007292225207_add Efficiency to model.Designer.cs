@@ -7,13 +7,13 @@ namespace Skill_PMS.Migrations
     using System.Resources;
     
     [GeneratedCode("EntityFramework.Migrations", "6.4.4")]
-    public sealed partial class addDateinJobsModel : IMigrationMetadata
+    public sealed partial class addEfficiencytomodel : IMigrationMetadata
     {
-        private readonly ResourceManager Resources = new ResourceManager(typeof(addDateinJobsModel));
+        private readonly ResourceManager Resources = new ResourceManager(typeof(addEfficiencytomodel));
         
         string IMigrationMetadata.Id
         {
-            get { return "202007281238452_add Date in Jobs Model"; }
+            get { return "202007292225207_add Efficiency to model"; }
         }
         
         string IMigrationMetadata.Source

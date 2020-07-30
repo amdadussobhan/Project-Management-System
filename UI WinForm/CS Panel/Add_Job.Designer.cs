@@ -52,6 +52,7 @@
             this.label7 = new System.Windows.Forms.Label();
             this.label8 = new System.Windows.Forms.Label();
             this.label11 = new System.Windows.Forms.Label();
+            this.Chk_Remember = new System.Windows.Forms.CheckBox();
             this.SuspendLayout();
             // 
             // Lbl_Total_Time
@@ -78,7 +79,7 @@
             // 
             this.Btn_Open_Folder.BackColor = System.Drawing.Color.Khaki;
             this.Btn_Open_Folder.Font = new System.Drawing.Font("Microsoft Sans Serif", 13F);
-            this.Btn_Open_Folder.Location = new System.Drawing.Point(614, 401);
+            this.Btn_Open_Folder.Location = new System.Drawing.Point(729, 278);
             this.Btn_Open_Folder.Name = "Btn_Open_Folder";
             this.Btn_Open_Folder.Size = new System.Drawing.Size(117, 35);
             this.Btn_Open_Folder.TabIndex = 10;
@@ -91,7 +92,7 @@
             this.Txt_Folder.Font = new System.Drawing.Font("Microsoft Sans Serif", 13F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.Txt_Folder.Location = new System.Drawing.Point(157, 281);
             this.Txt_Folder.Name = "Txt_Folder";
-            this.Txt_Folder.Size = new System.Drawing.Size(689, 27);
+            this.Txt_Folder.Size = new System.Drawing.Size(566, 27);
             this.Txt_Folder.TabIndex = 6;
             this.Txt_Folder.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             // 
@@ -205,9 +206,9 @@
             // 
             this.Btn_Submit_Job.BackColor = System.Drawing.Color.MediumSeaGreen;
             this.Btn_Submit_Job.Font = new System.Drawing.Font("Microsoft Sans Serif", 13F);
-            this.Btn_Submit_Job.Location = new System.Drawing.Point(737, 401);
+            this.Btn_Submit_Job.Location = new System.Drawing.Point(729, 401);
             this.Btn_Submit_Job.Name = "Btn_Submit_Job";
-            this.Btn_Submit_Job.Size = new System.Drawing.Size(109, 35);
+            this.Btn_Submit_Job.Size = new System.Drawing.Size(117, 35);
             this.Btn_Submit_Job.TabIndex = 11;
             this.Btn_Submit_Job.Text = "Submit";
             this.Btn_Submit_Job.UseVisualStyleBackColor = false;
@@ -306,12 +307,24 @@
             this.label11.TabIndex = 218;
             this.label11.Text = "Client :";
             // 
+            // Chk_Remember
+            // 
+            this.Chk_Remember.AutoSize = true;
+            this.Chk_Remember.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F);
+            this.Chk_Remember.Location = new System.Drawing.Point(614, 407);
+            this.Chk_Remember.Name = "Chk_Remember";
+            this.Chk_Remember.Size = new System.Drawing.Size(107, 24);
+            this.Chk_Remember.TabIndex = 346;
+            this.Chk_Remember.Text = "Remember";
+            this.Chk_Remember.UseVisualStyleBackColor = true;
+            // 
             // Add_Job
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.SystemColors.ActiveBorder;
             this.ClientSize = new System.Drawing.Size(907, 484);
+            this.Controls.Add(this.Chk_Remember);
             this.Controls.Add(this.Lbl_Total_Time);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.Btn_Open_Folder);
@@ -371,5 +384,6 @@
         private System.Windows.Forms.Label label7;
         private System.Windows.Forms.Label label8;
         private System.Windows.Forms.Label label11;
+        private System.Windows.Forms.CheckBox Chk_Remember;
     }
 }

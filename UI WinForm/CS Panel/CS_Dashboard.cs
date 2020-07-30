@@ -29,7 +29,7 @@ namespace Skill_PMS.UI_WinForm.CS_Panel
 
         private void Dashboard_Load(object sender, EventArgs e)
         {
-            this.Text = "CS Panel - "+User.Full_Name;
+            this.Text = "CS Panel - " + User.Full_Name;
             Check_New_Job();
         }
 
@@ -46,7 +46,7 @@ namespace Skill_PMS.UI_WinForm.CS_Panel
         private void Btn_Add_New_Job_Click(object sender, EventArgs e)
         {
             Add_Job add_Job = new Add_Job();
-            add_Job.User = User;
+            add_Job.user = User;
             add_Job.Show();
         }
 

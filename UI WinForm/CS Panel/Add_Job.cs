@@ -20,7 +20,7 @@ namespace Skill_PMS
     public partial class Add_Job : Form
     {
         Job job = new Job();
-        Actual_Price_Time actual_price_time = new Actual_Price_Time();
+        Price_Time price_time = new Price_Time();
         Rate rate = new Rate();
         SkillContext DB = new SkillContext();
 
@@ -28,7 +28,7 @@ namespace Skill_PMS
         string ID = "", Job_ID = "";
         string Date = DateTime.Now.ToString("yyMMdd");
 
-        public User User { get; set; }
+        public User user { get; set; }
 
         public Add_Job()
         {
@@ -52,7 +52,7 @@ namespace Skill_PMS
         void Create_Job_ID()
         {
             Check_Todays_Max_ID();
-            Job_ID = Date + ID + "_" + Cmb_Client.Text;
+            Job_ID = Date + ID + "_" + Cmb_Client.Text.ToUpper();
             Txt_Job_ID.Text = Job_ID;
         }
 
@@ -69,7 +69,7 @@ namespace Skill_PMS
 
         void Check_Catagory()
         {
-            var Categories = DB.Actual_Price_Times
+            var Categories = DB.Price_Times
                 .Where(x => x.Client == Cmb_Client.Text)
                 .Select(x => x.Category).Distinct();
             foreach (var Category in Categories)
@@ -78,7 +78,7 @@ namespace Skill_PMS
             }
         }
 
-        bool Job_Validate()
+        bool Job_Validated()
         {
             if (string.IsNullOrEmpty(Cmb_Client.Text))
             {
@@ -103,24 +103,41 @@ namespace Skill_PMS
 
         private void Btn_Submit_Job_Click(object sender, EventArgs e)
         {
-            if (Job_Validate()) { 
-                rate.Currency = Cmb_Currency.Text;
-                DB.Rates.AddOrUpdate(rate);
+            if (Job_Validated()) {
+                if (rate == null)
+                {
+                    if (!string.IsNullOrEmpty(Cmb_Currency.Text))
+                    {
+                        rate.Currency = Cmb_Currency.Text;
+                        DB.Rates.AddOrUpdate(rate);
+                        DB.SaveChanges();
+                    }
+                }
 
-                string Client = Cmb_Client.Text;
+                double Time = 0, Price = 0, Taka = 0;
+
+                string Client = Cmb_Client.Text.ToUpper();
                 string Catagory = Cmb_Catagory.Text;
-                double Time = Convert.ToDouble(Txt_Job_Time.Text);
-                double Price = Convert.ToDouble(Txt_Price.Text);
-                double Taka = Convert.ToDouble(Txt_Price.Text) * Price_Rate;
 
-                actual_price_time.Client = Client;
-                actual_price_time.Category = Catagory;
-                actual_price_time.Rate = rate;
-                actual_price_time.Time = Time;
-                actual_price_time.Price = Price;
-                actual_price_time.Taka = Taka;
-                DB.Actual_Price_Times.AddOrUpdate(actual_price_time);
-            
+                if(!string.IsNullOrEmpty(Txt_Job_Time.Text))
+                    Time = Convert.ToDouble(Txt_Job_Time.Text);
+
+                if (!string.IsNullOrEmpty(Txt_Price.Text)) {
+                    Price = Convert.ToDouble(Txt_Price.Text);
+                    Taka = Convert.ToDouble(Txt_Price.Text) * Price_Rate;
+                }
+
+                if (Chk_Remember.Checked){
+                    price_time.Client = Client;
+                    price_time.Category = Catagory;
+                    price_time.Rate_ID = rate.ID;
+                    price_time.Actual_Time = Time;
+                    price_time.Price = Price;
+                    price_time.Taka = Taka;
+                    DB.Price_Times.AddOrUpdate(price_time);
+                    DB.SaveChanges();
+                }
+
                 Check_Todays_Max_ID();
                 job.JobID = Job_ID;
                 job.Client = Client;
@@ -136,10 +153,12 @@ namespace Skill_PMS
                 job.Date = DateTime.Now.Date;
                 job.Incoming = DateTime.Now;
                 job.Delivery = Dtp_Delivery.Value;
-                job.Receiver = User;
-                job.Actual_Price_Times = actual_price_time;
-                DB.Jobs.Add(job);
+                job.Receiver_ID = user.ID;
 
+                if(price_time != null)
+                    job.Price_Times_ID = price_time.ID;
+
+                DB.Jobs.AddOrUpdate(job);
                 DB.SaveChanges();
                 this.Hide();
             }
@@ -153,22 +172,27 @@ namespace Skill_PMS
 
         private void Cmb_Catagory_TextChanged(object sender, EventArgs e)
         {
-            var Actual_Price_Times = DB.Actual_Price_Times
+            var Price_Times = DB.Price_Times
                 .Where(x => x.Client == Cmb_Client.Text & x.Category == Cmb_Catagory.Text)
-                .Include(c => c.Rate)
-                .FirstOrDefault<Actual_Price_Time>();
+                .FirstOrDefault<Price_Time>();
 
-            if(Actual_Price_Times != null) { 
-                actual_price_time = Actual_Price_Times;
-                Txt_Price.Text = Actual_Price_Times.Price + "";
-                Txt_Job_Time.Text = Actual_Price_Times.Time + "";
+            if(Price_Times != null) { 
+                price_time = Price_Times;
+                Txt_Price.Text = price_time.Price + "";
+                Txt_Job_Time.Text = price_time.Actual_Time + "";
 
-                if (Actual_Price_Times.Rate != null)
+                if (price_time.Rate_ID != 0)
                 {
-                    rate = Actual_Price_Times.Rate;
+                    rate = DB.Rates.Where(x => x.ID == price_time.Rate_ID).FirstOrDefault<Rate>();
                     Price_Rate = rate.Amount;
-                    Cmb_Currency.Text = Actual_Price_Times.Rate.Currency + "";
+                    Cmb_Currency.Text = rate.Currency + "";
                 }
+            }
+            else
+            {
+                Txt_Price.Text = "";
+                Cmb_Currency.Text = "";
+                Txt_Job_Time.Text = "";
             }
         }
 
@@ -199,7 +223,7 @@ namespace Skill_PMS
             if (Rates != null)
             {
                 rate = Rates;
-                actual_price_time.Rate = Rates;
+                price_time.Rate_ID = rate.ID;
                 Price_Rate = rate.Amount;
             }
         }

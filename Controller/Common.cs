@@ -1,5 +1,8 @@
-﻿using System;
+﻿using Skill_PMS.Data;
+using Skill_PMS.Models;
+using System;
 using System.Collections.Generic;
+using System.Data.Entity.Migrations;
 using System.Drawing;
 using System.Linq;
 using System.Text;
@@ -8,8 +11,10 @@ using System.Windows.Forms;
 
 namespace Skill_PMS.Controller
 {
-    class Common
+    public class Common
     {
+        SkillContext DB = new SkillContext();
+
         public void Dgv_Size(DataGridView Dgv, int Font_Size)
         {
             Dgv.RowTemplate.Height = 30;
@@ -49,6 +54,16 @@ namespace Skill_PMS.Controller
                     }
                 }
             }
+        }
+
+        public void Logout(Attend attend)
+        {
+            attend.Logout = DateTime.Now;
+            attend.Status = "Logout";
+            attend.Workingtime = Convert.ToInt32((attend.Logout - attend.Login).TotalMinutes);
+            DB.Attends.AddOrUpdate(attend);
+            DB.SaveChanges();
+            Application.Exit();
         }
     }
 }

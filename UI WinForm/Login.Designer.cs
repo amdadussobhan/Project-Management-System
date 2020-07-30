@@ -105,7 +105,7 @@
             this.Txt_Usr.Name = "Txt_Usr";
             this.Txt_Usr.Size = new System.Drawing.Size(172, 29);
             this.Txt_Usr.TabIndex = 0;
-            this.Txt_Usr.Text = "10000015";
+            this.Txt_Usr.Text = "10000017";
             this.Txt_Usr.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             this.Txt_Usr.TextChanged += new System.EventHandler(this.Txt_Usr_TextChanged);
             // 

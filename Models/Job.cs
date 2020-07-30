@@ -36,10 +36,13 @@ namespace Skill_PMS.Models
         public double Target_Time { get; set; }
         public double Pro_Time { get; set; }
 
-        public User Receiver { get; set; }
-        public User Sender { get; set; }
-        public User Shift_Incharge { get; set; }
-        public User Quality_Control { get; set; }
+        public int Actual_Efficiency { get; set; }
+        public int Target_Efficiency { get; set; }
+
+        public int Receiver_ID { get; set; }
+        public int Sender_ID { get; set; }
+        public int SI_ID { get; set; }
+        public int QC_ID { get; set; }
 
         public double CP_Time { get; set; }
         public double RET_Time { get; set; }
@@ -59,7 +62,6 @@ namespace Skill_PMS.Models
         public double LIQ_Price { get; set; }
         public double AI_Price { get; set; }
 
-        public Actual_Price_Time Actual_Price_Times { get; set; }
-        public Target_Pro_Time Target_Pro_Times { get; set; }
+        public int Price_Times_ID { get; set; }
     }
 }
