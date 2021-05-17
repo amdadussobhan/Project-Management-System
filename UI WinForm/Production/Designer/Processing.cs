@@ -1,538 +1,1026 @@
-﻿using Skill_PMS.Controller;
-using Skill_PMS.Data;
+﻿using Skill_PMS.Data;
 using Skill_PMS.Models;
+using Skill_PMS.UI_WinForm.Production.QC_Panel;
+using Skill_PMS.UI_WinForm.Production.SI_Panel;
 using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Data.Entity.Migrations;
 using System.Diagnostics;
 using System.Drawing;
 using System.IO;
 using System.Linq;
-using System.Text;
-using System.Threading;
-using System.Threading.Tasks;
 using System.Windows.Forms;
+using Skill_PMS.Controller;
 
 namespace Skill_PMS.UI_WinForm.Production.Designer
 {
     public partial class Processing : Form
     {
-        SkillContext DB = new SkillContext();
+        private readonly SkillContext _db = new SkillContext();
+        private readonly Common _common = new Common();
 
-        public Job job = new Job();
-        Log log = new Log();
-        Common common = new Common();
-        public User user { get; set; }
+        private Log _log = new Log();
+        public NewJob _job = new NewJob();
+        public Performance _performance = new Performance();
 
-        string My_Service = "";
-        double My_Time = 0, Total_Time = 0, Pro_Time = 0;
+        public User User { get; set; }
 
-        int File_Amount;
-        string[] files, files_name = new string[99];
-
-        string Instruction, Job_Folder, My_Folder, Ready_Folder;
+        private int _fileAmount;
+        private bool _isOld;
+        private string _myService, _file, _fileName, _filePath, _ext, _parentFolder;
+        private double _myTime;
+        public static double _proTime;
+        public static double TotalTime;
+        public static bool Minimized;
+        private string _instruction, _jobFolder, _readyFolder, _myFolder, _rawFolder, _doneFolder;
+        private string _source, _destination, _shareName;
 
         public Processing()
         {
             InitializeComponent();
         }
 
-        private static Processing instance;
-        public static Processing getInstance()
+        private static Processing _instance;
+        public static Processing GetInstance()
         {
-            if (instance == null || instance.IsDisposed)
-                instance = new Processing();
+            if (_instance == null || _instance.IsDisposed)
+                _instance = new Processing();
             else
-                instance.BringToFront();
-            return instance;
+                _instance.BringToFront();
+            return _instance;
         }
 
         private void Processing_Load(object sender, EventArgs e)
         {
-            this.Text = "Processing - " + user.Full_Name;
+            _job = _db.New_Jobs
+                .FirstOrDefault(x => x.JobId == _job.JobId);
 
-            job = DB.Jobs
-                .Where(x => x.JobID == job.JobID)
-                .FirstOrDefault<Job>();
+            _performance = _db.Performances
+                .Where(x => x.Id == _performance.Id)
+                .FirstOrDefault<Performance>();
 
-            Lbl_Job_ID.Text = job.JobID;
-            Lbl_Job_Time.Text = job.Target_Time + "";
-            Lbl_My_Time.Text = "0";
-            Lbl_Job_Service.Text = job.Service;
-            Lbl_My_Service.Text = "";
+            if (_job != null)
+            {
+                this.Text = @"Processing - By - " + User.Short_Name + "_" + _job.JobId;
 
-            Job_Folder = job.WorkingLocation;
-            Instruction = job.InputLocation + @"\ins.txt";
-            My_Folder = job.WorkingLocation + @"\" + user.Short_Name;
+                Lbl_Format.Text = @"Format- " + _job.Format;
+                _jobFolder = _job.WorkingLocation;
+                _instruction = _job.InputLocation + @"\ins";
+                _instruction = Path.Combine(_instruction, @"ins.txt");
 
-            Check_Service();
-        }
+                _ext = _job.Format;
+            }
 
-        void Check_Service()
-        {
-            if (job.Service.Contains("CP"))
+            switch (_ext)
+            {
+                case ".jpg":
+                    Rdb_JPG.Checked = true;
+                    break;
+                case ".psd":
+                    Rdb_PSD.Checked = true;
+                    break;
+                case ".png":
+                    Rdb_PNG.Checked = true;
+                    break;
+                case ".tif":
+                    Rdb_TIF.Checked = true;
+                    break;
+            }
+
+            if (_job.Service.Contains("CP"))
                 Chk_CP.Enabled = true;
 
-            if (job.Service.Contains("RET"))
+            if (_job.Service.Contains("RET"))
                 Chk_RET.Enabled = true;
 
-            if (job.Service.Contains("MSK"))
+            if (_job.Service.Contains("MSK"))
                 Chk_MSK.Enabled = true;
 
-            if (job.Service.Contains("SHA"))
+            if (_job.Service.Contains("SHA"))
                 Chk_SHA.Enabled = true;
 
-            if (job.Service.Contains("NJ"))
+            if (_job.Service.Contains("NJ"))
                 Chk_NJ.Enabled = true;
 
-            if (job.Service.Contains("CC"))
+            if (_job.Service.Contains("CC"))
                 Chk_CC.Enabled = true;
 
-            if (job.Service.Contains("LIQ"))
+            if (_job.Service.Contains("LIQ"))
                 Chk_LIQ.Enabled = true;
 
-            if (job.Service.Contains("AI"))
+            if (_job.Service.Contains("AI"))
                 Chk_AI.Enabled = true;
-        }
 
-        private void DGV_Files_DragDrop(object sender, DragEventArgs e)
-        {
-            files = (string[])e.Data.GetData(DataFormats.FileDrop);
-            int SL = 1;
-            DGV_Files.DataSource = null;
-            DGV_Files.Rows.Clear();
-            common.Dgv_Size(DGV_Files, 11);
+            //if (User.Role == "QC")
+            //{
+            //    Btn_Start.Enabled = true;
+            //    Btn_Start.Text = @"Start QC";
+            //}
 
-            File_Amount = files.Count();
+            foreach (var designer in _common.Current_Designers())
+                CMB_Share.Items.Add(designer.Name);
 
-            if (File_Amount > 0 & File_Amount < 16)
-            {
-                int i = 0;
-                foreach (string file in files)
-                {
-                    string name = Path.GetFileName(file);
-                    files_name[i++] = name;
-                    DGV_Files.Rows.Add(SL++, name, "X");
-
-                    log = new Log();
-                    log.Job_ID = job.ID;
-                    log.Image = name;
-                    log.Job_Time = My_Time;
-                    log.Service = My_Service;
-                    log.Start_Job = DateTime.Now;
-                    log.Finish_Job = DateTime.Now;
-                    log.User_ID = user.ID;
-                    log.Status = "Running";
-                    DB.Logs.AddOrUpdate(log);
-                }
-
-                foreach (string file in files)
-                {
-                    try
-                    {
-                        Process Open = new Process();
-                        Open.StartInfo.FileName = @"Photoshop";
-                        Open.StartInfo.Arguments = file;
-                        Open.Start();
-                    }
-                    catch
-                    {
-                        Process Open = new Process();
-                        Open.StartInfo.FileName = @"C:\Program Files (x86)\Adobe\Adobe Photoshop CS6\Photoshop.exe";
-                        Open.StartInfo.Arguments = file;
-                        Open.Start();
-                    }
-
-                    Thread.Sleep(500);
-                }
-
-                DB.SaveChanges();
-
-                DGV_Files.AllowDrop = false;
-                Btn_Start.Enabled = false;
-                Btn_Save.Enabled = true;
-                Btn_Cancel.Enabled = true;
-                Btn_Pause.Enabled = true;
-
-                Total_Time = My_Time * File_Amount * 60;
-                Tmr_Count.Start();
-            }
+            if (Directory.Exists(_jobFolder))
+                Process.Start(_jobFolder);
             else
-                MessageBox.Show("Maximum file amount selected. Please don't select more than 15 files...", "File amount exceeded the limit", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show(@"Job Folder doesn't Exist. Please inform Your in-charge Or Manager about this...", @"Job Folder Not Found", MessageBoxButtons.OK, MessageBoxIcon.Error);
         }
 
-        private void DGV_Files_DragEnter(object sender, DragEventArgs e)
+        private void Generate_Service()
         {
-            e.Effect = DragDropEffects.All;
-        }
-
-        private void Btn_Start_Click(object sender, EventArgs e)
-        {
-            if(My_Time > 0)
-            {
-                Ready_Folder = job.WorkingLocation + @"\" + My_Service + "_Done";
-                Directory.CreateDirectory(My_Folder);
-                Directory.CreateDirectory(Ready_Folder);
-                Process.Start(My_Folder);
-
-                DGV_Files.AllowDrop = true;
-                Btn_My_Folder.Enabled = true;
-                Btn_Ready_Folder.Enabled = true;
-
-                Chk_CP.Enabled = false;
-                Chk_RET.Enabled = false;
-                Chk_MSK.Enabled = false;
-                Chk_SHA.Enabled = false;
-                Chk_NJ.Enabled = false;
-                Chk_CC.Enabled = false;
-                Chk_LIQ.Enabled = false;
-                Chk_AI.Enabled = false;
-
-                Chk_Select_all.Enabled = false;
-            }
-        }
-
-        void Check_Time_Service()
-        {
-            My_Time = 0;
-            My_Service = "";
+            _myService = "";
 
             if (Chk_CP.Checked)
-            {
-                My_Time += job.CP_Time;
-                My_Service += "CP+";
-            }
+                _myService += "CP+";
 
             if (Chk_RET.Checked)
-            {
-                My_Time += job.RET_Time;
-                My_Service += "RET+";
-            }
+                _myService += "RET+";
 
             if (Chk_MSK.Checked)
-            {
-                My_Time += job.MSK_Time;
-                My_Service += "MSK+";
-            }
+                _myService += "MSK+";
 
             if (Chk_SHA.Checked)
-            {
-                My_Time += job.SHA_Time;
-                My_Service += "SHA+";
-            }
+                _myService += "SHA+";
 
             if (Chk_LIQ.Checked)
-            {
-                My_Time += job.LIQ_Time;
-                My_Service += "LIQ+";
-            }
+                _myService += "LIQ+";
 
             if (Chk_NJ.Checked)
-            {
-                My_Time += job.NJ_Time;
-                My_Service += "NJ+";
-            }
+                _myService += "NJ+";
 
             if (Chk_CC.Checked)
-            {
-                My_Time += job.CC_Time;
-                My_Service += "CC+";
-            }
+                _myService += "CC+";
 
             if (Chk_AI.Checked)
+                _myService += "AI+";
+
+            _myService = _myService.TrimEnd('+');
+            Lbl_My_Service.Text = @"Service: " + _myService;
+            //Lbl_Job_Time_1.Text = @"Job Time: " + _myTime;
+
+            if (_myService != "")
             {
-                My_Time += job.AI_Time;
-                My_Service += "AI+";
-            }
-
-            Chk_Select_all.Enabled = true;
-
-            Lbl_My_Time.Text = My_Time + "";
-            My_Service = My_Service.TrimEnd('+');
-            Lbl_My_Service.Text = My_Service; 
-            
-            if (My_Time > 0)
+                Btn_Start.Text = @"Start Job";
                 Btn_Start.Enabled = true;
+            }
             else
                 Btn_Start.Enabled = false;
         }
 
         private void Chk_CP_CheckedChanged(object sender, EventArgs e)
         {
-            Check_Time_Service();
+            Generate_Service();
         }
 
         private void Chk_RET_CheckedChanged(object sender, EventArgs e)
         {
-            Check_Time_Service();
+            Generate_Service();
         }
 
         private void Chk_MSK_CheckedChanged(object sender, EventArgs e)
         {
-            Check_Time_Service();
+            Generate_Service();
         }
 
         private void Chk_NJ_CheckedChanged(object sender, EventArgs e)
         {
-            Check_Time_Service();
+            Generate_Service();
         }
 
         private void Chk_CC_CheckedChanged(object sender, EventArgs e)
         {
-            Check_Time_Service();
+            Generate_Service();
         }
 
         private void Chk_LIQ_CheckedChanged(object sender, EventArgs e)
         {
-            Check_Time_Service();
+            Generate_Service();
         }
 
         private void Chk_SHA_CheckedChanged(object sender, EventArgs e)
         {
-            Check_Time_Service();
+            Generate_Service();
         }
 
         private void Chk_AI_CheckedChanged(object sender, EventArgs e)
         {
-            Check_Time_Service();
-        }
-
-        private void Chk_Select_all_CheckedChanged(object sender, EventArgs e)
-        {
-            if (Chk_Select_all.Checked)
-            {
-                if (job.Service.Contains("CP"))
-                    Chk_CP.Checked = true;
-
-                if (job.Service.Contains("RET"))
-                    Chk_RET.Checked = true;
-
-                if (job.Service.Contains("MSK"))
-                    Chk_MSK.Checked = true;
-
-                if (job.Service.Contains("SHA"))
-                    Chk_SHA.Checked = true;
-
-                if (job.Service.Contains("NJ"))
-                    Chk_NJ.Checked = true;
-
-                if (job.Service.Contains("CC"))
-                    Chk_CC.Checked = true;
-
-                if (job.Service.Contains("LIQ"))
-                    Chk_LIQ.Checked = true;
-
-                if (job.Service.Contains("AI"))
-                    Chk_AI.Checked = true;
-            }
-            else
-            {
-                if (job.Service.Contains("CP"))
-                    Chk_CP.Checked = false;
-
-                if (job.Service.Contains("RET"))
-                    Chk_RET.Checked = false;
-
-                if (job.Service.Contains("MSK"))
-                    Chk_MSK.Checked = false;
-
-                if (job.Service.Contains("SHA"))
-                    Chk_SHA.Checked = false;
-
-                if (job.Service.Contains("NJ"))
-                    Chk_NJ.Checked = false;
-
-                if (job.Service.Contains("CC"))
-                    Chk_CC.Checked = false;
-
-                if (job.Service.Contains("LIQ"))
-                    Chk_LIQ.Checked = false;
-
-                if (job.Service.Contains("AI"))
-                    Chk_AI.Checked = false;
-            }
-        }
+            Generate_Service();
+        }        
 
         private void Btn_Cancel_Click(object sender, EventArgs e)
         {
-            Reset_Process();
-            Clear_Job();
-        }
+            Cancel_Job();
 
-        void Reset_Process()
-        {
-            DGV_Files.DataSource = null;
-            DGV_Files.Rows.Clear();
-            DGV_Files.AllowDrop = true;
-            Check_Service();
             Tmr_Count.Stop();
+            _proTime = 0;
 
             var timespan = TimeSpan.FromSeconds(0);
             Lbl_Count.Text = timespan.ToString(@"h\:mm\:ss");
 
-            Btn_Pause.Enabled = false;
-            Btn_Save.Enabled = false;
-        }
-
-        void Clear_Job()
-        {
-            foreach (string file in files_name)
-            {
-                Remove_File(file);
-                if (File_Amount == 0)
-                    break;
-            }
-            DB.SaveChanges();
-        }
-
-        void Remove_File(string file)
-        {
-            log = DB.Logs
-                .Where(x => x.Job_ID == job.ID & x.Image == file & x.Status == "Running" & x.User_ID == user.ID & x.Service == My_Service)
-                .FirstOrDefault<Log>();
-
-            if (log != null)
-                DB.Logs.Remove(log);
-
-            if (--File_Amount == 0)
-                Reset_Process();
-        }
-
-        private void Btn_My_Folder_Click(object sender, EventArgs e)
-        {
-            if (Directory.Exists(My_Folder))
-                Process.Start(My_Folder);
-            else
-                MessageBox.Show("My Folder doesn't Exist. Please Start Job First then try again...", "My Folder Not Found", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            Pnl_Format.Visible = false;
+            Pnl_Counter.Visible = false;
+            Pnl_Drop.Visible = true;
+            Pnl_Start_Job.Visible = true;
         }
 
         private void Processing_FormClosed(object sender, FormClosedEventArgs e)
         {
-            Clear_Job();
-            Dashboard dashboard = Dashboard.getInstance();
-            dashboard.Show();
-        }
-
-        private void DGV_Files_CellContentClick(object sender, DataGridViewCellEventArgs e)
-        {
-            string file_name = "";
-            if (DGV_Files.Columns[DGV_Files.CurrentCell.ColumnIndex].HeaderText.Contains("X"))
+            Cancel_Job();
+            Minimized = false;
+            switch (User.Role)
             {
-                if (DGV_Files.Rows[e.RowIndex].Cells[e.ColumnIndex].Value != null)
+                case "SI":
                 {
-                    file_name = DGV_Files.Rows[e.RowIndex].Cells[1].Value.ToString();
+                    var siDashboard = SiDashboard.GetInstance();
+                    siDashboard.Show();
+                    break;
                 }
-
-                if (!String.IsNullOrWhiteSpace(DGV_Files.CurrentCell.EditedFormattedValue.ToString()))
+                case "QC":
                 {
-                    if (!string.IsNullOrEmpty(file_name))
-                    {
-                        DGV_Files.Rows.RemoveAt(e.RowIndex);
-                        Remove_File(file_name);
-                        DB.SaveChanges();
-                    }
+                    var qcDashboard = QcDashboard.GetInstance();
+                    qcDashboard.Show();
+                    break;
+                }
+                default:
+                {
+                    var dashboard = Dashboard.GetInstance();
+                    dashboard.Performance = _performance;
+                    dashboard.Show();
+                    break;
                 }
             }
+        }
+
+        private void Cancel_Job()
+        {
+            _log = _db.Logs
+                .FirstOrDefault(x => x.JobId == _job.JobId & x.Image == _fileName & x.Status == "Running" & x.Name == User.Short_Name & x.Service == _myService);
+
+            if (_log != null)
+            {
+                if (_isOld)
+                    _log.Status = "Done";
+                else
+                    _db.Logs.Remove(_log);
+            }
+
+            _db.SaveChanges();
+
+            if (File.Exists(_file))
+            {
+                var path = Path.GetDirectoryName(_filePath);
+                var itemName = Path.GetFileName(_file);
+                _destination = Path.Combine(path ?? string.Empty, itemName);
+
+                //move back file to my folder
+                File.Move(_file ?? string.Empty, _destination);
+            }
+        }
+
+        private void Check_Format()
+        {
+            if (Rdb_PSD.Checked)
+                _ext = ".psd";
+            else if (Rdb_TIF.Checked)
+                _ext = ".tif";
+            else if (Rdb_JPG.Checked)
+                _ext = ".jpg";
+            else
+                _ext = ".png";
+            Lbl_Format.Text = @"Format- " + _ext;
+        }
+
+        private void Rdb_PSD_CheckedChanged(object sender, EventArgs e)
+        {
+            Check_Format();
+        }
+
+        private void Rdb_JPG_CheckedChanged(object sender, EventArgs e)
+        {
+            Check_Format();
+        }
+
+        private void Btn_Clear_Click(object sender, EventArgs e)
+        {
+            Pnl_Drop.Visible = false;
+            Pnl_Service.Visible = true;
+            Chk_Select_All.Visible = true;
+            Btn_Clear.Visible = false;
+            Btn_Start.Visible = true;
+            Lbl_Success.Visible = false;
+            Btn_Start.Enabled = false;
+        }
+
+        private void Btn_My_Folder_Click(object sender, EventArgs e)
+        {
+            if (Directory.Exists(_myFolder))
+                Process.Start(_myFolder);
+            else
+                MessageBox.Show(@"Folder doesn't Exist. Please inform Your In-charge Or Manager about this...", @"Folder Not Found", MessageBoxButtons.OK, MessageBoxIcon.Error);
+        }
+
+        private void Chk_Select_All_CheckedChanged(object sender, EventArgs e)
+        {
+            if (Chk_Select_All.Checked)
+            {
+                if (_job.Service.Contains("CP"))
+                {
+                    Chk_CP.Enabled = true;
+                    Chk_CP.Checked = true;
+                }
+
+                if (_job.Service.Contains("RET"))
+                {
+                    Chk_RET.Enabled = true;
+                    Chk_RET.Checked = true;
+                }
+
+                if (_job.Service.Contains("MSK"))
+                {
+                    Chk_MSK.Enabled = true;
+                    Chk_MSK.Checked = true;
+                }
+
+                if (_job.Service.Contains("SHA"))
+                {
+                    Chk_SHA.Enabled = true;
+                    Chk_SHA.Checked = true;
+                }
+
+                if (_job.Service.Contains("NJ"))
+                {
+                    Chk_NJ.Enabled = true;
+                    Chk_NJ.Checked = true;
+                }
+
+                if (_job.Service.Contains("CC"))
+                {
+                    Chk_CC.Enabled = true;
+                    Chk_CC.Checked = true;
+                }
+
+                if (_job.Service.Contains("LIQ"))
+                {
+                    Chk_LIQ.Enabled = true;
+                    Chk_LIQ.Checked = true;
+                }
+
+                if (_job.Service.Contains("AI"))
+                {
+                    Chk_AI.Enabled = true;
+                    Chk_AI.Checked = true;
+                }
+            }
+            else
+            {
+                Chk_CP.Checked = false;
+                Chk_RET.Checked = false;
+                Chk_MSK.Checked = false;
+                Chk_SHA.Checked = false;
+                Chk_NJ.Checked = false;
+                Chk_CC.Checked = false;
+                Chk_LIQ.Checked = false;
+                Chk_AI.Checked = false;
+            }
+        }
+
+        private void CMB_Share_TextChanged(object sender, EventArgs e)
+        {
+            _shareName = CMB_Share.Text;
+            if (_shareName != User.Short_Name & !string.IsNullOrEmpty(_shareName))
+            {
+                BTN_Share.Enabled = true;
+                Txt_Mnt.Enabled = true;
+            }
+            else
+            {
+                BTN_Share.Enabled = false;
+                Txt_Mnt.Enabled = false;
+            }
+        }
+
+        private void Txt_Mnt_TextChanged(object sender, EventArgs e)
+        {
+            if (!string.IsNullOrEmpty(Txt_Mnt.Text))
+            {
+                var find = _db.Logs
+                    .Where(x => x.JobId == _job.JobId & x.Image == _fileName & x.Service == _myService & x.Name != User.Short_Name & x.Remarks == "Share")
+                    .FirstOrDefault();
+
+                double totalTime = 0;
+                if (find != null)
+                {
+                    totalTime = _db.Logs
+                        .Where(x => x.JobId == _job.JobId & x.Image == _fileName & x.Service == _myService & x.Name != User.Short_Name & x.Remarks == "Share")
+                        .Sum(x => x.TargetTime);
+                }
+
+                double shareTime = Convert.ToDouble(Txt_Mnt.Text);
+                if (totalTime + shareTime > _log.TargetTime)
+                    Txt_Mnt.BackColor = Color.FromArgb(255, 100, 100);
+                else
+                    Txt_Mnt.BackColor = Color.FromArgb(255, 255, 255);
+            }
+        }
+
+        private void Btn_Instruction_Click(object sender, EventArgs e)
+        {
+            if (File.Exists(_instruction))
+            {
+                Process.Start(_instruction);
+            }
+            else
+                MessageBox.Show(@"Instruction doesn't Exist. Please inform Your in-charge Or Manager about this...", @"Folder Not Found", MessageBoxButtons.OK, MessageBoxIcon.Error);
+        }
+
+        private void Rdb_PNG_CheckedChanged(object sender, EventArgs e)
+        {
+            Check_Format();
+        }
+
+        private void Rdb_TIF_CheckedChanged(object sender, EventArgs e)
+        {
+            Check_Format();
+        }
+
+        private void Processing_Resize(object sender, EventArgs e)
+        {
+            var counter = new Counter();
+            if (this.WindowState == FormWindowState.Minimized & TotalTime != 0 & Btn_Pause.Text != "Resume")
+            {
+                //counter.Show();
+                Minimized = true;
+            }
+            else
+            {
+                Minimized = false;
+            }
+
+            Counter.Minimized = Minimized;
+            Counter.TotalTime = TotalTime;
         }
 
         private void Btn_Pause_Click(object sender, EventArgs e)
         {
-            if (Btn_Pause.Text == "Pause")
+            if (Btn_Pause.Text == @"Pause")
             {
                 Tmr_Count.Stop();
-                Btn_Pause.Text = "Resume";
+                Btn_Pause.Text = @"Resume";
             }
             else
             {
                 Tmr_Count.Start();
-                Btn_Pause.Text = "Pause";
+                Btn_Pause.Text = @"Pause";
             }
         }
 
         private void Tmr_Count_Tick(object sender, EventArgs e)
         {
-            Pro_Time++; Total_Time--;
-            var timespan = TimeSpan.FromSeconds(Total_Time);
-            Lbl_Count.Text = timespan.ToString(@"h\:mm\:ss");
-            if (Total_Time < 0)
-            {
-                if (Panel.BackColor == Color.FromArgb(255, 90, 100))
-                {
-                    //Btn_Reject.BackColor = Color.FromArgb(255, 195, 195);
-                    //Txt_image.BackColor = Color.FromArgb(255, 195, 195);
-                    //Txt_Job_ID.BackColor = Color.FromArgb(255, 195, 195);
-                    Panel.BackColor = Color.FromArgb(255, 195, 195);
-                }
-                else
-                {
-                    //Btn_Reject.BackColor = Color.FromArgb(255, 90, 100);
-                    //Txt_image.BackColor = Color.FromArgb(255, 90, 100);
-                    //Txt_Job_ID.BackColor = Color.FromArgb(255, 90, 100);
-                    Panel.BackColor = Color.FromArgb(255, 90, 100);
-                }
-            }
+            _proTime++; TotalTime--;
+            if (Pnl_Counter.BackColor == Color.FromArgb(180, 180, 180))
+                Pnl_Counter.BackColor = Color.MediumOrchid;
+            else
+                Pnl_Counter.BackColor = Color.FromArgb(180, 180, 180);
+
+            //var timespan = TimeSpan.FromSeconds(TotalTime);
+            //Lbl_Count.Text = timespan.ToString(@"h\:mm\:ss");
+            //if ((TotalTime < 0))
+            //{
+            //if (Pnl_Counter.BackColor == Color.FromArgb(255, 100, 100))
+            //    Pnl_Counter.BackColor = Color.FromArgb(255, 195, 195);
+            //else
+            //    Pnl_Counter.BackColor = Color.FromArgb(255, 100, 100);
+            //}
         }
 
         private void Btn_Save_Click(object sender, EventArgs e)
         {
+            var now = DateTime.Now;
+            var date = DateTime.Now.Date;
+            if (_performance.Shift == "Night" & DateTime.Now.ToString("tt").ToUpper() == "AM")
+                date = DateTime.Now.AddDays(-1).Date;
+
             Tmr_Count.Stop();
+            _proTime /= 60;
 
-            Pro_Time = Math.Round(Pro_Time / File_Amount / 60, 2);
+            //update log Report in Log Table
+            _log = _db.Logs
+                .FirstOrDefault(x => x.JobId == _job.JobId & x.Image == _fileName & x.Status == "Running" & x.Name == User.Short_Name & x.Service == _myService);
 
-            foreach(string file in files_name)
+            if (_log != null)
             {
-                log = DB.Logs
-                    .Where(x => x.Job_ID == job.ID & x.Image == file & x.Status == "Running" & x.User_ID == user.ID & x.Service == My_Service)
-                    .FirstOrDefault<Log>();
+                _log.ProTime = _proTime;
+                if (_log.ProTime != 0)
+                    _log.Efficiency = Convert.ToInt32(_log.TargetTime / _log.ProTime * 100);
 
-                if (log != null)
-                {
-                    log.Pro_Time = Pro_Time;
-                    log.Efficiency = Convert.ToInt32(My_Time / Pro_Time * 100);
-                    log.Finish_Job = DateTime.Now;
-                    log.Status = "Done";
-                    DB.Logs.AddOrUpdate(log);
-                }
-
-                if (--File_Amount == 0)
-                    break;
+                _log.OutputLocation = _destination;
+                _log.EndTime = DateTime.Now;
+                _log.Status = "Done";
+                _log.Quality = 100;
+                _log.Up = 0;
             }
-            job.Pro_Done += File_Amount;
-            job.Pro_Time += Pro_Time / 2;
-            DB.Jobs.AddOrUpdate(job);
-            DB.SaveChanges();
-            Reset_Process();            
+
+            _db.SaveChanges();
+
+            //Update Job report in job table
+            var logCount = _db.Logs
+                    .Where(x => x.JobId == _job.JobId & x.Status == "Done")
+                    .Select(x => x.Image)
+                    .Distinct()
+                    .Count();
+
+            _job.ProDone = logCount;
+
+            if (logCount != 0)
+            {
+                var sum = _db.Logs
+                    .Where(x => x.JobId == _job.JobId & x.Status == "Done")
+                    .Sum(x => x.ProTime);
+
+                _job.ProTime = sum / logCount;
+            }
+
+            _job.Up = 0;
+            _db.SaveChanges();
+
+            //Update My_Job Report in My_Job Table
+
+            var myJob = _db.My_Jobs
+                .FirstOrDefault(x => x.JobId == _job.JobId & x.Name == User.Short_Name & x.Service == _myService & x.Date == date);
+
+            if (myJob == null)
+            {
+                myJob = new MyJob
+                {
+                    JobId = _job.JobId,
+                    Name = User.Short_Name,
+                    Service = _myService,
+                    JobTime = _myTime,
+                    Date = date,
+                    StartTime = _log.StartTime
+                };
+                _db.My_Jobs.Add(myJob);
+            }
+
+            logCount = _db.Logs
+                .Where(x => x.JobId == _job.JobId & x.Status == "Done" & x.Name == User.Short_Name &
+                            x.Service == _myService & x.StartTime >= _performance.Login & x.StartTime <= now)
+                .Select(x => x.Image)
+                .Distinct()
+                .Count();
+            
+            myJob.Amount = logCount;
+            myJob.TotalJobTime = logCount * _myTime;
+
+            double avg;
+            if (logCount != 0)
+            {
+                avg = _db.Logs
+                    .Where(x => x.JobId == _job.JobId & x.Status == "Done" & x.Name == User.Short_Name &
+                                x.Service == _myService & x.StartTime >= _performance.Login & x.StartTime <= now)
+                    .Average(x => x.ProTime);
+
+                myJob.ProTime = avg;
+                if (myJob.ProTime != 0)
+                    myJob.Efficiency = Convert.ToInt32(myJob.JobTime / myJob.ProTime * 100);
+
+                avg = _db.Logs
+                    .Where(x => x.JobId == _job.JobId & x.Status == "Done" & x.Name == User.Short_Name &
+                                x.Service == _myService & x.StartTime >= _performance.Login & x.StartTime <= now)
+                    .Average(x => x.Quality);
+
+                myJob.Quality = Convert.ToInt32(avg);
+
+                myJob.TotalProTime = _db.Logs
+                    .Where(x => x.JobId == _job.JobId & x.Status == "Done" & x.Name == User.Short_Name &
+                                x.Service == _myService & x.StartTime >= _performance.Login & x.StartTime <= now)
+                    .Sum(x => x.ProTime);
+            }
+
+            myJob.Up = 0;
+            myJob.EndTime = DateTime.Now;
+            _db.SaveChanges();
+
+            //Update My_Job Performance in Performance Table
+
+            logCount = _db.My_Jobs
+                .Count(x => x.Name == User.Short_Name & x.StartTime >= _performance.Login & x.StartTime <= now);
+
+            if (logCount != 0)
+            {
+                _performance.File = _db.My_Jobs
+                        .Where(x => x.Name == User.Short_Name & x.StartTime >= _performance.Login & x.StartTime <= now)
+                        .Sum(x => x.Amount);
+
+                _performance.JobTime = _db.My_Jobs
+                        .Where(x => x.Name == User.Short_Name & x.StartTime >= _performance.Login & x.StartTime <= now)
+                        .Sum(x => x.TotalJobTime);
+
+                _performance.ProTime = _db.My_Jobs
+                        .Where(x => x.Name == User.Short_Name & x.StartTime >= _performance.Login & x.StartTime <= now)
+                        .Sum(x => x.TotalProTime);
+                
+                avg = _db.My_Jobs
+                        .Where(x => x.Name == User.Short_Name & x.StartTime >= _performance.Login & x.StartTime <= now)
+                        .Average(x => x.Quality);
+
+                _performance.Quality = Convert.ToInt32(avg);
+            }
+
+            if(_performance.ProTime != 0)
+                _performance.Efficiency = Convert.ToInt32(_performance.JobTime / _performance.ProTime * 100);
+
+            _performance.Up = 0;
+            _db.SaveChanges();
+
+            Pnl_Counter.Visible = false;
+            Pnl_Format.Visible = false;
+            Pnl_Start_Job.Visible = true;
+            Pnl_Drop.Visible = true;
+            Lbl_Success.Visible = true;
+
+            var itemName = Path.GetFileNameWithoutExtension(_file) + _ext;
+            _source = Path.Combine(_filePath, itemName);
+
+            if (Btn_Pause.Text == @"Resume")
+            {
+                if (File.Exists(_source))
+                {
+                    var path = Path.GetDirectoryName(_filePath);
+                    _destination = Path.Combine(path ?? string.Empty, itemName);
+
+                    //move back file to my folder
+                    File.Move(_source, _destination);
+                }
+                else
+                    MessageBox.Show(@"Find done file & keep it to my folder manually...", @"File doesn't Exist", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+            else
+            {
+                //Copy done image to server ready folder
+                if (File.Exists(_source))
+                {
+                    Directory.CreateDirectory(_doneFolder);
+                    _destination = Path.Combine(_doneFolder, itemName);                    
+
+                    if (File.Exists(_destination))
+                        File.Delete(_destination);
+
+                    //move done file to done folder
+                    File.Move(_source, _destination);
+                    _source = _destination;
+
+                    //create ready folder with check if exist subfolder
+                    var root = "";
+                    _filePath = Path.GetDirectoryName(_filePath);
+                    _parentFolder = new DirectoryInfo(_filePath ?? string.Empty).Name;
+                    while (_parentFolder != _myService)
+                    {
+                        if (_parentFolder != "Raw_File" & _parentFolder != "Done_File")
+                            root = _parentFolder + @"\" + root;
+
+                        _filePath = Path.GetDirectoryName(_filePath);
+                        _parentFolder = new DirectoryInfo(_filePath ?? string.Empty).Name;
+                    }
+
+                    _readyFolder = _job.WorkingLocation + @"\" + _myService + "_Done" + @"\" + root;
+
+                    if (_log.Remarks == "Share")
+                        _readyFolder += @"\Share\" + User.Short_Name;
+
+                    Directory.CreateDirectory(_readyFolder);
+                    _destination = Path.Combine(_readyFolder, itemName);
+
+                    var savingProgress = new SavingProgress
+                    {
+                        Source = _source,
+                        Destination = _destination
+                    };
+                    savingProgress.Show();
+                }
+                else
+                    MessageBox.Show(@"Find done file & keep it to Ready folder manually...", @"Done file doesn't Exist", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
         }
 
-        private void Btn_Instruction_Click(object sender, EventArgs e)
+        private void Pnl_Drop_DragDrop(object sender, DragEventArgs e)
         {
-            if (Directory.Exists(Instruction))
+            var files = (string[])e.Data.GetData(DataFormats.FileDrop);
+            _fileAmount = files.Count();
+            _file = files[0];
+            string Loc = Path.GetDirectoryName(_file); ;
+
+            if (_fileAmount == 1)
             {
-                Process.Start(Instruction);
-                if (My_Time > 0)
-                    Btn_Start.Enabled = true;                
-            }                
+                string file = Path.GetFileName(_file);
+                _fileName = Path.GetFileNameWithoutExtension(_file);
+
+                var imageTime = _db.ImageTime
+                    .FirstOrDefault(x => x.JobId == _job.JobId & x.Image == _fileName);
+
+                if (imageTime == null)
+                {
+                    MessageBox.Show(@"This file have not assign target time. Please inform to Shift Incharge", @"Target Time empty", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    return;
+                }
+                _myTime = 0;
+
+                if (Chk_CP.Checked)
+                    _myTime += imageTime.CP_Time;
+
+                if (Chk_RET.Checked)
+                    _myTime += imageTime.RET_Time;
+
+                if (Chk_MSK.Checked)
+                    _myTime += imageTime.MSK_Time;
+
+                if (Chk_SHA.Checked)
+                    _myTime += imageTime.SHA_Time;
+
+                if (Chk_LIQ.Checked)
+                    _myTime += imageTime.LIQ_Time;
+
+                if (Chk_NJ.Checked)
+                    _myTime += imageTime.NJ_Time;
+
+                if (Chk_CC.Checked)
+                    _myTime += imageTime.CC_Time;
+
+                if (Chk_AI.Checked)
+                    _myTime += imageTime.AI_Time;
+
+
+                //for check if file already production running.
+                _log = _db.Logs
+                    .FirstOrDefault(x => x.JobId == _job.JobId & x.Image == _fileName & x.Service == _myService & (x.Status == "Running" | x.Status == "InHand") & x.Name != User.Short_Name);
+
+                if (_log != null)
+                {
+                    var log = _db.Logs
+                        .FirstOrDefault(x => x.JobId == _job.JobId & x.Image == _fileName & x.Service == _myService & x.Name == User.Short_Name & x.Remarks == "Share");
+
+                    if (log == null)
+                    {
+                        MessageBox.Show(@"This file already production running. by " + _log.Name + @". Please select another file......", @"Running by " + _log.Name, MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        return;
+                    }
+                    _myTime = log.TargetTime;
+                }
+
+                _filePath = Loc;
+                _parentFolder = new DirectoryInfo(_filePath ?? string.Empty).Name;
+                _doneFolder = _filePath + @"\Done_File";
+
+                //move file to my folder
+                if (_parentFolder != "Raw_File" & _parentFolder != "Done_File")
+                {
+                    _rawFolder = _filePath + @"\Raw_File";
+                    Directory.CreateDirectory(_rawFolder);
+
+                    _filePath = Path.Combine(_rawFolder, file);
+
+                    if (File.Exists(_filePath))
+                        File.Delete(_filePath);
+
+                    File.Move(_file ?? string.Empty, _filePath);
+                    _file = _filePath;
+
+                    _filePath = _rawFolder;
+                }
+                else
+                {
+                    var subfolder = Path.GetDirectoryName(_filePath);
+                    _doneFolder = subfolder + @"\Done_File";
+                }
+
+                Directory.CreateDirectory(_doneFolder);
+
+                try
+                {
+                    var open = new Process 
+                    { 
+                        StartInfo = 
+                        { 
+                            FileName = @"Photoshop",
+                            Arguments = _file ?? string.Empty 
+                        } 
+                    };
+                    open.Start();
+                }
+                catch
+                {
+                    var open = new Process
+                    {
+                        StartInfo =
+                        {
+                            FileName = @"C:\Program Files (x86)\Adobe\Adobe Photoshop CS6\Photoshop.exe",
+                            Arguments = _file ?? string.Empty
+                        }
+                    };
+                    open.Start();
+                }
+
+                _log = _db.Logs
+                    .FirstOrDefault(x => x.JobId == _job.JobId & x.Image == _fileName & x.Service == _myService & x.Name == User.Short_Name);
+
+                if (_log == null)
+                {
+                    _log = new Log
+                    {
+                        JobId = _job.JobId,
+                        Image = _fileName,
+                        ActualTime = _myTime,
+                        TargetTime = _myTime,
+                        Shift = _performance.Shift,
+                        Service = _myService,
+                        Date = DateTime.Now.Date,
+                        StartTime = DateTime.Now,
+                        EndTime = DateTime.Now,
+                        Name = User.Short_Name
+                    };
+                    _db.Logs.Add(_log);
+
+                    TotalTime = _log.TargetTime * 60;
+                }
+                else
+                {
+                    _proTime = _log.ProTime * 60;
+                    TotalTime = (_myTime * 60) - _proTime;
+                    _isOld = true;
+                }
+
+                _log.Status = "Running";
+                _log.Category = imageTime.Category;
+                _log.InputLocation = _file;
+                _log.WorkingLocation = _file;
+                _db.SaveChanges();
+
+                Pnl_Counter.Visible = true;
+                Pnl_Format.Visible = true;
+                Pnl_Drop.Visible = false;
+                Pnl_Service.Visible = false;
+                Pnl_Start_Job.Visible = false;
+                Lbl_Success.Visible = false;
+                Btn_Pause.Text = @"Pause";
+
+                CMB_Share.Enabled = true;
+                BTN_Share.Enabled = true;
+
+                Txt_image.Text = _fileName;
+                this.WindowState = FormWindowState.Minimized;
+                Tmr_Count.Start();
+                Lbl_Job_Time.Text = @"Job Time: " + _myTime;
+                Lbl_Job_Time_1.Text = @"Job Time: " + _myTime;
+            }
             else
-                MessageBox.Show("Instruction doesn't Exist. Please inform Your Incharge Or Manager about this...", "Folder Not Found", MessageBoxButtons.OK, MessageBoxIcon.Error);            
-            
+                MessageBox.Show(@"Please select single file. Don't select multiple files...", @"Multiple files selected", MessageBoxButtons.OK, MessageBoxIcon.Error);
+
+            files = Directory.GetFiles(Loc, "*", SearchOption.AllDirectories);
+
+            foreach (string file in files)
+            {
+                string fileName = Path.GetFileNameWithoutExtension(file);
+
+                var pendingImage = _db.PendingImage
+                    .FirstOrDefault(x => x.JobId == _job.JobId & x.Name == User.Short_Name & x.Image == fileName);
+
+                if (pendingImage == null)
+                {
+                    pendingImage = new PendingImage
+                    {
+                        JobId = _job.JobId,
+                        Name = User.Short_Name,
+                        Image = fileName,
+                        Time = DateTime.Now
+                    };
+                    _db.PendingImage.Add(pendingImage);
+                }
+            }
+
+            _db.SaveChanges();
+        }
+        
+        private void BTN_Share_Click(object sender, EventArgs e)
+        {
+            if (string.IsNullOrEmpty(Txt_Mnt.Text))
+            {
+                MessageBox.Show(@"Share time is empty. Please Enter share time...", @"Share time is empty", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
+
+            var find = _db.Logs
+                .Where(x => x.JobId == _job.JobId & x.Image == _fileName & x.Service == _myService & x.Name != User.Short_Name & x.Remarks == "Share")
+                .FirstOrDefault();
+
+            double totalTime = 0;
+            if (find != null)
+            {
+                totalTime = _db.Logs
+                    .Where(x => x.JobId == _job.JobId & x.Image == _fileName & x.Service == _myService & x.Name != User.Short_Name & x.Remarks == "Share")
+                    .Sum(x => x.TargetTime);
+            }            
+
+            double shareTime = Convert.ToDouble(Txt_Mnt.Text);
+            if (totalTime + shareTime > _log.TargetTime)
+            {
+                MessageBox.Show(@"Share time limit over. Please decrease share time...", @"Share time limit over", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
+
+            var log = _db.Logs
+                .FirstOrDefault(x => x.JobId == _job.JobId & x.Image == _fileName & x.Service == _myService & x.Name == _shareName & x.Remarks == "Share");
+
+            if (log == null)
+            {
+                log = new Log
+                {
+                    JobId = _job.JobId,
+                    Image = _fileName,
+                    Service = _myService,
+                    Name = _shareName,
+                    Date = DateTime.Now.Date,
+                    StartTime = DateTime.Now,
+                    EndTime = DateTime.Now
+                };
+                _db.Logs.Add(log);
+            }
+
+            log.ActualTime = log.TargetTime = shareTime;
+            Lbl_Job_Time_1.Text = log.TargetTime + "";
+            log.Status = "InHand";
+            log.Remarks = "Share";
+
+            _log.ActualTime = _log.TargetTime -= shareTime;
+            _log.Remarks = "Share";
+            _db.SaveChanges();
+            MessageBox.Show(@"This file shared successfully with " + _shareName + @". Please inform him to start immediate......", @"Successfully shared", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            TotalTime -= (shareTime * 60);
+        }
+
+        private void Btn_Start_Click(object sender, EventArgs e)
+        {
+            if (Btn_Start.Text == @"Start Job")
+            {
+                Pnl_Service.Visible = false;
+                Pnl_Drop.Visible = true;
+                Btn_Start.Visible = false;
+                Chk_Select_All.Visible = false;
+                Btn_Clear.Visible = true;
+
+                ////Create my folder in job folder
+                //_myFolder = Job.WorkingLocation + "\\" + User.Short_Name;
+                //Directory.CreateDirectory(_myFolder);
+
+                //Create my folder to local drive
+                var localDrive = "";
+
+                if (Directory.Exists(@"D:\"))
+                    localDrive = @"D:\";
+                else if (Directory.Exists(@"E:\"))
+                    localDrive = @"E:\";
+                else if (Directory.Exists(@"F:\"))
+                    localDrive = @"F:\";
+                else if (Directory.Exists(@"G:\"))
+                    localDrive = @"G:\";
+
+                _myFolder = localDrive + @"Workfile\" + DateTime.Now.ToString("dd_MMM_yy") + "\\" + _job.JobId + "\\" + User.Short_Name + "\\" + _myService;
+                Directory.CreateDirectory(_myFolder);
+                Process.Start(_myFolder);
+
+                //create done folder in job folder
+                _readyFolder = _job.WorkingLocation + @"\" + _myService + "_Done";
+                Directory.CreateDirectory(_readyFolder);
+
+                Btn_Ready_Folder.Enabled = true;
+                Btn_My_Folder.Enabled = true;
+            }
+            else if (Btn_Start.Text == @"Start QC")
+            {
+                var qcProcess = QC_Process.getInstance();
+                qcProcess._job.JobId = _job.JobId;
+                QC_Process._user = User;
+                qcProcess.Show();
+                this.Hide();
+            }
+        }
+
+        private void Pnl_Drop_DragEnter(object sender, DragEventArgs e)
+        {
+            e.Effect = DragDropEffects.All;
         }
 
         private void Btn_Job_Folder_Click(object sender, EventArgs e)
         {
-            if (Directory.Exists(Job_Folder))
-                Process.Start(Job_Folder);
+            if (Directory.Exists(_jobFolder))
+                Process.Start(_jobFolder);
             else
-                MessageBox.Show("Folder doesn't Exist. Please inform Your Incharge Or Manager about this...", "Folder Not Found", MessageBoxButtons.OK, MessageBoxIcon.Error);            
+                MessageBox.Show(@"Folder doesn't Exist. Please inform Your in-charge Or Manager about this...", @"Folder Not Found", MessageBoxButtons.OK, MessageBoxIcon.Error);            
         }
 
         private void Btn_Ready_Folder_Click(object sender, EventArgs e)
         {
-            if(Directory.Exists(Ready_Folder))
-                Process.Start(Ready_Folder);
+            if(Directory.Exists(_readyFolder))
+                Process.Start(_readyFolder);
             else
-                MessageBox.Show("Folder doesn't Exist. Please Start Job First then try again...", "Folder Not Found", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show(@"Folder doesn't Exist. Please Start Job First then try again...", @"Folder Not Found", MessageBoxButtons.OK, MessageBoxIcon.Error);
         }
     }
 }

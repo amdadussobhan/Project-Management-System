@@ -22,6 +22,7 @@ namespace Skill_PMS.Models
         public string Team { get; set; }
         public string Shift { get; set; }
         public Boolean IsActive { get; set; }
+        public int UP { get; set; }
     }
 }
 

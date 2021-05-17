@@ -72,7 +72,15 @@
             this.Btn_Open_Folder = new System.Windows.Forms.Button();
             this.Txt_Folder = new System.Windows.Forms.TextBox();
             this.Chk_Remember = new System.Windows.Forms.CheckBox();
+            this.Rdb_TIF = new System.Windows.Forms.RadioButton();
+            this.Rdb_PSD = new System.Windows.Forms.RadioButton();
+            this.Rdb_JPG = new System.Windows.Forms.RadioButton();
+            this.Rdb_PNG = new System.Windows.Forms.RadioButton();
+            this.Txt_QC = new System.Windows.Forms.TextBox();
+            this.Chk_QC = new System.Windows.Forms.CheckBox();
+            this.Btn_assign = new System.Windows.Forms.Button();
             this.jobBindingSource = new System.Windows.Forms.BindingSource(this.components);
+            this.Prb_Subfolder = new System.Windows.Forms.ProgressBar();
             ((System.ComponentModel.ISupportInitialize)(this.jobBindingSource)).BeginInit();
             this.SuspendLayout();
             // 
@@ -84,7 +92,7 @@
             this.Btn_Save.Name = "Btn_Save";
             this.Btn_Save.Size = new System.Drawing.Size(140, 35);
             this.Btn_Save.TabIndex = 317;
-            this.Btn_Save.Text = "Save";
+            this.Btn_Save.Text = "Pass";
             this.Btn_Save.UseVisualStyleBackColor = false;
             this.Btn_Save.Click += new System.EventHandler(this.Btn_Save_Click);
             // 
@@ -92,7 +100,7 @@
             // 
             this.Txt_CC.Enabled = false;
             this.Txt_CC.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.Txt_CC.Location = new System.Drawing.Point(755, 312);
+            this.Txt_CC.Location = new System.Drawing.Point(657, 312);
             this.Txt_CC.Name = "Txt_CC";
             this.Txt_CC.Size = new System.Drawing.Size(65, 26);
             this.Txt_CC.TabIndex = 307;
@@ -103,7 +111,7 @@
             // 
             this.Chk_RET.AutoSize = true;
             this.Chk_RET.Font = new System.Drawing.Font("Microsoft Sans Serif", 13F);
-            this.Chk_RET.Location = new System.Drawing.Point(166, 282);
+            this.Chk_RET.Location = new System.Drawing.Point(153, 282);
             this.Chk_RET.Name = "Chk_RET";
             this.Chk_RET.Size = new System.Drawing.Size(66, 26);
             this.Chk_RET.TabIndex = 101;
@@ -115,7 +123,7 @@
             // 
             this.Txt_LIQ.Enabled = false;
             this.Txt_LIQ.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.Txt_LIQ.Location = new System.Drawing.Point(641, 312);
+            this.Txt_LIQ.Location = new System.Drawing.Point(555, 312);
             this.Txt_LIQ.Name = "Txt_LIQ";
             this.Txt_LIQ.Size = new System.Drawing.Size(65, 26);
             this.Txt_LIQ.TabIndex = 306;
@@ -126,7 +134,7 @@
             // 
             this.Chk_MSK.AutoSize = true;
             this.Chk_MSK.Font = new System.Drawing.Font("Microsoft Sans Serif", 13F);
-            this.Chk_MSK.Location = new System.Drawing.Point(399, 282);
+            this.Chk_MSK.Location = new System.Drawing.Point(355, 282);
             this.Chk_MSK.Name = "Chk_MSK";
             this.Chk_MSK.Size = new System.Drawing.Size(67, 26);
             this.Chk_MSK.TabIndex = 102;
@@ -138,7 +146,7 @@
             // 
             this.Txt_SHA.Enabled = false;
             this.Txt_SHA.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.Txt_SHA.Location = new System.Drawing.Point(521, 312);
+            this.Txt_SHA.Location = new System.Drawing.Point(453, 312);
             this.Txt_SHA.Name = "Txt_SHA";
             this.Txt_SHA.Size = new System.Drawing.Size(65, 26);
             this.Txt_SHA.TabIndex = 303;
@@ -149,7 +157,7 @@
             // 
             this.Chk_SHA.AutoSize = true;
             this.Chk_SHA.Font = new System.Drawing.Font("Microsoft Sans Serif", 13F);
-            this.Chk_SHA.Location = new System.Drawing.Point(524, 282);
+            this.Chk_SHA.Location = new System.Drawing.Point(458, 282);
             this.Chk_SHA.Name = "Chk_SHA";
             this.Chk_SHA.Size = new System.Drawing.Size(66, 26);
             this.Chk_SHA.TabIndex = 103;
@@ -161,7 +169,7 @@
             // 
             this.Chk_LIQ.AutoSize = true;
             this.Chk_LIQ.Font = new System.Drawing.Font("Microsoft Sans Serif", 13F);
-            this.Chk_LIQ.Location = new System.Drawing.Point(648, 280);
+            this.Chk_LIQ.Location = new System.Drawing.Point(563, 280);
             this.Chk_LIQ.Name = "Chk_LIQ";
             this.Chk_LIQ.Size = new System.Drawing.Size(57, 26);
             this.Chk_LIQ.TabIndex = 104;
@@ -173,7 +181,7 @@
             // 
             this.Chk_CC.AutoSize = true;
             this.Chk_CC.Font = new System.Drawing.Font("Microsoft Sans Serif", 13F);
-            this.Chk_CC.Location = new System.Drawing.Point(763, 282);
+            this.Chk_CC.Location = new System.Drawing.Point(664, 282);
             this.Chk_CC.Name = "Chk_CC";
             this.Chk_CC.Size = new System.Drawing.Size(55, 26);
             this.Chk_CC.TabIndex = 105;
@@ -185,7 +193,7 @@
             // 
             this.Txt_MSK.Enabled = false;
             this.Txt_MSK.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.Txt_MSK.Location = new System.Drawing.Point(396, 312);
+            this.Txt_MSK.Location = new System.Drawing.Point(351, 312);
             this.Txt_MSK.Name = "Txt_MSK";
             this.Txt_MSK.Size = new System.Drawing.Size(65, 26);
             this.Txt_MSK.TabIndex = 295;
@@ -196,7 +204,7 @@
             // 
             this.Txt_RET.Enabled = false;
             this.Txt_RET.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.Txt_RET.Location = new System.Drawing.Point(161, 312);
+            this.Txt_RET.Location = new System.Drawing.Point(147, 312);
             this.Txt_RET.Name = "Txt_RET";
             this.Txt_RET.Size = new System.Drawing.Size(65, 26);
             this.Txt_RET.TabIndex = 294;
@@ -207,7 +215,7 @@
             // 
             this.Txt_NJ.Enabled = false;
             this.Txt_NJ.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.Txt_NJ.Location = new System.Drawing.Point(278, 312);
+            this.Txt_NJ.Location = new System.Drawing.Point(249, 312);
             this.Txt_NJ.Name = "Txt_NJ";
             this.Txt_NJ.Size = new System.Drawing.Size(65, 26);
             this.Txt_NJ.TabIndex = 299;
@@ -218,7 +226,7 @@
             // 
             this.Chk_NJ.AutoSize = true;
             this.Chk_NJ.Font = new System.Drawing.Font("Microsoft Sans Serif", 13F);
-            this.Chk_NJ.Location = new System.Drawing.Point(290, 282);
+            this.Chk_NJ.Location = new System.Drawing.Point(262, 282);
             this.Chk_NJ.Name = "Chk_NJ";
             this.Chk_NJ.Size = new System.Drawing.Size(51, 26);
             this.Chk_NJ.TabIndex = 118;
@@ -241,7 +249,7 @@
             // 
             this.Lbl_Total_Time.AutoSize = true;
             this.Lbl_Total_Time.Font = new System.Drawing.Font("Microsoft Sans Serif", 16F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.Lbl_Total_Time.Location = new System.Drawing.Point(827, 167);
+            this.Lbl_Total_Time.Location = new System.Drawing.Point(827, 169);
             this.Lbl_Total_Time.Name = "Lbl_Total_Time";
             this.Lbl_Total_Time.Size = new System.Drawing.Size(0, 26);
             this.Lbl_Total_Time.TabIndex = 332;
@@ -261,7 +269,7 @@
             this.Txt_Location.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.Txt_Location.Location = new System.Drawing.Point(149, 248);
             this.Txt_Location.Name = "Txt_Location";
-            this.Txt_Location.Size = new System.Drawing.Size(784, 26);
+            this.Txt_Location.Size = new System.Drawing.Size(655, 26);
             this.Txt_Location.TabIndex = 312;
             this.Txt_Location.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             // 
@@ -284,12 +292,13 @@
             this.Btn_Subfolder.TabIndex = 328;
             this.Btn_Subfolder.Text = "Merge Folder";
             this.Btn_Subfolder.UseVisualStyleBackColor = true;
+            this.Btn_Subfolder.Click += new System.EventHandler(this.Btn_Subfolder_Click);
             // 
             // Lbl_Service
             // 
             this.Lbl_Service.AutoSize = true;
             this.Lbl_Service.Font = new System.Drawing.Font("Microsoft Sans Serif", 16F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.Lbl_Service.Location = new System.Drawing.Point(253, 167);
+            this.Lbl_Service.Location = new System.Drawing.Point(255, 169);
             this.Lbl_Service.Name = "Lbl_Service";
             this.Lbl_Service.Size = new System.Drawing.Size(0, 26);
             this.Lbl_Service.TabIndex = 327;
@@ -298,7 +307,7 @@
             // 
             this.Lbl_Actual_Time.AutoSize = true;
             this.Lbl_Actual_Time.Font = new System.Drawing.Font("Microsoft Sans Serif", 16F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.Lbl_Actual_Time.Location = new System.Drawing.Point(827, 94);
+            this.Lbl_Actual_Time.Location = new System.Drawing.Point(827, 95);
             this.Lbl_Actual_Time.Name = "Lbl_Actual_Time";
             this.Lbl_Actual_Time.Size = new System.Drawing.Size(0, 26);
             this.Lbl_Actual_Time.TabIndex = 326;
@@ -307,7 +316,7 @@
             // 
             this.Lbl_Amount.AutoSize = true;
             this.Lbl_Amount.Font = new System.Drawing.Font("Microsoft Sans Serif", 16F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.Lbl_Amount.Location = new System.Drawing.Point(827, 56);
+            this.Lbl_Amount.Location = new System.Drawing.Point(827, 57);
             this.Lbl_Amount.Name = "Lbl_Amount";
             this.Lbl_Amount.Size = new System.Drawing.Size(0, 26);
             this.Lbl_Amount.TabIndex = 325;
@@ -325,7 +334,7 @@
             // 
             this.Lbl_Delivery.AutoSize = true;
             this.Lbl_Delivery.Font = new System.Drawing.Font("Microsoft Sans Serif", 16F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.Lbl_Delivery.Location = new System.Drawing.Point(255, 130);
+            this.Lbl_Delivery.Location = new System.Drawing.Point(255, 131);
             this.Lbl_Delivery.Name = "Lbl_Delivery";
             this.Lbl_Delivery.Size = new System.Drawing.Size(0, 26);
             this.Lbl_Delivery.TabIndex = 323;
@@ -334,7 +343,7 @@
             // 
             this.Lbl_Job_ID.AutoSize = true;
             this.Lbl_Job_ID.Font = new System.Drawing.Font("Microsoft Sans Serif", 16F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.Lbl_Job_ID.Location = new System.Drawing.Point(255, 56);
+            this.Lbl_Job_ID.Location = new System.Drawing.Point(255, 57);
             this.Lbl_Job_ID.Name = "Lbl_Job_ID";
             this.Lbl_Job_ID.Size = new System.Drawing.Size(0, 26);
             this.Lbl_Job_ID.TabIndex = 322;
@@ -353,7 +362,7 @@
             // 
             this.Chk_CP.AutoSize = true;
             this.Chk_CP.Font = new System.Drawing.Font("Microsoft Sans Serif", 13F);
-            this.Chk_CP.Location = new System.Drawing.Point(54, 282);
+            this.Chk_CP.Location = new System.Drawing.Point(56, 282);
             this.Chk_CP.Name = "Chk_CP";
             this.Chk_CP.Size = new System.Drawing.Size(54, 26);
             this.Chk_CP.TabIndex = 320;
@@ -456,7 +465,7 @@
             // 
             this.Txt_AI.Enabled = false;
             this.Txt_AI.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.Txt_AI.Location = new System.Drawing.Point(868, 312);
+            this.Txt_AI.Location = new System.Drawing.Point(759, 312);
             this.Txt_AI.Name = "Txt_AI";
             this.Txt_AI.Size = new System.Drawing.Size(65, 26);
             this.Txt_AI.TabIndex = 341;
@@ -467,7 +476,7 @@
             // 
             this.Chk_AI.AutoSize = true;
             this.Chk_AI.Font = new System.Drawing.Font("Microsoft Sans Serif", 13F);
-            this.Chk_AI.Location = new System.Drawing.Point(880, 282);
+            this.Chk_AI.Location = new System.Drawing.Point(771, 282);
             this.Chk_AI.Name = "Chk_AI";
             this.Chk_AI.Size = new System.Drawing.Size(45, 26);
             this.Chk_AI.TabIndex = 340;
@@ -479,6 +488,10 @@
             // 
             this.Cmb_Category.Font = new System.Drawing.Font("Microsoft Sans Serif", 13F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.Cmb_Category.FormattingEnabled = true;
+            this.Cmb_Category.Items.AddRange(new object[] {
+            "Simple",
+            "Medium",
+            "Complex"});
             this.Cmb_Category.Location = new System.Drawing.Point(371, 372);
             this.Cmb_Category.Name = "Cmb_Category";
             this.Cmb_Category.Size = new System.Drawing.Size(244, 28);
@@ -512,7 +525,7 @@
             this.Txt_Folder.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.Txt_Folder.Location = new System.Drawing.Point(149, 208);
             this.Txt_Folder.Name = "Txt_Folder";
-            this.Txt_Folder.Size = new System.Drawing.Size(517, 26);
+            this.Txt_Folder.Size = new System.Drawing.Size(525, 26);
             this.Txt_Folder.TabIndex = 334;
             this.Txt_Folder.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             // 
@@ -527,9 +540,103 @@
             this.Chk_Remember.Text = "Remember";
             this.Chk_Remember.UseVisualStyleBackColor = true;
             // 
+            // Rdb_TIF
+            // 
+            this.Rdb_TIF.AutoSize = true;
+            this.Rdb_TIF.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.Rdb_TIF.Location = new System.Drawing.Point(654, 423);
+            this.Rdb_TIF.Name = "Rdb_TIF";
+            this.Rdb_TIF.Size = new System.Drawing.Size(54, 24);
+            this.Rdb_TIF.TabIndex = 391;
+            this.Rdb_TIF.TabStop = true;
+            this.Rdb_TIF.Text = "TIF";
+            this.Rdb_TIF.UseVisualStyleBackColor = true;
+            this.Rdb_TIF.CheckedChanged += new System.EventHandler(this.Rdb_TIF_CheckedChanged);
+            // 
+            // Rdb_PSD
+            // 
+            this.Rdb_PSD.AutoSize = true;
+            this.Rdb_PSD.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.Rdb_PSD.Location = new System.Drawing.Point(282, 423);
+            this.Rdb_PSD.Name = "Rdb_PSD";
+            this.Rdb_PSD.Size = new System.Drawing.Size(63, 24);
+            this.Rdb_PSD.TabIndex = 388;
+            this.Rdb_PSD.TabStop = true;
+            this.Rdb_PSD.Text = "PSD";
+            this.Rdb_PSD.UseVisualStyleBackColor = true;
+            this.Rdb_PSD.CheckedChanged += new System.EventHandler(this.Rdb_PSD_CheckedChanged);
+            // 
+            // Rdb_JPG
+            // 
+            this.Rdb_JPG.AutoSize = true;
+            this.Rdb_JPG.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.Rdb_JPG.Location = new System.Drawing.Point(401, 423);
+            this.Rdb_JPG.Name = "Rdb_JPG";
+            this.Rdb_JPG.Size = new System.Drawing.Size(61, 24);
+            this.Rdb_JPG.TabIndex = 389;
+            this.Rdb_JPG.TabStop = true;
+            this.Rdb_JPG.Text = "JPG";
+            this.Rdb_JPG.UseVisualStyleBackColor = true;
+            this.Rdb_JPG.CheckedChanged += new System.EventHandler(this.Rdb_JPG_CheckedChanged);
+            // 
+            // Rdb_PNG
+            // 
+            this.Rdb_PNG.AutoSize = true;
+            this.Rdb_PNG.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.Rdb_PNG.Location = new System.Drawing.Point(526, 423);
+            this.Rdb_PNG.Name = "Rdb_PNG";
+            this.Rdb_PNG.Size = new System.Drawing.Size(64, 24);
+            this.Rdb_PNG.TabIndex = 390;
+            this.Rdb_PNG.TabStop = true;
+            this.Rdb_PNG.Text = "PNG";
+            this.Rdb_PNG.UseVisualStyleBackColor = true;
+            this.Rdb_PNG.CheckedChanged += new System.EventHandler(this.Rdb_PNG_CheckedChanged);
+            // 
+            // Txt_QC
+            // 
+            this.Txt_QC.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.Txt_QC.Location = new System.Drawing.Point(861, 312);
+            this.Txt_QC.Name = "Txt_QC";
+            this.Txt_QC.Size = new System.Drawing.Size(65, 26);
+            this.Txt_QC.TabIndex = 393;
+            this.Txt_QC.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            // 
+            // Chk_QC
+            // 
+            this.Chk_QC.AutoSize = true;
+            this.Chk_QC.Checked = true;
+            this.Chk_QC.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.Chk_QC.Enabled = false;
+            this.Chk_QC.Font = new System.Drawing.Font("Microsoft Sans Serif", 13F);
+            this.Chk_QC.Location = new System.Drawing.Point(868, 282);
+            this.Chk_QC.Name = "Chk_QC";
+            this.Chk_QC.Size = new System.Drawing.Size(56, 26);
+            this.Chk_QC.TabIndex = 392;
+            this.Chk_QC.Text = "QC";
+            this.Chk_QC.UseVisualStyleBackColor = true;
+            // 
+            // Btn_assign
+            // 
+            this.Btn_assign.Font = new System.Drawing.Font("Microsoft Sans Serif", 12.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.Btn_assign.Location = new System.Drawing.Point(810, 243);
+            this.Btn_assign.Name = "Btn_assign";
+            this.Btn_assign.Size = new System.Drawing.Size(123, 35);
+            this.Btn_assign.TabIndex = 394;
+            this.Btn_assign.Text = "Assign Time";
+            this.Btn_assign.UseVisualStyleBackColor = true;
+            this.Btn_assign.Click += new System.EventHandler(this.Btn_assign_Click);
+            // 
             // jobBindingSource
             // 
-            this.jobBindingSource.DataSource = typeof(Skill_PMS.Models.Job);
+            this.jobBindingSource.DataSource = typeof(Skill_PMS.Models.NewJob);
+            // 
+            // Prb_Subfolder
+            // 
+            this.Prb_Subfolder.Location = new System.Drawing.Point(0, 465);
+            this.Prb_Subfolder.Maximum = 0;
+            this.Prb_Subfolder.Name = "Prb_Subfolder";
+            this.Prb_Subfolder.Size = new System.Drawing.Size(970, 10);
+            this.Prb_Subfolder.TabIndex = 395;
             // 
             // Job_assign
             // 
@@ -537,6 +644,14 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.SystemColors.ActiveBorder;
             this.ClientSize = new System.Drawing.Size(970, 475);
+            this.Controls.Add(this.Prb_Subfolder);
+            this.Controls.Add(this.Btn_assign);
+            this.Controls.Add(this.Txt_QC);
+            this.Controls.Add(this.Chk_QC);
+            this.Controls.Add(this.Rdb_TIF);
+            this.Controls.Add(this.Rdb_PSD);
+            this.Controls.Add(this.Rdb_JPG);
+            this.Controls.Add(this.Rdb_PNG);
             this.Controls.Add(this.Chk_Remember);
             this.Controls.Add(this.Btn_Open_Folder);
             this.Controls.Add(this.label10);
@@ -637,5 +752,13 @@
         private System.Windows.Forms.TextBox Txt_Folder;
         private System.Windows.Forms.CheckBox Chk_Remember;
         private System.Windows.Forms.BindingSource jobBindingSource;
+        private System.Windows.Forms.RadioButton Rdb_TIF;
+        private System.Windows.Forms.RadioButton Rdb_PSD;
+        private System.Windows.Forms.RadioButton Rdb_JPG;
+        private System.Windows.Forms.RadioButton Rdb_PNG;
+        private System.Windows.Forms.TextBox Txt_QC;
+        private System.Windows.Forms.CheckBox Chk_QC;
+        private System.Windows.Forms.Button Btn_assign;
+        private System.Windows.Forms.ProgressBar Prb_Subfolder;
     }
 }

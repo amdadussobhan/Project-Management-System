@@ -31,7 +31,6 @@ namespace Skill_PMS.Models
 
         public double Price { get; set; }
         public double Taka { get; set; }
-        public string Currency { get; set; }
 
         public double Actual_Time { get; set; }
         public double Target_Time { get; set; }

@@ -1,4 +1,4 @@
-﻿namespace Skill_PMS
+﻿namespace Skill_PMS.UI_WinForm
 {
     partial class Login
     {
@@ -38,6 +38,7 @@
             this.lblpss = new System.Windows.Forms.Label();
             this.Btn_Clear = new System.Windows.Forms.Button();
             this.Btn_Login = new System.Windows.Forms.Button();
+            this.Lnk_Sync = new System.Windows.Forms.LinkLabel();
             this.SuspendLayout();
             // 
             // Cmb_Shift
@@ -52,8 +53,7 @@
             this.Cmb_Shift.Location = new System.Drawing.Point(279, 91);
             this.Cmb_Shift.Name = "Cmb_Shift";
             this.Cmb_Shift.Size = new System.Drawing.Size(214, 30);
-            this.Cmb_Shift.TabIndex = 2;
-            this.Cmb_Shift.Text = "Morning";
+            this.Cmb_Shift.TabIndex = 3;
             // 
             // Txt_Designation
             // 
@@ -81,10 +81,10 @@
             this.Lnk_Change_Pass.AutoSize = true;
             this.Lnk_Change_Pass.Font = new System.Drawing.Font("Microsoft Sans Serif", 11F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.Lnk_Change_Pass.LinkColor = System.Drawing.Color.RoyalBlue;
-            this.Lnk_Change_Pass.Location = new System.Drawing.Point(367, 129);
+            this.Lnk_Change_Pass.Location = new System.Drawing.Point(367, 131);
             this.Lnk_Change_Pass.Name = "Lnk_Change_Pass";
             this.Lnk_Change_Pass.Size = new System.Drawing.Size(130, 18);
-            this.Lnk_Change_Pass.TabIndex = 5;
+            this.Lnk_Change_Pass.TabIndex = 4;
             this.Lnk_Change_Pass.TabStop = true;
             this.Lnk_Change_Pass.Text = "Change Password";
             // 
@@ -96,7 +96,6 @@
             this.Txt_Pss.PasswordChar = '*';
             this.Txt_Pss.Size = new System.Drawing.Size(172, 29);
             this.Txt_Pss.TabIndex = 1;
-            this.Txt_Pss.Text = "123";
             this.Txt_Pss.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             // 
             // Txt_Usr
@@ -106,7 +105,7 @@
             this.Txt_Usr.Name = "Txt_Usr";
             this.Txt_Usr.Size = new System.Drawing.Size(172, 29);
             this.Txt_Usr.TabIndex = 0;
-            this.Txt_Usr.Text = "10000018";
+            this.Txt_Usr.Text = "20000";
             this.Txt_Usr.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             this.Txt_Usr.TextChanged += new System.EventHandler(this.Txt_Usr_TextChanged);
             // 
@@ -132,30 +131,46 @@
             // 
             // Btn_Clear
             // 
+            this.Btn_Clear.BackColor = System.Drawing.Color.Khaki;
             this.Btn_Clear.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.Btn_Clear.Location = new System.Drawing.Point(10, 152);
+            this.Btn_Clear.Location = new System.Drawing.Point(10, 154);
             this.Btn_Clear.Name = "Btn_Clear";
-            this.Btn_Clear.Size = new System.Drawing.Size(180, 35);
-            this.Btn_Clear.TabIndex = 4;
+            this.Btn_Clear.Size = new System.Drawing.Size(125, 35);
+            this.Btn_Clear.TabIndex = 5;
             this.Btn_Clear.Text = "Clear";
-            this.Btn_Clear.UseVisualStyleBackColor = true;
+            this.Btn_Clear.UseVisualStyleBackColor = false;
             // 
             // Btn_Login
             // 
+            this.Btn_Login.BackColor = System.Drawing.Color.MediumSeaGreen;
             this.Btn_Login.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.Btn_Login.Location = new System.Drawing.Point(298, 155);
+            this.Btn_Login.Location = new System.Drawing.Point(369, 154);
             this.Btn_Login.Name = "Btn_Login";
-            this.Btn_Login.Size = new System.Drawing.Size(195, 35);
-            this.Btn_Login.TabIndex = 3;
-            this.Btn_Login.Text = "Sign_In";
-            this.Btn_Login.UseVisualStyleBackColor = true;
+            this.Btn_Login.Size = new System.Drawing.Size(125, 35);
+            this.Btn_Login.TabIndex = 2;
+            this.Btn_Login.Text = "Log-In";
+            this.Btn_Login.UseVisualStyleBackColor = false;
             this.Btn_Login.Click += new System.EventHandler(this.Btn_Login_Click);
+            // 
+            // Lnk_Sync
+            // 
+            this.Lnk_Sync.AutoSize = true;
+            this.Lnk_Sync.Font = new System.Drawing.Font("Microsoft Sans Serif", 11F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.Lnk_Sync.LinkColor = System.Drawing.Color.RoyalBlue;
+            this.Lnk_Sync.Location = new System.Drawing.Point(15, 131);
+            this.Lnk_Sync.Name = "Lnk_Sync";
+            this.Lnk_Sync.Size = new System.Drawing.Size(118, 18);
+            this.Lnk_Sync.TabIndex = 21;
+            this.Lnk_Sync.TabStop = true;
+            this.Lnk_Sync.Text = "Generate Report";
+            this.Lnk_Sync.Click += new System.EventHandler(this.Lnk_Sync_Click);
             // 
             // Login
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(509, 201);
+            this.Controls.Add(this.Lnk_Sync);
             this.Controls.Add(this.Cmb_Shift);
             this.Controls.Add(this.Txt_Designation);
             this.Controls.Add(this.Txt_Name);
@@ -170,6 +185,7 @@
             this.Name = "Login";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Skill_PMS Login";
+            this.TopMost = true;
             this.Load += new System.EventHandler(this.Login_Load);
             this.ResumeLayout(false);
             this.PerformLayout();
@@ -188,6 +204,7 @@
         private System.Windows.Forms.Label lblpss;
         private System.Windows.Forms.Button Btn_Clear;
         private System.Windows.Forms.Button Btn_Login;
+        private System.Windows.Forms.LinkLabel Lnk_Sync;
     }
 }
 

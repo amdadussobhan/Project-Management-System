@@ -11,6 +11,7 @@ namespace Skill_PMS.Models
         public int ID { get; set; }
         public string Client { get; set; }
         public string Category { get; set; }
+        public string Format { get; set; }
 
         public double Actual_Time { get; set; }
         public double Target_Time { get; set; }

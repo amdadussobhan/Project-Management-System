@@ -1,25 +1,25 @@
-﻿using Skill_PMS.Data;
+﻿using System;
+using System.Linq;
+using System.Windows.Forms;
+using Skill_PMS.Controller;
+using Skill_PMS.Data;
 using Skill_PMS.Models;
+using Skill_PMS.UI_WinForm.admin_Panel;
 using Skill_PMS.UI_WinForm.CS_Panel;
 using Skill_PMS.UI_WinForm.HR_Panel;
 using Skill_PMS.UI_WinForm.Production.Designer;
+using Skill_PMS.UI_WinForm.Production.QC_Panel;
 using Skill_PMS.UI_WinForm.Production.SI_Panel;
-using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Forms;
 
-namespace Skill_PMS
+namespace Skill_PMS.UI_WinForm
 {
     public partial class Login : Form
     {
-        User user = new User();
-        SkillContext DB = new SkillContext();
+        private User _user;
+        private readonly Common _common = new Common();
+        private readonly SkillContext _db = new SkillContext();
+        private string _shift;
+
         public Login()
         {
             InitializeComponent();
@@ -27,90 +27,150 @@ namespace Skill_PMS
 
         private void Login_Load(object sender, EventArgs e)
         {
-            //user.Full_Name = "AMDADUS SOBHAN";
-            //user.Designation = "Senior Designer";
-            //user.Employee_ID = "10000017";
-            //user.Short_Name = "SBN";
-            //user.Shift = "Morning";
-            //user.Password = "123";
-            //user.Role = "";
             //DB.Users.Add(user);
             //DB.SaveChanges();
 
-            check_user();
+            Check_user();
+        }
+
+        private bool User_Validated()
+        {
+            _shift = Cmb_Shift.Text;
+            if (_user == null)
+            {
+                MessageBox.Show(@"Please Enter Proper User ID and Try again", @"User doesn't Found", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return false;
+            }
+
+            if (string.IsNullOrEmpty(_shift))
+            {
+                MessageBox.Show(@"Please select Your Working Shift", @"Shift is Empty", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return false;
+            }
+
+            if (_user.Password != Txt_Pss.Text)
+            {
+                MessageBox.Show(@"Please try again with correct password", @"Password Don't Match", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return false;
+            }
+
+            return true;
         }
 
         private void Btn_Login_Click(object sender, EventArgs e)
         {
-            if (Cmb_Shift.Text != "")
-            {
-                if (user.Password == Txt_Pss.Text)
-                {
-                    Attend attendence = new Attend();
-                    attendence =  DB.Attends
-                           .SqlQuery("Select * From attends where User_ID = ' " + user.ID + " ' and Attend_Date = ' " + DateTime.Now.Date + " ' ")
-                           .FirstOrDefault<Attend>();
-                    if(attendence == null) {
-                        attendence = new Attend();
-                        attendence.User_ID = user.ID;
-                        attendence.Attend_Date = DateTime.Now.Date;
-                        attendence.Login = DateTime.Now;
-                        DB.Attends.Add(attendence);
-                    }
-                    attendence.Logout = DateTime.Now;
-                    attendence.Status = "Running";
-                    DB.SaveChanges();
+            var date = _common.Shift_Date(DateTime.Now, _shift);
+            if (!User_Validated()) return;
 
-                    if (user.Role == "CS"){
-                        CS_Dashboard cs_dashboard = CS_Dashboard.getInstance();
-                        CS_Dashboard.user = user;
-                        CS_Dashboard.Attend = attendence;
-                        cs_dashboard.Show();
-                    }
-                    else if (user.Role == "SI"){
-                        SI_Dashboard si_dashboard = SI_Dashboard.getInstance();
-                        SI_Dashboard.user = user;
-                        SI_Dashboard.attend = attendence;
-                        si_dashboard.Show();
-                    }else if (user.Role == "HR"){
-                        HR_Dashboard hr_dashboard = HR_Dashboard.getInstance();
-                        HR_Dashboard.user = user;
-                        HR_Dashboard.attend = attendence;
-                        hr_dashboard.Show();
-                    }else{
-                        Dashboard dashboard = Dashboard.getInstance();
-                        Dashboard.user = user;
-                        Dashboard.attend = attendence;
-                        dashboard.Show();
-                    }
-                    this.Hide();
+            var performance = _db.Performances
+                .FirstOrDefault(x => x.Name == _user.Short_Name & x.Date ==  date & x.Shift == _shift);
+
+            if (performance == null)
+            {
+                performance = new Performance
+                {
+                    Name = _user.Short_Name, 
+                    Shift = _shift, 
+                    Date = date, 
+                    Login = DateTime.Now
+                };
+                _db.Performances.Add(performance);
+            }
+
+            performance.Logout = DateTime.Now;
+            _user.Shift = _shift;
+            performance.Status = "Running";
+
+            var shiftReport = _db.Shift_Reports
+                .FirstOrDefault(x => x.Date == date & x.Shift == _shift);
+
+            if (shiftReport == null)
+                shiftReport = _common.Add_New_Shift_Report(date, _shift);
+
+            shiftReport.Capacity = _common.Current_Designers().Count * 420;
+            shiftReport.Up = 0;
+            _db.SaveChanges();
+            _common.Change_Shift();
+
+            if (shiftReport.TotalLoad == 0)
+                _common.Check_Workload(_shift);
+
+            switch (_user.Role)
+            {
+                case "CS":
+                {
+                    var csDashboard = CsDashboard.GetInstance();
+                    CsDashboard.User = _user;
+                    csDashboard.Performance = performance;
+                    csDashboard.Show();
+                    break;
+                }
+                case "SI":
+                {
+                    var siDashboard = SiDashboard.GetInstance();
+                    SiDashboard._user = _user;
+                    siDashboard._performance = performance;
+                    siDashboard.Show();
+                    break;
+                }
+                case "HR":
+                {
+                    var hrDashboard = HrDashboard.GetInstance();
+                    HrDashboard.User = _user;
+                    hrDashboard.Performance = performance;
+                    hrDashboard.Show();
+                    break;
+                }
+                case "QC":
+                {
+                    var qcDashboard = QcDashboard.GetInstance();
+                    QcDashboard._user = _user;
+                    qcDashboard._performance = performance;
+                    qcDashboard.Show();
+                    break;
+                }
+                default:
+                {
+                    var dashboard = Dashboard.GetInstance();
+                    Dashboard.User = _user;
+                    dashboard.Performance = performance;
+                    dashboard.Show();
+                    break;
                 }
             }
-            else
-                MessageBox.Show("Please select Your Working Shift", "Shift is Empty", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            this.Hide();
         }
 
-        void check_user()
+        private void Check_user()
         {
-            user = DB.Users
-                .Where(x => x.Employee_ID == Txt_Usr.Text)
-                .FirstOrDefault<User>();
+            _user = _db.Users
+                .FirstOrDefault(x => x.Employee_ID == Txt_Usr.Text);
 
-            if (user != null)
+            if (_user != null)
             {
-                Txt_Name.Text = user.Full_Name;
-                Txt_Designation.Text = user.Designation;
+                Txt_Name.Text = _user.Full_Name;
+                Txt_Designation.Text = _user.Designation;
+                if (_user.Role == "admin" | _user.Role == "HR")
+                    Cmb_Shift.Text = _common.Current_Shift();
             }
             else
             {
                 Txt_Name.Text = "";
                 Txt_Designation.Text = "";
+                Cmb_Shift.Text = "";
             }
         }
 
         private void Txt_Usr_TextChanged(object sender, EventArgs e)
         {
-            check_user();
+            Check_user();
+        }
+
+        private void Lnk_Sync_Click(object sender, EventArgs e)
+        {
+            var adminPanel = AdminPanel.GetInstance();
+            adminPanel.Show();
+            this.Hide();
         }
     }
 }

@@ -15,6 +15,29 @@
     <Deterministic>true</Deterministic>
     <NuGetPackageImportStamp>
     </NuGetPackageImportStamp>
+    <IsWebBootstrapper>false</IsWebBootstrapper>
+    <PublishUrl>\\192.168.1.147\Skill_Server\8.Software\Skill_PMS_DHK\</PublishUrl>
+    <Install>true</Install>
+    <InstallFrom>Unc</InstallFrom>
+    <UpdateEnabled>true</UpdateEnabled>
+    <UpdateMode>Foreground</UpdateMode>
+    <UpdateInterval>7</UpdateInterval>
+    <UpdateIntervalUnits>Days</UpdateIntervalUnits>
+    <UpdatePeriodically>false</UpdatePeriodically>
+    <UpdateRequired>false</UpdateRequired>
+    <MapFileExtensions>true</MapFileExtensions>
+    <TargetCulture>en</TargetCulture>
+    <ProductName>Skill_PMS</ProductName>
+    <PublisherName>Skill Graphics Ltd.</PublisherName>
+    <SuiteName>SBN</SuiteName>
+    <MinimumRequiredVersion>1.0.0.2</MinimumRequiredVersion>
+    <AutorunEnabled>true</AutorunEnabled>
+    <ApplicationRevision>82</ApplicationRevision>
+    <ApplicationVersion>1.0.0.%2a</ApplicationVersion>
+    <UseApplicationTrust>false</UseApplicationTrust>
+    <CreateDesktopShortcut>true</CreateDesktopShortcut>
+    <PublishWizardCompleted>true</PublishWizardCompleted>
+    <BootstrapperEnabled>true</BootstrapperEnabled>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <PlatformTarget>AnyCPU</PlatformTarget>
@@ -25,6 +48,8 @@
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+    <RunCodeAnalysis>false</RunCodeAnalysis>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <PlatformTarget>AnyCPU</PlatformTarget>
@@ -35,16 +60,79 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
+  <PropertyGroup>
+    <ManifestCertificateThumbprint>175B7EDF3423F003ECC73AC46B5C3129C4F1E5CD</ManifestCertificateThumbprint>
+  </PropertyGroup>
+  <PropertyGroup>
+    <ManifestKeyFile>Skill_PMS_TemporaryKey.pfx</ManifestKeyFile>
+  </PropertyGroup>
+  <PropertyGroup>
+    <GenerateManifests>true</GenerateManifests>
+  </PropertyGroup>
+  <PropertyGroup>
+    <TargetZone>LocalIntranet</TargetZone>
+  </PropertyGroup>
+  <PropertyGroup />
+  <PropertyGroup>
+    <SignManifests>true</SignManifests>
+  </PropertyGroup>
+  <PropertyGroup>
+    <StartupObject>Skill_PMS.Program</StartupObject>
+  </PropertyGroup>
+  <PropertyGroup>
+    <ApplicationManifest>Properties\app.manifest</ApplicationManifest>
+  </PropertyGroup>
   <ItemGroup>
+    <Reference Include="BouncyCastle.Crypto, Version=1.8.3.0, Culture=neutral, PublicKeyToken=0e99375e54769942">
+      <HintPath>packages\BouncyCastle.1.8.3.1\lib\BouncyCastle.Crypto.dll</HintPath>
+    </Reference>
     <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
       <HintPath>packages\EntityFramework.6.4.4\lib\net45\EntityFramework.dll</HintPath>
     </Reference>
     <Reference Include="EntityFramework.SqlServer, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
       <HintPath>packages\EntityFramework.6.4.4\lib\net45\EntityFramework.SqlServer.dll</HintPath>
     </Reference>
+    <Reference Include="Google.Protobuf, Version=3.6.1.0, Culture=neutral, PublicKeyToken=a7d26565bac4d604, processorArchitecture=MSIL">
+      <HintPath>packages\Google.Protobuf.3.6.1\lib\net45\Google.Protobuf.dll</HintPath>
+    </Reference>
+    <Reference Include="K4os.Compression.LZ4, Version=1.1.11.0, Culture=neutral, PublicKeyToken=2186fa9121ef231d, processorArchitecture=MSIL">
+      <HintPath>packages\K4os.Compression.LZ4.1.1.11\lib\net46\K4os.Compression.LZ4.dll</HintPath>
+    </Reference>
+    <Reference Include="K4os.Compression.LZ4.Streams, Version=1.1.11.0, Culture=neutral, PublicKeyToken=2186fa9121ef231d, processorArchitecture=MSIL">
+      <HintPath>packages\K4os.Compression.LZ4.Streams.1.1.11\lib\net46\K4os.Compression.LZ4.Streams.dll</HintPath>
+    </Reference>
+    <Reference Include="K4os.Hash.xxHash, Version=1.0.6.0, Culture=neutral, PublicKeyToken=32cd54395057cec3, processorArchitecture=MSIL">
+      <HintPath>packages\K4os.Hash.xxHash.1.0.6\lib\net46\K4os.Hash.xxHash.dll</HintPath>
+    </Reference>
+    <Reference Include="MySql.Data, Version=8.0.21.0, Culture=neutral, PublicKeyToken=c5687fc88969c44d, processorArchitecture=MSIL">
+      <HintPath>packages\MySql.Data.8.0.21\lib\net452\MySql.Data.dll</HintPath>
+    </Reference>
+    <Reference Include="Renci.SshNet, Version=2016.1.0.0, Culture=neutral, PublicKeyToken=1cee9f8bde3db106, processorArchitecture=MSIL">
+      <HintPath>packages\SSH.NET.2016.1.0\lib\net40\Renci.SshNet.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
+    <Reference Include="System.Buffers, Version=4.0.3.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
+      <HintPath>packages\System.Buffers.4.5.0\lib\netstandard2.0\System.Buffers.dll</HintPath>
+    </Reference>
+    <Reference Include="System.ComponentModel" />
     <Reference Include="System.ComponentModel.DataAnnotations" />
+    <Reference Include="System.Configuration" />
+    <Reference Include="System.Configuration.Install" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Drawing.Design" />
+    <Reference Include="System.Management" />
+    <Reference Include="System.Memory, Version=4.0.1.1, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
+      <HintPath>packages\System.Memory.4.5.3\lib\netstandard2.0\System.Memory.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Numerics" />
+    <Reference Include="System.Numerics.Vectors, Version=4.1.3.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>packages\System.Numerics.Vectors.4.4.0\lib\net46\System.Numerics.Vectors.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Runtime.CompilerServices.Unsafe, Version=4.0.5.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>packages\System.Runtime.CompilerServices.Unsafe.4.6.0\lib\netstandard2.0\System.Runtime.CompilerServices.Unsafe.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Transactions" />
+    <Reference Include="System.Web.Extensions" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -54,32 +142,135 @@
     <Reference Include="System.Net.Http" />
     <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xml" />
+    <Reference Include="Ubiety.Dns.Core, Version=2.2.1.0, Culture=neutral, PublicKeyToken=c5687fc88969c44d, processorArchitecture=MSIL">
+      <HintPath>packages\MySql.Data.8.0.21\lib\net452\Ubiety.Dns.Core.dll</HintPath>
+    </Reference>
+    <Reference Include="Zstandard.Net, Version=1.1.7.0, Culture=neutral, PublicKeyToken=c5687fc88969c44d, processorArchitecture=MSIL">
+      <HintPath>packages\MySql.Data.8.0.21\lib\net452\Zstandard.Net.dll</HintPath>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Controller\Common.cs" />
-    <Compile Include="Migrations\202007291410591_initial Database setup.cs" />
-    <Compile Include="Migrations\202007291410591_initial Database setup.designer.cs">
-      <DependentUpon>202007291410591_initial Database setup.cs</DependentUpon>
+    <Compile Include="Migrations\202008061335030_Modify Log Models.cs" />
+    <Compile Include="Migrations\202008061335030_Modify Log Models.designer.cs">
+      <DependentUpon>202008061335030_Modify Log Models.cs</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\202007292225207_add Efficiency to model.cs" />
-    <Compile Include="Migrations\202007292225207_add Efficiency to model.designer.cs">
-      <DependentUpon>202007292225207_add Efficiency to model.cs</DependentUpon>
+    <Compile Include="Migrations\202008061532426_add file formate in job model.cs" />
+    <Compile Include="Migrations\202008061532426_add file formate in job model.designer.cs">
+      <DependentUpon>202008061532426_add file formate in job model.cs</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\202007300329146_add currency in jobs model.cs" />
-    <Compile Include="Migrations\202007300329146_add currency in jobs model.designer.cs">
-      <DependentUpon>202007300329146_add currency in jobs model.cs</DependentUpon>
+    <Compile Include="Migrations\202008070209471_add sub folder model.cs" />
+    <Compile Include="Migrations\202008070209471_add sub folder model.designer.cs">
+      <DependentUpon>202008070209471_add sub folder model.cs</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\202007300830072_add HR Panel and Production Model.cs" />
-    <Compile Include="Migrations\202007300830072_add HR Panel and Production Model.designer.cs">
-      <DependentUpon>202007300830072_add HR Panel and Production Model.cs</DependentUpon>
+    <Compile Include="Migrations\202008070246238_add format in price model.cs" />
+    <Compile Include="Migrations\202008070246238_add format in price model.designer.cs">
+      <DependentUpon>202008070246238_add format in price model.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202008070609435_add date to my job model.cs" />
+    <Compile Include="Migrations\202008070609435_add date to my job model.designer.cs">
+      <DependentUpon>202008070609435_add date to my job model.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202008081721490_add Date to log model.cs" />
+    <Compile Include="Migrations\202008081721490_add Date to log model.designer.cs">
+      <DependentUpon>202008081721490_add Date to log model.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202008110905444_add location and remarks field in log model.cs" />
+    <Compile Include="Migrations\202008110905444_add location and remarks field in log model.designer.cs">
+      <DependentUpon>202008110905444_add location and remarks field in log model.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202009031653410_Shift_Report_Added.cs" />
+    <Compile Include="Migrations\202009031653410_Shift_Report_Added.designer.cs">
+      <DependentUpon>202009031653410_Shift_Report_Added.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202009032247122_correction perfomane.cs" />
+    <Compile Include="Migrations\202009032247122_correction perfomane.designer.cs">
+      <DependentUpon>202009032247122_correction perfomane.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202009051503400_added workload.cs" />
+    <Compile Include="Migrations\202009051503400_added workload.designer.cs">
+      <DependentUpon>202009051503400_added workload.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202009051823545_modification log model.cs" />
+    <Compile Include="Migrations\202009051823545_modification log model.designer.cs">
+      <DependentUpon>202009051823545_modification log model.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202009060811228_modification all Model Field.cs" />
+    <Compile Include="Migrations\202009060811228_modification all Model Field.designer.cs">
+      <DependentUpon>202009060811228_modification all Model Field.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202010191150417_add_24H_File_Count.cs" />
+    <Compile Include="Migrations\202010191150417_add_24H_File_Count.designer.cs">
+      <DependentUpon>202010191150417_add_24H_File_Count.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202011152259140_add_QC_in_NewJobs.cs" />
+    <Compile Include="Migrations\202011152259140_add_QC_in_NewJobs.designer.cs">
+      <DependentUpon>202011152259140_add_QC_in_NewJobs.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202011281453515_add Model PendingImage.cs" />
+    <Compile Include="Migrations\202011281453515_add Model PendingImage.designer.cs">
+      <DependentUpon>202011281453515_add Model PendingImage.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202012121638049_add feedback panel.cs" />
+    <Compile Include="Migrations\202012121638049_add feedback panel.designer.cs">
+      <DependentUpon>202012121638049_add feedback panel.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Models\ImageTime.cs" />
+    <Compile Include="Models\My_Job.cs" />
+    <Compile Include="Models\PendingImage.cs" />
     <Compile Include="Models\Production.cs" />
     <Compile Include="Models\Rate.cs" />
-    <Compile Include="UI WinForm\CS Panel\Job_Entry_Panel.cs">
+    <Compile Include="Models\Redo_Job.cs" />
+    <Compile Include="Models\Shift_Report.cs" />
+    <Compile Include="Models\Sub_Folder.cs" />
+    <Compile Include="Models\Workload.cs" />
+    <Compile Include="Rename.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="UI WinForm\CS Panel\Job_Entry_Panel.Designer.cs">
-      <DependentUpon>Job_Entry_Panel.cs</DependentUpon>
+    <Compile Include="Rename.Designer.cs">
+      <DependentUpon>Rename.cs</DependentUpon>
+    </Compile>
+    <Compile Include="UI WinForm\admin_Panel\admin_panel.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="UI WinForm\admin_Panel\admin_panel.Designer.cs">
+      <DependentUpon>admin_panel.cs</DependentUpon>
+    </Compile>
+    <Compile Include="UI WinForm\Common_Panel\Designer_Report.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="UI WinForm\Common_Panel\Designer_Report.Designer.cs">
+      <DependentUpon>Designer_Report.cs</DependentUpon>
+    </Compile>
+    <Compile Include="UI WinForm\Common_Panel\Performance_UI.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="UI WinForm\Common_Panel\Performance_UI.Designer.cs">
+      <DependentUpon>Performance_UI.cs</DependentUpon>
+    </Compile>
+    <Compile Include="UI WinForm\Common_Panel\Productivity.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="UI WinForm\Common_Panel\Productivity.Designer.cs">
+      <DependentUpon>Productivity.cs</DependentUpon>
+    </Compile>
+    <Compile Include="UI WinForm\Common_Panel\waiting.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="UI WinForm\Common_Panel\waiting.Designer.cs">
+      <DependentUpon>waiting.cs</DependentUpon>
+    </Compile>
+    <Compile Include="UI WinForm\Common_Panel\Workload_Report.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="UI WinForm\Common_Panel\Workload_Report.Designer.cs">
+      <DependentUpon>Workload_Report.cs</DependentUpon>
+    </Compile>
+    <Compile Include="UI WinForm\CS Panel\Job_Entry.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="UI WinForm\CS Panel\Job_Entry.Designer.cs">
+      <DependentUpon>Job_Entry.cs</DependentUpon>
     </Compile>
     <Compile Include="UI WinForm\CS Panel\CS_Dashboard.cs">
       <SubType>Form</SubType>
@@ -87,11 +278,23 @@
     <Compile Include="UI WinForm\CS Panel\CS_Dashboard.Designer.cs">
       <DependentUpon>CS_Dashboard.cs</DependentUpon>
     </Compile>
+    <Compile Include="UI WinForm\CS Panel\Job_Update.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="UI WinForm\CS Panel\Job_Update.Designer.cs">
+      <DependentUpon>Job_Update.cs</DependentUpon>
+    </Compile>
     <Compile Include="UI WinForm\HR Panel\HR_Dashboard.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="UI WinForm\HR Panel\HR_Dashboard.Designer.cs">
       <DependentUpon>HR_Dashboard.cs</DependentUpon>
+    </Compile>
+    <Compile Include="UI WinForm\HR Panel\Job_Report.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="UI WinForm\HR Panel\Job_Report.Designer.cs">
+      <DependentUpon>Job_Report.cs</DependentUpon>
     </Compile>
     <Compile Include="UI WinForm\Login.cs">
       <SubType>Form</SubType>
@@ -100,14 +303,20 @@
       <DependentUpon>Login.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
-    <Compile Include="Models\Attend.cs" />
-    <Compile Include="Models\Job.cs" />
+    <Compile Include="Models\Performance.cs" />
+    <Compile Include="Models\New_Job.cs" />
     <Compile Include="Models\Price_Time.cs" />
     <Compile Include="Models\Log.cs" />
     <Compile Include="Models\User.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Data\SkillContext.cs" />
+    <Compile Include="UI WinForm\Production\Designer\Counter.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="UI WinForm\Production\Designer\Counter.Designer.cs">
+      <DependentUpon>Counter.cs</DependentUpon>
+    </Compile>
     <Compile Include="UI WinForm\Production\Designer\Dashboard.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -119,6 +328,30 @@
     </Compile>
     <Compile Include="UI WinForm\Production\Designer\Processing.Designer.cs">
       <DependentUpon>Processing.cs</DependentUpon>
+    </Compile>
+    <Compile Include="UI WinForm\Production\Designer\Saving_Progress.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="UI WinForm\Production\Designer\Saving_Progress.Designer.cs">
+      <DependentUpon>Saving_Progress.cs</DependentUpon>
+    </Compile>
+    <Compile Include="UI WinForm\Production\QC Panel\QC_Dashboard.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="UI WinForm\Production\QC Panel\QC_Dashboard.Designer.cs">
+      <DependentUpon>QC_Dashboard.cs</DependentUpon>
+    </Compile>
+    <Compile Include="UI WinForm\Production\QC Panel\QC_Job_View.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="UI WinForm\Production\QC Panel\QC_Job_View.Designer.cs">
+      <DependentUpon>QC_Job_View.cs</DependentUpon>
+    </Compile>
+    <Compile Include="UI WinForm\Production\QC Panel\QC_Process.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="UI WinForm\Production\QC Panel\QC_Process.Designer.cs">
+      <DependentUpon>QC_Process.cs</DependentUpon>
     </Compile>
     <Compile Include="UI WinForm\Production\SI Panel\Job_assign.cs">
       <SubType>Form</SubType>
@@ -132,32 +365,89 @@
     <Compile Include="UI WinForm\Production\SI Panel\SI_Dashboard.Designer.cs">
       <DependentUpon>SI_Dashboard.cs</DependentUpon>
     </Compile>
-    <Compile Include="UI WinForm\Common\Productivity.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="UI WinForm\Common\Productivity.Designer.cs">
+    <EmbeddedResource Include="Migrations\202008061335030_Modify Log Models.resx">
+      <DependentUpon>202008061335030_Modify Log Models.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202008061532426_add file formate in job model.resx">
+      <DependentUpon>202008061532426_add file formate in job model.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202008070209471_add sub folder model.resx">
+      <DependentUpon>202008070209471_add sub folder model.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202008070246238_add format in price model.resx">
+      <DependentUpon>202008070246238_add format in price model.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202008070609435_add date to my job model.resx">
+      <DependentUpon>202008070609435_add date to my job model.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202008081721490_add Date to log model.resx">
+      <DependentUpon>202008081721490_add Date to log model.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202008110905444_add location and remarks field in log model.resx">
+      <DependentUpon>202008110905444_add location and remarks field in log model.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202009031653410_Shift_Report_Added.resx">
+      <DependentUpon>202009031653410_Shift_Report_Added.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202009032247122_correction perfomane.resx">
+      <DependentUpon>202009032247122_correction perfomane.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202009051503400_added workload.resx">
+      <DependentUpon>202009051503400_added workload.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202009051823545_modification log model.resx">
+      <DependentUpon>202009051823545_modification log model.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202009060811228_modification all Model Field.resx">
+      <DependentUpon>202009060811228_modification all Model Field.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202010191150417_add_24H_File_Count.resx">
+      <DependentUpon>202010191150417_add_24H_File_Count.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202011152259140_add_QC_in_NewJobs.resx">
+      <DependentUpon>202011152259140_add_QC_in_NewJobs.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202011281453515_add Model PendingImage.resx">
+      <DependentUpon>202011281453515_add Model PendingImage.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202012121638049_add feedback panel.resx">
+      <DependentUpon>202012121638049_add feedback panel.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Rename.resx">
+      <DependentUpon>Rename.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UI WinForm\admin_Panel\admin_panel.resx">
+      <DependentUpon>admin_panel.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UI WinForm\Common_Panel\Designer_Report.resx">
+      <DependentUpon>Designer_Report.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UI WinForm\Common_Panel\Performance_UI.resx">
+      <DependentUpon>Performance_UI.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UI WinForm\Common_Panel\Productivity.resx">
       <DependentUpon>Productivity.cs</DependentUpon>
-    </Compile>
-    <EmbeddedResource Include="Migrations\202007291410591_initial Database setup.resx">
-      <DependentUpon>202007291410591_initial Database setup.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\202007292225207_add Efficiency to model.resx">
-      <DependentUpon>202007292225207_add Efficiency to model.cs</DependentUpon>
+    <EmbeddedResource Include="UI WinForm\Common_Panel\waiting.resx">
+      <DependentUpon>waiting.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\202007300329146_add currency in jobs model.resx">
-      <DependentUpon>202007300329146_add currency in jobs model.cs</DependentUpon>
+    <EmbeddedResource Include="UI WinForm\Common_Panel\Workload_Report.resx">
+      <DependentUpon>Workload_Report.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\202007300830072_add HR Panel and Production Model.resx">
-      <DependentUpon>202007300830072_add HR Panel and Production Model.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="UI WinForm\CS Panel\Job_Entry_Panel.resx">
-      <DependentUpon>Job_Entry_Panel.cs</DependentUpon>
+    <EmbeddedResource Include="UI WinForm\CS Panel\Job_Entry.resx">
+      <DependentUpon>Job_Entry.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="UI WinForm\CS Panel\CS_Dashboard.resx">
       <DependentUpon>CS_Dashboard.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="UI WinForm\CS Panel\Job_Update.resx">
+      <DependentUpon>Job_Update.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="UI WinForm\HR Panel\HR_Dashboard.resx">
       <DependentUpon>HR_Dashboard.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UI WinForm\HR Panel\Job_Report.resx">
+      <DependentUpon>Job_Report.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="UI WinForm\Login.resx">
       <DependentUpon>Login.cs</DependentUpon>
@@ -171,11 +461,26 @@
       <AutoGen>True</AutoGen>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
+    <EmbeddedResource Include="UI WinForm\Production\Designer\Counter.resx">
+      <DependentUpon>Counter.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="UI WinForm\Production\Designer\Dashboard.resx">
       <DependentUpon>Dashboard.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="UI WinForm\Production\Designer\Processing.resx">
       <DependentUpon>Processing.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UI WinForm\Production\Designer\Saving_Progress.resx">
+      <DependentUpon>Saving_Progress.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UI WinForm\Production\QC Panel\QC_Dashboard.resx">
+      <DependentUpon>QC_Dashboard.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UI WinForm\Production\QC Panel\QC_Job_View.resx">
+      <DependentUpon>QC_Job_View.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UI WinForm\Production\QC Panel\QC_Process.resx">
+      <DependentUpon>QC_Process.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="UI WinForm\Production\SI Panel\Job_assign.resx">
       <DependentUpon>Job_assign.cs</DependentUpon>
@@ -183,11 +488,10 @@
     <EmbeddedResource Include="UI WinForm\Production\SI Panel\SI_Dashboard.resx">
       <DependentUpon>SI_Dashboard.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="UI WinForm\Common\Productivity.resx">
-      <DependentUpon>Productivity.cs</DependentUpon>
-    </EmbeddedResource>
     <None Include="packages.config" />
+    <None Include="Properties\app.manifest" />
     <None Include="Properties\DataSources\Skill_PMS.Models.Job.datasource" />
+    <None Include="Properties\DataSources\Skill_PMS.Models.NewJob.datasource" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
@@ -197,12 +501,25 @@
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
+    <None Include="Skill_PMS_TemporaryKey.pfx" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="UI WinForm\Production\QC Panel\" />
+    <WCFMetadata Include="Connected Services\" />
+  </ItemGroup>
+  <ItemGroup>
+    <BootstrapperPackage Include=".NETFramework,Version=v4.7.2">
+      <Visible>False</Visible>
+      <ProductName>Microsoft .NET Framework 4.7.2 %28x86 and x64%29</ProductName>
+      <Install>true</Install>
+    </BootstrapperPackage>
+    <BootstrapperPackage Include="Microsoft.Net.Framework.3.5.SP1">
+      <Visible>False</Visible>
+      <ProductName>.NET Framework 3.5 SP1</ProductName>
+      <Install>false</Install>
+    </BootstrapperPackage>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">

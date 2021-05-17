@@ -1,23 +1,29 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Skill_PMS.Models
 {
     public class Log
     {
-        public int ID { get; set; }
-        public int User_ID { get; set; }
-        public int Job_ID { get; set; }
+        public int Id { get; set; }
+        public string Name { get; set; }
+        public string JobId { get; set; }
         public string Status { get; set; }
-        public DateTime Start_Job { get; set; }
-        public DateTime Finish_Job { get; set; }
-        public double Job_Time { get; set; }
-        public double Pro_Time { get; set; }
+        public string Shift { get; set; }
+        public string Category { get; set; }
+        public DateTime Date { get; set; }
+        public DateTime StartTime { get; set; }
+        public DateTime EndTime { get; set; }
+        public double ActualTime { get; set; }
+        public double TargetTime { get; set; }
+        public double ProTime { get; set; }
         public int Efficiency { get; set; }
+        public int Quality { get; set; }
         public string Service { get; set; }
         public string Image { get; set; }
+        public string Remarks { get; set; }
+        public string InputLocation { get; set; }
+        public string WorkingLocation { get; set; }
+        public string OutputLocation { get; set; }
+        public int Up { get; set; }
     }
 }
