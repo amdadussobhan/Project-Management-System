@@ -17,6 +17,8 @@ namespace Skill_PMS.UI_WinForm.Production.Designer
         private readonly SkillContext _db = new SkillContext();
         private readonly Common _common = new Common();
 
+        public bool autoPause = false;
+        public Point cursorPosition = new Point();
         private Log _log = new Log();
         public NewJob _job = new NewJob();
         public Performance _performance = new Performance();
@@ -27,7 +29,7 @@ namespace Skill_PMS.UI_WinForm.Production.Designer
         private bool _isOld;
         private string _myService, _file, _fileName, _filePath, _ext, _parentFolder;
         private double _myTime;
-        public static double _proTime;
+        public double _proTime;
         public static double TotalTime;
         public static bool Minimized;
         private string _instruction, _jobFolder, _readyFolder, _myFolder, _rawFolder, _doneFolder;
@@ -431,6 +433,25 @@ namespace Skill_PMS.UI_WinForm.Production.Designer
                 MessageBox.Show(@"Instruction doesn't Exist. Please inform Your in-charge Or Manager about this...", @"Folder Not Found", MessageBoxButtons.OK, MessageBoxIcon.Error);
         }
 
+        private void Tmr_Pause_Tick(object sender, EventArgs e)
+        {
+            if (cursorPosition == Cursor.Position)
+            {
+                autoPause = true;
+                Tmr_Count.Stop();
+                Btn_Pause.Text = "Resume";
+            }
+            else
+            {
+                if (autoPause)
+                {
+                    Tmr_Count.Start();
+                    Btn_Pause.Text = "Pause";
+                }
+            }
+            cursorPosition = Cursor.Position;
+        }
+
         private void Rdb_PNG_CheckedChanged(object sender, EventArgs e)
         {
             Check_Format();
@@ -462,6 +483,7 @@ namespace Skill_PMS.UI_WinForm.Production.Designer
         {
             if (Btn_Pause.Text == @"Pause")
             {
+                autoPause = false;
                 Tmr_Count.Stop();
                 Btn_Pause.Text = @"Resume";
             }
@@ -493,143 +515,9 @@ namespace Skill_PMS.UI_WinForm.Production.Designer
 
         private void Btn_Save_Click(object sender, EventArgs e)
         {
-            var now = DateTime.Now;
-            var date = DateTime.Now.Date;
-            if (_performance.Shift == "Night" & DateTime.Now.ToString("tt").ToUpper() == "AM")
-                date = DateTime.Now.AddDays(-1).Date;
-
             Tmr_Count.Stop();
+            Tmr_Pause.Stop();
             _proTime /= 60;
-
-            //update log Report in Log Table
-            _log = _db.Logs
-                .FirstOrDefault(x => x.JobId == _job.JobId & x.Image == _fileName & x.Status == "Running" & x.Name == User.Short_Name & x.Service == _myService);
-
-            if (_log != null)
-            {
-                _log.ProTime = _proTime;
-                if (_log.ProTime != 0)
-                    _log.Efficiency = Convert.ToInt32(_log.TargetTime / _log.ProTime * 100);
-
-                _log.OutputLocation = _destination;
-                _log.EndTime = DateTime.Now;
-                _log.Status = "Done";
-                _log.Quality = 100;
-                _log.Up = 0;
-            }
-
-            _db.SaveChanges();
-
-            //Update Job report in job table
-            var logCount = _db.Logs
-                    .Where(x => x.JobId == _job.JobId & x.Status == "Done")
-                    .Select(x => x.Image)
-                    .Distinct()
-                    .Count();
-
-            _job.ProDone = logCount;
-
-            if (logCount != 0)
-            {
-                var sum = _db.Logs
-                    .Where(x => x.JobId == _job.JobId & x.Status == "Done")
-                    .Sum(x => x.ProTime);
-
-                _job.ProTime = sum / logCount;
-            }
-
-            _job.Up = 0;
-            _db.SaveChanges();
-
-            //Update My_Job Report in My_Job Table
-
-            var myJob = _db.My_Jobs
-                .FirstOrDefault(x => x.JobId == _job.JobId & x.Name == User.Short_Name & x.Service == _myService & x.Date == date);
-
-            if (myJob == null)
-            {
-                myJob = new MyJob
-                {
-                    JobId = _job.JobId,
-                    Name = User.Short_Name,
-                    Service = _myService,
-                    JobTime = _myTime,
-                    Date = date,
-                    StartTime = _log.StartTime
-                };
-                _db.My_Jobs.Add(myJob);
-            }
-
-            logCount = _db.Logs
-                .Where(x => x.JobId == _job.JobId & x.Status == "Done" & x.Name == User.Short_Name &
-                            x.Service == _myService & x.StartTime >= _performance.Login & x.StartTime <= now)
-                .Select(x => x.Image)
-                .Distinct()
-                .Count();
-            
-            myJob.Amount = logCount;
-            myJob.TotalJobTime = logCount * _myTime;
-
-            double avg;
-            if (logCount != 0)
-            {
-                avg = _db.Logs
-                    .Where(x => x.JobId == _job.JobId & x.Status == "Done" & x.Name == User.Short_Name &
-                                x.Service == _myService & x.StartTime >= _performance.Login & x.StartTime <= now)
-                    .Average(x => x.ProTime);
-
-                myJob.ProTime = avg;
-                if (myJob.ProTime != 0)
-                    myJob.Efficiency = Convert.ToInt32(myJob.JobTime / myJob.ProTime * 100);
-
-                avg = _db.Logs
-                    .Where(x => x.JobId == _job.JobId & x.Status == "Done" & x.Name == User.Short_Name &
-                                x.Service == _myService & x.StartTime >= _performance.Login & x.StartTime <= now)
-                    .Average(x => x.Quality);
-
-                myJob.Quality = Convert.ToInt32(avg);
-
-                myJob.TotalProTime = _db.Logs
-                    .Where(x => x.JobId == _job.JobId & x.Status == "Done" & x.Name == User.Short_Name &
-                                x.Service == _myService & x.StartTime >= _performance.Login & x.StartTime <= now)
-                    .Sum(x => x.ProTime);
-            }
-
-            myJob.Up = 0;
-            myJob.EndTime = DateTime.Now;
-            _db.SaveChanges();
-
-            //Update My_Job Performance in Performance Table
-
-            logCount = _db.My_Jobs
-                .Count(x => x.Name == User.Short_Name & x.StartTime >= _performance.Login & x.StartTime <= now);
-
-            if (logCount != 0)
-            {
-                _performance.File = _db.My_Jobs
-                        .Where(x => x.Name == User.Short_Name & x.StartTime >= _performance.Login & x.StartTime <= now)
-                        .Sum(x => x.Amount);
-
-                _performance.JobTime = _db.My_Jobs
-                        .Where(x => x.Name == User.Short_Name & x.StartTime >= _performance.Login & x.StartTime <= now)
-                        .Sum(x => x.TotalJobTime);
-
-                _performance.ProTime = _db.My_Jobs
-                        .Where(x => x.Name == User.Short_Name & x.StartTime >= _performance.Login & x.StartTime <= now)
-                        .Sum(x => x.TotalProTime);
-                
-                avg = _db.My_Jobs
-                        .Where(x => x.Name == User.Short_Name & x.StartTime >= _performance.Login & x.StartTime <= now)
-                        .Average(x => x.Quality);
-
-                _performance.Quality = Convert.ToInt32(avg);
-            }
-
-            if(_performance.ProTime != 0)
-                _performance.Efficiency = Convert.ToInt32(_performance.JobTime / _performance.ProTime * 100);
-
-            _performance.Up = 0;
-            _db.SaveChanges();
 
             Pnl_Counter.Visible = false;
             Pnl_Format.Visible = false;
@@ -642,62 +530,68 @@ namespace Skill_PMS.UI_WinForm.Production.Designer
 
             if (Btn_Pause.Text == @"Resume")
             {
-                if (File.Exists(_source))
-                {
-                    var path = Path.GetDirectoryName(_filePath);
-                    _destination = Path.Combine(path ?? string.Empty, itemName);
+                var path = Path.GetDirectoryName(_filePath);
+                _destination = Path.Combine(path ?? string.Empty, itemName);
 
-                    //move back file to my folder
-                    File.Move(_source, _destination);
-                }
-                else
-                    MessageBox.Show(@"Find done file & keep it to my folder manually...", @"File doesn't Exist", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                var savingProgress = new SavingProgress
+                {
+                    resume = true,
+                    _performance = _performance,
+                    User = User,
+                    _job = _job,
+                    _fileName = _fileName,
+                    _myService = _myService,
+                    _proTime = _proTime,
+                    Source = _source,
+                    Destination = _destination
+                };
+                savingProgress.Show();
             }
             else
             {
-                //Copy done image to server ready folder
-                if (File.Exists(_source))
+                Directory.CreateDirectory(_doneFolder);
+                _destination = Path.Combine(_doneFolder, itemName);                    
+
+                if (File.Exists(_destination))
+                    File.Delete(_destination);
+
+                //move done file to done folder
+                File.Move(_source, _destination);
+                _source = _destination;
+
+                //create ready folder with check if exist subfolder
+                var root = "";
+                _filePath = Path.GetDirectoryName(_filePath);
+                _parentFolder = new DirectoryInfo(_filePath ?? string.Empty).Name;
+                while (_parentFolder != _myService)
                 {
-                    Directory.CreateDirectory(_doneFolder);
-                    _destination = Path.Combine(_doneFolder, itemName);                    
+                    if (_parentFolder != "Raw_File" & _parentFolder != "Done_File")
+                        root = _parentFolder + @"\" + root;
 
-                    if (File.Exists(_destination))
-                        File.Delete(_destination);
-
-                    //move done file to done folder
-                    File.Move(_source, _destination);
-                    _source = _destination;
-
-                    //create ready folder with check if exist subfolder
-                    var root = "";
                     _filePath = Path.GetDirectoryName(_filePath);
                     _parentFolder = new DirectoryInfo(_filePath ?? string.Empty).Name;
-                    while (_parentFolder != _myService)
-                    {
-                        if (_parentFolder != "Raw_File" & _parentFolder != "Done_File")
-                            root = _parentFolder + @"\" + root;
-
-                        _filePath = Path.GetDirectoryName(_filePath);
-                        _parentFolder = new DirectoryInfo(_filePath ?? string.Empty).Name;
-                    }
-
-                    _readyFolder = _job.WorkingLocation + @"\" + _myService + "_Done" + @"\" + root;
-
-                    if (_log.Remarks == "Share")
-                        _readyFolder += @"\Share\" + User.Short_Name;
-
-                    Directory.CreateDirectory(_readyFolder);
-                    _destination = Path.Combine(_readyFolder, itemName);
-
-                    var savingProgress = new SavingProgress
-                    {
-                        Source = _source,
-                        Destination = _destination
-                    };
-                    savingProgress.Show();
                 }
-                else
-                    MessageBox.Show(@"Find done file & keep it to Ready folder manually...", @"Done file doesn't Exist", MessageBoxButtons.OK, MessageBoxIcon.Error);
+
+                _readyFolder = _job.WorkingLocation + @"\" + _myService + "_Done" + @"\" + root;
+
+                if (_log.Remarks == "Share")
+                    _readyFolder += @"\Share\" + User.Short_Name;
+
+                Directory.CreateDirectory(_readyFolder);
+                _destination = Path.Combine(_readyFolder, itemName);
+
+                var savingProgress = new SavingProgress
+                {
+                    _performance = _performance,
+                    User = User,
+                    _job = _job,
+                    _fileName = _fileName,
+                    _myService = _myService,
+                    _proTime = _proTime,
+                    Source = _source,
+                    Destination = _destination
+                };
+                savingProgress.Show();
             }
         }
 
@@ -710,6 +604,8 @@ namespace Skill_PMS.UI_WinForm.Production.Designer
 
             if (_fileAmount == 1)
             {
+                Tmr_Count.Start();
+                Tmr_Pause.Start();
                 string file = Path.GetFileName(_file);
                 _fileName = Path.GetFileNameWithoutExtension(_file);
 
@@ -719,8 +615,10 @@ namespace Skill_PMS.UI_WinForm.Production.Designer
                 if (imageTime == null)
                 {
                     MessageBox.Show(@"This file have not assign target time. Please inform to Shift Incharge", @"Target Time empty", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    Tmr_Count.Stop();
                     return;
                 }
+
                 _myTime = 0;
 
                 if (Chk_CP.Checked)
@@ -760,10 +658,13 @@ namespace Skill_PMS.UI_WinForm.Production.Designer
                     if (log == null)
                     {
                         MessageBox.Show(@"This file already production running. by " + _log.Name + @". Please select another file......", @"Running by " + _log.Name, MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        Tmr_Count.Stop();
                         return;
                     }
                     _myTime = log.TargetTime;
                 }
+
+                this.WindowState = FormWindowState.Minimized;
 
                 _filePath = Loc;
                 _parentFolder = new DirectoryInfo(_filePath ?? string.Empty).Name;
@@ -865,8 +766,6 @@ namespace Skill_PMS.UI_WinForm.Production.Designer
                 BTN_Share.Enabled = true;
 
                 Txt_image.Text = _fileName;
-                this.WindowState = FormWindowState.Minimized;
-                Tmr_Count.Start();
                 Lbl_Job_Time.Text = @"Job Time: " + _myTime;
                 Lbl_Job_Time_1.Text = @"Job Time: " + _myTime;
             }

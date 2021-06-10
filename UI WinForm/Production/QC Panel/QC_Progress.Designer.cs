@@ -1,6 +1,7 @@
-﻿namespace Skill_PMS.UI_WinForm.Production.Designer
+﻿
+namespace Skill_PMS.UI_WinForm.Production.QC_Panel
 {
-    partial class SavingProgress
+    partial class QC_Progress
     {
         /// <summary>
         /// Required designer variable.
@@ -35,10 +36,10 @@
             // 
             // Prb_Copier
             // 
-            this.Prb_Copier.Location = new System.Drawing.Point(10, 13);
+            this.Prb_Copier.Location = new System.Drawing.Point(7, 11);
             this.Prb_Copier.Name = "Prb_Copier";
             this.Prb_Copier.Size = new System.Drawing.Size(400, 15);
-            this.Prb_Copier.TabIndex = 5;
+            this.Prb_Copier.TabIndex = 6;
             // 
             // Tmr_Count
             // 
@@ -46,21 +47,20 @@
             this.Tmr_Count.Interval = 3000;
             this.Tmr_Count.Tick += new System.EventHandler(this.Tmr_Count_Tick);
             // 
-            // SavingProgress
+            // QC_Progress
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.SystemColors.ActiveBorder;
-            this.ClientSize = new System.Drawing.Size(419, 41);
+            this.ClientSize = new System.Drawing.Size(415, 37);
             this.Controls.Add(this.Prb_Copier);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.Fixed3D;
             this.Location = new System.Drawing.Point(1490, 950);
             this.MaximizeBox = false;
-            this.Name = "SavingProgress";
+            this.Name = "QC_Progress";
             this.StartPosition = System.Windows.Forms.FormStartPosition.Manual;
-            this.Text = "Saving_Progress";
-            this.TopMost = true;
-            this.Load += new System.EventHandler(this.Saving_Progress_Load);
+            this.Text = "QC_Progress";
+            this.Load += new System.EventHandler(this.QC_Progress_Load);
             this.ResumeLayout(false);
 
         }

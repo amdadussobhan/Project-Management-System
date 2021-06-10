@@ -88,8 +88,6 @@ namespace Skill_PMS.UI_WinForm.CS_Panel
 
         private void Create_Job_ID()
         {
-            _db = new SkillContext();
-
             var today = DateTime.Now.Date;
             var count = _db.New_Jobs
                 .Count(x => x.Date == today);
@@ -163,8 +161,6 @@ namespace Skill_PMS.UI_WinForm.CS_Panel
 
         private void Btn_Submit_Job_Click(object sender, EventArgs e)
         {
-            _db = new SkillContext();
-
             if (!string.IsNullOrEmpty(Txt_Amount.Text))
                 _file = Convert.ToInt32(Txt_Amount.Text);
 
@@ -251,15 +247,8 @@ namespace Skill_PMS.UI_WinForm.CS_Panel
             //........................
 
             //update job table
-            if (!_isModify)
-            {
-                _newJob.Date = DateTime.Now.Date;
-                _newJob.Incoming = DateTime.Now;
-            }
-
             Create_Job_ID();
             _newJob.JobId = workLoad.JobId = _newJobId;
-            _newJob.Status = "New";
             _newJob.Client = _client;
             _newJob.Category = category;
             _newJob.Type = Cmb_Job_Type.Text;
@@ -278,20 +267,25 @@ namespace Skill_PMS.UI_WinForm.CS_Panel
                 _newJob.Price_Times_ID = _priceTime.ID;
 
             if (!_isModify)
+            {
+                _newJob.Status = "New";
+                _newJob.Date = DateTime.Now.Date;
+                _newJob.Incoming = DateTime.Now;
                 _db.New_Jobs.Add(_newJob);
+            }
 
             if (_isRedo)
             {
                 _redoJob.RedoJobId = _newJob.JobId;
                 _db.RedoJob.Add(_redoJob);
             }
-            _db.SaveChanges();
 
+            _db.SaveChanges();
             _common.Change_Shift();
             if (shiftReport.TotalLoad == 0)
                 _common.Check_Workload(shift);
 
-            this.Hide();
+            this.Close();
         }
 
         private void Cmb_Client_TextChanged(object sender, EventArgs e)

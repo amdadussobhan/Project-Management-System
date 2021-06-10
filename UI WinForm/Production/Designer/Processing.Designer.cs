@@ -68,6 +68,7 @@
             this.BTN_Share = new System.Windows.Forms.Button();
             this.Btn_Instruction = new System.Windows.Forms.Button();
             this.Txt_Mnt = new System.Windows.Forms.TextBox();
+            this.Tmr_Pause = new System.Windows.Forms.Timer(this.components);
             this.Pnl_Counter.SuspendLayout();
             this.Pnl_Service.SuspendLayout();
             this.Pnl_Format.SuspendLayout();
@@ -279,6 +280,7 @@
             // 
             // Tmr_Count
             // 
+            this.Tmr_Count.Enabled = true;
             this.Tmr_Count.Interval = 1000;
             this.Tmr_Count.Tick += new System.EventHandler(this.Tmr_Count_Tick);
             // 
@@ -547,6 +549,12 @@
             this.Txt_Mnt.TabIndex = 408;
             this.Txt_Mnt.TextChanged += new System.EventHandler(this.Txt_Mnt_TextChanged);
             // 
+            // Tmr_Pause
+            // 
+            this.Tmr_Pause.Enabled = true;
+            this.Tmr_Pause.Interval = 30000;
+            this.Tmr_Pause.Tick += new System.EventHandler(this.Tmr_Pause_Tick);
+            // 
             // Processing
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -629,5 +637,6 @@
         private System.Windows.Forms.Button Btn_Instruction;
         private System.Windows.Forms.TextBox Txt_Mnt;
         private System.Windows.Forms.Label Lbl_Job_Time;
+        private System.Windows.Forms.Timer Tmr_Pause;
     }
 }

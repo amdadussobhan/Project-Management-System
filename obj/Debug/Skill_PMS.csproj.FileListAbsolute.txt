@@ -239,7 +239,6 @@ F:\Project\Skill Soft\Skill_PMS_DHK\bin\Debug\System.Buffers.xml
 F:\Project\Skill Soft\Skill_PMS_DHK\bin\Debug\System.Memory.xml
 F:\Project\Skill Soft\Skill_PMS_DHK\bin\Debug\System.Numerics.Vectors.xml
 F:\Project\Skill Soft\Skill_PMS_DHK\bin\Debug\System.Runtime.CompilerServices.Unsafe.xml
-F:\Project\Skill Soft\Skill_PMS_DHK\obj\Debug\Skill_PMS.csprojAssemblyReference.cache
 F:\Project\Skill Soft\Skill_PMS_DHK\obj\Debug\Skill_PMS.Migrations.ModifyLogModels.resources
 F:\Project\Skill Soft\Skill_PMS_DHK\obj\Debug\Skill_PMS.Migrations.addfileformateinjobmodel.resources
 F:\Project\Skill Soft\Skill_PMS_DHK\obj\Debug\Skill_PMS.Migrations.addsubfoldermodel.resources
@@ -287,3 +286,6 @@ F:\Project\Skill Soft\Skill_PMS_DHK\obj\Debug\Skill_PMS.application
 F:\Project\Skill Soft\Skill_PMS_DHK\obj\Debug\Skill_PMS.csproj.CopyComplete
 F:\Project\Skill Soft\Skill_PMS_DHK\obj\Debug\Skill_PMS.exe
 F:\Project\Skill Soft\Skill_PMS_DHK\obj\Debug\Skill_PMS.pdb
+F:\Project\Skill Soft\Skill_PMS_DHK\obj\Debug\Skill_PMS.UI_WinForm.Production.QC_Panel.QC_Progress.resources
+F:\Project\Skill Soft\Skill_PMS_DHK\obj\Debug\Skill_PMS.csprojAssemblyReference.cache
+F:\Project\Skill Soft\Skill_PMS_DHK\obj\Debug\Skill_PMS.UI_WinForm.Production.SI_Panel.Double_Login.resources

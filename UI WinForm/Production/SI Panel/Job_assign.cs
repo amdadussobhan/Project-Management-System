@@ -483,10 +483,7 @@ namespace Skill_PMS.UI_WinForm.Production.SI_Panel
         private void Job_assign_Load(object sender, EventArgs e)
         {
             this.Text = "Job assign - " + _user.Full_Name;
-            
-            _job = _db.New_Jobs
-                .Where(x => x.JobId == _job.JobId)
-                .FirstOrDefault<NewJob>();
+            _job = _db.New_Jobs.FirstOrDefault(x => x.JobId == _job.JobId);
 
             Lbl_Job_ID.Text = _job.JobId;
             Lbl_Incoming.Text = _job.Incoming.ToString("ddd  dd-MM-yy  hh:mm tt");
@@ -524,8 +521,7 @@ namespace Skill_PMS.UI_WinForm.Production.SI_Panel
         private void Cmb_Category_TextChanged(object sender, EventArgs e)
         {
             var price_time = _db.Price_Times
-                .Where(x => x.Client == _job.Client & x.Category == Cmb_Category.Text)
-                .FirstOrDefault<Price_Time>();
+                .FirstOrDefault(x => x.Client == _job.Client & x.Category == Cmb_Category.Text);
 
             Fill_Service_Time(price_time);
         }

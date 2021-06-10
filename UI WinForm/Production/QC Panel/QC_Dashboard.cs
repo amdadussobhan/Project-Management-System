@@ -115,7 +115,7 @@ namespace Skill_PMS.UI_WinForm.Production.QC_Panel
             var sl = 1;
             foreach (var job in jobs)
             {
-                Dgv_Feedback.Rows.Add(sl++, job.JobId, job.Folder, job.Type, job.InputAmount, job.ActualTime,
+                Dgv_Feedback.Rows.Add(sl++, job.JobId, job.Folder, job.InputAmount, job.ActualTime,
                     job.ActualTime * job.InputAmount, job.Incoming, job.Delivery);
             }
 
@@ -192,6 +192,64 @@ namespace Skill_PMS.UI_WinForm.Production.QC_Panel
                     Dgv_QC_Job.CurrentCell = Dgv_QC_Job.Rows[row].Cells[3];
             }
             _common.Row_Color_By_Delivery(Dgv_QC_Job, "Column53");
+        }
+
+        private void Check_Performance()
+        {
+            var date = _common.Shift_Date(DateTime.Now, _shift);
+            Dgv_Performance.DataSource = null;
+            Dgv_Performance.Rows.Clear();
+            _common.Dgv_Size(Dgv_Performance, 11);
+
+            var performances = (from per in _db.Performances
+                                join user in _db.Users
+                                on per.Name equals user.Short_Name
+                                where per.Date == date & user.Role == ""
+                                select new
+                                {
+                                    per.Name,
+                                    per.Shift,
+                                    per.Login,
+                                    per.Logout,
+                                    per.WorkingTime,
+                                    per.File,
+                                    per.JobTime,
+                                    per.ProTime,
+                                    per.Efficiency,
+                                    per.Quality,
+                                }).OrderByDescending(x => x.Efficiency).ToList();
+
+            var sl = 1;
+            foreach (var per in performances)
+            {
+                var start_time = _common.Shift_Time(per.Shift);
+                if (start_time > per.Logout)
+                    start_time = per.Logout;
+
+                var Capacity = (per.Logout - start_time).TotalMinutes;
+                Dgv_Performance.Rows.Add(sl++, per.Name, per.Shift, per.Login, per.Logout, per.WorkingTime, per.File, per.JobTime, Math.Round(per.ProTime), Math.Round(Capacity - per.ProTime), per.Efficiency + "%", per.Quality + "%");
+            }
+
+            _common.Row_Color_By_Efficiency(Dgv_Performance, "Column55");
+        }
+
+        private void Check_History()
+        {
+            DgvHistory.DataSource = null;
+            DgvHistory.Rows.Clear();
+            _common.Dgv_Size(DgvHistory, 11);
+
+            var logs = _db.Logs
+                .Where(x => x.Status == "Done")
+                .OrderByDescending(x => x.Id)
+                .Take(999)
+                .ToList();
+
+            var sl = 1;
+            foreach (var log in logs)
+                DgvHistory.Rows.Add(sl++, log.Name, log.JobId, log.Category, log.Image, log.Service, log.StartTime, log.EndTime, log.TargetTime, Math.Round(log.ProTime, 2), log.Efficiency + "%");
+
+            _common.Row_Color_By_Efficiency(DgvHistory, "Column59");
         }
 
         private void Check_Ready_Job()
@@ -288,17 +346,12 @@ namespace Skill_PMS.UI_WinForm.Production.QC_Panel
 
         private void QC_Dashboard_FormClosed(object sender, FormClosedEventArgs e)
         {
-            _performance = _db.Performances
-                .FirstOrDefault(x => x.Name == _user.Short_Name & x.Date == _today);
+            //    _performance = _db.Performances
+            //        .FirstOrDefault(x => x.Name == _user.Short_Name & x.Date == _today);
             _common.Logout(_performance);
         }
 
         private void Tbc_QC_Panel_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            Check_Data();
-        }
-
-        private void Check_Data()
         {
             switch (Tbc_QC_Panel.SelectedIndex)
             {
@@ -309,6 +362,7 @@ namespace Skill_PMS.UI_WinForm.Production.QC_Panel
                 case 1:
                     Check_Running_Job();
                     break;
+
                 case 2:
                     Check_Feedback();
                     break;
@@ -318,9 +372,18 @@ namespace Skill_PMS.UI_WinForm.Production.QC_Panel
                     break;
 
                 case 4:
+                    Check_Performance();
+                    break;
+
+                case 5:
+                    Check_History();
+                    break;
+
+                case 6:
                     Check_Ready_Job();
                     break;
-                case 5:
+
+                case 7:
                     Check_Done_Job();
                     break;
             }
@@ -331,8 +394,26 @@ namespace Skill_PMS.UI_WinForm.Production.QC_Panel
             _db = new SkillContext();
             _shift = _common.Current_Shift();
             _db.SaveChanges();
-            Check_Data();
             _common.Change_Shift();
+
+            switch (Tbc_QC_Panel.SelectedIndex)
+            {
+                case 0:
+                    Check_New_Job();
+                    break;
+
+                case 1:
+                    Check_Running_Job();
+                    break;
+
+                case 2:
+                    Check_Feedback();
+                    break;
+
+                case 3:
+                    Check_QC_Job();
+                    break;
+            }
         }
 
         private void Dgv_QC_Job_CellClick(object sender, DataGridViewCellEventArgs e)

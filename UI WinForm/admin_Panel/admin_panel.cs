@@ -204,26 +204,26 @@ namespace Skill_PMS.UI_WinForm.admin_Panel
             //Upload_Performances();
             //Upload_Logs();
 
-            try { Update_Shift_Report(); }
-            catch (Exception) { }
+            //try { Update_Shift_Report(); }
+            //catch (Exception) { }
 
-            try { _common.Change_Shift(); }
-            catch (Exception) { }
+            //try { _common.Change_Shift(); }
+            //catch (Exception) { }
 
-            try { Upload_Shift_Report(); }
-            catch (Exception) { }
+            //try { Upload_Shift_Report(); }
+            //catch (Exception) { }
 
-            try { Upload_Workloads(); }
-            catch (Exception) { }
+            //try { Upload_Workloads(); }
+            //catch (Exception) { }
 
-            try { Upload_New_Jobs(); }
-            catch (Exception) { }
+            //try { Upload_New_Jobs(); }
+            //catch (Exception) { }
 
-            try { Upload_My_Jobs(); }
-            catch (Exception) { }
+            //try { Upload_My_Jobs(); }
+            //catch (Exception) { }
 
-            try { Upload_Performances(); }
-            catch (Exception) { }
+            //try { Upload_Performances(); }
+            //catch (Exception) { }
 
             try { Upload_Logs(); }
             catch (Exception) { }

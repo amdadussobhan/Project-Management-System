@@ -27,40 +27,39 @@ namespace Skill_PMS.UI_WinForm
 
         private void Login_Load(object sender, EventArgs e)
         {
-            //DB.Users.Add(user);
-            //DB.SaveChanges();
-
             Check_user();
         }
 
-        private bool User_Validated()
+        private void Btn_Login_Click(object sender, EventArgs e)
         {
             _shift = Cmb_Shift.Text;
-            if (_user == null)
+            var date = _common.Shift_Date(DateTime.Now, _shift);
+            if (_user == null) 
             {
                 MessageBox.Show(@"Please Enter Proper User ID and Try again", @"User doesn't Found", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                return false;
+                return;
             }
 
             if (string.IsNullOrEmpty(_shift))
             {
                 MessageBox.Show(@"Please select Your Working Shift", @"Shift is Empty", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                return false;
+                return;
             }
 
             if (_user.Password != Txt_Pss.Text)
             {
                 MessageBox.Show(@"Please try again with correct password", @"Password Don't Match", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                return false;
+                return;
             }
 
-            return true;
-        }
+            var login = _db.Performances
+                .Where(x => x.Name == _user.Short_Name & x.Date == date & x.Status == "Running").Count();
 
-        private void Btn_Login_Click(object sender, EventArgs e)
-        {
-            var date = _common.Shift_Date(DateTime.Now, _shift);
-            if (!User_Validated()) return;
+            if (login > 0 & _user.Role == "")
+            {
+                MessageBox.Show(@"You are already loged in. Please close that then try again", @"Already Loged in", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                this.Close();
+            }
 
             var performance = _db.Performances
                 .FirstOrDefault(x => x.Name == _user.Short_Name & x.Date ==  date & x.Shift == _shift);

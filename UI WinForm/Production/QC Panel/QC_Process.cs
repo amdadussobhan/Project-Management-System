@@ -70,7 +70,7 @@ namespace Skill_PMS.UI_WinForm.Production.QC_Panel
             Btn_My_Folder.Enabled = true;
             Btn_Ready_Folder.Enabled = true;
             
-            Chenge_Service();
+            Change_Service();
             //Create my folder to local drive
             var localDrive = "";
 
@@ -98,7 +98,7 @@ namespace Skill_PMS.UI_WinForm.Production.QC_Panel
                 MessageBox.Show(@"Job Folder doesn't Exist. Please inform Your in-charge Or Manager about this...", @"Job Folder Not Found", MessageBoxButtons.OK, MessageBoxIcon.Error);
         }
 
-        private void Chenge_Service()
+        private void Change_Service()
         {
             if (_job.Service == null)
                 return;
@@ -204,8 +204,8 @@ namespace Skill_PMS.UI_WinForm.Production.QC_Panel
             if (_pro_files_name != null)
                 _pro_files_name.Clear();
 
-            if (_backup != null)
-                _backup.Clear();
+            //if (_backup != null)
+            //    _backup.Clear();
 
             if (_QC_files_name != null)
                 _QC_files_name.Clear();
@@ -291,16 +291,15 @@ namespace Skill_PMS.UI_WinForm.Production.QC_Panel
         void Remove_File(string file)
         {
             log = _db.Logs
-                .Where(x => x.JobId == _job.JobId & x.Image == file & x.Status == "Running" & x.Name == _user.Short_Name & x.Service == "QC")
-                .FirstOrDefault<Log>();
+                .FirstOrDefault(x => x.JobId == _job.JobId & x.Image == file & x.Status == "Running" & x.Name == _user.Short_Name & x.Service == "QC");
 
             if (log != null)
                 _db.Logs.Remove(log);
-
+            
             if (--_fileAmount <= 0)
                 Reset_Process();
 
-            _backup.Add(file);
+            _db.SaveChanges();
         }
 
         private void Btn_Cancel_Click(object sender, EventArgs e)
@@ -308,7 +307,7 @@ namespace Skill_PMS.UI_WinForm.Production.QC_Panel
             Clear_Job();
             Reset_Process();
             DGV_Files.Rows.Clear();
-            Chenge_Service();
+            Change_Service();
         }
 
         private void Btn_Pause_Click(object sender, EventArgs e)
@@ -332,6 +331,7 @@ namespace Skill_PMS.UI_WinForm.Production.QC_Panel
 
         private void DGV_Files_DragDrop(object sender, DragEventArgs e)
         {
+            _db = new SkillContext();
             string[] data = (string[])e.Data.GetData(DataFormats.FileDrop);
             _files = data.ToList();
 
@@ -353,8 +353,7 @@ namespace Skill_PMS.UI_WinForm.Production.QC_Panel
                 _pro_files_name.Add(fileName);
                 DGV_Files.Rows.Add(SL++, fileName, "X");
 
-                var imageTime = _db.ImageTime
-                    .FirstOrDefault(x => x.JobId == _job.JobId & x.Image == fileName);
+                var imageTime = _db.ImageTime.FirstOrDefault(x => x.JobId == _job.JobId & x.Image == fileName);
 
                 var category = "";
                 if (imageTime != null)
@@ -413,8 +412,7 @@ namespace Skill_PMS.UI_WinForm.Production.QC_Panel
                     }
 
                     log = _db.Logs
-                        .Where(x => x.JobId == _job.JobId & x.Image == fileName & x.Name == _user.Short_Name & x.Service == _myService)
-                        .FirstOrDefault<Log>();
+                        .FirstOrDefault(x => x.JobId == _job.JobId & x.Image == fileName & x.Name == _user.Short_Name & x.Service == _myService);
 
                     if (log == null)
                     {
@@ -448,8 +446,7 @@ namespace Skill_PMS.UI_WinForm.Production.QC_Panel
                         _jobTime = _job.QC_Time;
 
                     log = _db.Logs
-                        .Where(x => x.JobId == _job.JobId & x.Image == fileName & x.Name == _user.Short_Name & x.Service == "QC")
-                        .FirstOrDefault<Log>();
+                        .FirstOrDefault(x => x.JobId == _job.JobId & x.Image == fileName & x.Name == _user.Short_Name & x.Service == "QC");
 
                     if (log == null)
                     {
@@ -479,30 +476,6 @@ namespace Skill_PMS.UI_WinForm.Production.QC_Panel
             }
 
             _db.SaveChanges();
-            /*
-            foreach (string file in _files)
-            {
-                if (string.IsNullOrEmpty(file))
-                    break;
-
-                try
-                {
-                    Process Open = new Process();
-                    Open.StartInfo.FileName = @"Photoshop";
-                    Open.StartInfo.Arguments = file;
-                    Open.Start();
-                }
-                catch
-                {
-                    Process Open = new Process();
-                    Open.StartInfo.FileName = @"C:\Program Files (x86)\Adobe\Adobe Photoshop CS6\Photoshop.exe";
-                    Open.StartInfo.Arguments = file;
-                    Open.Start();
-                }
-
-                Thread.Sleep(1000);
-            }*/
-
             DGV_Files.AllowDrop = false;
             Btn_Save.Enabled = true;
             Btn_Cancel.Enabled = true;
@@ -516,218 +489,50 @@ namespace Skill_PMS.UI_WinForm.Production.QC_Panel
             Chk_LIQ.Enabled = false;
             Chk_SHA.Enabled = false;
             Chk_QC.Enabled = false;
-
-            _backup = new List<string>();
         }
 
         private void Btn_Save_Click(object sender, EventArgs e)
         {
-            DateTime today = DateTime.Now.Date;
-            if (this._performance.Shift == "Night" & DateTime.Now.ToString("tt").ToUpper() == "AM")
-                today = DateTime.Now.AddDays(-1).Date;
-
             Tmr_Count.Stop();
-            _total_Time = _total_Time / 60;
+            _total_Time /= 60;
+            bool QC = false;
             double pro_Time = _total_Time / _fileAmount;
             double qc_Time = pro_Time * 0.1;
 
+            if (Chk_QC.Checked)
+
             if (!string.IsNullOrEmpty(_myService))
-                pro_Time -= qc_Time;
-            else
-                qc_Time = pro_Time;
-
-            if (_backup != null)
             {
-                foreach (string file in _backup.ToList())
-                    _pro_files_name.Remove(file);
-            }
-
-            //My_Job Report Entry in Log Table
-            foreach (string file in _pro_files_name)
-            {
-                if (file == null)
-                    break;
-
-                if (!string.IsNullOrEmpty(_myService)) 
-                {
-                    log = _db.Logs
-                        .Where(x => x.JobId == _job.JobId & x.Image == file & x.Status == "Running" & x.Name == _user.Short_Name & x.Service == _myService)
-                        .FirstOrDefault<Log>();
-
-                    log.ProTime += pro_Time;
-                    log.EndTime = DateTime.Now;
-                    log.Status = "Done";
-                    log.Up = 0;
-
-                    if (log.ProTime != 0)
-                        log.Efficiency = (int)(log.TargetTime / log.ProTime * 100);
-                }
-
                 if (Chk_QC.Checked)
                 {
-                    log = _db.Logs
-                        .Where(x => x.JobId == _job.JobId & x.Image == file & x.Status == "Running" & x.Name == _user.Short_Name & x.Service == "QC")
-                        .FirstOrDefault<Log>();
-
-                    log.ProTime += qc_Time;
-                    log.EndTime = DateTime.Now;
-                    log.Status = "Done";
-                    log.Up = 0;
-
-                    if (log.ProTime != 0)
-                        log.Efficiency = (int)(log.TargetTime / log.ProTime * 100);
+                    QC = true;
+                    pro_Time -= qc_Time;
                 }
-
-                --_fileAmount;
             }
-
-            _db.SaveChanges();
-
-            //Job Report Entry in Job Table
-            int done_file = _db.Logs
-                .Where(x => x.JobId == _job.JobId & x.Service == "QC")
-                .Count();
-
-            if (done_file != 0) {
-                double done_time = _db.Logs
-                    .Where(x => x.JobId == _job.JobId & x.Service == "QC")
-                    .Sum(x => x.ProTime);
-
-                _job.QcTime = done_time / done_file;
-            }
-
-            _job.OutputAmount = done_file;
-            _job.Up = 0;
-
-            //My_Job Report Entry in My_Job Table
-            MyJob my_job;
-            if (!string.IsNullOrEmpty(_myService))
+            else
             {
-                my_job = _db.My_Jobs
-                .Where(x => x.JobId == _job.JobId & x.Name == _user.Short_Name & x.Service == _myService)
-                .FirstOrDefault<MyJob>();
-
-                if (my_job == null)
-                {
-                    my_job = new MyJob();
-                    my_job.JobId = _job.JobId;
-                    my_job.Name = _user.Short_Name;
-                    my_job.Service = _myService;
-                    my_job.Date = DateTime.Now.Date;
-                    my_job.StartTime = DateTime.Now;
-
-                    _db.My_Jobs.Add(my_job);
-                }
-
-                done_file = _db.Logs
-                    .Where(x => x.JobId == _job.JobId & x.Name == _user.Short_Name & x.Service == _myService)
-                    .Count();
-
-                my_job.Amount = done_file;
-                if (done_file != 0)
-                {
-                    double done_time = _db.Logs
-                        .Where(x => x.JobId == _job.JobId & x.Name == _user.Short_Name & x.Service == _myService)
-                        .Sum(x => x.TargetTime);
-
-                    my_job.JobTime = done_time;
-
-                    done_time = _db.Logs
-                        .Where(x => x.JobId == _job.JobId & x.Name == _user.Short_Name & x.Service == _myService)
-                        .Sum(x => x.ProTime);
-
-                    my_job.ProTime = done_time;
-                    if (my_job.ProTime != 0)
-                        my_job.Efficiency = (int)(my_job.JobTime / my_job.ProTime * 100);
-                }
-
-                my_job.EndTime = DateTime.Now;
-                my_job.Up = 0;
-                _db.SaveChanges();
+                QC = true;
+                qc_Time = pro_Time;
             }
-
-            if (Chk_QC.Checked)
+            
+            var qcProgress = new QC_Progress
             {
-                my_job = _db.My_Jobs
-                .Where(x => x.JobId == _job.JobId & x.Name == _user.Short_Name & x.Service == "QC")
-                .FirstOrDefault<MyJob>();
+                QC = QC,
+                _job = _job,
+                _user = _user,
+                _performance = _performance,
+                _pro_files_name = _pro_files_name.ToList(),
+                _fileAmount = _fileAmount,
+                _myService = _myService,
+                pro_Time = pro_Time,
+                qc_Time = qc_Time,
+            };
 
-                if (my_job == null)
-                {
-                    my_job = new MyJob();
-                    my_job.JobId = _job.JobId;
-                    my_job.Name = _user.Short_Name;
-                    my_job.Service = "QC";
-                    my_job.Date = DateTime.Now.Date;
-                    my_job.StartTime = DateTime.Now;
+            qcProgress.Show();
 
-                    _db.My_Jobs.Add(my_job);
-                }
-
-                done_file = _db.Logs
-                    .Where(x => x.JobId == _job.JobId & x.Name == _user.Short_Name & x.Service == "QC")
-                    .Count();
-
-                my_job.Amount = done_file;
-                if (done_file != 0)
-                {
-                    double done_time = _db.Logs
-                        .Where(x => x.JobId == _job.JobId & x.Name == _user.Short_Name & x.Service == "QC")
-                        .Sum(x => x.TargetTime);
-
-                    my_job.JobTime = done_time;
-
-                    done_time = _db.Logs
-                        .Where(x => x.JobId == _job.JobId & x.Name == _user.Short_Name & x.Service == "QC")
-                        .Sum(x => x.ProTime);
-
-                    my_job.ProTime = done_time;
-                    if (my_job.ProTime != 0)
-                        my_job.Efficiency = (int)(my_job.JobTime / my_job.ProTime * 100);
-                }
-
-                my_job.EndTime = DateTime.Now;
-                my_job.Up = 0;
-                _db.SaveChanges();
-            }
-
-            //My_Job Performance Entry in Performance Table
-            Performance performance;
-            performance = _db.Performances
-                .Where(x => x.Name == _user.Short_Name & x.Date == today)
-                .FirstOrDefault<Performance>();
-
-            done_file = _db.My_Jobs
-                .Where(x => x.Name == _user.Short_Name & x.Date == today)
-                .Count();
-
-            if (done_file != 0)
-            {
-                done_file = _db.My_Jobs
-                   .Where(x => x.Name == _user.Short_Name & x.Date == today)
-                   .Sum(x => x.Amount);
-
-                performance.File = done_file;
-
-                double done_time = _db.Logs
-                    .Where(x => x.JobId == _job.JobId & x.Name == _user.Short_Name)
-                    .Sum(x => x.TargetTime);
-
-                performance.JobTime = done_time;
-                done_time = _db.Logs
-                    .Where(x => x.JobId == _job.JobId & x.Name == _user.Short_Name)
-                    .Sum(x => x.ProTime);
-
-                performance.ProTime = done_time;
-
-                if (performance.ProTime != 0)
-                    performance.Efficiency = (int)(performance.JobTime / performance.ProTime * 100);
-            }
-            performance.Up = 0;
-            _db.SaveChanges();
             Reset_Process();
             Chenge_Quality_Btn(true);
-            Chenge_Service();
+            Change_Service();
 
             _QC_files_name = _pro_files_name.ToList();
             _pro_files_name.Clear();
@@ -795,7 +600,7 @@ namespace Skill_PMS.UI_WinForm.Production.QC_Panel
                         }
                     }
                 }
-                _backup.Add(file);
+                //_backup.Add(file);
             }
             _QC_files_name.Clear();
             _db.SaveChanges();

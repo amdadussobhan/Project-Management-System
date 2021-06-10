@@ -11,8 +11,6 @@ namespace Skill_PMS.UI_WinForm.Production.Designer
     {
         private readonly Common _common = new Common();
         private SkillContext _db = new SkillContext();
-        private DateTime _today;
-
         public static User User { get; set; }
         public Performance Performance = new Performance();
 
@@ -35,8 +33,8 @@ namespace Skill_PMS.UI_WinForm.Production.Designer
         private void Dashboard_Load(object sender, EventArgs e)
         {
             this.Text = @"Dashboard - " + User.Full_Name;
-            _today = DateTime.Now.Date;
             Tmr_Count.Start();
+            Check_New_Job();
             Check_Data();
         }
 
@@ -73,11 +71,41 @@ namespace Skill_PMS.UI_WinForm.Production.Designer
 
             var sl = 1;
             foreach (var log in logs)
-            {
-                DgvHistory.Rows.Add(sl++, log.JobId, log.Category, log.Image, log.Service, log.TargetTime, Math.Round(log.ProTime, 2), log.Efficiency + "%", log.Quality+"%", log.StartTime, log.EndTime);
-            }
+                DgvHistory.Rows.Add(sl++, log.JobId, log.Category, log.Image, log.Service, log.StartTime, log.EndTime, log.TargetTime, Math.Round(log.ProTime, 2), log.Efficiency + "%");
 
             _common.Row_Color_By_Efficiency(DgvHistory, "Column10");
+        }
+
+        private void Check_Performance()
+        {
+            var date = _common.Shift_Date(DateTime.Now, _common.Current_Shift());
+            Dgv_Performance.DataSource = null;
+            Dgv_Performance.Rows.Clear();
+            _common.Dgv_Size(Dgv_Performance, 11);
+
+            var performances = (from per in _db.Performances
+                                join user in _db.Users
+                          on per.Name equals user.Short_Name
+                          where per.Date == date & user.Role == ""
+                          select new
+                          {
+                              per.Name,
+                              per.Login,
+                              per.Logout,
+                              per.Shift,
+                              per.WorkingTime,
+                              per.File,
+                              per.JobTime,
+                              per.ProTime,
+                              per.Efficiency,
+                              per.Quality,
+                          }).OrderByDescending(x => x.Efficiency).ToList();
+
+            var sl = 1;
+            foreach (var per in performances)
+                Dgv_Performance.Rows.Add(sl++, per.Name, per.Shift, per.Login, per.Logout, per.WorkingTime, per.File, Math.Round(per.ProTime), per.Efficiency + "%", per.Quality + "%");
+
+            _common.Row_Color_By_Efficiency(Dgv_Performance, "Column16");
         }
 
         private void Check_Done_Job()
@@ -90,7 +118,8 @@ namespace Skill_PMS.UI_WinForm.Production.Designer
                        join job in _db.New_Jobs 
                        on my.JobId equals job.JobId
                        where my.Name == User.Short_Name
-                       select new { 
+                       select new {
+                           my.Id,
                            Job_ID = my.JobId,
                            job.Folder,
                            my.Service,
@@ -101,7 +130,7 @@ namespace Skill_PMS.UI_WinForm.Production.Designer
                            End_Time = my.EndTime,
                            my.Efficiency,
                            my.Quality
-                       }).ToList();
+                       }).OrderByDescending(x => x.Id).ToList();
 
             var sl = 1;
             foreach (var job in myJobs)
@@ -141,40 +170,53 @@ namespace Skill_PMS.UI_WinForm.Production.Designer
         private void Tmr_Count_Tick(object sender, EventArgs e)
         {
             _db = new SkillContext();
+            if (Tbc_Designer.SelectedIndex == 1)
+                Check_New_Job();
             Check_Data();
         }
 
         private void Check_Data()
         {
-            Check_New_Job();
-
-            var today = DateTime.Now.Date;
-            if (User.Shift == "Night" & DateTime.Now.ToString("tt").ToUpper() == "AM")
-                today = DateTime.Now.AddDays(-1).Date;
+            //check performance data
+            var currentTime = DateTime.Now;
+            var today = currentTime.Date;
+            var start_time = _common.Shift_Time(User.Shift);
+            if (User.Shift == "Night" & currentTime.ToString("tt").ToUpper() == "AM")
+            {
+                today = currentTime.AddDays(-1).Date;
+                start_time = _common.Shift_Time("LastNight");
+            }
 
             Performance = _db.Performances
                 .FirstOrDefault(x => x.Name == User.Short_Name & x.Date == today & x.Shift == User.Shift);
 
-            if (Performance == null) return;
             Btn_Pro_Time.Text = @"Pro Time: " + Convert.ToInt32(Performance.ProTime);
             Btn_Efficiency.Text = @"Efficiency: " + Performance.Efficiency + @"%";
-            Btn_Quality.Text = @"Quality: " + Performance.Quality + @"%";
+
+            if (start_time > currentTime)
+                start_time = currentTime;
+
+            var Capacity = (currentTime - start_time).TotalMinutes;
+            Btn_Loss_Time.Text = @"Rest Time: " + Math.Round(Capacity - Performance.ProTime);
         }
 
         private void Tbc_Designer_SelectedIndexChanged(object sender, EventArgs e)
         {
+            Tmr_Count.Start();
             switch (Tbc_Designer.SelectedIndex)
             {
                 case 0:
-                    Check_New_Job();
                     break;
                 case 1:
                     Check_New_Job();
                     break;
                 case 2:
-                    Check_History();
+                    Check_Performance();
                     break;
                 case 3:
+                    Check_History();
+                    break;
+                case 4:
                     Check_Done_Job();
                     break;
             }

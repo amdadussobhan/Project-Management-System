@@ -140,6 +140,64 @@ namespace Skill_PMS.UI_WinForm.Production.SI_Panel
             _common.Row_Color_By_Delivery(Dgv_QC_Job, "Column9");
         }
 
+        private void Check_Performance()
+        {
+            var date = _common.Shift_Date(DateTime.Now, _shift);
+            Dgv_Performance.DataSource = null;
+            Dgv_Performance.Rows.Clear();
+            _common.Dgv_Size(Dgv_Performance, 11);
+
+            var performances = (from per in _db.Performances
+                                join user in _db.Users
+                                on per.Name equals user.Short_Name
+                                where per.Date == date & user.Role == "" & per.Shift == _shift
+                                select new
+                                {
+                                    per.Name,
+                                    per.Shift,
+                                    per.Login,
+                                    per.Logout,
+                                    per.WorkingTime,
+                                    per.File,
+                                    per.JobTime,
+                                    per.ProTime,
+                                    per.Efficiency,
+                                    per.Quality,
+                                }).OrderByDescending(x => x.Efficiency).ToList();
+
+            var sl = 1;
+            foreach (var per in performances)
+            {
+                var start_time = _common.Shift_Time(per.Shift);
+                if (start_time > per.Logout)
+                    start_time = per.Logout;
+
+                var Capacity = (per.Logout - start_time).TotalMinutes;
+                Dgv_Performance.Rows.Add(sl++, per.Name, per.Shift, per.Login, per.Logout, per.WorkingTime, per.File, per.JobTime, Math.Round(per.ProTime), Math.Round(Capacity - per.ProTime), per.Efficiency + "%", per.Quality + "%");
+            }
+
+            _common.Row_Color_By_Efficiency(Dgv_Performance, "Column13");
+        }
+
+        private void Check_History()
+        {
+            DgvHistory.DataSource = null;
+            DgvHistory.Rows.Clear();
+            _common.Dgv_Size(DgvHistory, 11);
+
+            var logs = _db.Logs
+                .Where(x => x.Status == "Done")
+                .OrderByDescending(x => x.Id)
+                .Take(999)
+                .ToList();
+
+            var sl = 1;
+            foreach (var log in logs)
+                DgvHistory.Rows.Add(sl++, log.Name, log.JobId, log.Category, log.Image, log.Service, log.StartTime, log.EndTime, log.TargetTime, Math.Round(log.ProTime, 2), log.Efficiency + "%");
+
+            _common.Row_Color_By_Efficiency(DgvHistory, "Column24");
+        }
+
         private void Check_Ready_Job()
         {
             int row = 0;
@@ -223,13 +281,18 @@ namespace Skill_PMS.UI_WinForm.Production.SI_Panel
                     break;
                 case 2:
                     Check_QC_Job();
-                    break;
-
+                    break; 
                 case 3:
+                    Check_Performance();
+                    break;
+                case 4:
+                    Check_History();
+                    break; 
+                case 5:
                     Check_Ready_Job();
                     break;
 
-                case 4:
+                case 6:
                     Check_Done_Job();
                     break;
             }
@@ -312,6 +375,19 @@ namespace Skill_PMS.UI_WinForm.Production.SI_Panel
             }
         }
 
+        private void Dgv_Performance_CellContentClick(object sender, DataGridViewCellEventArgs e)
+        {
+            if (Dgv_Performance.Columns[Dgv_Performance.CurrentCell.ColumnIndex].HeaderText.Contains("Name"))
+            {
+                Double_Login double_Login = new Double_Login();
+                if (Dgv_Performance.Rows[e.RowIndex].Cells[e.ColumnIndex].Value != null)
+                {
+                    double_Login._name = Dgv_Performance.Rows[e.RowIndex].Cells[e.ColumnIndex].Value.ToString();
+                    double_Login.Show();
+                }
+            }
+        }
+
         private void Btn_Workload_Click(object sender, EventArgs e)
         {
             var workload = Workload_Report.getInstance();
@@ -330,7 +406,6 @@ namespace Skill_PMS.UI_WinForm.Production.SI_Panel
             _shift = _common.Current_Shift();
             _db.SaveChanges();
             Check_Shift_Report();
-            Check_Running_Job();
             
             if (_counter++ >= 9)
             {
@@ -343,6 +418,21 @@ namespace Skill_PMS.UI_WinForm.Production.SI_Panel
                     waiting.Close();
                     _counter = 0;
                 }
+            }
+
+            switch (Tbc_CS_Panel.SelectedIndex)
+            {
+                case 0:
+                    Check_New_Job();
+                    break;
+
+                case 1:
+                    Check_Running_Job();
+                    break;
+
+                case 2:
+                    Check_QC_Job();
+                    break;
             }
         }
 
@@ -358,5 +448,6 @@ namespace Skill_PMS.UI_WinForm.Production.SI_Panel
                 Btn_Capacity.Text = @"Capacity: " + _shiftReport.Capacity;
             }
         }
+
     }
 }

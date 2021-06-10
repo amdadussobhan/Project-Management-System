@@ -54,15 +54,6 @@
             this.Column14 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.tabPage3 = new System.Windows.Forms.TabPage();
             this.Dgv_Running_Job = new System.Windows.Forms.DataGridView();
-            this.Column29 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Column30 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Column31 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Column32 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Column34 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Column37 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Column38 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Column56 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Column33 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.tabPage8 = new System.Windows.Forms.TabPage();
             this.panel2 = new System.Windows.Forms.Panel();
             this.Txt_QC_Folder = new System.Windows.Forms.TextBox();
@@ -121,11 +112,20 @@
             this.Column21 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Column5 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.panel1 = new System.Windows.Forms.Panel();
+            this.Btn_Rename = new System.Windows.Forms.Button();
             this.Btn_Workload = new System.Windows.Forms.Button();
             this.Btn_Capacity = new System.Windows.Forms.Button();
             this.Btn_Add_New_Job = new System.Windows.Forms.Button();
             this.Tmr_Count = new System.Windows.Forms.Timer(this.components);
-            this.Btn_Rename = new System.Windows.Forms.Button();
+            this.Column29 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Column30 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Column31 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Column32 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Column34 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Column37 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Column38 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Column56 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Column33 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Tbc_CS_Panel.SuspendLayout();
             this.tabPage2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.Dgv_New_Job)).BeginInit();
@@ -335,56 +335,6 @@
             this.Dgv_Running_Job.Size = new System.Drawing.Size(1500, 705);
             this.Dgv_Running_Job.TabIndex = 23;
             this.Dgv_Running_Job.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.Dgv_Running_Job_CellContentClick);
-            // 
-            // Column29
-            // 
-            this.Column29.HeaderText = "SL";
-            this.Column29.Name = "Column29";
-            this.Column29.Width = 50;
-            // 
-            // Column30
-            // 
-            this.Column30.HeaderText = "Job_ID";
-            this.Column30.Name = "Column30";
-            this.Column30.Width = 250;
-            // 
-            // Column31
-            // 
-            this.Column31.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
-            this.Column31.HeaderText = "Folder";
-            this.Column31.Name = "Column31";
-            // 
-            // Column32
-            // 
-            this.Column32.HeaderText = "Input_amt";
-            this.Column32.Name = "Column32";
-            // 
-            // Column34
-            // 
-            this.Column34.HeaderText = "Pro_Done";
-            this.Column34.Name = "Column34";
-            // 
-            // Column37
-            // 
-            this.Column37.HeaderText = "Service";
-            this.Column37.Name = "Column37";
-            this.Column37.Width = 250;
-            // 
-            // Column38
-            // 
-            this.Column38.HeaderText = "Job_Time";
-            this.Column38.Name = "Column38";
-            // 
-            // Column56
-            // 
-            this.Column56.HeaderText = "Pro_Time";
-            this.Column56.Name = "Column56";
-            // 
-            // Column33
-            // 
-            this.Column33.HeaderText = "Delivery";
-            this.Column33.Name = "Column33";
-            this.Column33.Width = 180;
             // 
             // tabPage8
             // 
@@ -992,6 +942,23 @@
             this.panel1.Size = new System.Drawing.Size(1634, 50);
             this.panel1.TabIndex = 24;
             // 
+            // Btn_Rename
+            // 
+            this.Btn_Rename.FlatAppearance.BorderSize = 0;
+            this.Btn_Rename.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.Btn_Rename.Font = new System.Drawing.Font("Arial", 15F);
+            this.Btn_Rename.ForeColor = System.Drawing.SystemColors.ControlText;
+            this.Btn_Rename.Image = ((System.Drawing.Image)(resources.GetObject("Btn_Rename.Image")));
+            this.Btn_Rename.ImageAlign = System.Drawing.ContentAlignment.MiddleRight;
+            this.Btn_Rename.Location = new System.Drawing.Point(177, 3);
+            this.Btn_Rename.Name = "Btn_Rename";
+            this.Btn_Rename.Size = new System.Drawing.Size(170, 46);
+            this.Btn_Rename.TabIndex = 18;
+            this.Btn_Rename.Text = " Rename";
+            this.Btn_Rename.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
+            this.Btn_Rename.UseVisualStyleBackColor = true;
+            this.Btn_Rename.Click += new System.EventHandler(this.Btn_Rename_Click);
+            // 
             // Btn_Workload
             // 
             this.Btn_Workload.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
@@ -1047,22 +1014,55 @@
             this.Tmr_Count.Interval = 10000;
             this.Tmr_Count.Tick += new System.EventHandler(this.Tmr_Count_Tick);
             // 
-            // Btn_Rename
+            // Column29
             // 
-            this.Btn_Rename.FlatAppearance.BorderSize = 0;
-            this.Btn_Rename.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.Btn_Rename.Font = new System.Drawing.Font("Arial", 15F);
-            this.Btn_Rename.ForeColor = System.Drawing.SystemColors.ControlText;
-            this.Btn_Rename.Image = ((System.Drawing.Image)(resources.GetObject("Btn_Rename.Image")));
-            this.Btn_Rename.ImageAlign = System.Drawing.ContentAlignment.MiddleRight;
-            this.Btn_Rename.Location = new System.Drawing.Point(177, 3);
-            this.Btn_Rename.Name = "Btn_Rename";
-            this.Btn_Rename.Size = new System.Drawing.Size(170, 46);
-            this.Btn_Rename.TabIndex = 18;
-            this.Btn_Rename.Text = " Rename";
-            this.Btn_Rename.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
-            this.Btn_Rename.UseVisualStyleBackColor = true;
-            this.Btn_Rename.Click += new System.EventHandler(this.Btn_Rename_Click);
+            this.Column29.HeaderText = "SL";
+            this.Column29.Name = "Column29";
+            this.Column29.Width = 50;
+            // 
+            // Column30
+            // 
+            this.Column30.HeaderText = "Job_ID";
+            this.Column30.Name = "Column30";
+            this.Column30.Width = 250;
+            // 
+            // Column31
+            // 
+            this.Column31.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
+            this.Column31.HeaderText = "Folder";
+            this.Column31.Name = "Column31";
+            // 
+            // Column32
+            // 
+            this.Column32.HeaderText = "Input_amt";
+            this.Column32.Name = "Column32";
+            // 
+            // Column34
+            // 
+            this.Column34.HeaderText = "Pro_Done";
+            this.Column34.Name = "Column34";
+            // 
+            // Column37
+            // 
+            this.Column37.HeaderText = "Service";
+            this.Column37.Name = "Column37";
+            this.Column37.Width = 250;
+            // 
+            // Column38
+            // 
+            this.Column38.HeaderText = "Job_Time";
+            this.Column38.Name = "Column38";
+            // 
+            // Column56
+            // 
+            this.Column56.HeaderText = "Pro_Time";
+            this.Column56.Name = "Column56";
+            // 
+            // Column33
+            // 
+            this.Column33.HeaderText = "Delivery";
+            this.Column33.Name = "Column33";
+            this.Column33.Width = 200;
             // 
             // CsDashboard
             // 
@@ -1176,6 +1176,7 @@
         private System.Windows.Forms.Label label5;
         private System.Windows.Forms.Label label6;
         private System.Windows.Forms.DateTimePicker dateTimePicker2;
+        private System.Windows.Forms.Button Btn_Rename;
         private System.Windows.Forms.DataGridViewTextBoxColumn Column29;
         private System.Windows.Forms.DataGridViewTextBoxColumn Column30;
         private System.Windows.Forms.DataGridViewTextBoxColumn Column31;
@@ -1185,6 +1186,5 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn Column38;
         private System.Windows.Forms.DataGridViewTextBoxColumn Column56;
         private System.Windows.Forms.DataGridViewTextBoxColumn Column33;
-        private System.Windows.Forms.Button Btn_Rename;
     }
 }

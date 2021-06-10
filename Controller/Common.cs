@@ -113,6 +113,9 @@ namespace Skill_PMS.Controller
 
         public DateTime Shift_Time(string shift)
         {
+            if (shift == "Current")
+                shift = Current_Shift();
+
             switch (shift)
             {
                 case "Morning": 
@@ -331,6 +334,10 @@ namespace Skill_PMS.Controller
             performance.Status = "Logout";
             performance.WorkingTime = (int)(performance.Logout - performance.Login).TotalMinutes;
             performance.Up = 0;
+
+            var logs = _db.Logs.Where(x=>x.Name == performance.Name & x.Status != "Done");
+            foreach (var log in logs)
+                _db.Logs.Remove(log);
             _db.SaveChanges();
             Application.Exit();
         }

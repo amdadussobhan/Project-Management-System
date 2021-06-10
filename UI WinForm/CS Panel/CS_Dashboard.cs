@@ -193,7 +193,7 @@ namespace Skill_PMS.UI_WinForm.CS_Panel
                 if (Dgv_New_Job.Rows[e.RowIndex].Cells[e.ColumnIndex].Value != null)
                 {
                     jobEntry._newJob.JobId = jobEntry._oldJobId = Dgv_New_Job.Rows[e.RowIndex].Cells[e.ColumnIndex].Value.ToString();
-                    jobEntry._isModify= true;
+                    jobEntry._isModify = true;
                     jobEntry.User = User;
                     jobEntry.Show();
                 }
@@ -349,7 +349,7 @@ namespace Skill_PMS.UI_WinForm.CS_Panel
 
         private void Check_Data()
         {
-            Tmr_Count.Start();
+            _db = new SkillContext();
             switch (Tbc_CS_Panel.SelectedIndex)
             {
                 case 0:
