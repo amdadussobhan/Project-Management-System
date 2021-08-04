@@ -261,6 +261,8 @@ namespace Skill_PMS.UI_WinForm.Production.SI_Panel
                 string[] files = Directory.GetFiles(Loc, "*", SearchOption.AllDirectories);
                 Loc += @"\Images";
                 Directory.CreateDirectory(Loc);
+                Prb_FolderTime.Value = 0;
+                Prb_FolderTime.Maximum = files.Count();
                 foreach (string file_path in files)
                 {
                     string ext = Path.GetExtension(file_path);
@@ -290,6 +292,7 @@ namespace Skill_PMS.UI_WinForm.Production.SI_Panel
                         _sub_folder.New_Name = New_Name;
                         _db.Sub_Folders.Add(_sub_folder);
                     }
+                    Prb_FolderTime.Increment(1);
                 }
                 Txt_Location.Text = Loc;
                 Btn_Subfolder.Enabled = false;
@@ -340,6 +343,8 @@ namespace Skill_PMS.UI_WinForm.Production.SI_Panel
             string Loc = Txt_Location.Text;
             string[] files = Directory.GetFiles(Loc, "*", SearchOption.AllDirectories);
 
+            Prb_FolderTime.Value = 0;
+            Prb_FolderTime.Maximum = files.Count();
             foreach (string file in files)
             {
                 string fileName = Path.GetFileNameWithoutExtension(file);
@@ -369,6 +374,8 @@ namespace Skill_PMS.UI_WinForm.Production.SI_Panel
                 imageTime.CC_Time = cc;
                 imageTime.LIQ_Time = liq;
                 imageTime.AI_Time = ai;
+
+                Prb_FolderTime.Increment(1);
             }
 
             _db.SaveChanges();

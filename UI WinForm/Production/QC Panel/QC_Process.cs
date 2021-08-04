@@ -23,6 +23,7 @@ namespace Skill_PMS.UI_WinForm.Production.QC_Panel
     {
         SkillContext _db = new SkillContext();
         public Performance _performance = new Performance();
+        QC_Progress _qcProgress;
 
         Log log = new Log();
         Common common = new Common();
@@ -177,6 +178,7 @@ namespace Skill_PMS.UI_WinForm.Production.QC_Panel
 
             DGV_Files.DataSource = null;
             DGV_Files.Rows.Clear();
+
             Btn_Cancel.Enabled = false;
             Btn_Pause.Enabled = false;
             Btn_Save.Enabled = false;
@@ -334,161 +336,7 @@ namespace Skill_PMS.UI_WinForm.Production.QC_Panel
             _db = new SkillContext();
             string[] data = (string[])e.Data.GetData(DataFormats.FileDrop);
             _files = data.ToList();
-
-            int SL = 1;
-            DGV_Files.DataSource = null;
-            DGV_Files.Rows.Clear();
-            common.Dgv_Size(DGV_Files, 11);
-            _fileAmount = _files.Count();
-                        
-            Tmr_Count.Start();
-            this.WindowState = FormWindowState.Minimized;
-
-            foreach (string file in _files)
-            {
-                if (string.IsNullOrEmpty(file))
-                    break;
-
-                string fileName = Path.GetFileNameWithoutExtension(file);
-                _pro_files_name.Add(fileName);
-                DGV_Files.Rows.Add(SL++, fileName, "X");
-
-                var imageTime = _db.ImageTime.FirstOrDefault(x => x.JobId == _job.JobId & x.Image == fileName);
-
-                var category = "";
-                if (imageTime != null)
-                    category = imageTime.Category;
-
-                double total_job_time = 0;
-
-                if (!string.IsNullOrEmpty(_myService))
-                {
-                    _jobTime = 0;
-                    if (imageTime != null)
-                    {
-                        if (Chk_CP.Checked)
-                            _jobTime += imageTime.CP_Time;
-
-                        if (Chk_RET.Checked)
-                            _jobTime += imageTime.RET_Time;
-
-                        if (Chk_MSK.Checked)
-                            _jobTime += imageTime.MSK_Time;
-
-                        if (Chk_SHA.Checked)
-                            _jobTime += imageTime.SHA_Time;
-
-                        if (Chk_LIQ.Checked)
-                            _jobTime += imageTime.LIQ_Time;
-
-                        if (Chk_NJ.Checked)
-                            _jobTime += imageTime.NJ_Time;
-
-                        if (Chk_CC.Checked)
-                            _jobTime += imageTime.CC_Time;
-                    }
-                    else
-                    {
-                        if (Chk_CP.Checked)
-                            _jobTime += _job.CP_Time;
-
-                        if (Chk_RET.Checked)
-                            _jobTime += _job.RET_Time;
-
-                        if (Chk_MSK.Checked)
-                            _jobTime += _job.MSK_Time;
-
-                        if (Chk_SHA.Checked)
-                            _jobTime += _job.SHA_Time;
-
-                        if (Chk_LIQ.Checked)
-                            _jobTime += _job.LIQ_Time;
-
-                        if (Chk_NJ.Checked)
-                            _jobTime += _job.NJ_Time;
-
-                        if (Chk_CC.Checked)
-                            _jobTime += _job.CC_Time;
-                    }
-
-                    log = _db.Logs
-                        .FirstOrDefault(x => x.JobId == _job.JobId & x.Image == fileName & x.Name == _user.Short_Name & x.Service == _myService);
-
-                    if (log == null)
-                    {
-                        log = new Log
-                        {
-                            JobId = _job.JobId,
-                            Image = fileName,
-                            Name = _user.Short_Name,
-                            Shift = _performance.Shift,
-                            Service = _myService,
-                            TargetTime = _jobTime,
-                            Date = DateTime.Now.Date,
-                            StartTime = DateTime.Now,
-                            EndTime = DateTime.Now
-                        };
-                        _db.Logs.Add(log);
-                    }
-                    log.Status = "Running";
-                    log.Category = category;
-                    log.Up = 0;
-
-                    total_job_time = _jobTime;
-                }
-
-                if (Chk_QC.Checked)
-                {
-                    if (imageTime != null)
-                        _jobTime = imageTime.QC_Time;
-
-                    if(_jobTime == 0)
-                        _jobTime = _job.QC_Time;
-
-                    log = _db.Logs
-                        .FirstOrDefault(x => x.JobId == _job.JobId & x.Image == fileName & x.Name == _user.Short_Name & x.Service == "QC");
-
-                    if (log == null)
-                    {
-                        log = new Log
-                        {
-                            JobId = _job.JobId,
-                            Image = fileName,
-                            Name = _user.Short_Name,
-                            Shift = _performance.Shift,
-                            Service = "QC",
-                            TargetTime = _jobTime,
-                            Date = DateTime.Now.Date,
-                            StartTime = DateTime.Now,
-                            EndTime = DateTime.Now
-                        };
-                        _db.Logs.Add(log);
-                        log.Category = category;
-                    }
-                    log.Status = "Running";
-                    log.Up = 0;
-
-                    total_job_time += _jobTime;
-                }
-
-                TimeSpan timespan = TimeSpan.FromSeconds(total_job_time * 60 * _fileAmount);
-                Lbl_Job_Time.Text = "Time " + timespan.ToString(@"h\:mm\:s");
-            }
-
-            _db.SaveChanges();
-            DGV_Files.AllowDrop = false;
-            Btn_Save.Enabled = true;
-            Btn_Cancel.Enabled = true;
-            Btn_Pause.Enabled = true;
-
-            Chk_CP.Enabled = false;
-            Chk_RET.Enabled = false;
-            Chk_MSK.Enabled = false;
-            Chk_NJ.Enabled = false;
-            Chk_CC.Enabled = false;
-            Chk_LIQ.Enabled = false;
-            Chk_SHA.Enabled = false;
-            Chk_QC.Enabled = false;
+            Tmr_Open.Start();            
         }
 
         private void Btn_Save_Click(object sender, EventArgs e)
@@ -513,9 +361,13 @@ namespace Skill_PMS.UI_WinForm.Production.QC_Panel
             {
                 QC = true;
                 qc_Time = pro_Time;
-            }
-            
-            var qcProgress = new QC_Progress
+            }            
+
+            Reset_Process();
+            Chenge_Quality_Btn(true);
+            Change_Service();
+
+            _qcProgress = new QC_Progress
             {
                 QC = QC,
                 _job = _job,
@@ -528,12 +380,7 @@ namespace Skill_PMS.UI_WinForm.Production.QC_Panel
                 qc_Time = qc_Time,
             };
 
-            qcProgress.Show();
-
-            Reset_Process();
-            Chenge_Quality_Btn(true);
-            Change_Service();
-
+            _qcProgress.Show();
             _QC_files_name = _pro_files_name.ToList();
             _pro_files_name.Clear();
         }
@@ -661,6 +508,171 @@ namespace Skill_PMS.UI_WinForm.Production.QC_Panel
         private void Btn_85_Click(object sender, EventArgs e)
         {
             Update_Quality(70);
+        }
+
+        private void Tmr_Open_Tick(object sender, EventArgs e)
+        {
+            Tmr_Open.Stop();
+            int SL = 1;
+            DGV_Files.DataSource = null;
+            DGV_Files.Rows.Clear();
+            common.Dgv_Size(DGV_Files, 11);
+            _fileAmount = _files.Count();
+
+            Tmr_Count.Start();
+            this.WindowState = FormWindowState.Minimized;
+
+            foreach (string file in _files)
+            {
+                if (string.IsNullOrEmpty(file))
+                    break;
+
+                string fileName = Path.GetFileNameWithoutExtension(file);
+                _pro_files_name.Add(fileName);
+                DGV_Files.Rows.Add(SL++, fileName, "X");
+
+                var imageTime = _db.ImageTime.FirstOrDefault(x => x.JobId == _job.JobId & x.Image == fileName);
+
+                var category = "";
+                if (imageTime != null)
+                    category = imageTime.Category;
+
+                double total_job_time = 0;
+
+                if (!string.IsNullOrEmpty(_myService))
+                {
+                    _jobTime = 0;
+                    if (imageTime != null)
+                    {
+                        if (Chk_CP.Checked)
+                            _jobTime += imageTime.CP_Time;
+
+                        if (Chk_RET.Checked)
+                            _jobTime += imageTime.RET_Time;
+
+                        if (Chk_MSK.Checked)
+                            _jobTime += imageTime.MSK_Time;
+
+                        if (Chk_SHA.Checked)
+                            _jobTime += imageTime.SHA_Time;
+
+                        if (Chk_LIQ.Checked)
+                            _jobTime += imageTime.LIQ_Time;
+
+                        if (Chk_NJ.Checked)
+                            _jobTime += imageTime.NJ_Time;
+
+                        if (Chk_CC.Checked)
+                            _jobTime += imageTime.CC_Time;
+                    }
+                    else
+                    {
+                        if (Chk_CP.Checked)
+                            _jobTime += _job.CP_Time;
+
+                        if (Chk_RET.Checked)
+                            _jobTime += _job.RET_Time;
+
+                        if (Chk_MSK.Checked)
+                            _jobTime += _job.MSK_Time;
+
+                        if (Chk_SHA.Checked)
+                            _jobTime += _job.SHA_Time;
+
+                        if (Chk_LIQ.Checked)
+                            _jobTime += _job.LIQ_Time;
+
+                        if (Chk_NJ.Checked)
+                            _jobTime += _job.NJ_Time;
+
+                        if (Chk_CC.Checked)
+                            _jobTime += _job.CC_Time;
+                    }
+
+                    log = _db.Logs
+                        .FirstOrDefault(x => x.JobId == _job.JobId & x.Image == fileName & x.Name == _user.Short_Name & x.Service == _myService);
+
+                    if (log == null)
+                    {
+                        log = new Log
+                        {
+                            JobId = _job.JobId,
+                            Image = fileName,
+                            Name = _user.Short_Name,
+                            Shift = _performance.Shift,
+                            Service = _myService,
+                            TargetTime = _jobTime,
+                            Date = DateTime.Now.Date,
+                            StartTime = DateTime.Now,
+                            EndTime = DateTime.Now
+                        };
+                        _db.Logs.Add(log);
+                    }
+                    log.Status = "Running";
+                    log.Category = category;
+                    log.Up = 0;
+
+                    total_job_time = _jobTime;
+                }
+
+                if (Chk_QC.Checked)
+                {
+                    if (imageTime != null)
+                        _jobTime = imageTime.QC_Time;
+
+                    if (_jobTime == 0)
+                        _jobTime = _job.QC_Time;
+
+                    log = _db.Logs
+                        .FirstOrDefault(x => x.JobId == _job.JobId & x.Image == fileName & x.Name == _user.Short_Name & x.Service == "QC");
+
+                    if (log == null)
+                    {
+                        log = new Log
+                        {
+                            JobId = _job.JobId,
+                            Image = fileName,
+                            Name = _user.Short_Name,
+                            Shift = _performance.Shift,
+                            Service = "QC",
+                            TargetTime = _jobTime,
+                            Date = DateTime.Now.Date,
+                            StartTime = DateTime.Now,
+                            EndTime = DateTime.Now
+                        };
+                        _db.Logs.Add(log);
+                        log.Category = category;
+                    }
+                    log.Status = "Running";
+                    log.Up = 0;
+
+                    total_job_time += _jobTime;
+                }
+
+                TimeSpan timespan = TimeSpan.FromSeconds(total_job_time * 60 * _fileAmount);
+                Lbl_Job_Time.Text = "Time " + timespan.ToString(@"h\:mm\:s");
+            }
+
+            _db.SaveChanges();
+            DGV_Files.AllowDrop = false;
+            Btn_Save.Enabled = true;
+            Btn_Cancel.Enabled = true;
+            Btn_Pause.Enabled = true;
+
+            Chk_CP.Enabled = false;
+            Chk_RET.Enabled = false;
+            Chk_MSK.Enabled = false;
+            Chk_NJ.Enabled = false;
+            Chk_CC.Enabled = false;
+            Chk_LIQ.Enabled = false;
+            Chk_SHA.Enabled = false;
+            Chk_QC.Enabled = false;
+        }
+
+        private void Tmr_Save_Tick(object sender, EventArgs e)
+        {
+            Tmr_Save.Stop();
+            _qcProgress.Show();
         }
 
         private void Btn_90_Click(object sender, EventArgs e)

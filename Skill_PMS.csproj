@@ -33,8 +33,8 @@
     <SuiteName>SBN</SuiteName>
     <MinimumRequiredVersion>1.0.0.2</MinimumRequiredVersion>
     <AutorunEnabled>true</AutorunEnabled>
-    <ApplicationRevision>2</ApplicationRevision>
-    <ApplicationVersion>1.1.1.%2a</ApplicationVersion>
+    <ApplicationRevision>7</ApplicationRevision>
+    <ApplicationVersion>1.1.3.%2a</ApplicationVersion>
     <UseApplicationTrust>true</UseApplicationTrust>
     <CreateDesktopShortcut>true</CreateDesktopShortcut>
     <PublishWizardCompleted>true</PublishWizardCompleted>
@@ -225,10 +225,10 @@
     <Compile Include="Models\Shift_Report.cs" />
     <Compile Include="Models\Sub_Folder.cs" />
     <Compile Include="Models\Workload.cs" />
-    <Compile Include="Rename.cs">
+    <Compile Include="UI WinForm\CS Panel\Rename.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Rename.Designer.cs">
+    <Compile Include="UI WinForm\CS Panel\Rename.Designer.cs">
       <DependentUpon>Rename.cs</DependentUpon>
     </Compile>
     <Compile Include="UI WinForm\admin_Panel\admin_panel.cs">
@@ -426,7 +426,7 @@
     <EmbeddedResource Include="Migrations\202012121638049_add feedback panel.resx">
       <DependentUpon>202012121638049_add feedback panel.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Rename.resx">
+    <EmbeddedResource Include="UI WinForm\CS Panel\Rename.resx">
       <DependentUpon>Rename.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="UI WinForm\admin_Panel\admin_panel.resx">

@@ -27,9 +27,9 @@ namespace Skill_PMS.UI_WinForm.Production.Designer
 
         private int _fileAmount;
         private bool _isOld;
-        private string _myService, _file, _fileName, _filePath, _ext, _parentFolder;
+        private string _myService, _file, _rawFile, _fileName, _filePath, _ext, _parentFolder;
         private double _myTime;
-        public double _proTime;
+        public double _proTime = 0;
         public static double TotalTime;
         public static bool Minimized;
         private string _instruction, _jobFolder, _readyFolder, _myFolder, _rawFolder, _doneFolder;
@@ -464,19 +464,19 @@ namespace Skill_PMS.UI_WinForm.Production.Designer
 
         private void Processing_Resize(object sender, EventArgs e)
         {
-            var counter = new Counter();
-            if (this.WindowState == FormWindowState.Minimized & TotalTime != 0 & Btn_Pause.Text != "Resume")
-            {
-                //counter.Show();
-                Minimized = true;
-            }
-            else
-            {
-                Minimized = false;
-            }
+            //var counter = new Counter();
+            //if (this.WindowState == FormWindowState.Minimized & TotalTime != 0 & Btn_Pause.Text != "Resume")
+            //{
+            //    //counter.Show();
+            //    Minimized = true;
+            //}
+            //else
+            //{
+            //    Minimized = false;
+            //}
 
-            Counter.Minimized = Minimized;
-            Counter.TotalTime = TotalTime;
+            //Counter.Minimized = Minimized;
+            //Counter.TotalTime = TotalTime;
         }
 
         private void Btn_Pause_Click(object sender, EventArgs e)
@@ -523,6 +523,7 @@ namespace Skill_PMS.UI_WinForm.Production.Designer
             Pnl_Format.Visible = false;
             Pnl_Start_Job.Visible = true;
             Pnl_Drop.Visible = true;
+            Pnl_Drop.Enabled = true;
             Lbl_Success.Visible = true;
 
             var itemName = Path.GetFileNameWithoutExtension(_file) + _ext;
@@ -533,31 +534,34 @@ namespace Skill_PMS.UI_WinForm.Production.Designer
                 var path = Path.GetDirectoryName(_filePath);
                 _destination = Path.Combine(path ?? string.Empty, itemName);
 
+                if (File.Exists(_source))
+                    File.Move(_source, _destination);
+                else
+                    File.Move(_rawFile, _destination);
+
                 var savingProgress = new SavingProgress
                 {
-                    resume = true,
-                    _performance = _performance,
-                    User = User,
                     _job = _job,
+                    _user = User,
+                    _pause = true,
+                    _proTime = _proTime,
                     _fileName = _fileName,
                     _myService = _myService,
-                    _proTime = _proTime,
-                    Source = _source,
-                    Destination = _destination
+                    _performance = _performance,
                 };
                 savingProgress.Show();
             }
             else
             {
-                Directory.CreateDirectory(_doneFolder);
-                _destination = Path.Combine(_doneFolder, itemName);                    
+                //Directory.CreateDirectory(_doneFolder);
+                //_destination = Path.Combine(_doneFolder, itemName);                    
 
-                if (File.Exists(_destination))
-                    File.Delete(_destination);
+                //if (File.Exists(_destination))
+                //    File.Delete(_destination);
 
                 //move done file to done folder
-                File.Move(_source, _destination);
-                _source = _destination;
+                //File.Move(_source, _destination);
+                //_source = _destination;
 
                 //create ready folder with check if exist subfolder
                 var root = "";
@@ -565,7 +569,7 @@ namespace Skill_PMS.UI_WinForm.Production.Designer
                 _parentFolder = new DirectoryInfo(_filePath ?? string.Empty).Name;
                 while (_parentFolder != _myService)
                 {
-                    if (_parentFolder != "Raw_File" & _parentFolder != "Done_File")
+                    if (_parentFolder != "Processing")
                         root = _parentFolder + @"\" + root;
 
                     _filePath = Path.GetDirectoryName(_filePath);
@@ -582,28 +586,31 @@ namespace Skill_PMS.UI_WinForm.Production.Designer
 
                 var savingProgress = new SavingProgress
                 {
-                    _performance = _performance,
-                    User = User,
                     _job = _job,
+                    _user = User,
+                    _source = _source,
+                    _proTime = _proTime,
                     _fileName = _fileName,
                     _myService = _myService,
-                    _proTime = _proTime,
-                    Source = _source,
-                    Destination = _destination
+                    _destination = _destination,
+                    _performance = _performance,
                 };
                 savingProgress.Show();
+                _file = "";
             }
+            _proTime = 0;
         }
 
         private void Pnl_Drop_DragDrop(object sender, DragEventArgs e)
         {
             var files = (string[])e.Data.GetData(DataFormats.FileDrop);
             _fileAmount = files.Count();
-            _file = files[0];
+            _file = _rawFile = files[0];
             string Loc = Path.GetDirectoryName(_file); ;
 
             if (_fileAmount == 1)
             {
+                _proTime = 0;
                 Tmr_Count.Start();
                 Tmr_Pause.Start();
                 string file = Path.GetFileName(_file);
@@ -668,12 +675,12 @@ namespace Skill_PMS.UI_WinForm.Production.Designer
 
                 _filePath = Loc;
                 _parentFolder = new DirectoryInfo(_filePath ?? string.Empty).Name;
-                _doneFolder = _filePath + @"\Done_File";
+                //_doneFolder = _filePath + @"\Done_File";
 
                 //move file to my folder
-                if (_parentFolder != "Raw_File" & _parentFolder != "Done_File")
+                if (_parentFolder != "Processing" & _parentFolder != "Done_File")
                 {
-                    _rawFolder = _filePath + @"\Raw_File";
+                    _rawFolder = _filePath + @"\Processing";
                     Directory.CreateDirectory(_rawFolder);
 
                     _filePath = Path.Combine(_rawFolder, file);
@@ -686,13 +693,13 @@ namespace Skill_PMS.UI_WinForm.Production.Designer
 
                     _filePath = _rawFolder;
                 }
-                else
-                {
-                    var subfolder = Path.GetDirectoryName(_filePath);
-                    _doneFolder = subfolder + @"\Done_File";
-                }
+                //else
+                //{
+                //    var subfolder = Path.GetDirectoryName(_filePath);
+                //    _doneFolder = subfolder + @"\Done_File";
+                //}
 
-                Directory.CreateDirectory(_doneFolder);
+                //Directory.CreateDirectory(_doneFolder);
 
                 try
                 {
@@ -743,7 +750,7 @@ namespace Skill_PMS.UI_WinForm.Production.Designer
                 }
                 else
                 {
-                    _proTime = _log.ProTime * 60;
+                    //_proTime = _log.ProTime * 60;
                     TotalTime = (_myTime * 60) - _proTime;
                     _isOld = true;
                 }
@@ -869,7 +876,7 @@ namespace Skill_PMS.UI_WinForm.Production.Designer
                 //Directory.CreateDirectory(_myFolder);
 
                 //Create my folder to local drive
-                var localDrive = "";
+                var localDrive = @"C:\";
 
                 if (Directory.Exists(@"D:\"))
                     localDrive = @"D:\";

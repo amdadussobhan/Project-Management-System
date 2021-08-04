@@ -80,7 +80,7 @@
             this.Chk_QC = new System.Windows.Forms.CheckBox();
             this.Btn_assign = new System.Windows.Forms.Button();
             this.jobBindingSource = new System.Windows.Forms.BindingSource(this.components);
-            this.Prb_Subfolder = new System.Windows.Forms.ProgressBar();
+            this.Prb_FolderTime = new System.Windows.Forms.ProgressBar();
             ((System.ComponentModel.ISupportInitialize)(this.jobBindingSource)).BeginInit();
             this.SuspendLayout();
             // 
@@ -630,13 +630,13 @@
             // 
             this.jobBindingSource.DataSource = typeof(Skill_PMS.Models.NewJob);
             // 
-            // Prb_Subfolder
+            // Prb_FolderTime
             // 
-            this.Prb_Subfolder.Location = new System.Drawing.Point(0, 465);
-            this.Prb_Subfolder.Maximum = 0;
-            this.Prb_Subfolder.Name = "Prb_Subfolder";
-            this.Prb_Subfolder.Size = new System.Drawing.Size(970, 10);
-            this.Prb_Subfolder.TabIndex = 395;
+            this.Prb_FolderTime.Location = new System.Drawing.Point(0, 465);
+            this.Prb_FolderTime.Maximum = 0;
+            this.Prb_FolderTime.Name = "Prb_FolderTime";
+            this.Prb_FolderTime.Size = new System.Drawing.Size(970, 10);
+            this.Prb_FolderTime.TabIndex = 395;
             // 
             // Job_assign
             // 
@@ -644,7 +644,7 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.SystemColors.ActiveBorder;
             this.ClientSize = new System.Drawing.Size(970, 475);
-            this.Controls.Add(this.Prb_Subfolder);
+            this.Controls.Add(this.Prb_FolderTime);
             this.Controls.Add(this.Btn_assign);
             this.Controls.Add(this.Txt_QC);
             this.Controls.Add(this.Chk_QC);
@@ -759,6 +759,6 @@
         private System.Windows.Forms.TextBox Txt_QC;
         private System.Windows.Forms.CheckBox Chk_QC;
         private System.Windows.Forms.Button Btn_assign;
-        private System.Windows.Forms.ProgressBar Prb_Subfolder;
+        private System.Windows.Forms.ProgressBar Prb_FolderTime;
     }
 }

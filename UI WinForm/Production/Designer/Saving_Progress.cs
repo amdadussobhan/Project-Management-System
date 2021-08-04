@@ -2,103 +2,105 @@
 using Skill_PMS.Models;
 using System;
 using System.ComponentModel;
+using System.Drawing;
 using System.IO;
 using System.Linq;
 using System.Threading;
 using System.Windows.Forms;
+using System.Runtime.InteropServices;
 
 namespace Skill_PMS.UI_WinForm.Production.Designer
 {
     public partial class SavingProgress : Form
     {
+        BackgroundWorker backgroundWorker = new BackgroundWorker();
         private readonly SkillContext _db = new SkillContext();
         public Performance _performance = new Performance();
         public NewJob _job = new NewJob();
-        public User User { get; set; }
+        public User _user { get; set; }
         private Log _log = new Log();
 
-        public string _myService, _fileName;
         public double _proTime;
-        public bool resume = false, finish = false;
+        public int _previousValue = 0;
+        private DateTime _currentTime;
+        public string _myService, _fileName;
+        public bool _pause = false, finish = false;
+        public string _source, _destination, Backup, Raw_Source, Raw_Backup, Status;
 
-        private class UiProgress
+        private void Tmr_Close_Tick(object sender, EventArgs e)
         {
-            public UiProgress(string name, long bytes, long maxbytes)
-            {
-                this.name = name; this.bytes = bytes; this.maxbytes = maxbytes;
-            }
-            public string name;
-            public long bytes;
-            public long maxbytes;
+            this.Close();
         }
 
-        // Class to report exception {
-        private class UIError
+        private void Tmr_Copy_Tick(object sender, EventArgs e)
         {
-            public UIError(Exception ex, string path_)
+            if (Prb_Copier.Value == _previousValue & Prb_Copier.Value != 100)
             {
-                msg = ex.Message; path = path_; result = DialogResult.Cancel;
+                if (File.Exists(_source))
+                {
+                    if (!_pause & !File.Exists(_destination))
+                        File.Copy(_source, _destination);
+                }
+                else
+                    MessageBox.Show(@"Find done file & keep it to Done folder manually...", @"Done file doesn't Exist", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                SavePerformance();
             }
-            public string msg;
-            public string path;
-            public DialogResult result;
         }
-        private BackgroundWorker mCopier;
-        private delegate void ProgressChanged(UiProgress info);
-        private delegate void CopyError(UIError err);
-        private ProgressChanged OnChange;
-        private CopyError OnError;
 
         public SavingProgress()
         {
             InitializeComponent();
+            backgroundWorker.WorkerSupportsCancellation = true;
+            backgroundWorker.WorkerReportsProgress = true;
 
-            mCopier = new BackgroundWorker();
-            mCopier.DoWork += Copier_DoWork;
-            mCopier.RunWorkerCompleted += Copier_RunWorkerCompleted;
-            mCopier.WorkerSupportsCancellation = true;
-            OnChange += Copier_ProgressChanged;
-            OnError += Copier_Error;
-            ChangeUi(false);
+            backgroundWorker.ProgressChanged += BackgroundWorker_ProgressChanged;
+            backgroundWorker.DoWork += BackgroundWorker_DoWork;
         }
 
-        public string Source, Destination, Backup, Raw_Source, Raw_Backup, Status;
-
-        private void Tmr_Count_Tick(object sender, EventArgs e)
+        public static class ModifyProgressBarColor
         {
-            Calculate();
+            [DllImport("user32.dll", CharSet = CharSet.Auto, SetLastError = false)]
+            static extern IntPtr SendMessage(IntPtr hWnd, uint Msg, IntPtr w, IntPtr l);
+            public static void SetState(ProgressBar prB, int state)
+            {
+                SendMessage(prB.Handle, 1040, (IntPtr)state, IntPtr.Zero);
+            }
         }
 
-        private void Calculate()
+        private void BackgroundWorker_DoWork(object sender, DoWorkEventArgs e)
         {
-            var currentTime = DateTime.Now;
-            var date = currentTime.Date;
+            if (File.Exists(_source))
+            {
+                if (!_pause)
+                    CopyFile(_source, _destination);
+            }
+            else
+                MessageBox.Show(@"Find done file & keep it to Done folder manually...", @"Done file doesn't Exist", MessageBoxButtons.OK, MessageBoxIcon.Error);
+        }
+
+        private void BackgroundWorker_ProgressChanged(object sender, ProgressChangedEventArgs e)
+        {
+            Tmr_Copy.Stop();
+            Prb_Copier.Value = _previousValue = e.ProgressPercentage;
+            if (Prb_Copier.Value == 100)
+                SavePerformance();
+        }
+
+        void SavePerformance()
+        {
+            Tmr_Copy.Stop();
+            Lbl_Success.Visible = true;
+            var date = _currentTime.Date;
             if (_performance.Shift == "Night" & DateTime.Now.ToString("tt").ToUpper() == "AM")
                 date = DateTime.Now.AddDays(-1).Date;
 
-            double myTime = 0;
-            //update log Report in Log Table
-            _log = _db.Logs
-                .FirstOrDefault(x => x.JobId == _job.JobId & x.Image == _fileName & x.Status == "Running" & x.Name == User.Short_Name & x.Service == _myService);
-
-            if (_log != null)
-            {
-                myTime = _log.TargetTime;
-                _log.ProTime += _proTime;
-
-                if (_log.ProTime != 0)
-                    _log.Efficiency = Convert.ToInt32(_log.TargetTime / _log.ProTime * 100);
-
-                _log.OutputLocation = Destination;
-                _log.EndTime = currentTime;
-                _log.Status = "Done";
-                _log.Quality = 100;
-                _log.Up = 0;
-            }
+            Lbl_Success.Left = 85;
+            Lbl_Success.ForeColor = Color.Black;
+            Lbl_Success.Text = "Pro_Time:" + Math.Round(_proTime, 1) + " Efficiency:" + _log.Efficiency + "%";
 
             //Update Job report in job table
             var fileCount = _db.Logs
-                    .Where(x => x.JobId == _job.JobId & x.Status == "Done")
+                    .Where(x => x.JobId == _job.JobId & x.Status == "Done" & x.Service != "QC")
                     .Select(x => x.Image)
                     .Distinct()
                     .Count();
@@ -106,7 +108,7 @@ namespace Skill_PMS.UI_WinForm.Production.Designer
             if (fileCount != 0)
             {
                 var proTime = _db.Logs
-                    .Where(x => x.JobId == _job.JobId & x.Status == "Done")
+                    .Where(x => x.JobId == _job.JobId & x.Status == "Done" & x.Service != "QC")
                     .Sum(x => x.ProTime);
 
                 _job.ProTime = proTime / fileCount;
@@ -116,16 +118,15 @@ namespace Skill_PMS.UI_WinForm.Production.Designer
             _job.Up = 0;
 
             //Update My_Job Report in My_Job Table
-
             var myJob = _db.My_Jobs
-                .FirstOrDefault(x => x.JobId == _job.JobId & x.Name == User.Short_Name & x.Service == _myService & x.Date == date);
+                .FirstOrDefault(x => x.JobId == _job.JobId & x.Name == _user.Short_Name & x.Service == _myService & x.Date == date);
 
             if (myJob == null)
             {
                 myJob = new MyJob
                 {
                     JobId = _job.JobId,
-                    Name = User.Short_Name,
+                    Name = _user.Short_Name,
                     Service = _myService,
                     Date = date,
                     StartTime = _log.StartTime
@@ -133,158 +134,118 @@ namespace Skill_PMS.UI_WinForm.Production.Designer
                 _db.My_Jobs.Add(myJob);
             }
 
-            fileCount = _db.Logs
-                .Where(x => x.JobId == _job.JobId & x.Name == User.Short_Name & x.Service == _myService &
-                    x.StartTime >= _performance.Login & x.StartTime <= currentTime).Count();
-
-            myJob.Amount = fileCount;
+            myJob.Amount = fileCount = _db.Logs
+                .Count(x => x.JobId == _job.JobId & x.Name == _user.Short_Name & x.Service == _myService &
+                    x.StartTime >= _performance.Login & x.StartTime <= _currentTime);
 
             double quality;
             if (fileCount != 0)
             {
-                quality = _db.Logs
-                    .Where(x => x.JobId == _job.JobId & x.Name == User.Short_Name & x.Service == _myService &
-                                x.StartTime >= _performance.Login & x.StartTime <= currentTime).Average(x => x.Quality);
-
-                myJob.Quality = Convert.ToInt32(quality);
-
                 myJob.TotalJobTime = _db.Logs
-                    .Where(x => x.JobId == _job.JobId & x.Name == User.Short_Name & x.Service == _myService &
-                                x.StartTime >= _performance.Login & x.StartTime <= currentTime).Sum(x => x.TargetTime);
+                    .Where(x => x.JobId == _job.JobId & x.Name == _user.Short_Name & x.Service == _myService &
+                                x.StartTime >= _performance.Login & x.StartTime <= _currentTime).Sum(x => x.TargetTime);
 
                 myJob.JobTime = myJob.TotalJobTime / fileCount;
 
                 myJob.TotalProTime = _db.Logs
-                    .Where(x => x.JobId == _job.JobId & x.Name == User.Short_Name & x.Service == _myService &
-                                x.StartTime >= _performance.Login & x.StartTime <= currentTime).Sum(x => x.ProTime);
+                    .Where(x => x.JobId == _job.JobId & x.Name == _user.Short_Name & x.Service == _myService &
+                                x.StartTime >= _performance.Login & x.StartTime <= _currentTime).Sum(x => x.ProTime);
 
                 myJob.ProTime = myJob.TotalProTime / fileCount;
 
                 if (myJob.ProTime != 0)
-                    myJob.Efficiency = Convert.ToInt32(myJob.JobTime / myJob.ProTime * 100);
+                    myJob.Efficiency = (int)(myJob.JobTime / myJob.ProTime * 100);
+
+                quality = _db.Logs
+                    .Where(x => x.JobId == _job.JobId & x.Name == _user.Short_Name & x.Service == _myService &
+                                x.StartTime >= _performance.Login & x.StartTime <= _currentTime).Average(x => x.Quality);
+
+                myJob.Quality = (int)(quality);
             }
 
-            myJob.EndTime = currentTime;
+            myJob.EndTime = _currentTime;
             myJob.Up = 0;
 
             //Update My_Job Performance in Performance Table
+            _performance = _db.Performances.FirstOrDefault(x => x.Id == _performance.Id);
 
-            fileCount = _db.My_Jobs
-                .Count(x => x.Name == User.Short_Name & x.StartTime >= _performance.Login & x.StartTime <= currentTime);
+            _performance.File = fileCount = _db.Logs
+                .Count(x => x.Name == _user.Short_Name & x.StartTime >= _performance.Login & x.StartTime <= _currentTime);
 
             if (fileCount != 0)
             {
-                _performance.File = _db.My_Jobs
-                        .Where(x => x.Name == User.Short_Name & x.StartTime >= _performance.Login & x.StartTime <= currentTime)
-                        .Sum(x => x.Amount);
+                _performance.JobTime = _db.Logs
+                        .Where(x => x.Name == _user.Short_Name & x.StartTime >= _performance.Login & x.StartTime <= _currentTime)
+                        .Sum(x => x.TargetTime);
 
-                _performance.JobTime = _db.My_Jobs
-                        .Where(x => x.Name == User.Short_Name & x.StartTime >= _performance.Login & x.StartTime <= currentTime)
-                        .Sum(x => x.TotalJobTime);
+                _performance.ProTime = _db.Logs
+                        .Where(x => x.Name == _user.Short_Name & x.StartTime >= _performance.Login & x.StartTime <= _currentTime)
+                        .Sum(x => x.ProTime);
 
-                _performance.ProTime = _db.My_Jobs
-                        .Where(x => x.Name == User.Short_Name & x.StartTime >= _performance.Login & x.StartTime <= currentTime)
-                        .Sum(x => x.TotalProTime);
+                if (_performance.ProTime != 0)
+                    _performance.Efficiency = (int)(_performance.JobTime / _performance.ProTime * 100);
 
-                quality = _db.My_Jobs
-                        .Where(x => x.Name == User.Short_Name & x.StartTime >= _performance.Login & x.StartTime <= currentTime)
+                quality = _db.Logs
+                        .Where(x => x.Name == _user.Short_Name & x.StartTime >= _performance.Login & x.StartTime <= _currentTime)
                         .Average(x => x.Quality);
 
-                _performance.Quality = Convert.ToInt32(quality);
+                _performance.Quality = (int)(quality);
             }
 
-            if (_performance.ProTime != 0)
-                _performance.Efficiency = Convert.ToInt32(_performance.JobTime / _performance.ProTime * 100);
-
-            _performance.Logout = currentTime;
-            _performance.WorkingTime = (int)(currentTime - _performance.Login).TotalMinutes;
+            _performance.Logout = _currentTime;
+            _performance.WorkingTime = (int)(_currentTime - _performance.Login).TotalMinutes;
             _performance.Up = 0;
             _db.SaveChanges();
 
-            Tmr_Count.Stop();
-
             var dashboard = Dashboard.GetInstance();
             dashboard.Performance = _performance;
-
-            if (finish) Finished();
-            else finish = true;
+            Tmr_Close.Start();
         }
 
-        void Finished()
+        void CopyFile(string source, string destination)
         {
-            this.Close();
-        }
-
-        private void Copier_DoWork(object sender, DoWorkEventArgs e)
-        {
-            //Copy done image to server ready folder
-            if (File.Exists(Source))
+            FileStream fsIn = new FileStream(source, FileMode.Open);
+            FileStream fsOut = new FileStream(destination, FileMode.Create);
+            byte[] bt = new byte[1048756];
+            int readByte;
+            while ((readByte = fsIn.Read(bt, 0, bt.Length)) >0)
             {
-                // Create list of files to copy
-                long maxbytes = 0;
-                maxbytes += Source.Length;
-                // Copy files
-                long bytes = 0;
-                try
-                {
-                    this.BeginInvoke(OnChange, new object[] { new UiProgress(Source, bytes, maxbytes) });
-                    if (resume)
-                        File.Move(Source, Destination);
-                    else
-                        File.Copy(Source, Destination, true);
-                }
-                catch (Exception ex)
-                {
-                    UIError err = new UIError(ex, Source);
-                    this.Invoke(OnError, new object[] { err });
-                    if (err.result == DialogResult.Cancel)
-                    {
-
-                    }
-                }
-                bytes += Source.Length;
+                fsOut.Write(bt, 0, readByte);
+                backgroundWorker.ReportProgress((int)(fsIn.Position * 100 / fsIn.Length));
             }
-            else
-                MessageBox.Show(@"Find done file & keep it to Ready folder manually...", @"Done file doesn't Exist", MessageBoxButtons.OK, MessageBoxIcon.Error);
-        }
-
-        private void Copier_ProgressChanged(UiProgress info)
-        {
-            // Update progress
-            Prb_Copier.Value = (int)(100.0 * info.bytes / info.maxbytes);
-        }
-
-        private void Copier_Error(UIError err)
-        {
-            // Error handler
-            string msg = string.Format("Error copying file {0}\n{1}\nClick OK to continue copying files", err.path, err.msg);
-            err.result = MessageBox.Show(msg, @"Copy error", MessageBoxButtons.OKCancel, MessageBoxIcon.Exclamation);
-        }
-
-        private void Copier_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
-        {
-            // Operation completed, update UI
-            if (!File.Exists(Destination))
-                File.Copy(Source, Destination, true);
-
-            Thread.Sleep(1000);
-            ChangeUi(false);
-
-            if (finish) Finished();
-            else finish = true;
-        }
-
-        private void ChangeUi(bool docopy)
-        {
-            Prb_Copier.Visible = docopy;
-            Prb_Copier.Value = 0;
+            fsIn.Close();
+            fsOut.Close();
         }
 
         private void Saving_Progress_Load(object sender, EventArgs e)
         {
-            Tmr_Count.Start();
-            ChangeUi(true); 
-            mCopier.RunWorkerAsync();
+            Tmr_Copy.Start();
+            Prb_Copier.Value = 0;
+            _currentTime = DateTime.Now;
+
+            //update log Report in Log Table
+            _log = _db.Logs
+                .FirstOrDefault(x => x.JobId == _job.JobId & x.Image == _fileName & x.Name == _user.Short_Name & x.Service == _myService);
+
+            _log.ProTime += _proTime;
+            _log.OutputLocation = _destination;
+            _log.EndTime = _currentTime;
+            _log.Status = "Done";
+            _log.Quality = 100;
+            _log.Up = 0;
+
+            if (_log.ProTime != 0)
+                _log.Efficiency = (int)(_log.TargetTime / _log.ProTime * 100);
+
+            _db.SaveChanges();
+            if (_log.Efficiency < 75)
+                ModifyProgressBarColor.SetState(Prb_Copier, 2);
+            else if (_log.Efficiency < 100)
+                ModifyProgressBarColor.SetState(Prb_Copier, 3);
+            else if (_log.Efficiency == 0)
+                ModifyProgressBarColor.SetState(Prb_Copier, 1);
+
+            backgroundWorker.RunWorkerAsync();
         }
     }
 }

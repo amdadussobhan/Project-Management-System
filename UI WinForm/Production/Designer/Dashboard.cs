@@ -106,6 +106,7 @@ namespace Skill_PMS.UI_WinForm.Production.Designer
                 Dgv_Performance.Rows.Add(sl++, per.Name, per.Shift, per.Login, per.Logout, per.WorkingTime, per.File, Math.Round(per.ProTime), per.Efficiency + "%", per.Quality + "%");
 
             _common.Row_Color_By_Efficiency(Dgv_Performance, "Column16");
+            Check_Data();
         }
 
         private void Check_Done_Job()
@@ -169,14 +170,14 @@ namespace Skill_PMS.UI_WinForm.Production.Designer
 
         private void Tmr_Count_Tick(object sender, EventArgs e)
         {
-            _db = new SkillContext();
+            Check_Data();
             if (Tbc_Designer.SelectedIndex == 1)
                 Check_New_Job();
-            Check_Data();
         }
 
         private void Check_Data()
         {
+            _db = new SkillContext();
             //check performance data
             var currentTime = DateTime.Now;
             var today = currentTime.Date;
@@ -184,13 +185,14 @@ namespace Skill_PMS.UI_WinForm.Production.Designer
             if (User.Shift == "Night" & currentTime.ToString("tt").ToUpper() == "AM")
             {
                 today = currentTime.AddDays(-1).Date;
-                start_time = _common.Shift_Time("LastNight");
+                if(today != start_time.Date)
+                    start_time = start_time.AddDays(-1);
             }
 
             Performance = _db.Performances
-                .FirstOrDefault(x => x.Name == User.Short_Name & x.Date == today & x.Shift == User.Shift);
+                .FirstOrDefault(x => x.Id == Performance.Id);
 
-            Btn_Pro_Time.Text = @"Pro Time: " + Convert.ToInt32(Performance.ProTime);
+            Btn_Pro_Time.Text = @"Pro Time: " + Math.Round(Performance.ProTime);
             Btn_Efficiency.Text = @"Efficiency: " + Performance.Efficiency + @"%";
 
             if (start_time > currentTime)
@@ -219,6 +221,15 @@ namespace Skill_PMS.UI_WinForm.Production.Designer
                 case 4:
                     Check_Done_Job();
                     break;
+            }
+        }
+
+        private void Dashboard_Resize(object sender, EventArgs e)
+        {
+            if (this.WindowState != FormWindowState.Minimized)
+            {
+                Check_Data();
+                Tmr_Count.Start();
             }
         }
     }

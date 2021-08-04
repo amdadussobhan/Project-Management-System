@@ -40,8 +40,8 @@ namespace Skill_PMS.UI_WinForm.Production.SI_Panel
         {
             this.Text = @"SI Panel - " + _user.Full_Name;
             Check_New_Job();
-            _shift = _common.Current_Shift();
-            Check_Shift_Report();
+            _shift = _common.Current_Shift(); 
+            Reload();
         }
 
         private void Check_New_Job()
@@ -150,7 +150,7 @@ namespace Skill_PMS.UI_WinForm.Production.SI_Panel
             var performances = (from per in _db.Performances
                                 join user in _db.Users
                                 on per.Name equals user.Short_Name
-                                where per.Date == date & user.Role == "" & per.Shift == _shift
+                                where per.Date == date & user.Role == "" & per.Shift == _performance.Shift
                                 select new
                                 {
                                     per.Name,
@@ -169,8 +169,8 @@ namespace Skill_PMS.UI_WinForm.Production.SI_Panel
             foreach (var per in performances)
             {
                 var start_time = _common.Shift_Time(per.Shift);
-                if (start_time > per.Logout)
-                    start_time = per.Logout;
+                if (start_time > per.Login)
+                    start_time = per.Login;
 
                 var Capacity = (per.Logout - start_time).TotalMinutes;
                 Dgv_Performance.Rows.Add(sl++, per.Name, per.Shift, per.Login, per.Logout, per.WorkingTime, per.File, per.JobTime, Math.Round(per.ProTime), Math.Round(Capacity - per.ProTime), per.Efficiency + "%", per.Quality + "%");
@@ -402,23 +402,37 @@ namespace Skill_PMS.UI_WinForm.Production.SI_Panel
 
         private void Tmr_Count_Tick(object sender, EventArgs e)
         {
+            Reload();
+        }
+
+        private void Reload()
+        {
             _db = new SkillContext();
             _shift = _common.Current_Shift();
             _db.SaveChanges();
-            Check_Shift_Report();
+
+            var date = _common.Shift_Date(DateTime.Now, _shift);
+            _shiftReport = _db.Shift_Reports
+                .FirstOrDefault(x => x.Date == date & x.Shift == _shift);
             
-            if (_counter++ >= 9)
+            if (_shiftReport != null)
             {
-                _common.Change_Shift();
-                if (_shiftReport.TotalLoad == 0)
+                Btn_Workload.Text = @"Workload: " + _shiftReport.TotalLoad;
+                Btn_Capacity.Text = @"Capacity: " + _shiftReport.Capacity; 
+                
+                if (_counter++ >= 9)
                 {
-                    waiting waiting = new waiting();
-                    waiting.Show();
-                    _common.Starting_Shift_Report(DateTime.Now, _shift);
-                    waiting.Close();
-                    _counter = 0;
+                    _common.Change_Shift();
+                    if (_shiftReport.TotalLoad == 0)
+                    {
+                        waiting waiting = new waiting();
+                        waiting.Show();
+                        _common.Starting_Shift_Report(DateTime.Now, _shift);
+                        waiting.Close();
+                        _counter = 0;
+                    }
                 }
-            }
+            }            
 
             switch (Tbc_CS_Panel.SelectedIndex)
             {
@@ -433,19 +447,6 @@ namespace Skill_PMS.UI_WinForm.Production.SI_Panel
                 case 2:
                     Check_QC_Job();
                     break;
-            }
-        }
-
-        private void Check_Shift_Report()
-        {
-            var date = _common.Shift_Date(DateTime.Now, _shift);
-            _shiftReport = _db.Shift_Reports
-                .FirstOrDefault(x => x.Date == date & x.Shift == _shift);
-            
-            if (_shiftReport != null)
-            {
-                Btn_Workload.Text = @"Workload: " + _shiftReport.TotalLoad;
-                Btn_Capacity.Text = @"Capacity: " + _shiftReport.Capacity;
             }
         }
 

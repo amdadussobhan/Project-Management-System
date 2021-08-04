@@ -280,7 +280,6 @@
             // 
             // Tmr_Count
             // 
-            this.Tmr_Count.Enabled = true;
             this.Tmr_Count.Interval = 1000;
             this.Tmr_Count.Tick += new System.EventHandler(this.Tmr_Count_Tick);
             // 
@@ -439,13 +438,14 @@
             // Lbl_Success
             // 
             this.Lbl_Success.AutoSize = true;
-            this.Lbl_Success.BackColor = System.Drawing.Color.MediumSeaGreen;
+            this.Lbl_Success.BackColor = System.Drawing.SystemColors.ActiveBorder;
             this.Lbl_Success.Font = new System.Drawing.Font("Microsoft Sans Serif", 14F);
-            this.Lbl_Success.Location = new System.Drawing.Point(145, 9);
+            this.Lbl_Success.ForeColor = System.Drawing.Color.DarkGreen;
+            this.Lbl_Success.Location = new System.Drawing.Point(135, 8);
             this.Lbl_Success.Name = "Lbl_Success";
-            this.Lbl_Success.Size = new System.Drawing.Size(172, 24);
+            this.Lbl_Success.Size = new System.Drawing.Size(188, 24);
             this.Lbl_Success.TabIndex = 395;
-            this.Lbl_Success.Text = "Successfully Saved";
+            this.Lbl_Success.Text = "Time Saved Success";
             this.Lbl_Success.Visible = false;
             // 
             // Lbl_Job_Time_1
@@ -463,7 +463,7 @@
             this.Btn_Clear.FlatAppearance.BorderSize = 0;
             this.Btn_Clear.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.Btn_Clear.Font = new System.Drawing.Font("Microsoft Sans Serif", 12.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.Btn_Clear.Location = new System.Drawing.Point(21, 3);
+            this.Btn_Clear.Location = new System.Drawing.Point(9, 3);
             this.Btn_Clear.Name = "Btn_Clear";
             this.Btn_Clear.Size = new System.Drawing.Size(120, 35);
             this.Btn_Clear.TabIndex = 393;
@@ -551,7 +551,6 @@
             // 
             // Tmr_Pause
             // 
-            this.Tmr_Pause.Enabled = true;
             this.Tmr_Pause.Interval = 30000;
             this.Tmr_Pause.Tick += new System.EventHandler(this.Tmr_Pause_Tick);
             // 

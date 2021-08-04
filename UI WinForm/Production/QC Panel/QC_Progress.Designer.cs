@@ -31,28 +31,42 @@ namespace Skill_PMS.UI_WinForm.Production.QC_Panel
         {
             this.components = new System.ComponentModel.Container();
             this.Prb_Copier = new System.Windows.Forms.ProgressBar();
-            this.Tmr_Count = new System.Windows.Forms.Timer(this.components);
+            this.Tmr_QC_Progress = new System.Windows.Forms.Timer(this.components);
+            this.Tmr_QC_Close = new System.Windows.Forms.Timer(this.components);
+            this.Tmr_QC_Wait_Performance = new System.Windows.Forms.Timer(this.components);
+            this.Tmr_QC_Performance = new System.Windows.Forms.Timer(this.components);
             this.SuspendLayout();
             // 
             // Prb_Copier
             // 
-            this.Prb_Copier.Location = new System.Drawing.Point(7, 11);
+            this.Prb_Copier.Location = new System.Drawing.Point(10, 15);
             this.Prb_Copier.Name = "Prb_Copier";
             this.Prb_Copier.Size = new System.Drawing.Size(400, 15);
             this.Prb_Copier.TabIndex = 6;
             // 
-            // Tmr_Count
+            // Tmr_QC_Progress
             // 
-            this.Tmr_Count.Enabled = true;
-            this.Tmr_Count.Interval = 3000;
-            this.Tmr_Count.Tick += new System.EventHandler(this.Tmr_Count_Tick);
+            this.Tmr_QC_Progress.Interval = 1;
+            this.Tmr_QC_Progress.Tick += new System.EventHandler(this.Tmr_QC_Progress_Tick);
+            // 
+            // Tmr_QC_Close
+            // 
+            this.Tmr_QC_Close.Interval = 3000;
+            // 
+            // Tmr_QC_Wait_Performance
+            // 
+            this.Tmr_QC_Wait_Performance.Interval = 2000;
+            // 
+            // Tmr_QC_Performance
+            // 
+            this.Tmr_QC_Performance.Interval = 500;
             // 
             // QC_Progress
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.SystemColors.ActiveBorder;
-            this.ClientSize = new System.Drawing.Size(415, 37);
+            this.ClientSize = new System.Drawing.Size(420, 42);
             this.Controls.Add(this.Prb_Copier);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.Fixed3D;
             this.Location = new System.Drawing.Point(1490, 950);
@@ -68,6 +82,9 @@ namespace Skill_PMS.UI_WinForm.Production.QC_Panel
         #endregion
 
         private System.Windows.Forms.ProgressBar Prb_Copier;
-        private System.Windows.Forms.Timer Tmr_Count;
+        private System.Windows.Forms.Timer Tmr_QC_Progress;
+        private System.Windows.Forms.Timer Tmr_QC_Close;
+        private System.Windows.Forms.Timer Tmr_QC_Wait_Performance;
+        private System.Windows.Forms.Timer Tmr_QC_Performance;
     }
 }
