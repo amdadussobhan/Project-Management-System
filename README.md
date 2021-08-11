@@ -1,3 +1,3 @@
 # Skill_PMS
 
-[Presentation.pdf](https://github.com/SBN-CSE-DIU/Skill_PMS/files/6966941/Presentation.pdf)
+![image](https://user-images.githubusercontent.com/10710685/128997761-ecbd224f-e519-4b84-b50f-1418c5fea2fe.png)
