@@ -39,7 +39,7 @@ $(document).ready(function(){
         })
     };
     
-    $(".add_efficiency").click(function () {
+    $(document).on("click", ".add_efficiency", function () {
         var name = $(this).data("name");
         var log_id = $(this).data("log_id");
         var increment_id = $(this).data("increment_id");
@@ -49,7 +49,7 @@ $(document).ready(function(){
         $("#increment_id").val(increment_id);
     });
 
-    $(".edit_efficiency").click(function () {
+    $(document).on("click", ".edit_efficiency", function () {
         var production_test_id = $(this).data("production_test_id");
         var performance = $(this).data("performance");
 
@@ -57,44 +57,30 @@ $(document).ready(function(){
         $(".performance").val(performance);
     });
 
-    $(".si_feedback").click(function () {
-        var si_increment_id = $(this).data("si_increment_id");
-        var designer_name = $(this).data("designer_name");
-
-        $("#si_increment_id").val(si_increment_id);
-        $(".designer_name").text(designer_name);
+    $(document).on("click", ".si_feedback", function () {
+        $("#si_increment_id").val($(this).data("si_increment_id"));
+        $(".designer_name").text($(this).data("designer_name"));
+        $(".quality").val($(this).data("quality"));
+        $(".interest").val($(this).data("interest"));
+        $(".discipline").val($(this).data("discipline"));
+        $(".dedication").val($(this).data("dedication"));
     });
 
-    $(".increment").click(function () {
-        var increment_id = $(this).data("increment_id");
-        var name = $(this).data("name");
-        var amount = $(this).data("amount");
-        var remarks = $(this).data("remarks");
-
-        $("#increment_id").val(increment_id);
-        $(".name").text(name);
-        $(".amount").val(amount);
-        $(".remarks").val(remarks);
+    $(document).on("click", ".increment", function () {
+        $("#increment_id").val($(this).data("increment_id"));
+        $(".name").text($(this).data("name"));
+        $(".amount").val($(this).data("amount"));
+        $(".remarks").val($(this).data("remarks"));
     });
 
-    $(".hr_feedback").click(function () {
-        var hr_increment_id = $(this).data("hr_increment_id");
-        var name = $(this).data("name");
-        var amount = $(this).data("amount");
-        var remarks = $(this).data("remarks");
-        var salary = $(this).data("salary");
-        var attendence = $(this).data("attendence");
-        var department = $(this).data("department");
-        var date = $(this).data("date");
-
-        $("#hr_increment_id").val(hr_increment_id);
-        $(".name").text(name);
-        $(".amount").val(amount);
-        $(".remarks").val(remarks);
-        $(".salary").val(salary);
-        $(".attendence").val(attendence);
-        $(".department").val(department);
-        $(".date").val(date);
-        console.log(date);
-    });hr_feedback
+    $(document).on("click", ".hr_feedback", function () {
+        $("#hr_increment_id").val($(this).data("hr_increment_id"));
+        $(".name").text($(this).data("name"));
+        $(".amount").val($(this).data("amount"));
+        $(".remarks").val($(this).data("remarks"));
+        $(".salary").val($(this).data("salary"));
+        $(".attendence").val($(this).data("attendence"));
+        $(".department").val($(this).data("department"));
+        $(".joining_date").val($(this).data("joining_date"));
+    });
 });

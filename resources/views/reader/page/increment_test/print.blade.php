@@ -48,8 +48,8 @@
                             <td>Efficiency : <span class="text-primary">{{ $row->efficiency + 0 }}%</span></td>
                         </tr>
                         <tr>
-                            <td>Current Salary Tk : <span class="text-primary">{{ $row->salary }}</span></td>
-                            <td>Increment Salary Tk : <span class="text-primary">{{ $row->increment_ho }}</span></td>
+                            <td>Current Salary : <span class="text-primary">{{ $row->salary }}</span></td>
+                            <td>Increment Salary : <span class="text-primary">{{ $row->increment_ho }}</span></td>
                         </tr>
                         <!-- <tr class="text-center">
                             <td colspan="2">Increment with salary for the month of July 2022..................................</td>

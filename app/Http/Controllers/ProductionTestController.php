@@ -19,13 +19,14 @@ class ProductionTestController extends Controller
         $basics = ProductionTest::Where('Team', 'Basic')->Orderby('name', 'asc')->get();
         $seniors = ProductionTest::Where('Team', 'Senior')->Orderby('name', 'asc')->get();
         $clippers = ProductionTest::Where('Team', 'Clipper')->Orderby('name', 'asc')->get();
+        $natores = ProductionTest::Where('Team', 'Natore')->Orderby('name', 'asc')->get();
         $team = "";
         $designers = "";
         $designer = "";
         $users = "";
         $user_id = "";
         
-        return view("reader.page.increment_test.production_tests", compact(['advances','basics','seniors','clippers', 'logs', 'designers', 'designer',
+        return view("reader.page.increment_test.production_tests", compact(['advances','basics','seniors','clippers','natores', 'logs', 'designers', 'designer',
             'users', 'user_id', 'team']));
     }
 

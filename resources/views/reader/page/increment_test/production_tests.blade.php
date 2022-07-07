@@ -135,10 +135,12 @@
 
                         @if($advance->overall == "A")
                             <td style="background: #8cd985">{{ $advance->overall }}</td>
-                        @elseif($advance->overall == "B" | $advance->overall == "C")
+                        @elseif($advance->overall == "B")
                             <td style="background: #fff8b3">{{ $advance->overall }}</td>
-                        @else
+                        @elseif($advance->overall == "C")
                             <td style="background: #f1b0b7">{{ $advance->overall }}</td>
+                        @else
+                            <td>{{ $advance->overall }}</td>
                         @endif
 
                         @if($user == 130)
@@ -200,16 +202,29 @@
                                 <a href="#" class="hr_feedback" data-toggle="modal" data-target="#hr_feedback"
                                     data-hr_increment_id="{{$advance->id}}" data-name="{{$advance->name}}" data-amount="{{$advance->increment_hr}}" 
                                     data-remarks="{{$advance->remarks_hr}}" data-salary="{{$advance->salary}}" data-attendence="{{$advance->attendence}}" 
-                                    data-department="{{$advance->department}}" data-date="{{$advance->joining_date}}">
+                                    data-department="{{$advance->department}}" data-joining_date="{{$advance->joining_date}}">
                                     <i class="fas fa-paper-plane text-primary" style="width: 20px; height: 20px"></i>
                                 </a>
                             </td>
                         @endif
 
-                        @if($user == 11 | $user == 12)
+                        @if($user == 11)
                             <td class="text-center" style="vertical-align:middle;">
                                 <a href="#" class="si_feedback" data-toggle="modal" data-target="#si_feedback" 
-                                    data-si_increment_id="{{$advance->id}}" data-designer_name="{{$advance->name}}">
+                                    data-si_increment_id="{{$advance->id}}" data-designer_name="{{$advance->name}}"
+                                    data-quality="{{$advance->quality_sumon}}" data-interest="{{$advance->interest_sumon}}"
+                                    data-discipline="{{$advance->discipline_sumon}}" data-dedication="{{$advance->dedication_sumon}}">
+                                    <i class="fas fa-paper-plane text-primary" style="width: 20px; height: 20px"></i>
+                                </a>
+                            </td>
+                        @endif
+                        
+                        @if($user == 12)
+                            <td class="text-center" style="vertical-align:middle;">
+                                <a href="#" class="si_feedback" data-toggle="modal" data-target="#si_feedback" 
+                                    data-si_increment_id="{{$advance->id}}" data-designer_name="{{$advance->name}}"
+                                    data-quality="{{$advance->quality_mottaleb}}" data-interest="{{$advance->interest_mottaleb}}"
+                                    data-discipline="{{$advance->discipline_mottaleb}}" data-dedication="{{$advance->dedication_mottaleb}}">
                                     <i class="fas fa-paper-plane text-primary" style="width: 20px; height: 20px"></i>
                                 </a>
                             </td>
@@ -286,10 +301,12 @@
 
                         @if($senior->overall == "A")
                             <td style="background: #8cd985">{{ $senior->overall }}</td>
-                        @elseif($senior->overall == "B" | $senior->overall == "C")
+                        @elseif($senior->overall == "B")
                             <td style="background: #fff8b3">{{ $senior->overall }}</td>
-                        @else
+                        @elseif($senior->overall == "C")
                             <td style="background: #f1b0b7">{{ $senior->overall }}</td>
+                        @else
+                            <td>{{ $senior->overall }}</td>
                         @endif
 
                         @if($user == 130)
@@ -437,10 +454,12 @@
 
                         @if($basic->overall == "A")
                             <td style="background: #8cd985">{{ $basic->overall }}</td>
-                        @elseif($basic->overall == "B" | $basic->overall == "C")
+                        @elseif($basic->overall == "B")
                             <td style="background: #fff8b3">{{ $basic->overall }}</td>
-                        @else
+                        @elseif($basic->overall == "C")
                             <td style="background: #f1b0b7">{{ $basic->overall }}</td>
+                        @else
+                            <td>{{ $basic->overall }}</td>
                         @endif
 
                         @if($user == 130)
@@ -588,10 +607,12 @@
 
                         @if($clipper->overall == "A")
                             <td style="background: #8cd985">{{ $clipper->overall }}</td>
-                        @elseif($clipper->overall == "B" | $clipper->overall == "C")
+                        @elseif($clipper->overall == "B")
                             <td style="background: #fff8b3">{{ $clipper->overall }}</td>
-                        @else
+                        @elseif($clipper->overall == "C")
                             <td style="background: #f1b0b7">{{ $clipper->overall }}</td>
+                        @else
+                            <td>{{ $clipper->overall }}</td>
                         @endif
 
                         @if($user == 130)
@@ -663,6 +684,159 @@
                             <td class="text-center" style="vertical-align:middle;">
                                 <a href="#" class="si_feedback" data-toggle="modal" data-target="#si_feedback" 
                                     data-si_increment_id="{{$clipper->id}}" data-designer_name="{{$clipper->name}}">
+                                    <i class="fas fa-paper-plane text-primary" style="width: 20px; height: 20px"></i>
+                                </a>
+                            </td>
+                        @endif
+                    </tr>
+                @endforeach
+            @endif
+            
+            <?php $SL = 1; ?>
+            @if($natores != null)
+                <tr><td colspan="14" class="py-0"><h4>Natore Test</h3></td></tr>
+                @foreach($natores as $natore)
+                    <tr>
+                        <td>{{ $SL++ }}</td>
+                        
+                        @if($user == 5 | $user == 10)
+                            <td><a href="/3/production_test?id={{$natore->id}}" target="_blank">{{$natore->name}}</a></td>
+                        @else
+                            <td><a href="/3/test_report?name={{$natore->name}}" target="_blank">{{$natore->name}}</a></td>
+                        @endif
+
+                        <td>{{ $natore->full_name }}</td>
+                        <td>{{ $natore->employee_id }}</td>
+                        <td>{{ $natore->designation }}</td>
+                        
+                        @if($user != 5 & $user != 10)
+                            <td>{{ $natore->team }}</td>
+                        @endif
+
+                        @if($natore->attendence >= 100)
+                            <td style="background: #8cd985">{{ $natore->attendence + 0 }}%</td>
+                        @elseif($natore->attendence >= 90)
+                            <td style="background: #fff8b3">{{ $natore->attendence + 0 }}%</td>
+                        @else
+                            <td style="background: #f1b0b7">{{ $natore->attendence + 0 }}%</td>
+                        @endif
+
+                        @if($natore->performance >= 100)
+                            <td style="background: #8cd985">{{ $natore->performance + 0 }}%</td>
+                        @elseif($natore->performance >= 90)
+                            <td style="background: #fff8b3">{{ $natore->performance + 0 }}%</td>
+                        @else
+                            <td style="background: #f1b0b7">{{ $natore->performance + 0 }}%</td>
+                        @endif
+
+                        @if($natore->efficiency >= 100)
+                            <td style="background: #8cd985">{{ $natore->efficiency + 0 }}%</td>
+                        @elseif($natore->efficiency >= 90)
+                            <td style="background: #fff8b3">{{ $natore->efficiency + 0 }}%</td>
+                        @else
+                            <td style="background: #f1b0b7">{{ $natore->efficiency + 0 }}%</td>
+                        @endif
+
+                        @if($user == 11)
+                            <td>{{ $natore->quality_sumon }}</td>
+                            <td>{{ $natore->interest_sumon }}</td>
+                            <td>{{ $natore->discipline_sumon }}</td>
+                            <td>{{ $natore->dedication_sumon }}</td>
+                        @endif
+
+                        @if($user == 12)
+                            <td>{{ $natore->quality_mottaleb }}</td>
+                            <td>{{ $natore->interest_mottaleb }}</td>
+                            <td>{{ $natore->discipline_mottaleb }}</td>
+                            <td>{{ $natore->dedication_mottaleb }}</td>
+                        @endif
+
+                        @if($user == 8 | $user == 130)
+                            <td>{{ $natore->quality_overall }}</td>
+                            <td>{{ $natore->interest_overall }}</td>
+                            <td>{{ $natore->discipline_overall }}</td>
+                            <td>{{ $natore->dedication_overall }}</td>
+                        @endif
+
+                        @if($natore->overall == "A")
+                            <td style="background: #8cd985">{{ $natore->overall }}</td>
+                        @elseif($natore->overall == "B")
+                            <td style="background: #fff8b3">{{ $natore->overall }}</td>
+                        @elseif($natore->overall == "C")
+                            <td style="background: #f1b0b7">{{ $natore->overall }}</td>
+                        @else
+                            <td>{{ $natore->overall }}</td>
+                        @endif
+
+                        @if($user == 130)
+                            <td>{{$natore->increment_spm}}</td>
+                        @endif
+
+                        @if($user == 8)
+                            <td>{{$natore->increment_qpm}}</td>
+                        @endif
+
+                        @if($user == 5 | $user == 10)
+                            <td>{{ $natore->increment_qpm }}</td>
+                            <td>{{ $natore->increment_spm }}</td>
+                            <td>{{ $natore->increment_hr }}</td>
+                            <td>{{ $natore->increment_ho }}</td>
+                        @endif
+
+                        @if($user == 1)
+                            <td class="text-center" style="vertical-align:middle;">
+                                <a href="#" class="edit_efficiency" data-toggle="modal" data-target="#edit_efficiency" 
+                                    data-production_test_id="{{$natore->id}}" data-performance="{{$natore->performance}}">
+                                    <i class="fas fa-paper-plane text-primary" style="width: 20px; height: 20px"></i>
+                                </a>
+                            </td>
+                        @endif
+
+                        @if($user == 5)
+                            <td class="text-center" style="vertical-align:middle;">
+                                <a href="#" class="increment" data-toggle="modal" data-target="#increment"
+                                    data-increment_id="{{$natore->id}}" data-name="{{$natore->name}}" data-amount="{{$natore->increment_ho}}" 
+                                    data-remarks="{{$natore->remarks_ho}}">
+                                    <i class="fas fa-paper-plane text-primary" style="width: 20px; height: 20px"></i>
+                                </a>
+                            </td>
+                        @endif
+
+                        @if($user == 130)
+                            <td class="text-center" style="vertical-align:middle;">
+                                <a href="#" class="increment" data-toggle="modal" data-target="#increment"
+                                    data-increment_id="{{$natore->id}}" data-name="{{$natore->name}}" data-amount="{{$natore->increment_spm}}" 
+                                    data-remarks="{{$natore->remarks_spm}}">
+                                    <i class="fas fa-paper-plane text-primary" style="width: 20px; height: 20px"></i>
+                                </a>
+                            </td>
+                        @endif
+
+                        @if($user == 8)
+                            <td class="text-center" style="vertical-align:middle;">
+                                <a href="#" class="increment" data-toggle="modal" data-target="#increment"
+                                    data-increment_id="{{$natore->id}}" data-name="{{$natore->name}}" data-amount="{{$natore->increment_qpm}}" 
+                                    data-remarks="{{$natore->remarks_qpm}}">
+                                    <i class="fas fa-paper-plane text-primary" style="width: 20px; height: 20px"></i>
+                                </a>
+                            </td>
+                        @endif
+
+                        @if($user == 10)
+                            <td class="text-center" style="vertical-align:middle;">
+                                <a href="#" class="hr_feedback" data-toggle="modal" data-target="#hr_feedback"
+                                    data-hr_increment_id="{{$natore->id}}" data-name="{{$natore->name}}" data-amount="{{$natore->increment_hr}}" 
+                                    data-remarks="{{$natore->remarks_hr}}" data-salary="{{$natore->salary}}" data-attendence="{{$natore->attendence}}" 
+                                    data-department="{{$natore->department}}" data-date="{{$natore->joining_date}}">
+                                    <i class="fas fa-paper-plane text-primary" style="width: 20px; height: 20px"></i>
+                                </a>
+                            </td>
+                        @endif
+
+                        @if($user == 11 | $user == 12)
+                            <td class="text-center" style="vertical-align:middle;">
+                                <a href="#" class="si_feedback" data-toggle="modal" data-target="#si_feedback" 
+                                    data-si_increment_id="{{$natore->id}}" data-designer_name="{{$natore->name}}">
                                     <i class="fas fa-paper-plane text-primary" style="width: 20px; height: 20px"></i>
                                 </a>
                             </td>

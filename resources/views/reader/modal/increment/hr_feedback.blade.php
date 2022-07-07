@@ -5,7 +5,7 @@
 
             <!-- Modal Header -->
             <div class="modal-header">
-                <h4 class="modal-title">HR Feedback Report of : <span class="text-primary name"></span></h4>
+                <h4 class="modal-title">HR Feedback of : <span class="text-primary name"></span></h4>
                 <button type="button" class="close" data-dismiss="modal">&times;</button>
             </div>
 
@@ -18,13 +18,13 @@
                         <div class="col">
                             <div class="form-group">
                                 {!! Form::label('Joining Date') !!}
-                                {!! Form::date('date', null, ['class'=>'form-control text-center date']) !!}
+                                <input type="date" name="date" value="" class="form-control text-center joining_date">
                             </div>
                         </div>
                         <div class="col">
                             <div class="form-group">
                                 {!! Form::label('Attendence') !!}
-                                {!! Form::text('attendence', null, ['class'=>'form-control text-center attendence', 'required'=>'required']) !!}
+                                {!! Form::text('attendence', null, ['class'=>'form-control text-center attendence', 'required']) !!}
                             </div>
                         </div>
                     </div>
@@ -38,7 +38,7 @@
                         <div class="col">
                             <div class="form-group">
                                 {!! Form::label('Increment Suggest') !!}
-                                {!! Form::text('amount', null, ['class'=>'form-control text-center amount', 'required'=>'required']) !!}
+                                {!! Form::text('amount', null, ['class'=>'form-control text-center amount', 'required']) !!}
                             </div>
                         </div>
                     </div>

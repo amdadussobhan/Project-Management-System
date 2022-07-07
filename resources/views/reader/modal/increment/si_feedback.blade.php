@@ -18,7 +18,7 @@
                         <div class="col">
                             <div class="form-group">
                                 {!! Form::label('Quality') !!}
-                                <select class="form-control" required name="quality" >
+                                <select class="form-control quality" required name="quality" >
                                     <option value=""></option>
                                     <option value="A">A</option>
                                     <option value="B">B</option>
@@ -31,7 +31,7 @@
                         <div class="col">
                             <div class="form-group">
                                 {!! Form::label('Interest') !!}
-                                <select class="form-control" required name="interest" >
+                                <select class="form-control interest" required name="interest" >
                                     <option value=""></option>
                                     <option value="A">A</option>
                                     <option value="B">B</option>
@@ -46,7 +46,7 @@
                         <div class="col">
                             <div class="form-group">
                                 {!! Form::label('Discipline') !!}
-                                <select class="form-control" required name="discipline" >
+                                <select class="form-control discipline" required name="discipline" >
                                     <option value=""></option>
                                     <option value="A">A</option>
                                     <option value="B">B</option>
@@ -59,7 +59,7 @@
                         <div class="col">
                             <div class="form-group">
                                 {!! Form::label('Dedication') !!}
-                                <select class="form-control" required name="dedication" >
+                                <select class="form-control dedication" required name="dedication" >
                                     <option value=""></option>
                                     <option value="A">A</option>
                                     <option value="B">B</option>
