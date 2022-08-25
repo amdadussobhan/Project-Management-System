@@ -33,25 +33,52 @@ namespace Skill_PMS.UI_WinForm.Production.Designer
         private void Dashboard_Load(object sender, EventArgs e)
         {
             this.Text = @"Dashboard - " + User.Full_Name;
-            Tmr_Count.Start();
+            Tmr_Count_Dashboard.Start();
             Check_New_Job();
             Check_Data();
+            Tbc_Designer.SelectedIndex = 1;
         }
 
         private void Check_New_Job()
         {
+            int row = 0, sl = 1;
+            DateTime Todays = DateTime.Now.Date.AddDays(1);
+            if (Dgv_New_Job.CurrentCell != null)
+                row = Dgv_New_Job.CurrentCell.RowIndex;
+
             Dgv_New_Job.DataSource = null;
             Dgv_New_Job.Rows.Clear();
             _common.Dgv_Size(Dgv_New_Job, 11);
 
-            var jobs = _db.New_Jobs
-                .Where(x => x.Status == "Pro")
-                .ToList();
+            var jobs = _db.New_Jobs.Where(x => x.Status == "Pro").OrderBy(x => x.Delivery).ToList();
 
-            var sl = 1;
-            foreach (var job in jobs)
+            if (jobs.Find(x => x.Team == "Basic") != null)
             {
-                Dgv_New_Job.Rows.Add(sl++, job.JobId, job.Folder, job.Category, job.Service, job.TargetTime, job.InputAmount, job.Delivery);
+                Dgv_New_Job.Rows.Add("", "", "", "", "Basic Team Job Workload", "", "", "", "", "");
+                foreach (var job in jobs)
+                {
+                    if (job.Team == "Basic")
+                        Dgv_New_Job.Rows.Add(sl++, job.JobId, job.Folder, Math.Round(job.TargetTime, 1), job.Category, job.Service, job.InputAmount, job.ProDone, job.Delivery, job.Id);
+                }
+            }
+
+            sl = 1;
+            if (jobs.Find(x => x.Team == "Advance") != null)
+            {
+                Dgv_New_Job.Rows.Add("", "", "", "", "Advance Team Job Workload", "", "", "", "", "");
+                foreach (var job in jobs)
+                {
+                    if (job.Team == "Advance")
+                        Dgv_New_Job.Rows.Add(sl++, job.JobId, job.Folder, Math.Round(job.TargetTime, 1), job.Category, job.Service, job.InputAmount, job.ProDone, job.Delivery, job.Id);
+                }
+            }
+
+            int max_row = Dgv_New_Job.Rows.Count - 1;
+            if (max_row >= 0)
+            {
+                Dgv_New_Job.CurrentCell = Dgv_New_Job.Rows[max_row].Cells[3];
+                if (max_row >= row)
+                    Dgv_New_Job.CurrentCell = Dgv_New_Job.Rows[row].Cells[3];
             }
 
             _common.Row_Color_By_Delivery(Dgv_New_Job, "Column28");
@@ -71,9 +98,27 @@ namespace Skill_PMS.UI_WinForm.Production.Designer
 
             var sl = 1;
             foreach (var log in logs)
-                DgvHistory.Rows.Add(sl++, log.JobId, log.Category, log.Image, log.Service, log.StartTime, log.EndTime, log.TargetTime, Math.Round(log.ProTime, 2), log.Efficiency + "%");
+                DgvHistory.Rows.Add(sl++, log.JobId, log.Type, log.Image, log.Service, log.StartTime, log.EndTime, Math.Round(log.TargetTime, 1), Math.Round(log.ProTime, 2), log.Efficiency + "%");
 
             _common.Row_Color_By_Efficiency(DgvHistory, "Column10");
+        }
+
+        private void Check_Production_Error()
+        {
+            Dgv_Production_Error.DataSource = null;
+            Dgv_Production_Error.Rows.Clear();
+            _common.Dgv_Size(Dgv_Production_Error, 11);
+
+            var errors = _db.Feedback
+                .OrderByDescending(x => x.Id)
+                .Take(999)
+                .ToList();
+
+            var sl = 1;
+            foreach (var error in errors)
+                Dgv_Production_Error.Rows.Add(sl++, error.Name, error.JobId, error.Folder, error.Image, error.Remarks, error.ReportTime, error.Reporter);
+
+            //_common.Row_Color_By_Efficiency(Dgv_Production_Error, "Column55");
         }
 
         private void Check_Performance()
@@ -136,7 +181,7 @@ namespace Skill_PMS.UI_WinForm.Production.Designer
             var sl = 1;
             foreach (var job in myJobs)
             {
-                Dgv_Done_Job.Rows.Add(sl++, job.Job_ID, job.Folder, job.Service,  job.Amount, job.Job_Time, Convert.ToInt32(job.Pro_Time), job.Start_Time, job.End_Time, job.Efficiency+"%", job.Quality+"%");
+                Dgv_Done_Job.Rows.Add(sl++, job.Job_ID, job.Folder, job.Service,  job.Amount, Math.Round(job.Job_Time, 1), Math.Round(job.Pro_Time, 2), job.Start_Time, job.End_Time, job.Efficiency+"%", job.Quality+"%");
             }
 
             _common.Row_Color_By_Efficiency(Dgv_Done_Job, "Column57");
@@ -155,24 +200,18 @@ namespace Skill_PMS.UI_WinForm.Production.Designer
                 if (Dgv_New_Job.Rows[e.RowIndex].Cells[e.ColumnIndex].Value != null)
                 {
                     processing._job.JobId = Dgv_New_Job.Rows[e.RowIndex].Cells[e.ColumnIndex].Value.ToString();
+                    processing._runningJobsId = Convert.ToInt32(Dgv_New_Job.Rows[e.RowIndex].Cells[9].Value.ToString());
                 }
 
                 if (!string.IsNullOrWhiteSpace(Dgv_New_Job.CurrentCell.EditedFormattedValue.ToString()))
                 {
-                    Tmr_Count.Stop();
+                    Tmr_Count_Dashboard.Stop();
                     this.Hide();
                     processing.User = User;
                     processing._performance = Performance;
                     processing.Show();
                 }
             }
-        }
-
-        private void Tmr_Count_Tick(object sender, EventArgs e)
-        {
-            Check_Data();
-            if (Tbc_Designer.SelectedIndex == 1)
-                Check_New_Job();
         }
 
         private void Check_Data()
@@ -204,7 +243,7 @@ namespace Skill_PMS.UI_WinForm.Production.Designer
 
         private void Tbc_Designer_SelectedIndexChanged(object sender, EventArgs e)
         {
-            Tmr_Count.Start();
+            Tmr_Count_Dashboard.Start();
             switch (Tbc_Designer.SelectedIndex)
             {
                 case 0:
@@ -219,6 +258,9 @@ namespace Skill_PMS.UI_WinForm.Production.Designer
                     Check_History();
                     break;
                 case 4:
+                    Check_Production_Error();
+                    break;
+                case 5:
                     Check_Done_Job();
                     break;
             }
@@ -229,8 +271,15 @@ namespace Skill_PMS.UI_WinForm.Production.Designer
             if (this.WindowState != FormWindowState.Minimized)
             {
                 Check_Data();
-                Tmr_Count.Start();
+                Tmr_Count_Dashboard.Start();
             }
+        }
+
+        private void Tmr_Count_Dashboard_Tick(object sender, EventArgs e)
+        {
+            Check_Data();
+            if (Tbc_Designer.SelectedIndex == 1)
+                Check_New_Job();
         }
     }
 }

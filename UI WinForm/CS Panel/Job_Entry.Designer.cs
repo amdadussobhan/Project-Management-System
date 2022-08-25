@@ -52,7 +52,9 @@
             this.label8 = new System.Windows.Forms.Label();
             this.label11 = new System.Windows.Forms.Label();
             this.Chk_Remember = new System.Windows.Forms.CheckBox();
-            this.Chk_Price = new System.Windows.Forms.CheckBox();
+            this.Cmb_Service = new System.Windows.Forms.ComboBox();
+            this.label2 = new System.Windows.Forms.Label();
+            this.label6 = new System.Windows.Forms.Label();
             this.SuspendLayout();
             // 
             // Lbl_Total_Time
@@ -79,7 +81,7 @@
             // 
             this.Btn_Open_Folder.BackColor = System.Drawing.Color.Khaki;
             this.Btn_Open_Folder.Font = new System.Drawing.Font("Microsoft Sans Serif", 13F);
-            this.Btn_Open_Folder.Location = new System.Drawing.Point(740, 284);
+            this.Btn_Open_Folder.Location = new System.Drawing.Point(740, 342);
             this.Btn_Open_Folder.Name = "Btn_Open_Folder";
             this.Btn_Open_Folder.Size = new System.Drawing.Size(117, 35);
             this.Btn_Open_Folder.TabIndex = 10;
@@ -92,7 +94,7 @@
             this.Txt_Folder.Font = new System.Drawing.Font("Microsoft Sans Serif", 13F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.Txt_Folder.Location = new System.Drawing.Point(168, 288);
             this.Txt_Folder.Name = "Txt_Folder";
-            this.Txt_Folder.Size = new System.Drawing.Size(566, 27);
+            this.Txt_Folder.Size = new System.Drawing.Size(232, 27);
             this.Txt_Folder.TabIndex = 6;
             this.Txt_Folder.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             // 
@@ -100,7 +102,7 @@
             // 
             this.label3.AutoSize = true;
             this.label3.Font = new System.Drawing.Font("Microsoft Sans Serif", 16F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label3.Location = new System.Drawing.Point(68, 285);
+            this.label3.Location = new System.Drawing.Point(69, 285);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(85, 26);
             this.label3.TabIndex = 235;
@@ -114,7 +116,6 @@
             this.Cmb_Currency.Name = "Cmb_Currency";
             this.Cmb_Currency.Size = new System.Drawing.Size(111, 30);
             this.Cmb_Currency.TabIndex = 9;
-            this.Cmb_Currency.Visible = false;
             this.Cmb_Currency.TextChanged += new System.EventHandler(this.Cmb_Currency_TextChanged);
             // 
             // Txt_Price
@@ -125,7 +126,7 @@
             this.Txt_Price.Size = new System.Drawing.Size(116, 30);
             this.Txt_Price.TabIndex = 8;
             this.Txt_Price.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
-            this.Txt_Price.Visible = false;
+            this.Txt_Price.TextChanged += new System.EventHandler(this.Txt_Price_TextChanged);
             // 
             // Cmb_Catagory
             // 
@@ -141,7 +142,7 @@
             // 
             this.label4.AutoSize = true;
             this.label4.Font = new System.Drawing.Font("Microsoft Sans Serif", 16F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label4.Location = new System.Drawing.Point(41, 167);
+            this.label4.Location = new System.Drawing.Point(41, 166);
             this.label4.Name = "label4";
             this.label4.Size = new System.Drawing.Size(112, 26);
             this.label4.TabIndex = 225;
@@ -175,18 +176,18 @@
             // 
             this.label24.AutoSize = true;
             this.label24.Font = new System.Drawing.Font("Microsoft Sans Serif", 16F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label24.Location = new System.Drawing.Point(82, 225);
+            this.label24.Location = new System.Drawing.Point(41, 225);
             this.label24.Name = "label24";
-            this.label24.Size = new System.Drawing.Size(71, 26);
+            this.label24.Size = new System.Drawing.Size(112, 26);
             this.label24.TabIndex = 224;
-            this.label24.Text = "Type :";
+            this.label24.Text = "Job Type :";
             // 
             // Txt_Location
             // 
             this.Txt_Location.Font = new System.Drawing.Font("Microsoft Sans Serif", 13F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.Txt_Location.Location = new System.Drawing.Point(169, 347);
             this.Txt_Location.Name = "Txt_Location";
-            this.Txt_Location.Size = new System.Drawing.Size(688, 27);
+            this.Txt_Location.Size = new System.Drawing.Size(565, 27);
             this.Txt_Location.TabIndex = 7;
             this.Txt_Location.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             this.Txt_Location.TextChanged += new System.EventHandler(this.Txt_Job_Location_TextChanged);
@@ -207,7 +208,7 @@
             // 
             this.label9.AutoSize = true;
             this.label9.Font = new System.Drawing.Font("Microsoft Sans Serif", 16F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label9.Location = new System.Drawing.Point(47, 343);
+            this.label9.Location = new System.Drawing.Point(48, 343);
             this.label9.Name = "label9";
             this.label9.Size = new System.Drawing.Size(106, 26);
             this.label9.TabIndex = 223;
@@ -218,7 +219,7 @@
             this.Dtp_Delivery.CustomFormat = "dd-MMM-yy   hh:mm tt";
             this.Dtp_Delivery.Font = new System.Drawing.Font("Microsoft Sans Serif", 15F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.Dtp_Delivery.Format = System.Windows.Forms.DateTimePickerFormat.Custom;
-            this.Dtp_Delivery.Location = new System.Drawing.Point(625, 228);
+            this.Dtp_Delivery.Location = new System.Drawing.Point(625, 288);
             this.Dtp_Delivery.Name = "Dtp_Delivery";
             this.Dtp_Delivery.Size = new System.Drawing.Size(232, 30);
             this.Dtp_Delivery.TabIndex = 5;
@@ -261,7 +262,7 @@
             // 
             this.label5.AutoSize = true;
             this.label5.Font = new System.Drawing.Font("Microsoft Sans Serif", 16F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label5.Location = new System.Drawing.Point(513, 228);
+            this.label5.Location = new System.Drawing.Point(513, 288);
             this.label5.Name = "label5";
             this.label5.Size = new System.Drawing.Size(103, 26);
             this.label5.TabIndex = 222;
@@ -301,24 +302,44 @@
             // 
             this.Chk_Remember.AutoSize = true;
             this.Chk_Remember.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F);
-            this.Chk_Remember.Location = new System.Drawing.Point(625, 413);
+            this.Chk_Remember.Location = new System.Drawing.Point(635, 413);
             this.Chk_Remember.Name = "Chk_Remember";
             this.Chk_Remember.Size = new System.Drawing.Size(107, 24);
             this.Chk_Remember.TabIndex = 346;
             this.Chk_Remember.Text = "Remember";
             this.Chk_Remember.UseVisualStyleBackColor = true;
             // 
-            // Chk_Price
+            // Cmb_Service
             // 
-            this.Chk_Price.AutoSize = true;
-            this.Chk_Price.Font = new System.Drawing.Font("Microsoft Sans Serif", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.Chk_Price.Location = new System.Drawing.Point(73, 411);
-            this.Chk_Price.Name = "Chk_Price";
-            this.Chk_Price.Size = new System.Drawing.Size(80, 29);
-            this.Chk_Price.TabIndex = 347;
-            this.Chk_Price.Text = "Price";
-            this.Chk_Price.UseVisualStyleBackColor = true;
-            this.Chk_Price.CheckedChanged += new System.EventHandler(this.Chk_Price_CheckedChanged);
+            this.Cmb_Service.Font = new System.Drawing.Font("Microsoft Sans Serif", 13F);
+            this.Cmb_Service.FormattingEnabled = true;
+            this.Cmb_Service.Items.AddRange(new object[] {
+            "Basic",
+            "Advance"});
+            this.Cmb_Service.Location = new System.Drawing.Point(626, 228);
+            this.Cmb_Service.Name = "Cmb_Service";
+            this.Cmb_Service.Size = new System.Drawing.Size(231, 28);
+            this.Cmb_Service.TabIndex = 348;
+            // 
+            // label2
+            // 
+            this.label2.AutoSize = true;
+            this.label2.Font = new System.Drawing.Font("Microsoft Sans Serif", 16F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label2.Location = new System.Drawing.Point(518, 225);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(97, 26);
+            this.label2.TabIndex = 349;
+            this.label2.Text = "Service :";
+            // 
+            // label6
+            // 
+            this.label6.AutoSize = true;
+            this.label6.Font = new System.Drawing.Font("Microsoft Sans Serif", 16F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label6.Location = new System.Drawing.Point(79, 409);
+            this.label6.Name = "label6";
+            this.label6.Size = new System.Drawing.Size(74, 26);
+            this.label6.TabIndex = 350;
+            this.label6.Text = "Price :";
             // 
             // JobEntry
             // 
@@ -326,7 +347,9 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.SystemColors.ActiveBorder;
             this.ClientSize = new System.Drawing.Size(905, 482);
-            this.Controls.Add(this.Chk_Price);
+            this.Controls.Add(this.label6);
+            this.Controls.Add(this.Cmb_Service);
+            this.Controls.Add(this.label2);
             this.Controls.Add(this.Chk_Remember);
             this.Controls.Add(this.Lbl_Total_Time);
             this.Controls.Add(this.label1);
@@ -356,7 +379,6 @@
             this.Name = "JobEntry";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Add_Job";
-            this.TopMost = true;
             this.Load += new System.EventHandler(this.Add_Job_Load);
             this.ResumeLayout(false);
             this.PerformLayout();
@@ -388,6 +410,8 @@
         private System.Windows.Forms.Label label8;
         private System.Windows.Forms.Label label11;
         private System.Windows.Forms.CheckBox Chk_Remember;
-        private System.Windows.Forms.CheckBox Chk_Price;
+        private System.Windows.Forms.ComboBox Cmb_Service;
+        private System.Windows.Forms.Label label2;
+        private System.Windows.Forms.Label label6;
     }
 }

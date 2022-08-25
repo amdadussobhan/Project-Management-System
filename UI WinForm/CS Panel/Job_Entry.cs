@@ -13,15 +13,14 @@ namespace Skill_PMS.UI_WinForm.CS_Panel
     public partial class JobEntry : Form
     {
         public NewJob _newJob = new NewJob();
-        public Redo_Job _redoJob = new Redo_Job();
         private Price_Time _priceTime = new Price_Time();
         private Rate _rate = new Rate();
         private Common _common = new Common();
         private SkillContext _db = new SkillContext();
 
-        private double _priceRate;
         private int _file = 0;
-        public string _newJobId = "", _oldJobId = "", _client ="";
+        private double _priceRate = 0, _time = 0, _price = 0, _taka = 0;
+        public string _newJobId = "", _oldJobId = "", _client ="", _category="";
         public bool _isModify = false;
         public bool _isRedo = false;
 
@@ -60,8 +59,6 @@ namespace Skill_PMS.UI_WinForm.CS_Panel
 
                 Cmb_Client.Text = _newJob.Client;
                 Cmb_Catagory.Text = _newJob.Category;
-                Txt_Price.Text = _newJob.Price + "";
-                Cmb_Currency.Text = _newJob.Currency;
             }
 
             if (_isModify)
@@ -89,19 +86,20 @@ namespace Skill_PMS.UI_WinForm.CS_Panel
         private void Create_Job_ID()
         {
             var today = DateTime.Now.Date;
-            var count = _db.New_Jobs
-                .Count(x => x.Date == today);
-
+            var count = _db.New_Jobs.Count(x => x.Date == today);
             var date = DateTime.Now.ToString("yyMMdd");
-
             string id;
+
             if (_isModify)
-                id = _oldJobId.Split('_')[0];
+            {
+                id = _oldJobId.Split('_')[1];
+            }
             else
-            { 
+            {
                 //create uniqe id
                 x:
                 id = date + ++count;
+
                 if (count < 10)
                     id = date + "0" + count;
 
@@ -114,57 +112,52 @@ namespace Skill_PMS.UI_WinForm.CS_Panel
                 //................
             }
 
-            _newJobId = id + "_" + _client;
+            _newJobId = _client + "_" + id;
             Txt_Job_ID.Text = _newJobId;
         }
 
-        private void Check_Category()
+        private void Btn_Submit_Job_Click(object sender, EventArgs e)
         {
-            var categories = _db.Price_Times
-                .Where(x => x.Client == Cmb_Client.Text)
-                .Select(x => x.Category)
-                .Distinct();
-
-            foreach (var category in categories)
-                Cmb_Catagory.Items.Add(category);
-        }
-
-        private bool Job_Validated()
-        {
-            if (string.IsNullOrEmpty(Cmb_Client.Text))
+            if (string.IsNullOrEmpty(_client))
             {
                 MessageBox.Show(@"Invalid Client Name Entered.!!! Please Enter Correct Client Name", @"Invalid Client Name Entered", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                return false;
+                return;
             }
 
             if (_file <= 0)
             {
                 MessageBox.Show(@"Invalid Job Amount Entered.!!! Please Enter Correct Job Amount", @"Invalid Job Amount Entered", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                return false;
+                return;
             }
 
-            if (string.IsNullOrEmpty(Txt_Location.Text))
+            var loc = Txt_Location.Text;
+            if (string.IsNullOrEmpty(loc))
             {
                 MessageBox.Show(@"Invalid Folder Location Entered.!!! Please Enter Correct Folder Location", @"Invalid Location Entered", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                return false;
+                return;
+            }
+
+            var folder = Txt_Folder.Text;
+            if (string.IsNullOrEmpty(loc))
+            {
+                MessageBox.Show(@"Invalid Folder Name Entered.!!! Please Enter Correct Folder Location", @"Invalid Folder Name Entered", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
             }
 
             var type = Cmb_Job_Type.Text;
             if (string.IsNullOrEmpty(type) | (type != "Regular" & type != "Test" & type != "Feedback"))
             {
                 MessageBox.Show(@"Invalid Job Type Selection.!!! Please Only select within existing Option", @"Invalid Job Type Selection", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                return false;
+                return;
             }
 
-            return true;
-        }
+            var service = Cmb_Service.Text;
+            if (string.IsNullOrEmpty(service) | (service != "Advance" & service != "Basic"))
+            {
+                MessageBox.Show(@"Invalid Job Service Selection.!!! Please Only select within existing Option", @"Invalid Job Service Selection", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
 
-        private void Btn_Submit_Job_Click(object sender, EventArgs e)
-        {
-            if (!string.IsNullOrEmpty(Txt_Amount.Text))
-                _file = Convert.ToInt32(Txt_Amount.Text);
-
-            if (!Job_Validated()) return;
             var currency = Cmb_Currency.Text;
             if (!string.IsNullOrEmpty(currency))
             {
@@ -177,92 +170,43 @@ namespace Skill_PMS.UI_WinForm.CS_Panel
                 }
             }
 
-            double time = 0, price = 0, taka = 0;
-            var category = Cmb_Catagory.Text;
-
-            if(!string.IsNullOrEmpty(Txt_Job_Time.Text))
-                time = Convert.ToDouble(Txt_Job_Time.Text);
-
-            if (!string.IsNullOrEmpty(Txt_Price.Text)) {
-                price = Convert.ToDouble(Txt_Price.Text);
-                taka = Convert.ToDouble(Txt_Price.Text) * _priceRate;
-            }
-
+            //--Update Price Time Table
+            
             if (Chk_Remember.Checked){
                 _priceTime.Client = _client;
-                _priceTime.Category = category;
+                _priceTime.Type = service;
+                _priceTime.Category = _category;
                 _priceTime.Rate_ID = _rate.ID;
-                _priceTime.Actual_Time = time;
-                _priceTime.Price = price;
-                _priceTime.Taka = taka;
+                _priceTime.Lock_Time = _time;
+                _priceTime.Price = _price;
                 _db.Price_Times.AddOrUpdate(_priceTime);
                 _db.SaveChanges();
             }
+            //--End Update Price Time Table
 
             var shift = _common.Current_Shift();
-            var date = _common.Shift_Date(DateTime.Now, shift);
-
-            //add to shiftReport
-            var shiftReport = _db.Shift_Reports
-                   .FirstOrDefault(x => x.Date == date & x.Shift == shift);
-
-            if (shiftReport == null)
-            {
-                shiftReport = _common.Add_New_Shift_Report(date, shift);
-                shiftReport = _db.Shift_Reports
-                   .FirstOrDefault(x => x.Date == date & x.Shift == shift);
-            }//...................
-
-            //add to workload
-            Workload workLoad = null;
-            if (_newJob != null & _newJob.JobId != null)
-            {
-                workLoad = _db.Workloads
-                    .OrderByDescending(x=>x.Id)
-                    .FirstOrDefault(x => x.JobId == _newJob.JobId);
-            }
-
-            if (workLoad == null)
-            {
-                workLoad = new Workload
-                {
-                    Date = date,
-                    Shift = shift
-                };
-                _db.Workloads.Add(workLoad);
-            }
-
-            workLoad.File = _file;
-            workLoad.Time = _file * time;
-            //.................
-
-            //update shiftReport table
-            workLoad.Up = 0;
-            shiftReport.TotalFile += workLoad.File;
-            shiftReport.HandFile += workLoad.File;
-            shiftReport.NewFile += workLoad.File;
-            shiftReport.TotalLoad += workLoad.Time;
-            shiftReport.HandLoad += workLoad.Time;
-            shiftReport.Up = 0;
-            //........................
-
-            //update job table
+            
+            //--update job table
             Create_Job_ID();
-            _newJob.JobId = workLoad.JobId = _newJobId;
+            _newJob.JobId = _newJobId;
             _newJob.Client = _client;
-            _newJob.Category = category;
-            _newJob.Type = Cmb_Job_Type.Text;
-            _newJob.Folder = Txt_Folder.Text;
+            _newJob.Category = _category;
+            _newJob.Type = type;
+            _newJob.Folder = folder;
             _newJob.InputAmount = _file;
-            _newJob.InputLocation = Txt_Location.Text;
-            _newJob.Price = price;
-            _newJob.Taka = taka;
-            _newJob.Currency = currency;
-            _newJob.ActualTime = time;
+            _newJob.InputLocation = loc;
+            _newJob.Price = _price;
+            _newJob.Taka = _taka;
+            _newJob.ActualTime = _newJob.TargetTime = _time;
             _newJob.Delivery = Dtp_Delivery.Value;
             _newJob.Receiver = User.Short_Name;
+            _newJob.Updator = User.Short_Name;
+            _newJob.Updated = DateTime.Now;
+            _newJob.Shift = shift;
+            _newJob.Team = service;
             _newJob.Up = 0;
 
+            _priceTime.Up = 0;
             if (_priceTime != null)
                 _newJob.Price_Times_ID = _priceTime.ID;
 
@@ -271,40 +215,49 @@ namespace Skill_PMS.UI_WinForm.CS_Panel
                 _newJob.Status = "New";
                 _newJob.Date = DateTime.Now.Date;
                 _newJob.Incoming = DateTime.Now;
+                _newJob.Created = DateTime.Now;
+                _newJob.ProStart = DateTime.Now;
+                _newJob.ProEnd = DateTime.Now;
                 _db.New_Jobs.Add(_newJob);
             }
-
-            if (_isRedo)
-            {
-                _redoJob.RedoJobId = _newJob.JobId;
-                _db.RedoJob.Add(_redoJob);
-            }
+            //--End update job table
 
             _db.SaveChanges();
-            _common.Change_Shift();
-            if (shiftReport.TotalLoad == 0)
-                _common.Check_Workload(shift);
-
             this.Close();
         }
 
         private void Cmb_Client_TextChanged(object sender, EventArgs e)
         {
             _client = Cmb_Client.Text.ToUpper();
-            Cmb_Catagory.Text = "";
             Check_Category();
             Create_Job_ID();
         }
 
         private void Cmb_Category_TextChanged(object sender, EventArgs e)
         {
-            var priceTimes = _db.Price_Times
-                .FirstOrDefault(x => x.Client == Cmb_Client.Text & x.Category == Cmb_Catagory.Text);
+            _category = Cmb_Catagory.Text;
+            Check_Category();
+        }
 
-            if(priceTimes != null) { 
+        private void Check_Category()
+        {
+            var categories = _db.Price_Times
+                .Where(x => x.Client == Cmb_Client.Text)
+                .Select(x => x.Category)
+                .Distinct();
+
+            foreach (var category in categories)
+                Cmb_Catagory.Items.Add(category);
+
+            var priceTimes = _db.Price_Times
+                .FirstOrDefault(x => x.Client == Cmb_Client.Text & x.Category == _category);
+
+            if (priceTimes != null)
+            {
                 _priceTime = priceTimes;
                 Txt_Price.Text = _priceTime.Price + "";
-                Txt_Job_Time.Text = _priceTime.Actual_Time + "";
+                Txt_Job_Time.Text = _priceTime.Lock_Time + "";
+                Cmb_Service.Text = _priceTime.Type + "";
 
                 if (_priceTime.Rate_ID != 0)
                 {
@@ -319,9 +272,34 @@ namespace Skill_PMS.UI_WinForm.CS_Panel
             else
             {
                 Txt_Price.Text = "";
-                Cmb_Currency.Text = "";
                 Txt_Job_Time.Text = "";
+                Cmb_Service.Text = "";
+                Cmb_Currency.Text = "";
             }
+        }
+
+        private void Cmb_Currency_TextChanged(object sender, EventArgs e)
+        {
+            _rate = _db.Rates.FirstOrDefault(x => x.Currency == Cmb_Currency.Text);
+
+            if (_rate == null) return;
+
+            _priceTime.Rate_ID = _rate.ID;
+            _priceRate = _rate.Amount;
+            Price_Calculate();
+        }
+
+        private void Txt_Price_TextChanged(object sender, EventArgs e)
+        {
+            if (!string.IsNullOrEmpty(Txt_Price.Text))
+                _price = Convert.ToDouble(Txt_Price.Text);
+
+            Price_Calculate();
+        }
+
+        private void Price_Calculate()
+        {
+            _taka = Convert.ToDouble(Txt_Price.Text) * _priceRate;
         }
 
         private void Txt_Job_Location_TextChanged(object sender, EventArgs e)
@@ -342,49 +320,25 @@ namespace Skill_PMS.UI_WinForm.CS_Panel
                 MessageBox.Show(@"Folder doesn't Exist. Please Enter Correct Location...", @"Folder Not Found", MessageBoxButtons.OK, MessageBoxIcon.Error);
         }
 
-        private void Cmb_Currency_TextChanged(object sender, EventArgs e)
+        private void Txt_Amount_TextChanged(object sender, EventArgs e)
         {
-            var rates = _db.Rates
-                .FirstOrDefault(x => x.Currency == Cmb_Currency.Text);
+            if (!string.IsNullOrEmpty(Txt_Amount.Text))
+                _file = Convert.ToInt32(Txt_Amount.Text);
 
-            if (rates == null) return;
-            _rate = rates;
-            _priceTime.Rate_ID = _rate.ID;
-            _priceRate = _rate.Amount;
-        }
-
-        private void Check_Total_Time()
-        {
-            var time = Txt_Job_Time.Text;
-            var amount = Txt_Amount.Text;
-            if(!string.IsNullOrEmpty(time) & !string.IsNullOrEmpty(amount))
-                Lbl_Total_Time.Text = Convert.ToDouble(time) * Convert.ToDouble(amount) + "";
-            else
-                Lbl_Total_Time.Text = "";
+            Time_Calculate();
         }
 
         private void Txt_Job_Time_TextChanged(object sender, EventArgs e)
         {
-            Check_Total_Time();
+            if (!string.IsNullOrEmpty(Txt_Job_Time.Text))
+                _time = Convert.ToDouble(Txt_Job_Time.Text);
+
+            Time_Calculate();
         }
 
-        private void Chk_Price_CheckedChanged(object sender, EventArgs e)
+        private void Time_Calculate()
         {
-            if (Chk_Price.Checked)
-            {
-                Cmb_Currency.Visible = true;
-                Txt_Price.Visible = true;
-            }
-            else
-            {
-                Cmb_Currency.Visible = false;
-                Txt_Price.Visible = false;
-            }
-        }
-
-        private void Txt_Amount_TextChanged(object sender, EventArgs e)
-        {
-            Check_Total_Time();
+            Lbl_Total_Time.Text = (_time * _file) + "";
         }
     }
 }

@@ -24,6 +24,7 @@ namespace Skill_PMS
         }
 
         private static Rename instance;
+
         public static Rename getInstance()
         {
             if (instance == null || instance.IsDisposed)
@@ -66,20 +67,24 @@ namespace Skill_PMS
                     else
                         newName += sl;
 
-                    var sub_folder = _db.Sub_Folders
-                        .FirstOrDefault(x => x.Job_ID == job_Id & x.Path == sourceFile & x.Old_Name == Old_Name);
+                    var sub_folder = _db.Sub_Folders.FirstOrDefault(x => x.Job_ID == job_Id & x.Old_Name == Old_Name);
 
                     if (sub_folder == null)
                     {
-                        sub_folder = new Sub_Folder();
-                        sub_folder.Job_ID = job_Id;
-                        sub_folder.Path = sourceFile;
-                        sub_folder.Old_Name = Old_Name;
-                        sub_folder.New_Name = newName;
+                        sub_folder = new Sub_Folder
+                        {
+                            Job_ID = job_Id,
+                            Old_Name = Old_Name,
+                            New_Name = newName,
+                            Created = DateTime.Now,
+                        };
                         _db.Sub_Folders.Add(sub_folder);
                     }
                     else
                         newName = sub_folder.New_Name;
+
+                    sub_folder.Path = sourceFile;
+                    sub_folder.Updated = DateTime.Now;
 
                     string desFile = Path.Combine(path, newName + ext);
                     File.Move(sourceFile, desFile);
@@ -116,8 +121,7 @@ namespace Skill_PMS
                     string ext = Path.GetExtension(sourceFile);
                     string newName = Path.GetFileNameWithoutExtension(sourceFile);
 
-                    var subfolder = _db.Sub_Folders
-                        .FirstOrDefault(x => x.Job_ID == jobId & x.New_Name == newName);
+                    var subfolder = _db.Sub_Folders.FirstOrDefault(x => x.Job_ID == jobId & x.New_Name == newName);
 
                     if (subfolder != null)
                     {

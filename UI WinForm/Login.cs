@@ -1,5 +1,10 @@
 ﻿using System;
+using System.Deployment.Application;
+using System.Diagnostics;
 using System.Linq;
+using System.Net;
+using System.Reflection;
+using System.Threading.Tasks;
 using System.Windows.Forms;
 using Skill_PMS.Controller;
 using Skill_PMS.Data;
@@ -28,12 +33,14 @@ namespace Skill_PMS.UI_WinForm
         private void Login_Load(object sender, EventArgs e)
         {
             Check_user();
+            Cmb_Shift.Text = _common.Current_Shift();
         }
 
         private void Btn_Login_Click(object sender, EventArgs e)
         {
             _shift = Cmb_Shift.Text;
             var date = _common.Shift_Date(DateTime.Now, _shift);
+
             if (_user == null) 
             {
                 MessageBox.Show(@"Please Enter Proper User ID and Try again", @"User doesn't Found", MessageBoxButtons.OK, MessageBoxIcon.Error);
@@ -52,48 +59,40 @@ namespace Skill_PMS.UI_WinForm
                 return;
             }
 
-            var login = _db.Performances
-                .Where(x => x.Name == _user.Short_Name & x.Date == date & x.Status == "Running").Count();
-
-            if (login > 0 & _user.Role == "")
-            {
-                MessageBox.Show(@"You are already loged in. Please close that then try again", @"Already Loged in", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                this.Close();
-            }
-
-            var performance = _db.Performances
-                .FirstOrDefault(x => x.Name == _user.Short_Name & x.Date ==  date & x.Shift == _shift);
+            var performance = _db.Performances.FirstOrDefault(x => x.Name == _user.Short_Name & x.Date ==  date);
 
             if (performance == null)
             {
                 performance = new Performance
                 {
-                    Name = _user.Short_Name, 
-                    Shift = _shift, 
+                    Name = _user.Short_Name,
                     Date = date, 
                     Login = DateTime.Now
                 };
                 _db.Performances.Add(performance);
             }
 
+            performance.Shift = _shift;
             performance.Logout = DateTime.Now;
             _user.Shift = _shift;
             performance.Status = "Running";
 
-            var shiftReport = _db.Shift_Reports
-                .FirstOrDefault(x => x.Date == date & x.Shift == _shift);
+            var version = Assembly.GetExecutingAssembly().GetName().Version + "";
+            var HostName = Dns.GetHostName() + "";
+            var ipAddress = Dns.GetHostAddresses(HostName);
+            performance.PC_Name = version + "_" + HostName + "_" + ipAddress[0] + "_" + ipAddress[1];
+            var shiftReport = _db.Shift_Reports.FirstOrDefault(x => x.Date == date & x.Shift == _shift & x.Team == "");
 
             if (shiftReport == null)
                 shiftReport = _common.Add_New_Shift_Report(date, _shift);
 
-            shiftReport.Capacity = _common.Current_Designers().Count * 420;
+            shiftReport.QC_Capacity = _common.QC_Capacity(date, _shift);
+            shiftReport.Capacity = _common.Designer_Capacity(date, _shift) + shiftReport.QC_Capacity;
             shiftReport.Up = 0;
             _db.SaveChanges();
-            _common.Change_Shift();
-
-            if (shiftReport.TotalLoad == 0)
-                _common.Check_Workload(_shift);
-
+            Task.Run(() => _common.Check_Shift_Changing());
+            
+            this.Hide();
             switch (_user.Role)
             {
                 case "CS":
@@ -137,26 +136,21 @@ namespace Skill_PMS.UI_WinForm
                     break;
                 }
             }
-            this.Hide();
         }
 
         private void Check_user()
         {
-            _user = _db.Users
-                .FirstOrDefault(x => x.Employee_ID == Txt_Usr.Text);
+            _user = _db.Users.FirstOrDefault(x => x.Employee_ID == Txt_Usr.Text);
 
             if (_user != null)
             {
                 Txt_Name.Text = _user.Full_Name;
                 Txt_Designation.Text = _user.Designation;
-                if (_user.Role == "admin" | _user.Role == "HR")
-                    Cmb_Shift.Text = _common.Current_Shift();
             }
             else
             {
                 Txt_Name.Text = "";
                 Txt_Designation.Text = "";
-                Cmb_Shift.Text = "";
             }
         }
 

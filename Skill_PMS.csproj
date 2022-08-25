@@ -16,7 +16,16 @@
     <NuGetPackageImportStamp>
     </NuGetPackageImportStamp>
     <IsWebBootstrapper>false</IsWebBootstrapper>
-    <PublishUrl>\\192.168.1.147\Skill_Server\8.Software\Skill_PMS_DHK\</PublishUrl>
+    <ShouldCreateLogs>True</ShouldCreateLogs>
+    <AdvancedSettingsExpanded>False</AdvancedSettingsExpanded>
+    <UpdateAssemblyVersion>True</UpdateAssemblyVersion>
+    <UpdateAssemblyFileVersion>False</UpdateAssemblyFileVersion>
+    <UpdateAssemblyInfoVersion>False</UpdateAssemblyInfoVersion>
+    <AssemblyVersionSettings>None.None.None.Increment</AssemblyVersionSettings>
+    <UpdatePackageVersion>False</UpdatePackageVersion>
+    <AssemblyInfoVersionType>SettingsVersion</AssemblyInfoVersionType>
+    <InheritWinAppVersionFrom>None</InheritWinAppVersionFrom>
+    <PublishUrl>H:\Project\Skill Soft\Publish\</PublishUrl>
     <Install>true</Install>
     <InstallFrom>Unc</InstallFrom>
     <UpdateEnabled>true</UpdateEnabled>
@@ -26,15 +35,16 @@
     <UpdatePeriodically>false</UpdatePeriodically>
     <UpdateRequired>false</UpdateRequired>
     <MapFileExtensions>true</MapFileExtensions>
+    <InstallUrl>\\192.168.1.147\Skill_Server\8.Software\Skill_PMS_DHK\</InstallUrl>
     <SupportUrl>http://www.skillservice.biz/login</SupportUrl>
     <TargetCulture>en</TargetCulture>
     <ProductName>Skill_PMS</ProductName>
-    <PublisherName>Skill Service Ltd.</PublisherName>
+    <PublisherName>Skill Service Ltd</PublisherName>
     <SuiteName>SBN</SuiteName>
     <MinimumRequiredVersion>1.0.0.2</MinimumRequiredVersion>
     <AutorunEnabled>true</AutorunEnabled>
     <ApplicationRevision>7</ApplicationRevision>
-    <ApplicationVersion>1.1.3.%2a</ApplicationVersion>
+    <ApplicationVersion>1.2.4.%2a</ApplicationVersion>
     <UseApplicationTrust>true</UseApplicationTrust>
     <CreateDesktopShortcut>true</CreateDesktopShortcut>
     <PublishWizardCompleted>true</PublishWizardCompleted>
@@ -62,10 +72,10 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <PropertyGroup>
-    <ManifestCertificateThumbprint>175B7EDF3423F003ECC73AC46B5C3129C4F1E5CD</ManifestCertificateThumbprint>
+    <ManifestCertificateThumbprint>C480F3F8FA553F124E58B56AF791E8240984B9F1</ManifestCertificateThumbprint>
   </PropertyGroup>
   <PropertyGroup>
-    <ManifestKeyFile>Skill_PMS_TemporaryKey.pfx</ManifestKeyFile>
+    <ManifestKeyFile>Skill_PMS_1_TemporaryKey.pfx</ManifestKeyFile>
   </PropertyGroup>
   <PropertyGroup>
     <GenerateManifests>true</GenerateManifests>
@@ -75,13 +85,16 @@
   </PropertyGroup>
   <PropertyGroup />
   <PropertyGroup>
-    <SignManifests>true</SignManifests>
+    <SignManifests>false</SignManifests>
   </PropertyGroup>
   <PropertyGroup>
     <StartupObject>Skill_PMS.Program</StartupObject>
   </PropertyGroup>
   <PropertyGroup>
     <ApplicationManifest>Properties\app.manifest</ApplicationManifest>
+  </PropertyGroup>
+  <PropertyGroup>
+    <SignAssembly>false</SignAssembly>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="BouncyCastle.Crypto, Version=1.8.3.0, Culture=neutral, PublicKeyToken=0e99375e54769942">
@@ -104,6 +117,30 @@
     </Reference>
     <Reference Include="K4os.Hash.xxHash, Version=1.0.6.0, Culture=neutral, PublicKeyToken=32cd54395057cec3, processorArchitecture=MSIL">
       <HintPath>packages\K4os.Hash.xxHash.1.0.6\lib\net46\K4os.Hash.xxHash.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.SqlServer.ConnectionInfo, Version=12.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91, processorArchitecture=MSIL">
+      <HintPath>packages\Unofficial.Microsoft.SQLServer.SMO.2014.12.0.2000.8\lib\Microsoft.SqlServer.ConnectionInfo.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.SqlServer.ConnectionInfoExtended, Version=12.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91, processorArchitecture=MSIL">
+      <HintPath>packages\Unofficial.Microsoft.SQLServer.SMO.2014.12.0.2000.8\lib\Microsoft.SqlServer.ConnectionInfoExtended.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.SqlServer.Management.Sdk.Sfc, Version=12.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91, processorArchitecture=MSIL">
+      <HintPath>packages\Unofficial.Microsoft.SQLServer.SMO.2014.12.0.2000.8\lib\Microsoft.SqlServer.Management.Sdk.Sfc.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.SqlServer.Management.SqlParser, Version=16.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91, processorArchitecture=MSIL">
+      <HintPath>packages\Microsoft.SqlServer.Management.SqlParser.160.22504.0\lib\net462\Microsoft.SqlServer.Management.SqlParser.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.SqlServer.Smo, Version=12.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91, processorArchitecture=MSIL">
+      <HintPath>packages\Unofficial.Microsoft.SQLServer.SMO.2014.12.0.2000.8\lib\Microsoft.SqlServer.Smo.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.SqlServer.SmoExtended, Version=12.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91, processorArchitecture=MSIL">
+      <HintPath>packages\Unofficial.Microsoft.SQLServer.SMO.2014.12.0.2000.8\lib\Microsoft.SqlServer.SmoExtended.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.SqlServer.SqlClrProvider, Version=12.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91, processorArchitecture=MSIL">
+      <HintPath>packages\Unofficial.Microsoft.SQLServer.SMO.2014.12.0.2000.8\lib\Microsoft.SqlServer.SqlClrProvider.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.SqlServer.SqlEnum, Version=12.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91, processorArchitecture=MSIL">
+      <HintPath>packages\Unofficial.Microsoft.SQLServer.SMO.2014.12.0.2000.8\lib\Microsoft.SqlServer.SqlEnum.dll</HintPath>
     </Reference>
     <Reference Include="MySql.Data, Version=8.0.21.0, Culture=neutral, PublicKeyToken=c5687fc88969c44d, processorArchitecture=MSIL">
       <HintPath>packages\MySql.Data.8.0.21\lib\net452\MySql.Data.dll</HintPath>
@@ -152,6 +189,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Controller\Common.cs" />
+    <Compile Include="Controller\ProgressReport.cs" />
     <Compile Include="Migrations\202008061335030_Modify Log Models.cs" />
     <Compile Include="Migrations\202008061335030_Modify Log Models.designer.cs">
       <DependentUpon>202008061335030_Modify Log Models.cs</DependentUpon>
@@ -216,12 +254,105 @@
     <Compile Include="Migrations\202012121638049_add feedback panel.designer.cs">
       <DependentUpon>202012121638049_add feedback panel.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202108040844252_Team_Service_added.cs" />
+    <Compile Include="Migrations\202108040844252_Team_Service_added.designer.cs">
+      <DependentUpon>202108040844252_Team_Service_added.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202108040914551_Status_Pro_Time_Total_Time_added.cs" />
+    <Compile Include="Migrations\202108040914551_Status_Pro_Time_Total_Time_added.designer.cs">
+      <DependentUpon>202108040914551_Status_Pro_Time_Total_Time_added.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202108041049302_Output_added.cs" />
+    <Compile Include="Migrations\202108041049302_Output_added.designer.cs">
+      <DependentUpon>202108041049302_Output_added.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202108051655122_ImageTime_PriceTime_Modified.cs" />
+    <Compile Include="Migrations\202108051655122_ImageTime_PriceTime_Modified.designer.cs">
+      <DependentUpon>202108051655122_ImageTime_PriceTime_Modified.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202108061229474_Modify_Log_Job_Price_Time.cs" />
+    <Compile Include="Migrations\202108061229474_Modify_Log_Job_Price_Time.designer.cs">
+      <DependentUpon>202108061229474_Modify_Log_Job_Price_Time.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202108070656538_RunningJob_Added_Workload_Modified.cs" />
+    <Compile Include="Migrations\202108070656538_RunningJob_Added_Workload_Modified.designer.cs">
+      <DependentUpon>202108070656538_RunningJob_Added_Workload_Modified.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202108071027456_Modified_Workload.cs" />
+    <Compile Include="Migrations\202108071027456_Modified_Workload.designer.cs">
+      <DependentUpon>202108071027456_Modified_Workload.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202108071207378_ImageTime_Modified.cs" />
+    <Compile Include="Migrations\202108071207378_ImageTime_Modified.designer.cs">
+      <DependentUpon>202108071207378_ImageTime_Modified.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202108081943074_ShiftReport_Workload_Modify.cs" />
+    <Compile Include="Migrations\202108081943074_ShiftReport_Workload_Modify.designer.cs">
+      <DependentUpon>202108081943074_ShiftReport_Workload_Modify.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202108081951283_Log_PendingImage_Performance_Modified.cs" />
+    <Compile Include="Migrations\202108081951283_Log_PendingImage_Performance_Modified.designer.cs">
+      <DependentUpon>202108081951283_Log_PendingImage_Performance_Modified.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202108222033063_Modify_NewJob_Workload_ShiftReport_RunningJob.cs" />
+    <Compile Include="Migrations\202108222033063_Modify_NewJob_Workload_ShiftReport_RunningJob.designer.cs">
+      <DependentUpon>202108222033063_Modify_NewJob_Workload_ShiftReport_RunningJob.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202111010951452_QC Time in Running Jobs.cs" />
+    <Compile Include="Migrations\202111010951452_QC Time in Running Jobs.designer.cs">
+      <DependentUpon>202111010951452_QC Time in Running Jobs.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202204250827287_Feedback Table Added.cs" />
+    <Compile Include="Migrations\202204250827287_Feedback Table Added.designer.cs">
+      <DependentUpon>202204250827287_Feedback Table Added.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202204250906470_Feedback Table Modified.cs" />
+    <Compile Include="Migrations\202204250906470_Feedback Table Modified.designer.cs">
+      <DependentUpon>202204250906470_Feedback Table Modified.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202208111049150_update price time.cs" />
+    <Compile Include="Migrations\202208111049150_update price time.designer.cs">
+      <DependentUpon>202208111049150_update price time.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202208111245190_remove all service related code.cs" />
+    <Compile Include="Migrations\202208111245190_remove all service related code.designer.cs">
+      <DependentUpon>202208111245190_remove all service related code.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202208151435373_productivity calculation with price.cs" />
+    <Compile Include="Migrations\202208151435373_productivity calculation with price.designer.cs">
+      <DependentUpon>202208151435373_productivity calculation with price.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202208200854554_add support and revenue.cs" />
+    <Compile Include="Migrations\202208200854554_add support and revenue.designer.cs">
+      <DependentUpon>202208200854554_add support and revenue.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202208230715276_breakdown price_time.cs" />
+    <Compile Include="Migrations\202208230715276_breakdown price_time.designer.cs">
+      <DependentUpon>202208230715276_breakdown price_time.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202208230732426_re-add total_time in assign_time.cs" />
+    <Compile Include="Migrations\202208230732426_re-add total_time in assign_time.designer.cs">
+      <DependentUpon>202208230732426_re-add total_time in assign_time.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202208231015493_remove team from imageTime.cs" />
+    <Compile Include="Migrations\202208231015493_remove team from imageTime.designer.cs">
+      <DependentUpon>202208231015493_remove team from imageTime.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202208240722557_remove total-time.cs" />
+    <Compile Include="Migrations\202208240722557_remove total-time.designer.cs">
+      <DependentUpon>202208240722557_remove total-time.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202208240738068_add revenue and support.cs" />
+    <Compile Include="Migrations\202208240738068_add revenue and support.designer.cs">
+      <DependentUpon>202208240738068_add revenue and support.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Assign_Time.cs" />
+    <Compile Include="Models\Feedback.cs" />
     <Compile Include="Models\ImageTime.cs" />
     <Compile Include="Models\My_Job.cs" />
     <Compile Include="Models\PendingImage.cs" />
     <Compile Include="Models\Production.cs" />
     <Compile Include="Models\Rate.cs" />
-    <Compile Include="Models\Redo_Job.cs" />
     <Compile Include="Models\Shift_Report.cs" />
     <Compile Include="Models\Sub_Folder.cs" />
     <Compile Include="Models\Workload.cs" />
@@ -279,12 +410,6 @@
     <Compile Include="UI WinForm\CS Panel\CS_Dashboard.Designer.cs">
       <DependentUpon>CS_Dashboard.cs</DependentUpon>
     </Compile>
-    <Compile Include="UI WinForm\CS Panel\Job_Update.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="UI WinForm\CS Panel\Job_Update.Designer.cs">
-      <DependentUpon>Job_Update.cs</DependentUpon>
-    </Compile>
     <Compile Include="UI WinForm\HR Panel\HR_Dashboard.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -336,6 +461,12 @@
     <Compile Include="UI WinForm\Production\Designer\Saving_Progress.Designer.cs">
       <DependentUpon>Saving_Progress.cs</DependentUpon>
     </Compile>
+    <Compile Include="UI WinForm\Production\QC Panel\Pro_Feedback.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="UI WinForm\Production\QC Panel\Pro_Feedback.Designer.cs">
+      <DependentUpon>Pro_Feedback.cs</DependentUpon>
+    </Compile>
     <Compile Include="UI WinForm\Production\QC Panel\QC_Dashboard.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -377,6 +508,12 @@
     </Compile>
     <Compile Include="UI WinForm\Production\SI Panel\SI_Dashboard.Designer.cs">
       <DependentUpon>SI_Dashboard.cs</DependentUpon>
+    </Compile>
+    <Compile Include="UI WinForm\Production\SI Panel\Time_assign.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="UI WinForm\Production\SI Panel\Time_assign.Designer.cs">
+      <DependentUpon>Time_assign.cs</DependentUpon>
     </Compile>
     <EmbeddedResource Include="Migrations\202008061335030_Modify Log Models.resx">
       <DependentUpon>202008061335030_Modify Log Models.cs</DependentUpon>
@@ -426,6 +563,75 @@
     <EmbeddedResource Include="Migrations\202012121638049_add feedback panel.resx">
       <DependentUpon>202012121638049_add feedback panel.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202108040844252_Team_Service_added.resx">
+      <DependentUpon>202108040844252_Team_Service_added.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202108040914551_Status_Pro_Time_Total_Time_added.resx">
+      <DependentUpon>202108040914551_Status_Pro_Time_Total_Time_added.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202108041049302_Output_added.resx">
+      <DependentUpon>202108041049302_Output_added.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202108051655122_ImageTime_PriceTime_Modified.resx">
+      <DependentUpon>202108051655122_ImageTime_PriceTime_Modified.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202108061229474_Modify_Log_Job_Price_Time.resx">
+      <DependentUpon>202108061229474_Modify_Log_Job_Price_Time.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202108070656538_RunningJob_Added_Workload_Modified.resx">
+      <DependentUpon>202108070656538_RunningJob_Added_Workload_Modified.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202108071027456_Modified_Workload.resx">
+      <DependentUpon>202108071027456_Modified_Workload.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202108071207378_ImageTime_Modified.resx">
+      <DependentUpon>202108071207378_ImageTime_Modified.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202108081943074_ShiftReport_Workload_Modify.resx">
+      <DependentUpon>202108081943074_ShiftReport_Workload_Modify.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202108081951283_Log_PendingImage_Performance_Modified.resx">
+      <DependentUpon>202108081951283_Log_PendingImage_Performance_Modified.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202108222033063_Modify_NewJob_Workload_ShiftReport_RunningJob.resx">
+      <DependentUpon>202108222033063_Modify_NewJob_Workload_ShiftReport_RunningJob.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202111010951452_QC Time in Running Jobs.resx">
+      <DependentUpon>202111010951452_QC Time in Running Jobs.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202204250827287_Feedback Table Added.resx">
+      <DependentUpon>202204250827287_Feedback Table Added.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202204250906470_Feedback Table Modified.resx">
+      <DependentUpon>202204250906470_Feedback Table Modified.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202208111049150_update price time.resx">
+      <DependentUpon>202208111049150_update price time.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202208111245190_remove all service related code.resx">
+      <DependentUpon>202208111245190_remove all service related code.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202208151435373_productivity calculation with price.resx">
+      <DependentUpon>202208151435373_productivity calculation with price.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202208200854554_add support and revenue.resx">
+      <DependentUpon>202208200854554_add support and revenue.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202208230715276_breakdown price_time.resx">
+      <DependentUpon>202208230715276_breakdown price_time.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202208230732426_re-add total_time in assign_time.resx">
+      <DependentUpon>202208230732426_re-add total_time in assign_time.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202208231015493_remove team from imageTime.resx">
+      <DependentUpon>202208231015493_remove team from imageTime.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202208240722557_remove total-time.resx">
+      <DependentUpon>202208240722557_remove total-time.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202208240738068_add revenue and support.resx">
+      <DependentUpon>202208240738068_add revenue and support.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="UI WinForm\CS Panel\Rename.resx">
       <DependentUpon>Rename.cs</DependentUpon>
     </EmbeddedResource>
@@ -453,9 +659,6 @@
     <EmbeddedResource Include="UI WinForm\CS Panel\CS_Dashboard.resx">
       <DependentUpon>CS_Dashboard.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="UI WinForm\CS Panel\Job_Update.resx">
-      <DependentUpon>Job_Update.cs</DependentUpon>
-    </EmbeddedResource>
     <EmbeddedResource Include="UI WinForm\HR Panel\HR_Dashboard.resx">
       <DependentUpon>HR_Dashboard.cs</DependentUpon>
     </EmbeddedResource>
@@ -473,18 +676,23 @@
     <Compile Include="Properties\Resources.Designer.cs">
       <AutoGen>True</AutoGen>
       <DependentUpon>Resources.resx</DependentUpon>
+      <DesignTime>True</DesignTime>
     </Compile>
     <EmbeddedResource Include="UI WinForm\Production\Designer\Counter.resx">
       <DependentUpon>Counter.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="UI WinForm\Production\Designer\Dashboard.resx">
       <DependentUpon>Dashboard.cs</DependentUpon>
+      <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="UI WinForm\Production\Designer\Processing.resx">
       <DependentUpon>Processing.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="UI WinForm\Production\Designer\Saving_Progress.resx">
       <DependentUpon>Saving_Progress.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UI WinForm\Production\QC Panel\Pro_Feedback.resx">
+      <DependentUpon>Pro_Feedback.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="UI WinForm\Production\QC Panel\QC_Dashboard.resx">
       <DependentUpon>QC_Dashboard.cs</DependentUpon>
@@ -507,6 +715,9 @@
     <EmbeddedResource Include="UI WinForm\Production\SI Panel\SI_Dashboard.resx">
       <DependentUpon>SI_Dashboard.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="UI WinForm\Production\SI Panel\Time_assign.resx">
+      <DependentUpon>Time_assign.cs</DependentUpon>
+    </EmbeddedResource>
     <None Include="packages.config" />
     <None Include="Properties\app.manifest" />
     <None Include="Properties\DataSources\Skill_PMS.Models.Job.datasource" />
@@ -520,6 +731,7 @@
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
+    <None Include="Skill_PMS_1_TemporaryKey.pfx" />
     <None Include="Skill_PMS_TemporaryKey.pfx" />
   </ItemGroup>
   <ItemGroup>
@@ -539,6 +751,24 @@
       <ProductName>.NET Framework 3.5 SP1</ProductName>
       <Install>false</Install>
     </BootstrapperPackage>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\refresh.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\refresh1.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\reload.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\refresh2.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\reload1.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\reload2.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">

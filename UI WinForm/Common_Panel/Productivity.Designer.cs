@@ -32,6 +32,17 @@
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
             this.DGV_Productivity = new System.Windows.Forms.DataGridView();
+            this.Column7 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Column3 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Column2 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Column4 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Column11 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Column6 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Column8 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Column9 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Column10 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Column1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Column5 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Cmb_Shift = new System.Windows.Forms.ComboBox();
             this.label2 = new System.Windows.Forms.Label();
             this.label8 = new System.Windows.Forms.Label();
@@ -46,25 +57,27 @@
             this.label3 = new System.Windows.Forms.Label();
             this.Cmb_Job_ID = new System.Windows.Forms.ComboBox();
             this.label1 = new System.Windows.Forms.Label();
-            this.Btn_Pass = new System.Windows.Forms.Button();
-            this.Btn_Stop = new System.Windows.Forms.Button();
+            this.Btn_Done = new System.Windows.Forms.Button();
             this.Btn_Subfolder = new System.Windows.Forms.Button();
-            this.Btn_Back = new System.Windows.Forms.Button();
             this.Txt_Location = new System.Windows.Forms.TextBox();
             this.Prb_Subfolder = new System.Windows.Forms.ProgressBar();
-            this.Column7 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Column3 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Column2 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Column4 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Column11 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Column6 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Column8 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Column9 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Column10 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Column1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Column5 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Chk_AI = new System.Windows.Forms.CheckBox();
+            this.Chk_RET = new System.Windows.Forms.CheckBox();
+            this.Chk_MSK = new System.Windows.Forms.CheckBox();
+            this.Chk_NJ = new System.Windows.Forms.CheckBox();
+            this.Chk_SHA = new System.Windows.Forms.CheckBox();
+            this.Chk_LIQ = new System.Windows.Forms.CheckBox();
+            this.Chk_CC = new System.Windows.Forms.CheckBox();
+            this.Chk_CP = new System.Windows.Forms.CheckBox();
+            this.Lbl_Service = new System.Windows.Forms.Label();
+            this.Txt_File = new System.Windows.Forms.TextBox();
+            this.Pnl_Control = new System.Windows.Forms.Panel();
+            this.Chk_RS = new System.Windows.Forms.CheckBox();
+            this.Chk_MQ = new System.Windows.Forms.CheckBox();
+            this.label4 = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.DGV_Productivity)).BeginInit();
             this.panel1.SuspendLayout();
+            this.Pnl_Control.SuspendLayout();
             this.SuspendLayout();
             // 
             // DGV_Productivity
@@ -122,8 +135,85 @@
             this.DGV_Productivity.RowHeadersVisible = false;
             this.DGV_Productivity.RowTemplate.Height = 28;
             this.DGV_Productivity.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.DGV_Productivity.Size = new System.Drawing.Size(1555, 721);
+            this.DGV_Productivity.Size = new System.Drawing.Size(1555, 700);
             this.DGV_Productivity.TabIndex = 96;
+            this.DGV_Productivity.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.DGV_Productivity_CellContentClick);
+            // 
+            // Column7
+            // 
+            this.Column7.HeaderText = "SL";
+            this.Column7.Name = "Column7";
+            this.Column7.ReadOnly = true;
+            this.Column7.Width = 40;
+            // 
+            // Column3
+            // 
+            this.Column3.HeaderText = "Name";
+            this.Column3.Name = "Column3";
+            this.Column3.ReadOnly = true;
+            this.Column3.Width = 150;
+            // 
+            // Column2
+            // 
+            this.Column2.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
+            this.Column2.HeaderText = "Image";
+            this.Column2.Name = "Column2";
+            this.Column2.ReadOnly = true;
+            // 
+            // Column4
+            // 
+            this.Column4.HeaderText = "Service";
+            this.Column4.Name = "Column4";
+            this.Column4.ReadOnly = true;
+            this.Column4.Width = 165;
+            // 
+            // Column11
+            // 
+            this.Column11.HeaderText = "Status";
+            this.Column11.Name = "Column11";
+            this.Column11.ReadOnly = true;
+            // 
+            // Column6
+            // 
+            this.Column6.HeaderText = "Job_Time";
+            this.Column6.Name = "Column6";
+            this.Column6.ReadOnly = true;
+            this.Column6.Width = 120;
+            // 
+            // Column8
+            // 
+            this.Column8.HeaderText = "Pro_Time";
+            this.Column8.Name = "Column8";
+            this.Column8.ReadOnly = true;
+            this.Column8.Width = 120;
+            // 
+            // Column9
+            // 
+            this.Column9.HeaderText = "Efficiency";
+            this.Column9.Name = "Column9";
+            this.Column9.ReadOnly = true;
+            this.Column9.Width = 120;
+            // 
+            // Column10
+            // 
+            this.Column10.HeaderText = "Quality";
+            this.Column10.Name = "Column10";
+            this.Column10.ReadOnly = true;
+            this.Column10.Width = 120;
+            // 
+            // Column1
+            // 
+            this.Column1.HeaderText = "Start_Time";
+            this.Column1.Name = "Column1";
+            this.Column1.ReadOnly = true;
+            this.Column1.Width = 180;
+            // 
+            // Column5
+            // 
+            this.Column5.HeaderText = "End_Time";
+            this.Column5.Name = "Column5";
+            this.Column5.ReadOnly = true;
+            this.Column5.Width = 180;
             // 
             // Cmb_Shift
             // 
@@ -297,150 +387,224 @@
             this.label1.TabIndex = 136;
             this.label1.Text = "Job_ID:";
             // 
-            // Btn_Pass
+            // Btn_Done
             // 
-            this.Btn_Pass.BackColor = System.Drawing.Color.MediumSeaGreen;
-            this.Btn_Pass.Font = new System.Drawing.Font("Microsoft Sans Serif", 11F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.Btn_Pass.Location = new System.Drawing.Point(1463, 798);
-            this.Btn_Pass.Name = "Btn_Pass";
-            this.Btn_Pass.Size = new System.Drawing.Size(133, 35);
-            this.Btn_Pass.TabIndex = 138;
-            this.Btn_Pass.Text = "Pass to QC";
-            this.Btn_Pass.UseVisualStyleBackColor = false;
-            this.Btn_Pass.Visible = false;
-            this.Btn_Pass.Click += new System.EventHandler(this.Btn_Pass_Click);
-            // 
-            // Btn_Stop
-            // 
-            this.Btn_Stop.BackColor = System.Drawing.Color.LightCoral;
-            this.Btn_Stop.Font = new System.Drawing.Font("Microsoft Sans Serif", 11F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.Btn_Stop.Location = new System.Drawing.Point(35, 798);
-            this.Btn_Stop.Name = "Btn_Stop";
-            this.Btn_Stop.Size = new System.Drawing.Size(133, 35);
-            this.Btn_Stop.TabIndex = 139;
-            this.Btn_Stop.Text = "Stop Job";
-            this.Btn_Stop.UseVisualStyleBackColor = false;
-            this.Btn_Stop.Visible = false;
-            this.Btn_Stop.Click += new System.EventHandler(this.Btn_Stop_Click);
+            this.Btn_Done.BackColor = System.Drawing.Color.MediumSeaGreen;
+            this.Btn_Done.Font = new System.Drawing.Font("Microsoft Sans Serif", 11F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.Btn_Done.Location = new System.Drawing.Point(1433, 37);
+            this.Btn_Done.Name = "Btn_Done";
+            this.Btn_Done.Size = new System.Drawing.Size(133, 35);
+            this.Btn_Done.TabIndex = 138;
+            this.Btn_Done.Text = "Done";
+            this.Btn_Done.UseVisualStyleBackColor = false;
+            this.Btn_Done.Click += new System.EventHandler(this.Btn_Done_Click);
             // 
             // Btn_Subfolder
             // 
             this.Btn_Subfolder.BackColor = System.Drawing.Color.Khaki;
             this.Btn_Subfolder.Font = new System.Drawing.Font("Microsoft Sans Serif", 11F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.Btn_Subfolder.Location = new System.Drawing.Point(1325, 798);
+            this.Btn_Subfolder.Location = new System.Drawing.Point(1294, 37);
             this.Btn_Subfolder.Name = "Btn_Subfolder";
             this.Btn_Subfolder.Size = new System.Drawing.Size(133, 35);
             this.Btn_Subfolder.TabIndex = 141;
             this.Btn_Subfolder.Text = "Sub Folder";
             this.Btn_Subfolder.UseVisualStyleBackColor = false;
-            this.Btn_Subfolder.Visible = false;
             this.Btn_Subfolder.Click += new System.EventHandler(this.Btn_Subfolder_Click);
-            // 
-            // Btn_Back
-            // 
-            this.Btn_Back.BackColor = System.Drawing.Color.Khaki;
-            this.Btn_Back.Font = new System.Drawing.Font("Microsoft Sans Serif", 11F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.Btn_Back.Location = new System.Drawing.Point(176, 798);
-            this.Btn_Back.Name = "Btn_Back";
-            this.Btn_Back.Size = new System.Drawing.Size(133, 35);
-            this.Btn_Back.TabIndex = 140;
-            this.Btn_Back.Text = "Send To Back";
-            this.Btn_Back.UseVisualStyleBackColor = false;
-            this.Btn_Back.Visible = false;
-            this.Btn_Back.Click += new System.EventHandler(this.Btn_Back_Click);
             // 
             // Txt_Location
             // 
             this.Txt_Location.Font = new System.Drawing.Font("Microsoft Sans Serif", 16F);
-            this.Txt_Location.Location = new System.Drawing.Point(317, 799);
+            this.Txt_Location.Location = new System.Drawing.Point(97, 38);
             this.Txt_Location.Name = "Txt_Location";
-            this.Txt_Location.Size = new System.Drawing.Size(1000, 32);
+            this.Txt_Location.Size = new System.Drawing.Size(1033, 32);
             this.Txt_Location.TabIndex = 142;
-            this.Txt_Location.Visible = false;
+            this.Txt_Location.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             // 
             // Prb_Subfolder
             // 
-            this.Prb_Subfolder.Location = new System.Drawing.Point(35, 839);
+            this.Prb_Subfolder.Location = new System.Drawing.Point(6, 73);
             this.Prb_Subfolder.Maximum = 0;
             this.Prb_Subfolder.Name = "Prb_Subfolder";
             this.Prb_Subfolder.Size = new System.Drawing.Size(1559, 10);
             this.Prb_Subfolder.TabIndex = 143;
             // 
-            // Column7
+            // Chk_AI
             // 
-            this.Column7.HeaderText = "SL";
-            this.Column7.Name = "Column7";
-            this.Column7.ReadOnly = true;
-            this.Column7.Width = 40;
+            this.Chk_AI.AutoSize = true;
+            this.Chk_AI.Font = new System.Drawing.Font("Microsoft Sans Serif", 13F);
+            this.Chk_AI.Location = new System.Drawing.Point(1339, 6);
+            this.Chk_AI.Name = "Chk_AI";
+            this.Chk_AI.Size = new System.Drawing.Size(45, 26);
+            this.Chk_AI.TabIndex = 348;
+            this.Chk_AI.Text = "AI";
+            this.Chk_AI.UseVisualStyleBackColor = true;
+            this.Chk_AI.CheckedChanged += new System.EventHandler(this.Chk_AI_CheckedChanged);
             // 
-            // Column3
+            // Chk_RET
             // 
-            this.Column3.HeaderText = "Name";
-            this.Column3.Name = "Column3";
-            this.Column3.ReadOnly = true;
-            this.Column3.Width = 150;
+            this.Chk_RET.AutoSize = true;
+            this.Chk_RET.Font = new System.Drawing.Font("Microsoft Sans Serif", 13F);
+            this.Chk_RET.Location = new System.Drawing.Point(779, 6);
+            this.Chk_RET.Name = "Chk_RET";
+            this.Chk_RET.Size = new System.Drawing.Size(66, 26);
+            this.Chk_RET.TabIndex = 341;
+            this.Chk_RET.Text = "RET";
+            this.Chk_RET.UseVisualStyleBackColor = true;
+            this.Chk_RET.CheckedChanged += new System.EventHandler(this.Chk_RET_CheckedChanged);
             // 
-            // Column2
+            // Chk_MSK
             // 
-            this.Column2.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
-            this.Column2.HeaderText = "Image";
-            this.Column2.Name = "Column2";
-            this.Column2.ReadOnly = true;
+            this.Chk_MSK.AutoSize = true;
+            this.Chk_MSK.Font = new System.Drawing.Font("Microsoft Sans Serif", 13F);
+            this.Chk_MSK.Location = new System.Drawing.Point(962, 6);
+            this.Chk_MSK.Name = "Chk_MSK";
+            this.Chk_MSK.Size = new System.Drawing.Size(67, 26);
+            this.Chk_MSK.TabIndex = 342;
+            this.Chk_MSK.Text = "MSK";
+            this.Chk_MSK.UseVisualStyleBackColor = true;
+            this.Chk_MSK.CheckedChanged += new System.EventHandler(this.Chk_MSK_CheckedChanged);
             // 
-            // Column4
+            // Chk_NJ
             // 
-            this.Column4.HeaderText = "Service";
-            this.Column4.Name = "Column4";
-            this.Column4.ReadOnly = true;
-            this.Column4.Width = 165;
+            this.Chk_NJ.AutoSize = true;
+            this.Chk_NJ.Font = new System.Drawing.Font("Microsoft Sans Serif", 13F);
+            this.Chk_NJ.Location = new System.Drawing.Point(878, 6);
+            this.Chk_NJ.Name = "Chk_NJ";
+            this.Chk_NJ.Size = new System.Drawing.Size(51, 26);
+            this.Chk_NJ.TabIndex = 346;
+            this.Chk_NJ.Text = "NJ";
+            this.Chk_NJ.UseVisualStyleBackColor = true;
+            this.Chk_NJ.CheckedChanged += new System.EventHandler(this.Chk_NJ_CheckedChanged);
             // 
-            // Column11
+            // Chk_SHA
             // 
-            this.Column11.HeaderText = "Status";
-            this.Column11.Name = "Column11";
-            this.Column11.ReadOnly = true;
+            this.Chk_SHA.AutoSize = true;
+            this.Chk_SHA.Font = new System.Drawing.Font("Microsoft Sans Serif", 13F);
+            this.Chk_SHA.Location = new System.Drawing.Point(1062, 6);
+            this.Chk_SHA.Name = "Chk_SHA";
+            this.Chk_SHA.Size = new System.Drawing.Size(66, 26);
+            this.Chk_SHA.TabIndex = 343;
+            this.Chk_SHA.Text = "SHA";
+            this.Chk_SHA.UseVisualStyleBackColor = true;
+            this.Chk_SHA.CheckedChanged += new System.EventHandler(this.Chk_SHA_CheckedChanged);
             // 
-            // Column6
+            // Chk_LIQ
             // 
-            this.Column6.HeaderText = "Job_Time";
-            this.Column6.Name = "Column6";
-            this.Column6.ReadOnly = true;
-            this.Column6.Width = 120;
+            this.Chk_LIQ.AutoSize = true;
+            this.Chk_LIQ.Font = new System.Drawing.Font("Microsoft Sans Serif", 13F);
+            this.Chk_LIQ.Location = new System.Drawing.Point(1161, 6);
+            this.Chk_LIQ.Name = "Chk_LIQ";
+            this.Chk_LIQ.Size = new System.Drawing.Size(57, 26);
+            this.Chk_LIQ.TabIndex = 344;
+            this.Chk_LIQ.Text = "LIQ";
+            this.Chk_LIQ.UseVisualStyleBackColor = true;
+            this.Chk_LIQ.CheckedChanged += new System.EventHandler(this.Chk_LIQ_CheckedChanged);
             // 
-            // Column8
+            // Chk_CC
             // 
-            this.Column8.HeaderText = "Pro_Time";
-            this.Column8.Name = "Column8";
-            this.Column8.ReadOnly = true;
-            this.Column8.Width = 120;
+            this.Chk_CC.AutoSize = true;
+            this.Chk_CC.Font = new System.Drawing.Font("Microsoft Sans Serif", 13F);
+            this.Chk_CC.Location = new System.Drawing.Point(1254, 6);
+            this.Chk_CC.Name = "Chk_CC";
+            this.Chk_CC.Size = new System.Drawing.Size(55, 26);
+            this.Chk_CC.TabIndex = 345;
+            this.Chk_CC.Text = "CC";
+            this.Chk_CC.UseVisualStyleBackColor = true;
+            this.Chk_CC.CheckedChanged += new System.EventHandler(this.Chk_CC_CheckedChanged);
             // 
-            // Column9
+            // Chk_CP
             // 
-            this.Column9.HeaderText = "Efficiency";
-            this.Column9.Name = "Column9";
-            this.Column9.ReadOnly = true;
-            this.Column9.Width = 120;
+            this.Chk_CP.AutoSize = true;
+            this.Chk_CP.Font = new System.Drawing.Font("Microsoft Sans Serif", 13F);
+            this.Chk_CP.Location = new System.Drawing.Point(692, 6);
+            this.Chk_CP.Name = "Chk_CP";
+            this.Chk_CP.Size = new System.Drawing.Size(54, 26);
+            this.Chk_CP.TabIndex = 347;
+            this.Chk_CP.Text = "CP";
+            this.Chk_CP.UseVisualStyleBackColor = true;
+            this.Chk_CP.CheckedChanged += new System.EventHandler(this.Chk_CP_CheckedChanged);
             // 
-            // Column10
+            // Lbl_Service
             // 
-            this.Column10.HeaderText = "Quality";
-            this.Column10.Name = "Column10";
-            this.Column10.ReadOnly = true;
-            this.Column10.Width = 120;
+            this.Lbl_Service.AutoSize = true;
+            this.Lbl_Service.BackColor = System.Drawing.SystemColors.ActiveBorder;
+            this.Lbl_Service.Font = new System.Drawing.Font("Microsoft Sans Serif", 13F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.Lbl_Service.ForeColor = System.Drawing.Color.Black;
+            this.Lbl_Service.Location = new System.Drawing.Point(10, 6);
+            this.Lbl_Service.Name = "Lbl_Service";
+            this.Lbl_Service.Size = new System.Drawing.Size(85, 22);
+            this.Lbl_Service.TabIndex = 145;
+            this.Lbl_Service.Text = "Service : ";
             // 
-            // Column1
+            // Txt_File
             // 
-            this.Column1.HeaderText = "Start_Time";
-            this.Column1.Name = "Column1";
-            this.Column1.ReadOnly = true;
-            this.Column1.Width = 180;
+            this.Txt_File.Font = new System.Drawing.Font("Microsoft Sans Serif", 16F);
+            this.Txt_File.Location = new System.Drawing.Point(1141, 38);
+            this.Txt_File.Name = "Txt_File";
+            this.Txt_File.Size = new System.Drawing.Size(145, 32);
+            this.Txt_File.TabIndex = 349;
+            this.Txt_File.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             // 
-            // Column5
+            // Pnl_Control
             // 
-            this.Column5.HeaderText = "End_Time";
-            this.Column5.Name = "Column5";
-            this.Column5.ReadOnly = true;
-            this.Column5.Width = 180;
+            this.Pnl_Control.Controls.Add(this.Chk_RS);
+            this.Pnl_Control.Controls.Add(this.Chk_MQ);
+            this.Pnl_Control.Controls.Add(this.label4);
+            this.Pnl_Control.Controls.Add(this.Chk_SHA);
+            this.Pnl_Control.Controls.Add(this.Txt_File);
+            this.Pnl_Control.Controls.Add(this.Lbl_Service);
+            this.Pnl_Control.Controls.Add(this.Btn_Subfolder);
+            this.Pnl_Control.Controls.Add(this.Chk_AI);
+            this.Pnl_Control.Controls.Add(this.Txt_Location);
+            this.Pnl_Control.Controls.Add(this.Chk_RET);
+            this.Pnl_Control.Controls.Add(this.Btn_Done);
+            this.Pnl_Control.Controls.Add(this.Chk_MSK);
+            this.Pnl_Control.Controls.Add(this.Chk_NJ);
+            this.Pnl_Control.Controls.Add(this.Prb_Subfolder);
+            this.Pnl_Control.Controls.Add(this.Chk_CP);
+            this.Pnl_Control.Controls.Add(this.Chk_LIQ);
+            this.Pnl_Control.Controls.Add(this.Chk_CC);
+            this.Pnl_Control.Location = new System.Drawing.Point(32, 771);
+            this.Pnl_Control.Name = "Pnl_Control";
+            this.Pnl_Control.Size = new System.Drawing.Size(1570, 85);
+            this.Pnl_Control.TabIndex = 350;
+            this.Pnl_Control.Visible = false;
+            // 
+            // Chk_RS
+            // 
+            this.Chk_RS.AutoSize = true;
+            this.Chk_RS.Font = new System.Drawing.Font("Microsoft Sans Serif", 13F);
+            this.Chk_RS.Location = new System.Drawing.Point(1497, 6);
+            this.Chk_RS.Name = "Chk_RS";
+            this.Chk_RS.Size = new System.Drawing.Size(54, 26);
+            this.Chk_RS.TabIndex = 353;
+            this.Chk_RS.Text = "RS";
+            this.Chk_RS.UseVisualStyleBackColor = true;
+            this.Chk_RS.CheckedChanged += new System.EventHandler(this.Chk_RS_CheckedChanged);
+            // 
+            // Chk_MQ
+            // 
+            this.Chk_MQ.AutoSize = true;
+            this.Chk_MQ.Font = new System.Drawing.Font("Microsoft Sans Serif", 13F);
+            this.Chk_MQ.Location = new System.Drawing.Point(1412, 6);
+            this.Chk_MQ.Name = "Chk_MQ";
+            this.Chk_MQ.Size = new System.Drawing.Size(57, 26);
+            this.Chk_MQ.TabIndex = 352;
+            this.Chk_MQ.Text = "MQ";
+            this.Chk_MQ.UseVisualStyleBackColor = true;
+            this.Chk_MQ.CheckedChanged += new System.EventHandler(this.Chk_MQ_CheckedChanged);
+            // 
+            // label4
+            // 
+            this.label4.AutoSize = true;
+            this.label4.BackColor = System.Drawing.SystemColors.ActiveBorder;
+            this.label4.Font = new System.Drawing.Font("Microsoft Sans Serif", 13F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label4.ForeColor = System.Drawing.Color.Black;
+            this.label4.Location = new System.Drawing.Point(9, 41);
+            this.label4.Name = "label4";
+            this.label4.Size = new System.Drawing.Size(83, 22);
+            this.label4.TabIndex = 350;
+            this.label4.Text = "Location:";
             // 
             // Productivity
             // 
@@ -448,26 +612,21 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.SystemColors.ActiveBorder;
             this.ClientSize = new System.Drawing.Size(1634, 861);
-            this.Controls.Add(this.Prb_Subfolder);
-            this.Controls.Add(this.Btn_Stop);
-            this.Controls.Add(this.Btn_Pass);
-            this.Controls.Add(this.Txt_Location);
+            this.Controls.Add(this.Pnl_Control);
             this.Controls.Add(this.panel1);
-            this.Controls.Add(this.Btn_Subfolder);
             this.Controls.Add(this.DGV_Productivity);
-            this.Controls.Add(this.Btn_Back);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.Fixed3D;
             this.MaximizeBox = false;
             this.Name = "Productivity";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Productivity";
-            this.TopMost = true;
             this.Load += new System.EventHandler(this.Productivity_Load);
             ((System.ComponentModel.ISupportInitialize)(this.DGV_Productivity)).EndInit();
             this.panel1.ResumeLayout(false);
             this.panel1.PerformLayout();
+            this.Pnl_Control.ResumeLayout(false);
+            this.Pnl_Control.PerformLayout();
             this.ResumeLayout(false);
-            this.PerformLayout();
 
         }
 
@@ -486,10 +645,8 @@
         private System.Windows.Forms.Panel panel1;
         private System.Windows.Forms.ComboBox Cmb_Job_ID;
         private System.Windows.Forms.Label label1;
-        private System.Windows.Forms.Button Btn_Pass;
-        private System.Windows.Forms.Button Btn_Stop;
+        private System.Windows.Forms.Button Btn_Done;
         private System.Windows.Forms.Button Btn_Subfolder;
-        private System.Windows.Forms.Button Btn_Back;
         private System.Windows.Forms.TextBox Txt_Location;
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.TextBox Txt_Image;
@@ -505,5 +662,19 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn Column10;
         private System.Windows.Forms.DataGridViewTextBoxColumn Column1;
         private System.Windows.Forms.DataGridViewTextBoxColumn Column5;
+        private System.Windows.Forms.CheckBox Chk_AI;
+        private System.Windows.Forms.CheckBox Chk_RET;
+        private System.Windows.Forms.CheckBox Chk_MSK;
+        private System.Windows.Forms.CheckBox Chk_NJ;
+        private System.Windows.Forms.CheckBox Chk_SHA;
+        private System.Windows.Forms.CheckBox Chk_LIQ;
+        private System.Windows.Forms.CheckBox Chk_CC;
+        private System.Windows.Forms.CheckBox Chk_CP;
+        private System.Windows.Forms.Label Lbl_Service;
+        private System.Windows.Forms.TextBox Txt_File;
+        private System.Windows.Forms.Panel Pnl_Control;
+        private System.Windows.Forms.Label label4;
+        private System.Windows.Forms.CheckBox Chk_RS;
+        private System.Windows.Forms.CheckBox Chk_MQ;
     }
 }

@@ -1,6 +1,7 @@
 ﻿using Skill_PMS.Controller;
 using Skill_PMS.Data;
 using Skill_PMS.Models;
+using Skill_PMS.UI_WinForm.Production.QC_Panel;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -19,11 +20,12 @@ namespace Skill_PMS.UI_WinForm.Common_Panel
     public partial class Productivity : Form
     {
         private readonly Common _common = new Common();
-        SkillContext DB = new SkillContext();
+        SkillContext _db = new SkillContext();
         Common common = new Common();
 
-        public User user;
-        public string _jobID, _image, _name, _shift;
+        public User _user;
+        public int _runningJobsId = 0;
+        public string _jobID, _image, _name, _shift, _service, _team;
         public DateTime _dateFrom, _dateTo;
         public NewJob _job = new NewJob();
 
@@ -40,6 +42,153 @@ namespace Skill_PMS.UI_WinForm.Common_Panel
             else
                 instance.BringToFront();
             return instance;
+        }
+
+        private void Chk_CP_CheckedChanged(object sender, EventArgs e)
+        {
+            Check_Service();
+        }
+
+        private void Check_Service()
+        {
+            _service = ""; 
+
+            if (Chk_CP.Checked)
+                _service += "CP+";
+
+            if (Chk_RET.Checked)
+                _service += "RET+";
+
+            if (Chk_NJ.Checked)
+                _service += "NJ+";
+
+            if (Chk_MSK.Checked)
+                _service += "MSK+";
+
+            if (Chk_SHA.Checked)
+                _service += "SHA+";
+
+            if (Chk_LIQ.Checked)
+                _service += "LIQ+";
+
+            if (Chk_CC.Checked)
+                _service += "CC+";
+
+            if (Chk_AI.Checked)
+                _service += "AI";
+
+            if (Chk_MQ.Checked)
+                _service += "MQ+";
+
+            if (Chk_RS.Checked)
+                _service += "RS";
+
+            _service = _service.TrimEnd('+');
+            Lbl_Service.Text = "Service: "+ _service;
+        }
+
+        private void Chk_RET_CheckedChanged(object sender, EventArgs e)
+        {
+            Check_Service();
+        }
+
+        private void Chk_NJ_CheckedChanged(object sender, EventArgs e)
+        {
+            Check_Service();
+        }
+
+        private void Chk_MSK_CheckedChanged(object sender, EventArgs e)
+        {
+            Check_Service();
+        }
+
+        private void Chk_SHA_CheckedChanged(object sender, EventArgs e)
+        {
+            Check_Service();
+        }
+
+        private void Chk_LIQ_CheckedChanged(object sender, EventArgs e)
+        {
+            Check_Service();
+        }
+
+        private void Chk_CC_CheckedChanged(object sender, EventArgs e)
+        {
+            Check_Service();
+        }
+
+        private void DGV_Productivity_CellContentClick(object sender, DataGridViewCellEventArgs e)
+        {
+            if (DGV_Productivity.Columns[DGV_Productivity.CurrentCell.ColumnIndex].HeaderText.Contains("Name"))
+            {
+                if (DGV_Productivity.Rows[e.RowIndex].Cells[e.ColumnIndex].Value.ToString() != "")
+                {
+                    if (DGV_Productivity.Rows[e.RowIndex].Cells[10].Value.ToString() != "")
+                    {
+                        var feedback = Pro_Feedback.GetInstance();
+                        feedback._name = DGV_Productivity.Rows[e.RowIndex].Cells[1].Value.ToString();
+                        feedback._image = DGV_Productivity.Rows[e.RowIndex].Cells[2].Value.ToString();
+                        feedback.User = _user;
+                        feedback._job = _job;
+                        feedback.Show();
+                    }
+                }
+            }
+        }
+
+        private void Chk_MQ_CheckedChanged(object sender, EventArgs e)
+        {
+            Check_Service();
+        }
+
+        private void Btn_Done_Click(object sender, EventArgs e)
+        {
+            if (string.IsNullOrEmpty(_service))
+            {
+                MessageBox.Show(@"Job Service is empty. Please Select Actual Job Service and try again......", @"Job Service is empty.", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
+
+            int file = 0;
+            if (!string.IsNullOrEmpty(Txt_File.Text))
+                file = Convert.ToInt32(Txt_File.Text);
+            else
+            {
+                MessageBox.Show(@"File is empty. Please enter actual output file count......", @"File is empty.", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
+
+            string loc = Txt_Location.Text;
+            var logCount = _db.Logs.Where(x => x.JobId == _job.JobId & x.Status == "Running").Count();
+            if (logCount > 0)
+            {
+                MessageBox.Show(@"Job is Still Running. Please inform production team to finish this job.", @"Job is Still Running.", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
+
+            _job.OutputAmount = file;
+            _job.OutputLocation = loc;
+            _job.Service = _service;
+            _job.ProEnd = DateTime.Now;
+            _job.Status = "Ready";
+
+            _job.ProDone = _db.Logs.Where(x => x.JobId == _job.JobId & x.Status == "Done").Select(x => x.Image).Distinct().Count();
+
+            if (_job.ProDone > 0)
+                _job.ProTime = _db.Logs.Where(x => x.JobId == _job.JobId & x.Status == "Done").Distinct().Sum(x => x.ProTime) / _job.ProDone;
+
+            _db.SaveChanges();
+            this.Close();
+        }
+
+        private void Chk_RS_CheckedChanged(object sender, EventArgs e)
+        {
+            Check_Service();
+        }
+
+        private void Chk_AI_CheckedChanged(object sender, EventArgs e)
+        {
+            Check_Service();
         }
 
         private void Productivity_Load(object sender, EventArgs e)
@@ -59,55 +208,26 @@ namespace Skill_PMS.UI_WinForm.Common_Panel
             foreach (var designer in _common.Current_Designers())
                 Cmb_Name.Items.Add(designer.Name);
 
-            var jobs = DB.New_Jobs.OrderByDescending(x => x.Id).Take(99);
+            var jobs = _db.New_Jobs.OrderByDescending(x => x.Id).Take(99);
             foreach (var job in jobs)
                 Cmb_Job_ID.Items.Add(job.JobId);
 
-            _job = DB.New_Jobs
-                .FirstOrDefault(x => x.JobId == _jobID);
+            _job = _db.New_Jobs.FirstOrDefault(x => x.JobId == _jobID);
+            Txt_File.Text = _job.ProDone+"";
 
             Load_Data();
-            //int Done = (from lo in DB.Logs
-            //            join usr in DB.Users on lo.Name equals usr.Short_Name
-            //            orderby lo.Id
-            //            where lo.JobId == _job.JobId & lo.Status == "Done"
-            //            select new
-            //            {
-            //                lo.Image
-            //            }).Count();
 
-            //Btn_Done.Text = "Done: " + Done;
-
-            //int Running = (from lo in DB.Logs
-            //            join usr in DB.Users on lo.Name equals usr.Short_Name
-            //            orderby lo.Id
-            //            where lo.JobId == _job.JobId & lo.Status == "Running"
-            //            select new
-            //            {
-            //                lo.Image
-            //            }).Count();
-
-            //Btn_Running.Text = "Running: " + Running;
-
-            if (user.Role == "SI" | user.Role == "QC" | user.Role == "CS")
-            {
-                Btn_Stop.Visible = true;
-                Btn_Back.Visible = true;
-                Txt_Location.Visible = true;
-                Btn_Subfolder.Visible = true;
-                Btn_Pass.Visible = true;
-            }
-
-            if(user.Role == "QC")
-                Btn_Pass.Text = "Pass to CS";
-
-            if (user.Role == "CS")
-                Btn_Pass.Text = "Job Done";
+            if (_user.Role == "SI" | _user.Role == "QC")
+                Pnl_Control.Visible = true;
         }
 
         void Load_Data()
         {
-            var findLogs = DB.Logs.Where(x => x.Image != "");
+            var findLogs = _db.Logs.Where(x => x.Image != "");
+
+            //2022
+            //if (_team != null)
+            //    findLogs = findLogs.Where(x => x.Team == _team);
 
             if (_jobID != null)
                 findLogs = findLogs.Where(x => x.JobId == _jobID);
@@ -121,7 +241,7 @@ namespace Skill_PMS.UI_WinForm.Common_Panel
             if (_image != null)
                 findLogs = findLogs.Where(x => x.Image == _image);
 
-            var logs = findLogs.OrderBy(x => x.Efficiency).Take(9999).ToList();
+            var logs = findLogs.OrderBy(x => x.Efficiency).Take(999).ToList();
 
             DGV_Productivity.DataSource = null;
             DGV_Productivity.Rows.Clear();
@@ -130,7 +250,7 @@ namespace Skill_PMS.UI_WinForm.Common_Panel
             int SL = 1;
             foreach (var log in logs)
             {
-                DGV_Productivity.Rows.Add(SL++, log.Name, log.Image, log.Service, log.Status, log.TargetTime, Math.Round(log.ProTime, 2), log.Efficiency + "%", log.Quality + "%", log.StartTime, log.EndTime);
+                DGV_Productivity.Rows.Add(SL++, log.Name, log.Image, log.Service, log.Status, Math.Round(log.TargetTime, 1), Math.Round(log.ProTime, 2), log.Efficiency + "%", log.Quality + "%", log.StartTime, log.EndTime);
             }
 
             common.Row_Color_By_Efficiency(DGV_Productivity, "Column9");
@@ -157,17 +277,6 @@ namespace Skill_PMS.UI_WinForm.Common_Panel
             Load_Data();
         }
 
-        private void Btn_Pass_Click(object sender, EventArgs e)
-        {
-            if (Btn_Pass.Text == "Pass to QC")
-                _job.Status = "QC";
-            else
-                _job.Status = "Ready";
-
-            DB.SaveChanges();
-            this.Close();
-        }
-
         private void Btn_Subfolder_Click(object sender, EventArgs e)
         {
             string Loc = Txt_Location.Text;
@@ -180,8 +289,7 @@ namespace Skill_PMS.UI_WinForm.Common_Panel
                 {
                     string ext = Path.GetExtension(file_path);
                     string new_name = Path.GetFileNameWithoutExtension(file_path);
-                    var subfolder = DB.Sub_Folders
-                        .FirstOrDefault(x => x.Job_ID == _job.JobId & x.New_Name == new_name);
+                    var subfolder = _db.Sub_Folders.FirstOrDefault(x => x.Job_ID == _job.JobId & x.New_Name == new_name);
 
                     if (subfolder != null)
                     {
@@ -205,24 +313,6 @@ namespace Skill_PMS.UI_WinForm.Common_Panel
             }
             else
                 MessageBox.Show(@"Folder Location maybe empty. Please check folder location......", @"Folder Doesn't work", MessageBoxButtons.OK, MessageBoxIcon.Error);
-        }
-
-        private void Btn_Stop_Click(object sender, EventArgs e)
-        {
-            _job.Status = "New";
-            DB.SaveChanges();
-            this.Close();
-        }
-
-        private void Btn_Back_Click(object sender, EventArgs e)
-        {
-            if (user.Role == "QC")
-                _job.Status = "Pro";
-            else
-                _job.Status = "New";
-
-            DB.SaveChanges();
-            this.Close();
         }
     }
 }

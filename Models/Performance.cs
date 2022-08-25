@@ -9,6 +9,7 @@ namespace Skill_PMS.Models
         public DateTime Date { get; set; }
         public DateTime Login { get; set; }
         public DateTime Logout { get; set; }
+        public string PC_Name { get; set; }
 
         public string Status { get; set; }
         public string Shift { get; set; }
@@ -21,6 +22,8 @@ namespace Skill_PMS.Models
         
         public int Efficiency { get; set; }
         public int Quality { get; set; }
+        public double Support { get; set; }
+        public double Revenue { get; set; }
         public int Up { get; set; }
     }
 }

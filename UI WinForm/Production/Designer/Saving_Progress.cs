@@ -8,6 +8,7 @@ using System.Linq;
 using System.Threading;
 using System.Windows.Forms;
 using System.Runtime.InteropServices;
+using Skill_PMS.Controller;
 
 namespace Skill_PMS.UI_WinForm.Production.Designer
 {
@@ -17,6 +18,7 @@ namespace Skill_PMS.UI_WinForm.Production.Designer
         private readonly SkillContext _db = new SkillContext();
         public Performance _performance = new Performance();
         public NewJob _job = new NewJob();
+        private readonly Common _common = new Common();
         public User _user { get; set; }
         private Log _log = new Log();
 
@@ -29,22 +31,25 @@ namespace Skill_PMS.UI_WinForm.Production.Designer
 
         private void Tmr_Close_Tick(object sender, EventArgs e)
         {
+            Tmr_Close.Stop();
             this.Close();
         }
 
         private void Tmr_Copy_Tick(object sender, EventArgs e)
         {
-            if (Prb_Copier.Value == _previousValue & Prb_Copier.Value != 100)
-            {
-                if (File.Exists(_source))
-                {
-                    if (!_pause & !File.Exists(_destination))
-                        File.Copy(_source, _destination);
-                }
-                else
-                    MessageBox.Show(@"Find done file & keep it to Done folder manually...", @"Done file doesn't Exist", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                SavePerformance();
-            }
+            Tmr_Copy.Stop();
+            backgroundWorker.RunWorkerAsync();
+            //if (Prb_Copier.Value == _previousValue & Prb_Copier.Value != 100)
+            //{
+            //    if (File.Exists(_source))
+            //    {
+            //        if (!_pause & !File.Exists(_destination))
+            //            File.Copy(_source, _destination);
+            //    }
+            //    else
+            //        MessageBox.Show(@"Find done file & keep it to Done folder manually...", @"Done file doesn't Exist", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            //    SavePerformance();
+            //}
         }
 
         public SavingProgress()
@@ -60,7 +65,9 @@ namespace Skill_PMS.UI_WinForm.Production.Designer
         public static class ModifyProgressBarColor
         {
             [DllImport("user32.dll", CharSet = CharSet.Auto, SetLastError = false)]
+
             static extern IntPtr SendMessage(IntPtr hWnd, uint Msg, IntPtr w, IntPtr l);
+
             public static void SetState(ProgressBar prB, int state)
             {
                 SendMessage(prB.Handle, 1040, (IntPtr)state, IntPtr.Zero);
@@ -75,12 +82,14 @@ namespace Skill_PMS.UI_WinForm.Production.Designer
                     CopyFile(_source, _destination);
             }
             else
+            {
                 MessageBox.Show(@"Find done file & keep it to Done folder manually...", @"Done file doesn't Exist", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
         }
 
         private void BackgroundWorker_ProgressChanged(object sender, ProgressChangedEventArgs e)
         {
-            Tmr_Copy.Stop();
+            //Tmr_Copy.Stop();
             Prb_Copier.Value = _previousValue = e.ProgressPercentage;
             if (Prb_Copier.Value == 100)
                 SavePerformance();
@@ -88,7 +97,7 @@ namespace Skill_PMS.UI_WinForm.Production.Designer
 
         void SavePerformance()
         {
-            Tmr_Copy.Stop();
+            //Tmr_Copy.Stop();
             Lbl_Success.Visible = true;
             var date = _currentTime.Date;
             if (_performance.Shift == "Night" & DateTime.Now.ToString("tt").ToUpper() == "AM")
@@ -98,26 +107,10 @@ namespace Skill_PMS.UI_WinForm.Production.Designer
             Lbl_Success.ForeColor = Color.Black;
             Lbl_Success.Text = "Pro_Time:" + Math.Round(_proTime, 1) + " Efficiency:" + _log.Efficiency + "%";
 
-            //Update Job report in job table
-            var fileCount = _db.Logs
-                    .Where(x => x.JobId == _job.JobId & x.Status == "Done" & x.Service != "QC")
-                    .Select(x => x.Image)
-                    .Distinct()
-                    .Count();
+            //2022
+            //_common.UpdateJob(_user, _job, _runningJob);
 
-            if (fileCount != 0)
-            {
-                var proTime = _db.Logs
-                    .Where(x => x.JobId == _job.JobId & x.Status == "Done" & x.Service != "QC")
-                    .Sum(x => x.ProTime);
-
-                _job.ProTime = proTime / fileCount;
-            }
-
-            _job.ProDone = fileCount;
-            _job.Up = 0;
-
-            //Update My_Job Report in My_Job Table
+            //---Update My_Job Report in My_Job Table
             var myJob = _db.My_Jobs
                 .FirstOrDefault(x => x.JobId == _job.JobId & x.Name == _user.Short_Name & x.Service == _myService & x.Date == date);
 
@@ -134,7 +127,7 @@ namespace Skill_PMS.UI_WinForm.Production.Designer
                 _db.My_Jobs.Add(myJob);
             }
 
-            myJob.Amount = fileCount = _db.Logs
+            var fileCount = myJob.Amount = _db.Logs
                 .Count(x => x.JobId == _job.JobId & x.Name == _user.Short_Name & x.Service == _myService &
                     x.StartTime >= _performance.Login & x.StartTime <= _currentTime);
 
@@ -165,8 +158,9 @@ namespace Skill_PMS.UI_WinForm.Production.Designer
 
             myJob.EndTime = _currentTime;
             myJob.Up = 0;
+            //---End Update My_Job Report in My_Job Table
 
-            //Update My_Job Performance in Performance Table
+            //---Update My_Job Performance in Performance Table
             _performance = _db.Performances.FirstOrDefault(x => x.Id == _performance.Id);
 
             _performance.File = fileCount = _db.Logs
@@ -219,13 +213,11 @@ namespace Skill_PMS.UI_WinForm.Production.Designer
 
         private void Saving_Progress_Load(object sender, EventArgs e)
         {
-            Tmr_Copy.Start();
             Prb_Copier.Value = 0;
             _currentTime = DateTime.Now;
 
             //update log Report in Log Table
-            _log = _db.Logs
-                .FirstOrDefault(x => x.JobId == _job.JobId & x.Image == _fileName & x.Name == _user.Short_Name & x.Service == _myService);
+            _log = _db.Logs.FirstOrDefault(x => x.JobId == _job.JobId & x.Image == _fileName & x.Name == _user.Short_Name & x.Service == _myService);
 
             _log.ProTime += _proTime;
             _log.OutputLocation = _destination;
@@ -238,6 +230,7 @@ namespace Skill_PMS.UI_WinForm.Production.Designer
                 _log.Efficiency = (int)(_log.TargetTime / _log.ProTime * 100);
 
             _db.SaveChanges();
+
             if (_log.Efficiency < 75)
                 ModifyProgressBarColor.SetState(Prb_Copier, 2);
             else if (_log.Efficiency < 100)
@@ -245,7 +238,7 @@ namespace Skill_PMS.UI_WinForm.Production.Designer
             else if (_log.Efficiency == 0)
                 ModifyProgressBarColor.SetState(Prb_Copier, 1);
 
-            backgroundWorker.RunWorkerAsync();
+            Tmr_Copy.Start();
         }
     }
 }

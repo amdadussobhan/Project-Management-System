@@ -57,12 +57,14 @@
             // 
             // Tmr_Close
             // 
+            this.Tmr_Close.Enabled = true;
             this.Tmr_Close.Interval = 3333;
             this.Tmr_Close.Tick += new System.EventHandler(this.Tmr_Close_Tick);
             // 
             // Tmr_Copy
             // 
-            this.Tmr_Copy.Interval = 33333;
+            this.Tmr_Copy.Enabled = true;
+            this.Tmr_Copy.Interval = 1111;
             this.Tmr_Copy.Tick += new System.EventHandler(this.Tmr_Copy_Tick);
             // 
             // SavingProgress

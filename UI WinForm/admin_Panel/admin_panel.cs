@@ -8,17 +8,23 @@ using Skill_PMS.Controller;
 using Skill_PMS.Data;
 using Skill_PMS.Models;
 using System.Linq;
+using System.IO;
 using System.Security.Cryptography.X509Certificates;
 using System.Threading;
 using MySql.Data.MySqlClient;
+using System.Threading.Tasks;
+using System.Data.SqlClient;
+using Microsoft.SqlServer.Management.Common;
+using Microsoft.SqlServer.Management.Smo;
 
 namespace Skill_PMS.UI_WinForm.admin_Panel
 {
     public partial class AdminPanel : Form
     {
         private readonly Common _common = new Common();
-        private readonly SkillContext _db = new SkillContext();
-        private DateTime _nowTime;
+        private SkillContext _db = new SkillContext();
+        public DateTime _nowTime;
+        int _count = 0;
 
         public AdminPanel()
         {
@@ -35,154 +41,19 @@ namespace Skill_PMS.UI_WinForm.admin_Panel
             return _instance;
         }
 
-        private void Update_Shift_Report()
-        {
-            var date = _nowTime.Date;
-            string shift = _common.Current_Shift();
-            var starTime = _common.Shift_Time(shift);
-
-            if (shift == "Night" & _nowTime.ToString("tt").ToUpper() == "AM")
-                date = starTime.AddDays(-1).Date;
-
-            var shiftReport = _db.Shift_Reports
-                   .FirstOrDefault(x => x.Date == date & x.Shift == shift);
-
-            if (shiftReport == null)
-            {
-                shiftReport = _common.Add_New_Shift_Report(date, shift);
-                shiftReport = _db.Shift_Reports
-                .FirstOrDefault(x => x.Date == date & x.Shift == shift);
-            }
-
-            var count = _db.Logs
-                .Where(x => x.StartTime >= starTime & x.StartTime <= _nowTime & x.Status == "Done" & x.Service != "QC")
-                .Select(x => x.Image)
-                .Distinct()
-                .Count();
-
-            if (count != 0)
-            {
-                var achiveLoad = _db.Logs
-                    .Where(x => x.StartTime >= starTime & x.StartTime <= _nowTime & x.Status == "Done" & x.Service != "QC")
-                    .Sum(x => x.TargetTime);
-
-                var achiveProTime = _db.Logs
-                    .Where(x => x.StartTime >= starTime & x.StartTime <= _nowTime & x.Status == "Done" & x.Service != "QC")
-                    .Sum(x => x.ProTime);
-
-                var quality = _db.Logs
-                    .Where(x => x.StartTime >= starTime & x.StartTime <= _nowTime & x.Status == "Done" & x.Service != "QC")
-                    .Average(x => x.Quality);
-
-                var qcCount = _db.Logs
-                    .Where(x => x.StartTime >= starTime & x.StartTime <= _nowTime & x.Status == "Done" & x.Service == "QC")
-                    .Select(x => x.Image)
-                    .Distinct()
-                    .Count();
-
-                shiftReport.AchieveLoad = achiveLoad;
-                shiftReport.Quality = (int)quality;
-                shiftReport.AchieveProTime = achiveProTime;
-
-                if (shiftReport.TotalLoad > achiveLoad)
-                    shiftReport.HandLoad = shiftReport.TotalLoad - achiveLoad;
-
-                if (shiftReport.TotalFile > count)
-                    shiftReport.HandFile = shiftReport.TotalFile - count;
-
-                shiftReport.ProDone = count;
-                shiftReport.QcDone = qcCount;
-
-                if (shiftReport.TotalLoad != 0)
-                    shiftReport.TargetAchieve = (int)((shiftReport.AchieveLoad / shiftReport.TotalLoad) * 100);
-
-                if (shiftReport.AchieveProTime != 0)
-                    shiftReport.Efficiency = (int)((shiftReport.AchieveLoad / shiftReport.AchieveProTime) * 100);
-            }
-
-            if(shiftReport.Capacity == 0)
-                shiftReport.Capacity = _common.Current_Designers().Count * 420;
-
-            //generate last 24 input
-            var startday = _common.Shift_Time("Morning");
-            if(shift == "Night" & _nowTime.ToString("tt").ToUpper() == "AM")
-                startday = startday.AddDays(-1);
-
-            count = _db.New_Jobs
-                .Where(x => x.Incoming >= startday & x.Incoming <= _nowTime)
-                .Count();
-
-            var totalInput = 0;
-            if (count != 0)
-            {
-                totalInput = _db.New_Jobs
-                    .Where(x => x.Incoming >= startday & x.Incoming <= _nowTime)
-                    .Sum(x => x.InputAmount);
-            }
-
-            count = _db.Logs
-                .Where(x => x.StartTime >= startday & x.StartTime <= _nowTime & x.Status == "Done" & x.Service != "QC")
-                .Select(x => x.Image)
-                .Distinct()
-                .Count();
-
-            shiftReport.Last24Input = totalInput;
-            shiftReport.Last24Output = count;
-            shiftReport.Up = 0;
-            _db.SaveChanges();
-        }
-
-        private void AdminPanel_Load(object sender, EventArgs e)
+        private async void AdminPanel_Load(object sender, EventArgs e)
         {
             _nowTime = DateTime.Now;
-            _common.Change_Shift();
             var shift = _common.Current_Shift();
             var date = _common.Shift_Date(_nowTime, shift);
-            var shiftReport = _db.Shift_Reports
-                   .FirstOrDefault(x => x.Date == date & x.Shift == shift);
-
-            if (shiftReport == null)
-                shiftReport = _common.Add_New_Shift_Report(date, shift);
-
-            shiftReport.Capacity = _common.Current_Designers().Count * 420;
-            shiftReport.Up = 0;
-            _db.SaveChanges();
-
-            if (shiftReport.TotalLoad == 0)
-                _common.Check_Workload(shift);
-
-            //Update_Shift_Report();
-            //Upload_Shift_Report();
-            //Upload_Workloads();
-            //Upload_New_Jobs();
-            //Upload_My_Jobs();
-            //Upload_Performances();
-            //Upload_Logs();
-
-            //try{Upload_Shift_Report();}
-            //catch (Exception){}
-
-            //try{Upload_Workloads();}
-            //catch (Exception) { }
-
-            //try { Upload_New_Jobs(); }
-            //catch (Exception) { }
-
-            //try { Upload_My_Jobs(); }
-            //catch (Exception) { }
-
-            //try { Upload_Performances(); }
-            //catch (Exception) { }
-
-            //try{Upload_Logs();}
-            //catch (Exception) { }
-
-            Tmr_Count.Start();
+            var shiftReport = _db.Shift_Reports.FirstOrDefault(x => x.Date == date & x.Shift == shift & x.Team == "");
         }
 
-        private void Tmr_Count_Tick(object sender, EventArgs e)
+        private async void Tmr_Count_Tick(object sender, EventArgs e)
         {
+            Tmr_Count.Stop();
             _nowTime = DateTime.Now;
+            _db = new SkillContext();
 
             if (Lbl_Status.Text == @"Running")
             {
@@ -195,70 +66,51 @@ namespace Skill_PMS.UI_WinForm.admin_Panel
                 Lbl_Status.ForeColor = Color.OrangeRed;
             }
 
-            //Update_Shift_Report();
-            //_common.Change_Shift();
-            //Upload_Shift_Report();
-            //Upload_Workloads();
-            //Upload_New_Jobs();
-            //Upload_My_Jobs();
-            //Upload_Performances();
-            //Upload_Logs();
+            await Task.Run(() => Upload_Users());
+            //await Task.Run(() => Upload_Workloads());
+            //await Task.Run(() => Upload_RunningJobs());
+            await Task.Run(() => Upload_New_Jobs());
+            //await Task.Run(() => Upload_Feedback());
+            await Task.Run(() => Upload_Performances());
 
-            //try { Update_Shift_Report(); }
-            //catch (Exception) { }
-
-            //try { _common.Change_Shift(); }
-            //catch (Exception) { }
-
-            //try { Upload_Shift_Report(); }
-            //catch (Exception) { }
-
-            //try { Upload_Workloads(); }
-            //catch (Exception) { }
-
-            //try { Upload_New_Jobs(); }
-            //catch (Exception) { }
-
-            //try { Upload_My_Jobs(); }
-            //catch (Exception) { }
-
-            //try { Upload_Performances(); }
-            //catch (Exception) { }
-
-            try { Upload_Logs(); }
-            catch (Exception) { }
-
+            if (_count++ >= 9)
+            {
+                //await Task.Run(() => _common.Update_Shift_Report());
+                //await Task.Run(() => Upload_Shift_Report());
+                //await Task.Run(() => Upload_Performances());
+                await Task.Run(() => Upload_Logs());
+                //await Task.Run(() => Upload_My_Jobs());
+                _count = 0;
+            }
             Tmr_Count.Start();
         }
 
-        private void Upload_Shift_Report()
+        public void Upload_Shift_Report()
         {
-            var shiftReports = _db.Shift_Reports
-                .Where(x => x.Up == 0)
-                .ToList();
-                
+            var shiftReports = _db.Shift_Reports.Where(x => x.Up == 0).ToList();
+
             foreach (var sR in shiftReports)
             {
                 var query = @" Select * From `shift_reports` Where `SL` = '" + sR.Id + "' and `Loc` = 'DHK' ";
 
                 int CapacityAchieve = 0;
                 if (sR.Capacity != 0)
-                    CapacityAchieve = (int)(sR.AchieveProTime / sR.Capacity * 100);                
+                    CapacityAchieve = (int)(sR.ProAchieve / sR.Capacity * 100);
 
                 if (_common.IsExist(query))
                 {
-                    query = @" Update `shift_reports` Set Capacity = '" + sR.Capacity + "', CapacityAchieve = '"+ CapacityAchieve + "', RevenueTarget = '', RevenueAchieve = '', AchieveLoad = '" + sR.AchieveLoad + "', " +
-                        " AchieveProTime = '" + (int)(sR.AchieveProTime) + "', NewFile = '" + sR.NewFile + "', PreFile = '" + sR.PreFile + "', PreLoad = '"+ sR.PreLoad + "'," + " TotalFile = '" + sR.TotalFile + "', TotalLoad = '" + sR.TotalLoad + "', " +
-                        " HandFile = '" + sR.HandFile + "', HandLoad = '" + sR.HandLoad + "', Last24Input = '" + sR.Last24Input + "', Last24Output = '" + sR.Last24Output + "', " + " ProDone = '" + sR.ProDone + "', " +
+                    query = @" Update `shift_reports` Set Capacity = '" + sR.Capacity + "', QC_Capacity = '" + sR.QC_Capacity + "', CapacityAchieve = '" + CapacityAchieve + "', RevenueTarget = '', RevenueAchieve = '', AchieveLoad = '" + sR.LoadAchieve + "', " +
+                        " AchieveProTime = '" + (int)sR.ProAchieve + "', NewFile = '" + sR.NewFile + "', PreFile = '" + sR.PreFile + "', PreLoad = '" + (int)sR.PreLoad + "'," + " TotalFile = '" + sR.TotalFile + "', " + " OutputFile = '" + sR.OutputFile + "', TotalLoad = '" + (int)sR.TotalLoad + "', " +
+                        " HandFile = '" + sR.HandFile + "', HandLoad = '" + (int)sR.HandLoad + "', Last24Input = '" + sR.Last24Input + "', Last24Output = '" + sR.Last24Output + "', " + " ProDone = '" + sR.ProDone + "', " +
                         " QcDone = '" + sR.QcDone + "', Quality = '" + sR.Quality + "', TargetAchieve = '" + sR.TargetAchieve + "', Efficiency = '" + sR.Efficiency + "' Where `SL` = '" + sR.Id + "' ";
                 }
                 else
                 {
-                    query = @" INSERT INTO `shift_reports`(`SL`, `Loc`, `Date`, `Shift`, `Capacity`, `CapacityAchieve`, `RevenueTarget`, `RevenueAchieve`, `AchieveLoad`, `AchieveProTime`, 
-                        `NewFile`, `PreFile`, `PreLoad`, `TotalFile`, `TotalLoad`, `HandFile`, `HandLoad`, `Last24Input`, `Last24Output`, `ProDone`, `QcDone`, `Quality`, `TargetAchieve`, `Efficiency`) 
-                        Values('" + sR.Id + "', 'DHK', '" + sR.Date.ToString("yyyy-MM-dd") + "', '" + sR.Shift + "', '" + sR.Capacity + "', '" + CapacityAchieve + "', '', '', '" + sR.AchieveLoad + "', '"
-                        + (int)(sR.AchieveProTime) + "', '" + sR.NewFile + "', '" + sR.PreFile + "', '" + sR.PreLoad + "', " + " '" + sR.TotalFile + "', '" + sR.TotalLoad  + "', '" + sR.HandFile + "', '" + sR.HandLoad + "', '" 
-                        + sR.Last24Input + "', '" + sR.Last24Output+ "', '" + sR.ProDone + "', '" + sR.QcDone + "', '" + sR.Quality + "', '" + sR.TargetAchieve + "', '" + sR.Efficiency + "') ";
+                    query = @" INSERT INTO `shift_reports`(`SL`, `Loc`, `Date`, `Shift`, `Team`, `Capacity`, `QC_Capacity`, `CapacityAchieve`, `RevenueTarget`, `RevenueAchieve`, `AchieveLoad`, `AchieveProTime`, 
+                        `NewFile`, `PreFile`, `PreLoad`, `TotalFile`, `OutputFile`, `TotalLoad`, `HandFile`, `HandLoad`, `Last24Input`, `Last24Output`, `ProDone`, `QcDone`, `Quality`, `TargetAchieve`, `Efficiency`) 
+                        Values('" + sR.Id + "', 'DHK', '" + sR.Date.ToString("yyyy-MM-dd") + "', '" + sR.Shift + "', '" + sR.Team + "', '" + sR.Capacity + "', '" + sR.QC_Capacity+ "', '" + CapacityAchieve + "', '', '', '" + sR.LoadAchieve + "', '"
+                        + (int)sR.ProAchieve + "', '" + sR.NewFile + "', '" + sR.PreFile + "', '" + (int)sR.PreLoad + "', " + " '" + sR.TotalFile + "', '" + sR.OutputFile + "', '" + (int)sR.TotalLoad + "', '" + sR.HandFile + "', '" + (int)sR.HandLoad + "', '"
+                        + sR.Last24Input + "', '" + sR.Last24Output + "', '" + sR.ProDone+ "', '" + sR.QcDone + "', '" + sR.Quality + "', '" + sR.TargetAchieve + "', '" + sR.Efficiency + "') ";
                 }
 
                 var cmd = new MySqlCommand(query, Common.Active_ON());
@@ -266,42 +118,147 @@ namespace Skill_PMS.UI_WinForm.admin_Panel
 
                 sR.Up = 1;
             }
+
             _db.SaveChanges();
             Common.Online.Close();
-        }        
+        }
 
-        private void Upload_New_Jobs()
+        public void Upload_New_Jobs()
         {
-            var newJobs = _db.New_Jobs
-                .Where(x => x.Up == 0)
-                .ToList();
+            int count = 0;
+            var newJobs = _db.New_Jobs.Where(x => x.Up == 0).OrderByDescending(x => x.Id).ToList();
 
             foreach (var nJ in newJobs)
             {
                 var query = @" Select * From `new_jobs` Where `SL` = '" + nJ.Id + "' and `Loc` = 'DHK' ";
                 if (_common.IsExist(query))
                 {
-                    query = @" Update `new_jobs` Set JobId = '" + nJ.JobId + "', Client = '" + nJ.Client + "', Category = '" + nJ.Category + "', Service = '" + nJ.Service + "', Status = '" + nJ.Status + "'," +
-                            " Type = '" + nJ.Type + "'," + " Delivery = '" + nJ.Delivery.ToString("yyyy-MM-dd HH:mm:ss") + "', InputAmount = '" + nJ.InputAmount + "', ProDone = '" + nJ.ProDone + "', " +
-                            " OutputAmount = '" + nJ.OutputAmount + "', Price = '" + nJ.Price + "', Taka = '" + nJ.Taka + "', Currency = '" + nJ.Currency + "', ActualTime = '" + nJ.ActualTime + "'," +
+                    query = @" Update `new_jobs` Set JobId = '" + nJ.JobId + "', Folder = '" + nJ.Folder + "', Client = '" + nJ.Client + "', Category = '" + nJ.Category + "', Service = '" + nJ.Service + "', Status = '" + nJ.Status + "'," +
+                            " Type = '" + nJ.Type + "'," + " Delivery = '" + nJ.Delivery.ToString("yyyy-MM-dd HH:mm:ss") + "', InputAmount = '" + nJ.InputAmount + "', " +
+                            " OutputAmount = '" + nJ.OutputAmount + "', Price = '" + nJ.Price + "', Taka = '" + nJ.Taka + "', ActualTime = '" + nJ.ActualTime + "'," +
                             " TargetTime = '" + nJ.TargetTime + "', ProTime = '" + Math.Round(nJ.ProTime, 2)+ "', QcTime = '" + nJ.QcTime + "', ActualEfficiency = '" + nJ.ActualEfficiency + "', TargetEfficiency = '" + nJ.TargetEfficiency + "', " +
-                            " Receiver = '" + nJ.Receiver + "', Sender = '" + nJ.Sender + "', SiName = '" + nJ.SiName + "', QcName = '" + nJ.QcName + "' Where `SL` = '" + nJ.Id + "' and `Loc` = 'DHK' ";
+                            " Receiver = '" + nJ.Receiver + "', Sender = '" + nJ.Sender + "', SiName = '" + nJ.SiName + "', QcName = '" + nJ.QcName + "', Team = '" + nJ.Team+ "' Where `SL` = '" + nJ.Id + "' and `Loc` = 'DHK' ";
                 }
                 else
                 {
                     query =
-                        @" INSERT INTO `new_jobs`(`SL`, `Loc`, `Date`, `JobId`, `Client`, `Category`, `Service`, `Status`, `Type`, `Incoming`, `Delivery`, `InputAmount`, `ProDone`, `OutputAmount`,
-                            `Price`, `Taka`, `Currency`, `ActualTime`, `TargetTime`, `ProTime`, `QcTime`, `ActualEfficiency`, `TargetEfficiency`, `Receiver`, `Sender`, `SiName`, `QcName`) 
-                        Values('" + nJ.Id + "', 'DHK', '" + nJ.Date.ToString("yyyy-MM-dd") + "', '" + nJ.JobId + "', '" + nJ.Client + "', '" + nJ.Category+ "', '" + nJ.Service+ "', '" +
+                        @" INSERT INTO `new_jobs`(`SL`, `Loc`, `Date`, `JobId`, `Folder`, `Client`, `Category`, `Service`, `Status`, `Type`, `Incoming`, `Delivery`, `InputAmount`, `OutputAmount`,
+                            `Price`, `Taka`, `ActualTime`, `TargetTime`, `ProTime`, `QcTime`, `ActualEfficiency`, `TargetEfficiency`, `Receiver`, `Sender`, `SiName`, `QcName`, `Team`) 
+                        Values('" + nJ.Id + "', 'DHK', '" + nJ.Date.ToString("yyyy-MM-dd") + "', '" + nJ.JobId + "', '" + nJ.Folder+ "', '" + nJ.Client + "', '" + nJ.Category+ "', '" + nJ.Service+ "', '" +
                             nJ.Status+ "', '" + nJ.Type+ "', " + " '" + nJ.Incoming.ToString("yyyy-MM-dd HH:mm:ss") + "', '" + nJ.Delivery.ToString("yyyy-MM-dd HH:mm:ss") + "', '" + 
-                            nJ.InputAmount+ "', '" + nJ.ProDone+ "', '" + nJ.OutputAmount+ "', '" + nJ.Price+ "', '" + nJ.Taka+ "', '" + nJ.Currency+ "', '" + nJ.ActualTime+ "', '" + nJ.TargetTime+ "', '" +
-                            Math.Round(nJ.ProTime, 2)+ "', '" + nJ.QcTime+ "', '" + nJ.ActualEfficiency+ "', '" + nJ.TargetEfficiency+ "', '" + nJ.Receiver+ "', '" + nJ.Sender+ "', '" + nJ.SiName+ "', '" + nJ.QcName+ "') ";
+                            nJ.InputAmount+ "', '" + nJ.OutputAmount+ "', '" + nJ.Price+ "', '" + nJ.Taka+ "', '" + nJ.ActualTime+ "', '" + nJ.TargetTime+ "', '" +
+                            Math.Round(nJ.ProTime, 2)+ "', '" + nJ.QcTime+ "', '" + nJ.ActualEfficiency+ "', '" + nJ.TargetEfficiency+ "', '" + nJ.Receiver+ "', '" + nJ.Sender+ "', '" + nJ.SiName+ "', '" + nJ.QcName+ "', '" + nJ.Team + "') ";
                 }
 
                 var cmd = new MySqlCommand(query, Common.Active_ON());
                 cmd.ExecuteNonQuery();
 
                 nJ.Up = 1;
+
+                if (count++ >= 9)
+                    break;
+            }
+
+            _db.SaveChanges();
+            Common.Online.Close();
+        }
+
+        public void Upload_Price_Time()
+        {
+            int count = 0;
+            var price_time = _db.Price_Times.Where(x => x.ID == 0).ToList();
+
+            foreach (var pt in price_time)
+            {
+                var query = @" Select * From `pms_price_time` Where `SL` = '" + pt.Up + "' ";
+                if (_common.IsExist(query))
+                {
+                    query = @" Update `pms_price_time` Set client = '" + pt.Client + "', category = '" + pt.Category + "', lock_time = '" 
+                        + pt.Lock_Time + "', price = '" + pt.Price + "', " + " type = '" + pt.Type + "', rate_id = '" + pt.Rate_ID + "' Where `SL` = '" + pt.ID+ "' ";
+                }
+                else
+                {
+                    query =
+                        @" INSERT INTO `pms_price_time`(`SL`, `client`, `category`, `lock_time`, `price`, `type`, `rate_id`) 
+                        Values('" + pt.ID + "', '" + pt.Client + "', '" + pt.Category + "', '" + pt.Lock_Time + "', '" + pt.Price + "', '" + pt.Type + "', '" + pt.Rate_ID + "') ";
+                }
+
+                var cmd = new MySqlCommand(query, Common.Active_ON());
+                cmd.ExecuteNonQuery();
+
+                pt.Up = 1;
+
+                if (count++ >= 9)
+                    break;
+            }
+
+            _db.SaveChanges();
+            Common.Online.Close();
+        }
+
+        public void Upload_Feedback()
+        {
+            int count = 0;
+            var feedback = _db.Feedback.Where(x => x.Up == 0).OrderByDescending(x => x.Id).ToList();
+
+            foreach (var fd in feedback)
+            {
+                var query = @" Select * From `feedback` Where `SL` = '" + fd.Id + "' and `Loc` = 'DHK' ";
+                if (_common.IsExist(query))
+                {
+                    query = @" Update `feedback` Set Remarks = '" + fd.Remarks + "' Where `SL` = '" + fd.Id + "' and `Loc` = 'DHK' ";
+                }
+                else
+                {
+                    query =
+                        @" INSERT INTO `feedback`(`SL`, `Loc`, `Name`, `JobId`, `Folder`, `Reporter`, `Image`, `Remarks`, `Location`, `ReportTime`) 
+                        Values('" + fd.Id + "', 'DHK', '" + fd.Name + "', '" + fd.JobId + "', '" + fd.Folder + "', '" + fd.Reporter + "', '" +
+                        fd.Image + "', '" + fd.Remarks + "', '" + fd.Location + "',  '" + fd.ReportTime.ToString("yyyy-MM-dd HH:mm:ss") + "') ";
+                }
+
+                var cmd = new MySqlCommand(query, Common.Active_ON());
+                cmd.ExecuteNonQuery();
+
+                fd.Up = 1;
+
+                if (count++ >= 9)
+                    break;
+            }
+
+            _db.SaveChanges();
+            Common.Online.Close();
+        }
+
+
+
+        public void Upload_Users()
+        {
+            int count = 0;
+            var users = _db.Users.Where(x => x.UP == 0).ToList();
+
+            foreach (var user in users)
+            {
+                var query = @" Select * From `users` Where `SL` = '" + user.ID + "' and `Loc` = 'DHK' ";
+                if (_common.IsExist(query))
+                {
+                    query = @"Update `users` Set name = '" + user.Full_Name + "', short_name = '" + user.Short_Name + "', designation = '" + user.Designation + "', team = '" + user.Team+ "' Where `sl` = '" + user.ID + "' and `Loc` = 'DHK' ";
+                }
+                else
+                {
+                    query = @"INSERT INTO `users`(`sl`, `loc`, `name`, `short_name`, `email`, `designation`, `employee_id`, `team`) 
+                        Values('" + user.ID + "', 'DHK', '" + user.Full_Name + "', '" + user.Short_Name + "', '"+user.Short_Name +"@skillgraphics.biz', '" + user.Designation + "', '" + user.Employee_ID + "',  '" + user.Team + "')";
+                }
+
+                var cmd = new MySqlCommand(query, Common.Active_ON());
+                cmd.ExecuteNonQuery();
+
+                user.UP = 1;
+
+                if (count++ >= 9)
+                    _db.SaveChanges();
+
+                if (count++ >= 99)
+                    break;
             }
 
             _db.SaveChanges();
@@ -310,9 +267,7 @@ namespace Skill_PMS.UI_WinForm.admin_Panel
 
         private void Upload_My_Jobs()
         {
-            var my_jobs = _db.My_Jobs
-                .Where(x => x.Up == 0)
-                .ToList();
+            var my_jobs = _db.My_Jobs.Where(x => x.Up == 0).ToList();
 
             foreach (var m in my_jobs)
             {
@@ -320,8 +275,8 @@ namespace Skill_PMS.UI_WinForm.admin_Panel
                 if (_common.IsExist(query))
                 {
                     query = @" Update `my_jobs` Set EndTime = '" + m.EndTime + "', Status = '" + m.Status + "', File = '" + m.Amount 
-                        + "', JobTime = '" + m.JobTime + "'," + " ProTime = '" + Math.Round(m.ProTime, 2)+ "', TotalJobTime = '" + m.TotalJobTime + "', TotalProTime = '" + Math.Round(m.TotalProTime, 2)
-                        + "', Efficiency = '" + m.Efficiency + "', Quality = '" + m.Quality + "' Where `SL` = '" + m.Id + "' and `Loc` = 'DHK' ";
+                        + "', JobTime = '" + m.JobTime + "'," + " ProTime = '" + Math.Round(m.ProTime, 2)+ "', TotalJobTime = '" + m.TotalJobTime + "', TotalProTime = '" 
+                        + Math.Round(m.TotalProTime, 2) + "', Efficiency = '" + m.Efficiency + "', Quality = '" + m.Quality + "' Where `SL` = '" + m.Id + "' and `Loc` = 'DHK' ";
                 }
                 else
                 {
@@ -343,40 +298,47 @@ namespace Skill_PMS.UI_WinForm.admin_Panel
             Common.Online.Close();
         }
 
-        private void Upload_Logs()
+        public void Upload_Logs()
         {
+            int count = 0;
             var logs = _db.Logs
                 .Where(x => x.Up == 0 & x.Status == "Done")
                 .OrderByDescending(x=>x.Id)
                 .ToList();
 
-            var count = 0;
-            foreach (var l in logs)
+            foreach (var log in logs)
             {
-                var image = l.Image;
+                var image = log.Image;
                 if(image.Contains("\'"))
                     image = image.Replace("\'", "");
 
-                var query = @" Select * From `logs` Where `SL` = '" + l.Id + "' and `Loc` = 'DHK' ";
+                var query = @" Select * From `logs` Where `SL` = '" + log.Id + "' and `Loc` = 'DHK' ";
+
                 if (_common.IsExist(query))
                 {
-                    query = @" Update `logs` Set EndTime = '" + l.EndTime.ToString("yyyy-MM-dd HH:mm:ss") + "', Status = '" + l.Status + "', ProTime = '" + Math.Round(l.ProTime, 2) + "'," +
-                            " Remarks = '" + l.Remarks + "', Efficiency = '" + l.Efficiency + "', Quality = '" + l.Quality + "' Where `SL` = '" + l.Id + "' and `Loc` = 'DHK' ";
+                    query = @" Update `logs` Set EndTime = '" + log.EndTime.ToString("yyyy-MM-dd HH:mm:ss") + "', Status = '" + log.Status + "', Type = '" + log.Type + "', ProTime = '" 
+                        + Math.Round(log.ProTime, 2) + "'," + " Remarks = '" + log.Remarks + "', Rest_Time = '" + log.RestTime + "', Pause_Time = '" + log.PauseTime + "', Efficiency = '" 
+                        + log.Efficiency + "', Quality = '" + log.Quality + "', Revenue = '" + log.Revenue + "', Support = '" + log.Support + "' Where `SL` = '" + log.Id + "' and `Loc` = 'DHK' ";
                 }
                 else
                 {
                     query =
-                        @" INSERT INTO `logs`(`SL`, `Loc`, `Date`, `StartTime`, `EndTime`, `Name`, `JobId`, `Service`, `Category`,
-                        `Status`, `ActualTime`, `TargetTime`, `ProTime`, `Image`,`Remarks`,`Efficiency`,`Quality`) 
-                        Values('" + l.Id + "', 'DHK', '" + l.Date.ToString("yyyy-MM-dd") + "', '" + l.StartTime.ToString("yyyy-MM-dd HH:mm:ss") + "', '" 
-                            + l.EndTime.ToString("yyyy-MM-dd HH:mm:ss") + "', '" + l.Name + "', '" + l.JobId + "', '" + l.Service + "', '" + l.Category + "', '" + l.Status + "', '" 
-                            + l.ActualTime + "', '" + Math.Round(l.TargetTime, 2) + "', " + " '" + Math.Round(l.ProTime, 2) + "', '" + image + "', '" + l.Remarks + "', '" + l.Efficiency + "', '" + l.Quality + "') ";
+                        @" INSERT INTO `logs`(`SL`, `Loc`, `Date`, `Shift`, `Revenue`, `Support`, `StartTime`, `EndTime`, `Name`, `JobId`, `Service`, `Type`, `Status`, 
+                            `ActualTime`, `TargetTime`, `ProTime`, `Rest_Time`, `Pause_Time`, `Image`,`Remarks`,`Efficiency`,`Quality`) 
+                        Values('" + log.Id + "', 'DHK', '" + log.Date.ToString("yyyy-MM-dd") + "', '" + log.Shift + "', '" + log.Revenue + "', '" + log.Support+ "','" 
+                        + log.StartTime.ToString("yyyy-MM-dd HH:mm:ss") + "', '"  + log.EndTime.ToString("yyyy-MM-dd HH:mm:ss") + "', '" + log.Name + "', '" + log.JobId + "', '" 
+                        + log.Service + "', '" + log.Type + "', '" + log.Status + "', '" + log.ActualTime + "', '" + Math.Round(log.TargetTime, 2) + "', " + " '" + Math.Round(log.ProTime, 2) + "', '" 
+                        + log.RestTime + "', '" + log.PauseTime + "', '" + image + "', '" + log.Remarks + "', '" + log.Efficiency + "', '" + log.Quality + "') ";
                 }
 
                 var cmd = new MySqlCommand(query, Common.Active_ON());
                 cmd.ExecuteNonQuery();
 
-                l.Up = 1;
+                log.Up = 1;
+
+                if (count++ > 9)
+                    _db.SaveChanges();
+
                 if (count++ > 99)
                     break;
             }
@@ -385,38 +347,47 @@ namespace Skill_PMS.UI_WinForm.admin_Panel
             Common.Online.Close();
         }
 
-        private void Upload_Performances()
+        public void Upload_Performances()
         {
-            var performances = (from p in _db.Performances
-                join u in _db.Users on p.Name equals u.Short_Name
-                where (u.Role == "" | u.Role == "QC" | u.Role == "SI") & p.Up == 0
-                select p).ToList();
+            int count = 0;
+            //var performances = (from p in _db.Performances
+            //    join u in _db.Users on p.Name equals u.Short_Name
+            //    where (u.Role == "" | u.Role == "QC" | u.Role == "SI") & p.Up == 0
+            //    select p).ToList();
 
-            var count = 0;
+            var performances = _db.Performances
+                .Where(x => x.Up == 0)
+                .OrderByDescending(x => x.Id)
+                .ToList();
+
             foreach (var p in performances)
             {
                 var query = @" Select * From `performances` Where `SL` = '" + p.Id + "' and `Loc` = 'DHK' ";
                 if (_common.IsExist(query))
                 {
-                    query = @" Update `performances` Set Logout = '" + p.Logout.ToString("yyyy-MM-dd HH:mm:ss") + "', Status = '" + p.Status + "', WorkingTime = '" + p.WorkingTime + "', File = '" + p.File + "'," +
-                            " JobTime = '" + p.JobTime + "'," + " ProTime = '" + Math.Round(p.ProTime,2) + "', Efficiency = '" + p.Efficiency + "', Quality = '" + p.Quality + "' Where `SL` = '" + p.Id + "' and `Loc` = 'DHK' ";
+                    query = @" Update `performances` Set Shift = '" + p.Shift + "', Logout = '" + p.Logout.ToString("yyyy-MM-dd HH:mm:ss") + "', Status = '" 
+                        + p.Status + "', WorkingTime = '" + p.WorkingTime + "', File = '" + p.File + "'," + " JobTime = '" + p.JobTime + "'," + " ProTime = '" 
+                        + Math.Round(p.ProTime,2) + "', Efficiency = '" + p.Efficiency + "', Quality = '" + p.Quality + "', Support = '" + p.Support 
+                        + "', Revenue = '" + p.Revenue + "' Where `SL` = '" + p.Id + "' and `Loc` = 'DHK' ";
                 }
                 else
                 {
-                    var user = _db.Users
-                        .Where(x => x.Short_Name == p.Name)
-                        .FirstOrDefault();
-
+                    var user = _db.Users.Where(x => x.Short_Name == p.Name).FirstOrDefault();
                     query =
-                        @" INSERT INTO `performances`(`SL`, `Loc`, `Date`, `Login`, `Logout`, `Shift`, `Status`, `Name`, `Role`, `WorkingTime`, `File`, `JobTime`, `ProTime`, `Efficiency`, `Quality`) 
+                        @" INSERT INTO `performances`(`SL`, `Loc`, `Date`, `Login`, `Logout`, `Shift`, `Status`, `Name`, `Support`, `WorkingTime`, `File`, `JobTime`, `ProTime`, `Efficiency`, `Quality`, `Revenue`) 
                         Values('" + p.Id + "', 'DHK', '" + p.Date.ToString("yyyy-MM-dd") + "', '" + p.Login.ToString("yyyy-MM-dd HH:mm:ss") + "', '" + p.Logout.ToString("yyyy-MM-dd HH:mm:ss") + "', '" +
-                            p.Shift+ "', '" + p.Status+ "', '" + p.Name+ "', '" + user.Role + "', '" + p.WorkingTime+ "', " + " '" + p.File + "', '" + p.JobTime + "', '" + Math.Round(p.ProTime,2)+ "', '" + p.Efficiency+ "', '" + p.Quality+ "') ";
+                            p.Shift+ "', '" + p.Status+ "', '" + p.Name+ "', '" + p.Support + "', '" + p.WorkingTime+ "', " + " '" + p.File + "', '" + p.JobTime + "', '" 
+                            + Math.Round(p.ProTime,2)+ "', '" + p.Efficiency+ "', '" + p.Quality+ "', '" + p.Revenue + "') ";
                 }
 
                 var cmd = new MySqlCommand(query, Common.Active_ON());
                 cmd.ExecuteNonQuery();
 
                 p.Up = 1;
+
+                if (count++ > 9)
+                    _db.SaveChanges();
+
                 if (count++ > 99)
                     break;
             }
@@ -425,31 +396,35 @@ namespace Skill_PMS.UI_WinForm.admin_Panel
             Common.Online.Close();
         }
 
-        private void Upload_Workloads()
+        public void Upload_Workloads()
         {
-            var workloads = _db.Workloads
-                .Where(x => x.Up == 0)
-                .ToList();
+            int count = 0;
+            var workloads = _db.Workloads.Where(x => x.Up == 0).ToList();
 
             foreach (var workload in workloads)
             {
                 var query = @" Select * From `work_loads` Where `SL` = '" + workload.Id + "' and `Loc` = 'DHK' ";
                 if (_common.IsExist(query))
                 {
-                    query = @" Update `work_loads` Set File = '" + workload.File + "', Time = '" + workload.Time +
-                            "' Where `SL` = '" + workload.Id + "' and `Loc` = 'DHK' ";
+                    query = @" Update `work_loads` Set Team = '" + workload.Team + "', Type = '" + workload.Type + "', Service = '" + workload.Service + "', Input_File = '" + workload.Input_File + 
+                        "', Target_Time = '" + workload.TargetTime + "', Output_File = '" + workload.Output_File + "', Total_Load = '" + workload.Total_Load + "', Load_Achieve = '" + workload.Load_Achieve + 
+                        "', Pro_Time = '" + workload.ProTime + "', Pro_Achieve = '" + workload.Pro_Achieve + "' Where `SL` = '" + workload.Id + "' and `Loc` = 'DHK'; ";
                 }
                 else
                 {
-                    query = @" INSERT INTO `work_loads`(`SL`, `Loc`, `Date`, `Shift`, `JobId`, `File`, `Time`) 
-                        Values('" + workload.Id + "', 'DHK', '" + workload.Date.ToString("yyyy-MM-dd") + "', '" + workload.Shift +
-                            "', '" + workload.JobId + "', '" + workload.File + "', '" + workload.Time + "') ";
+                    query = @" INSERT INTO `work_loads`(`SL`, `Loc`, `Date`, `JobId`, `Shift`, `Team`, `Type`, `Service`, `Input_File`, `Output_File`, `Target_Time`, `Total_Load`, `Load_Achieve`, `Pro_Time`, `Pro_Achieve`) 
+                        Values('" + workload.Id + "', 'DHK', '" + workload.Date.ToString("yyyy-MM-dd") + "', '" + workload.JobId + "', '" + workload.Shift + "', '" + workload.Team + "','" + workload.Type + "','" 
+                        + workload.Service+ "','" + workload.Input_File+ "', '" + workload.Output_File+ "', '" + workload.TargetTime + "', '" + workload.Total_Load + "', '" 
+                        + workload.Load_Achieve + "', '" + workload.ProTime + "', '" + workload.Pro_Achieve + "'); ";
                 }
 
                 var cmd = new MySqlCommand(query, Common.Active_ON());
                 cmd.ExecuteNonQuery();
 
                 workload.Up = 1;
+
+                if (count++ >= 9)
+                    break;
             }
 
             _db.SaveChanges();

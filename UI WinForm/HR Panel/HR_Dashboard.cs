@@ -110,8 +110,7 @@ namespace Skill_PMS.UI_WinForm.HR_Panel
 
             _common.Row_Color_By_Delivery(DGV_Job_List, "Column14");
 
-            var shiftReport = _db.Shift_Reports
-                .FirstOrDefault(x => x.Date == _common.Shift_Date(DateTime.Now, _common.Current_Shift()) & x.Shift == _common.Current_Shift());
+            var shiftReport = _db.Shift_Reports.FirstOrDefault(x => x.Date == _common.Shift_Date(DateTime.Now, _common.Current_Shift()) & x.Shift == _common.Current_Shift() & x.Team == "");
             if (shiftReport != null)
             {
                 Btn_Workload.Text = @"Workload: " + shiftReport.TotalLoad;
