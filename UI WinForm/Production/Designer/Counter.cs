@@ -44,7 +44,8 @@ namespace Skill_PMS.UI_WinForm.Production.Designer
             }
             else
             {
-                if (Processing._proTime == 0)
+                Processing processing = new Processing();
+                if (processing._proTime == 0)
                     this.Close();
             }
         }

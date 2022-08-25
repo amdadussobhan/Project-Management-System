@@ -17,7 +17,6 @@ namespace Skill_PMS
     public partial class Rename : Form
     {
         SkillContext _db = new SkillContext();
-        public Sub_Folder _sub_folder;
 
         public Rename()
         {
@@ -25,6 +24,7 @@ namespace Skill_PMS
         }
 
         private static Rename instance;
+
         public static Rename getInstance()
         {
             if (instance == null || instance.IsDisposed)
@@ -58,7 +58,7 @@ namespace Skill_PMS
                     string ext = Path.GetExtension(sourceFile);
                     string path = Path.GetDirectoryName(sourceFile);
                     string Old_Name = Path.GetFileNameWithoutExtension(sourceFile);
-                    string newName = "SG_";
+                    string newName = job_Id + "_";
                     
                     if (sl < 10)
                         newName += "00" + sl;
@@ -67,22 +67,28 @@ namespace Skill_PMS
                     else
                         newName += sl;
 
+                    var sub_folder = _db.Sub_Folders.FirstOrDefault(x => x.Job_ID == job_Id & x.Old_Name == Old_Name);
+
+                    if (sub_folder == null)
+                    {
+                        sub_folder = new Sub_Folder
+                        {
+                            Job_ID = job_Id,
+                            Old_Name = Old_Name,
+                            New_Name = newName,
+                            Created = DateTime.Now,
+                        };
+                        _db.Sub_Folders.Add(sub_folder);
+                    }
+                    else
+                        newName = sub_folder.New_Name;
+
+                    sub_folder.Path = sourceFile;
+                    sub_folder.Updated = DateTime.Now;
+
                     string desFile = Path.Combine(path, newName + ext);
                     File.Move(sourceFile, desFile);
 
-                    _sub_folder = _db.Sub_Folders
-                        .Where(x => x.Job_ID == job_Id & x.Path == sourceFile & x.Old_Name == Old_Name)
-                        .FirstOrDefault<Sub_Folder>();
-
-                    if (_sub_folder == null)
-                    {
-                        _sub_folder = new Sub_Folder();
-                        _sub_folder.Job_ID = job_Id;
-                        _sub_folder.Path = sourceFile;
-                        _sub_folder.Old_Name = Old_Name;
-                        _sub_folder.New_Name = newName;
-                        _db.Sub_Folders.Add(_sub_folder);
-                    }
                     Prb_Rename.Increment(1);
                 }
 
@@ -115,8 +121,7 @@ namespace Skill_PMS
                     string ext = Path.GetExtension(sourceFile);
                     string newName = Path.GetFileNameWithoutExtension(sourceFile);
 
-                    var subfolder = _db.Sub_Folders
-                        .FirstOrDefault(x => x.Job_ID == jobId & x.New_Name == newName);
+                    var subfolder = _db.Sub_Folders.FirstOrDefault(x => x.Job_ID == jobId & x.New_Name == newName);
 
                     if (subfolder != null)
                     {

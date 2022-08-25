@@ -37,7 +37,7 @@
             // Tmr_Count
             // 
             this.Tmr_Count.Enabled = true;
-            this.Tmr_Count.Interval = 100000;
+            this.Tmr_Count.Interval = 10000;
             this.Tmr_Count.Tick += new System.EventHandler(this.Tmr_Count_Tick);
             // 
             // Lbl_Status

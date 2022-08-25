@@ -48,8 +48,7 @@
             this.Cmb_Shift.Items.AddRange(new object[] {
             "Morning",
             "Evening",
-            "Night",
-            ""});
+            "Night"});
             this.Cmb_Shift.Location = new System.Drawing.Point(279, 91);
             this.Cmb_Shift.Name = "Cmb_Shift";
             this.Cmb_Shift.Size = new System.Drawing.Size(214, 30);
@@ -132,7 +131,7 @@
             // Btn_Clear
             // 
             this.Btn_Clear.BackColor = System.Drawing.Color.Khaki;
-            this.Btn_Clear.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.Btn_Clear.Font = new System.Drawing.Font("Microsoft Sans Serif", 13F, System.Drawing.FontStyle.Bold);
             this.Btn_Clear.Location = new System.Drawing.Point(10, 154);
             this.Btn_Clear.Name = "Btn_Clear";
             this.Btn_Clear.Size = new System.Drawing.Size(125, 35);

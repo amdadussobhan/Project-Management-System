@@ -1,4 +1,5 @@
-﻿using Skill_PMS.Data;
+﻿using Skill_PMS.Controller;
+using Skill_PMS.Data;
 using Skill_PMS.Models;
 using System;
 using System.Collections.Generic;
@@ -18,23 +19,23 @@ namespace Skill_PMS.UI_WinForm.Production.SI_Panel
 {
     public partial class Job_assign : Form
     {
+        public User User { get; set; }
         SkillContext _db = new SkillContext();
+        private readonly Common _common = new Common();
         public NewJob _job = new NewJob();
-        public Sub_Folder _sub_folder;
-        public Price_Time _price_time;
-
-        string _job_Service;
-        double _job_Time, cp = 0, ret = 0, msk = 0, nj = 0, ai = 0, cc = 0, liq = 0, sha = 0, qc = 0;
-
-        public User _user { get; set; }
+        public Sub_Folder _subFolder;
+        private Job_assign instance;
+        private Assign_Time _assignTime;
+        public int _runningJobsId, _inputFile = 0;
+        double _jobTime = 0, _clipping = 0, _pre_process= 0, _post_process = 0, _basic = 0, _totalTime;
+        string _team, _type, _loc;
 
         public Job_assign()
         {
             InitializeComponent();
         }
 
-        private static Job_assign instance;
-        public static Job_assign getInstance()
+        public Job_assign getInstance()
         {
             if (instance == null || instance.IsDisposed)
                 instance = new Job_assign();
@@ -43,224 +44,28 @@ namespace Skill_PMS.UI_WinForm.Production.SI_Panel
             return instance;
         }
 
-        private void Chk_CP_CheckedChanged(object sender, EventArgs e)
-        {
-            if (Chk_CP.Checked)
-            {
-                Txt_CP.Enabled = true;
-                if (_price_time != null)
-                    Txt_CP.Text = _price_time.CP_Time + "";
-            }
-            else
-            {
-                cp = 0;
-                Txt_CP.Text = "";
-                Txt_CP.Enabled = false;
-            }
-        }
-
-        private void Chk_RET_CheckedChanged(object sender, EventArgs e)
-        {
-            if (Chk_RET.Checked)
-            {
-                Txt_RET.Enabled = true;
-                if (_price_time != null)
-                    Txt_RET.Text = _price_time.RET_Time + "";
-            }
-            else
-            {
-                ret = 0;
-                Txt_RET.Text = "";
-                Txt_RET.Enabled = false;
-            }
-        }
-
-        private void Chk_NJ_CheckedChanged(object sender, EventArgs e)
-        {
-            if (Chk_NJ.Checked)
-            {
-                Txt_NJ.Enabled = true;
-                if (_price_time != null)
-                    Txt_NJ.Text = _price_time.NJ_Time + "";
-            }
-            else
-            {
-                nj = 0;
-                Txt_NJ.Text = "";
-                Txt_NJ.Enabled = false;
-            }
-        }
-
-        private void Chk_MSK_CheckedChanged(object sender, EventArgs e)
-        {
-            if (Chk_MSK.Checked)
-            {
-                Txt_MSK.Enabled = true;
-                if (_price_time != null)
-                    Txt_MSK.Text = _price_time.MSK_Time + "";
-            }
-            else
-            {
-                msk = 0;
-                Txt_MSK.Text = "";
-                Txt_MSK.Enabled = false;
-            }
-        }
-
-        private void Chk_SHA_CheckedChanged(object sender, EventArgs e)
-        {
-            if (Chk_SHA.Checked)
-            {
-                Txt_SHA.Enabled = true;
-                if (_price_time != null)
-                    Txt_SHA.Text = _price_time.SHA_Time + "";
-            }
-            else
-            {
-                sha = 0;
-                Txt_SHA.Text = "";
-                Txt_SHA.Enabled = false;
-            }
-        }
-
-        private void Chk_LIQ_CheckedChanged(object sender, EventArgs e)
-        {
-            if (Chk_LIQ.Checked)
-            {
-                Txt_LIQ.Enabled = true;
-                if (_price_time != null)
-                    Txt_LIQ.Text = _price_time.LIQ_Time + "";
-            }
-            else
-            {
-                liq = 0;
-                Txt_LIQ.Text = "";
-                Txt_LIQ.Enabled = false;
-            }
-        }
-
-        private void Chk_CC_CheckedChanged(object sender, EventArgs e)
-        {
-            if (Chk_CC.Checked)
-            {
-                Txt_CC.Enabled = true;
-                if (_price_time != null)
-                    Txt_CC.Text = _price_time.CC_Time + "";
-            }
-            else
-            {
-                cc = 0;
-                Txt_CC.Text = "";
-                Txt_CC.Enabled = false;
-            }
-        }
-
-        private void Chk_AI_CheckedChanged(object sender, EventArgs e)
-        {
-            if (Chk_AI.Checked)
-            {
-                Txt_AI.Enabled = true;
-                if (_price_time != null)
-                    Txt_AI.Text = _price_time.AI_Time + "";
-            }
-            else
-            {
-                ai = 0;
-                Txt_AI.Text = "";
-                Txt_AI.Enabled = false;
-            }
-        }
-
-        private void Txt_CP_TextChanged(object sender, EventArgs e)
-        {
-            string Time = Txt_CP.Text;
-            if (!string.IsNullOrEmpty(Time))
-                cp = Convert.ToDouble(Time);
-            else
-                cp = 0;
-
-            Check_Time_Service();
-        }
-
-        private void Txt_NJ_TextChanged(object sender, EventArgs e)
-        {
-            string Time = Txt_NJ.Text;
-            if (!string.IsNullOrEmpty(Time))
-                nj = Convert.ToDouble(Time);
-            else
-                nj = 0;
-
-            Check_Time_Service();
-        }
-
-        private void Txt_RET_TextChanged(object sender, EventArgs e)
-        {
-            string Time = Txt_RET.Text;
-            if (!string.IsNullOrEmpty(Time))
-                ret = Convert.ToDouble(Time);
-            else
-                ret = 0;
-
-            Check_Time_Service();
-        }
-
-        private void Txt_MSK_TextChanged(object sender, EventArgs e)
-        {
-            string Time = Txt_MSK.Text;
-            if (!string.IsNullOrEmpty(Time))
-                msk = Convert.ToDouble(Time);
-            else
-                msk = 0;
-
-            Check_Time_Service();
-        }
-
-        private void Txt_SHA_TextChanged(object sender, EventArgs e)
-        {
-            string Time = Txt_SHA.Text;
-            if (!string.IsNullOrEmpty(Time))
-                sha = Convert.ToDouble(Time);
-            else
-                sha = 0;
-
-            Check_Time_Service();
-        }
-
-        private void Txt_LIQ_TextChanged(object sender, EventArgs e)
-        {
-            string Time = Txt_LIQ.Text;
-            if (!string.IsNullOrEmpty(Time))
-                liq = Convert.ToDouble(Time);
-            else
-                liq = 0;
-
-            Check_Time_Service();
-        }
-
-        private void Txt_CC_TextChanged(object sender, EventArgs e)
-        {
-            string Time = Txt_CC.Text;
-            if (!string.IsNullOrEmpty(Time))
-                cc = Convert.ToDouble(Time);
-            else
-                cc = 0;
-
-            Check_Time_Service();
-        }
-
-        private void Btn_Reset_Click(object sender, EventArgs e)
-        {
-            Cmb_Category.Text = "";
-        }
-
         private void Btn_Subfolder_Click(object sender, EventArgs e)
         {
+            Btn_Save.Enabled = false;
             string Loc = Txt_Location.Text;
+            Loc = Merge_Folder(Loc);
+            if (!string.IsNullOrEmpty(Loc))
+            {
+                Txt_Location.Text = Loc;
+                Btn_Subfolder.Enabled = false;
+            }
+            Btn_Save.Enabled = true;
+        }
+
+        public string Merge_Folder(string Loc)
+        {
             if (!string.IsNullOrEmpty(Loc) & Directory.Exists(Loc))
             {
                 string[] files = Directory.GetFiles(Loc, "*", SearchOption.AllDirectories);
                 Loc += @"\Images";
                 Directory.CreateDirectory(Loc);
+                //Prb_FolderTime.Value = 0;
+                //Prb_FolderTime.Maximum = files.Count();
                 foreach (string file_path in files)
                 {
                     string ext = Path.GetExtension(file_path);
@@ -277,29 +82,32 @@ namespace Skill_PMS.UI_WinForm.Production.SI_Panel
                     }
                     File.Move(file_path, Des_File);
 
-                    _sub_folder = _db.Sub_Folders
-                        .Where(x => x.Job_ID == _job.JobId & x.Path == file_path & x.Old_Name == Old_Name)
-                        .FirstOrDefault<Sub_Folder>();
+                    _subFolder = _db.Sub_Folders.FirstOrDefault(x => x.Job_ID == _job.JobId & x.Old_Name == Old_Name);
 
-                    if(_sub_folder == null)
+                    if (_subFolder == null)
                     {
-                        _sub_folder = new Sub_Folder();
-                        _sub_folder.Job_ID = _job.JobId;
-                        _sub_folder.Path = file_path;
-                        _sub_folder.Old_Name = Old_Name;
-                        _sub_folder.New_Name = New_Name;
-                        _db.Sub_Folders.Add(_sub_folder);
+                        _subFolder = new Sub_Folder
+                        {
+                            Job_ID = _job.JobId,
+                            Old_Name = Old_Name,
+                            Created = DateTime.Now,
+                        };
+
+                        _db.Sub_Folders.Add(_subFolder);
                     }
+
+                    _subFolder.Path = file_path;
+                    _subFolder.New_Name = New_Name;
+                    _subFolder.Updated = DateTime.Now;
+                    //Prb_FolderTime.Increment(1);
                 }
-                Txt_Location.Text = Loc;
-                Btn_Subfolder.Enabled = false;
                 _db.SaveChanges();
                 MessageBox.Show(@"Successfully Saved Sub Folder Please check this Folder ", @"Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                return Loc;
             }
             else
-            {
                 MessageBox.Show(@"Folder Location maybe Empty. Please Enter correct folder Location", @"Invalid Folder Location", MessageBoxButtons.OK, MessageBoxIcon.Error);
-            }
+            return null;
         }
 
         private void Rdb_PSD_CheckedChanged(object sender, EventArgs e)
@@ -328,69 +136,142 @@ namespace Skill_PMS.UI_WinForm.Production.SI_Panel
 
         private void Btn_assign_Click(object sender, EventArgs e)
         {
-            if (Job_Validated())
+            Assign_Time();
+        }
+
+        private void Txt_Clipping_TextChanged(object sender, EventArgs e)
+        {
+            if (!string.IsNullOrEmpty(Txt_Clipping.Text))
+                _clipping = Convert.ToInt32(Txt_Clipping.Text);
+            else
+                _clipping = 0;
+
+            Time_Calculate();
+        }
+
+        private void Txt_Basics_TextChanged(object sender, EventArgs e)
+        {
+            if (!string.IsNullOrEmpty(Txt_Basics.Text))
+                _basic = Convert.ToInt32(Txt_Basics.Text);
+            else
+                _basic = 0;
+
+            Time_Calculate();
+        }
+
+        private void Cmb_Type_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            _type = Cmb_Type.Text;
+            Check_Time();
+        }
+
+        private void Cmb_Team_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            _team = Cmb_Team.Text;
+            //Check_Time();
+        }
+
+        private void Check_Time()
+        {
+            _assignTime = _db.Assign_Time.FirstOrDefault(x => x.Client == _job.Client & x.Type == _type);
+
+            if (_assignTime != null)
             {
-                Assign_Time();
-                MessageBox.Show(@"Time assign Successfully", @"Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                Txt_Clipping.Text = _assignTime.Clipping_Time + "";
+                Txt_Basics.Text = _assignTime.Basic_Time + "";
+                Txt_Pre_Process.Text = _assignTime.Pre_Process + "";
+                Txt_Post_Process.Text = _assignTime.Post_Process + "";
+            }
+            else
+            {
+                Txt_Clipping.Text = "";
+                Txt_Basics.Text = "";
+                Txt_Pre_Process.Text = "";
+                Txt_Post_Process.Text = "";
             }
         }
 
-        void Assign_Time()
+        private void Txt_Pre_Process_TextChanged(object sender, EventArgs e)
         {
-            string Loc = Txt_Location.Text;
-            string[] files = Directory.GetFiles(Loc, "*", SearchOption.AllDirectories);
+            if (!string.IsNullOrEmpty(Txt_Pre_Process.Text))
+                _pre_process = Convert.ToInt32(Txt_Pre_Process.Text);
+            else
+                _pre_process = 0;
 
-            foreach (string file in files)
+            Time_Calculate();
+        }
+
+        private void Txt_Post_Process_TextChanged(object sender, EventArgs e)
+        {
+            if (!string.IsNullOrEmpty(Txt_Post_Process.Text))
+                _post_process = Convert.ToInt32(Txt_Post_Process.Text);
+            else
+                _post_process = 0;
+
+            Time_Calculate();
+        }
+
+        private void Txt_File_TextChanged(object sender, EventArgs e)
+        {
+            if (!string.IsNullOrEmpty(Txt_File.Text))
+                _inputFile = Convert.ToInt32(Txt_File.Text);
+            else
+                _inputFile = 0;
+
+            Time_Calculate();
+        }
+
+        private void Time_Calculate()
+        {
+            _jobTime = _clipping + _basic + _pre_process + _post_process;
+            Lbl_Target_Time.Text = _jobTime + "";
+            _totalTime = _jobTime * _inputFile;
+        }
+
+        public void Assign_Time()
+        {
+            if (Job_Validated())
             {
-                string fileName = Path.GetFileNameWithoutExtension(file);
+                var timeAssign = Time_assign.GetInstance();
+                timeAssign._loc = _loc;
+                timeAssign._team = _team;
+                timeAssign._type = _type;
+                timeAssign._jobId = _job.JobId;
+                timeAssign._jobTime = _jobTime;
+                timeAssign._clipping = _clipping;
+                timeAssign._basic = _basic;
+                timeAssign._pre_process = _pre_process;
+                timeAssign._post_process = _post_process;
 
-                var imageTime = _db.ImageTime
-                    .FirstOrDefault(x => x.JobId == _job.JobId & x.Image == fileName);
-
-                if (imageTime == null)
-                {
-                    imageTime = new ImageTime
-                    {
-                        JobId = _job.JobId,
-                        Image = fileName
-                    };
-                    _db.ImageTime.Add(imageTime);
-                }
-
-                imageTime.Actual_Time = _job.ActualTime;
-                imageTime.Target_Time = _job_Time;
-                imageTime.Category = Cmb_Category.Text;
-
-                imageTime.CP_Time = cp;
-                imageTime.RET_Time = ret;
-                imageTime.MSK_Time = msk;
-                imageTime.SHA_Time = sha;
-                imageTime.NJ_Time = nj;
-                imageTime.CC_Time = cc;
-                imageTime.LIQ_Time = liq;
-                imageTime.AI_Time = ai;
+                timeAssign.Show();
             }
-
-            _db.SaveChanges();
         }
 
         bool Job_Validated()
         {
-            if (string.IsNullOrEmpty(_job_Service))
-            {
-                MessageBox.Show(@"Job Service is empty.!!! Please Select Proper Job Service", @"Job Service is empty", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                return false;
-            }
+            _loc = Txt_Location.Text;
 
-            if (_job_Time == 0)
-            {
-                MessageBox.Show(@"Job Time is empty.!!! Please Enter Proper Job Time", @"Job Time is empty", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                return false;
-            }
-
-            if (!Directory.Exists(Txt_Location.Text))
+            if (!Directory.Exists(_loc))
             {
                 MessageBox.Show(@"Invalid Folder Location Entered.!!! Please Enter Correct Folder Location", @"Invalid Location Entered", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return false;
+            }
+
+            if (string.IsNullOrEmpty(_team))
+            {
+                MessageBox.Show(@"Job Team is empty.!!! Please Select a Job Team", @"Job Team is empty", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return false;
+            }
+
+            if (string.IsNullOrEmpty(_type))
+            {
+                MessageBox.Show(@"Job Type is empty.!!! Please Select Correct Job Type", @"Job Type is empty", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return false;
+            }
+
+            if (_jobTime == 0)
+            {
+                MessageBox.Show(@"Job Time is empty.!!! Please Enter Proper Job Time", @"Job Time is empty", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return false;
             }
 
@@ -400,104 +281,76 @@ namespace Skill_PMS.UI_WinForm.Production.SI_Panel
                 return false;
             }
 
-            if (string.IsNullOrEmpty(Cmb_Category.Text))
-            {
-                MessageBox.Show(@"Job Category is empty.!!! Please Enter Correct Job Category", @"Job Category is empty", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                return false;
-            }
-
             return true;
         }
 
         private void Btn_Save_Click(object sender, EventArgs e)
         {
-            if(Job_Validated())
+            if (Job_Validated())
             {
-                if (Chk_Remember.Checked) { 
-                    if(_price_time.ID == 0) {
-                        _price_time.Client = _job.Client;
-                        _price_time.Category = Cmb_Category.Text;
-                        _db.Price_Times.Add(_price_time);
-                    }
-                    _price_time.Target_Time = _job_Time;
-                    _price_time.Format = _job.Format;
-                    _price_time.CP_Time = cp;
-                    _price_time.RET_Time = ret;
-                    _price_time.MSK_Time = msk;
-                    _price_time.SHA_Time = sha;
-                    _price_time.NJ_Time = nj;
-                    _price_time.CC_Time = cc;
-                    _price_time.LIQ_Time = liq;
-                    _price_time.AI_Time = ai;
-                    _db.SaveChanges();
-                }
-
-                Assign_Time();
-
-                string Time = Txt_QC.Text;
-                if (!string.IsNullOrEmpty(Time))
-                    qc = Convert.ToDouble(Time);
-                else
-                    qc = _job_Time * 0.1;
-
-                _job.QC_Time = qc;
-                double taka_per_min = _job.Taka / _job_Time;
-
-                _job.CP_Price = taka_per_min * cp;
-                _job.RET_Price = taka_per_min * ret;
-                _job.MSK_Price = taka_per_min * msk;
-                _job.SHA_Price = taka_per_min * sha;
-                _job.NJ_Price = taka_per_min * nj;
-                _job.CC_Price = taka_per_min * cc;
-                _job.LIQ_Price = taka_per_min * liq;
-                _job.AI_Price = taka_per_min * ai;
-
-                _job.WorkingLocation = Txt_Location.Text;
-                _job.TargetTime = _job_Time;
-                _job.Status = "Pro";
-                _job.Service = _job_Service;
-                _job.SiName = _user.Short_Name;
-
-                if (Chk_Remember.Checked)
+                if (_inputFile == 0)
                 {
-                    if (_price_time != null)
-                        _job.Price_Times_ID = _price_time.ID;
+                    MessageBox.Show(@"Job File is empty.!!! Please enter actual job file count", @"Job File is empty", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    return;
                 }
+
+                var count = _db.ImageTime.Where(x => x.Job_ID == _job.JobId & x.Type == _type).Count();
+                if (count == 0)
+                    Assign_Time();
+
+                //--Update Job Table
+                _job.Team = _team;
+                _job.Status = "Pro";
+                _job.WorkingLocation = _loc;
+                _job.SiName = User.Short_Name;
+
+                count = _db.ImageTime.Where(x => x.Job_ID == _job.JobId).Select(x=>x.Total_Time).Distinct().Count();
+
+                if (count != 0)
+                    _job.TargetTime = _db.ImageTime.Where(x => x.Job_ID == _job.JobId).Select(x => x.Total_Time).Distinct().Average();
+                else
+                    _job.TargetTime = _jobTime;
+
+                _job.Up = 0;
+                //--End update New Job Table
+
+                if (_assignTime == null)
+                {
+                    _assignTime = new Assign_Time
+                    {
+                        Client = _job.Client,
+                        Type = _type
+                    };
+
+                    _db.Assign_Time.Add(_assignTime);
+                }
+
+                _assignTime.Format = _job.Format;
+                _assignTime.Clipping_Time = _clipping;
+                _assignTime.Basic_Time = _basic;
+                _assignTime.Pre_Process = _pre_process;
+                _assignTime.Post_Process = _post_process;
+                _assignTime.Up = 0;
 
                 _db.SaveChanges();
                 this.Close();
             }
         }
 
-        private void Txt_AI_TextChanged(object sender, EventArgs e)
-        {
-            string Time = Txt_AI.Text;
-            if (!string.IsNullOrEmpty(Time))
-                ai = Convert.ToDouble(Time);
-            else
-                ai = 0;
-
-            Check_Time_Service();
-        }
-
         private void Job_assign_Load(object sender, EventArgs e)
         {
-            this.Text = "Job assign - " + _user.Full_Name;
-            
-            _job = _db.New_Jobs
-                .Where(x => x.JobId == _job.JobId)
-                .FirstOrDefault<NewJob>();
+            this.Text = "Job assign - " + User.Full_Name;
+            _job = _db.New_Jobs.FirstOrDefault(x => x.JobId == _job.JobId);         
 
             Lbl_Job_ID.Text = _job.JobId;
-            Lbl_Incoming.Text = _job.Incoming.ToString("ddd  dd-MM-yy  hh:mm tt");
-            Lbl_Delivery.Text = _job.Delivery.ToString("ddd  dd-MM-yy  hh:mm tt");
+            Lbl_Incoming.Text = _job.Incoming.ToString("ddd dd-MMM hh:mm tt");
+            Lbl_Delivery.Text = _job.Delivery.ToString("ddd dd-MMM hh:mm tt");
             Lbl_Amount.Text = _job.InputAmount + "";
             Lbl_Actual_Time.Text = _job.ActualTime + "";
-            Lbl_Target_Time.Text = _job.TargetTime + "";
-            Lbl_Total_Time.Text = _job.Type + "";
-            Txt_Folder.Text = _job.Folder + "";
             Txt_Location.Text = _job.InputLocation + "";
-            //Cmb_Category.Text = job.Category;
+            Txt_File.Text = _job.InputAmount + "";
+            Txt_Folder.Text = _job.Folder + "";
+            Cmb_Team.Text = _job.Team + "";
 
             string ext = _job.Format;
 
@@ -509,143 +362,6 @@ namespace Skill_PMS.UI_WinForm.Production.SI_Panel
                 Rdb_PNG.Checked = true;
             else if(ext == ".tif")
                 Rdb_TIF.Checked = true;
-            
-            /*
-            var Categories = DB.Price_Times
-                .Where(x => x.Client == job.Client)
-                .Select(x => x.Category)
-                .Distinct();
-
-            foreach (var Category in Categories)
-                Cmb_Category.Items.Add(Category);
-            */
-        }
-
-        private void Cmb_Category_TextChanged(object sender, EventArgs e)
-        {
-            var price_time = _db.Price_Times
-                .Where(x => x.Client == _job.Client & x.Category == Cmb_Category.Text)
-                .FirstOrDefault<Price_Time>();
-
-            Fill_Service_Time(price_time);
-        }
-
-        void Check_Time_Service()
-        {
-            _job_Time = 0;
-            _job_Service = "";
-
-            if (Chk_CP.Checked)
-            {
-                _job_Time += cp;
-                _job_Service += "CP+";
-            }
-
-            if (Chk_RET.Checked)
-            {
-                _job_Time += ret;
-                _job_Service += "RET+";
-            }
-
-            if (Chk_MSK.Checked)
-            {
-                _job_Time += msk;
-                _job_Service += "MSK+";
-            }
-
-            if (Chk_SHA.Checked)
-            {
-                _job_Time += sha;
-                _job_Service += "SHA+";
-            }
-
-            if (Chk_LIQ.Checked)
-            {
-                _job_Time += liq;
-                _job_Service += "LIQ+";
-            }
-
-            if (Chk_NJ.Checked)
-            {
-                _job_Time += nj;
-                _job_Service += "NJ+";
-            }
-
-            if (Chk_CC.Checked)
-            {
-                _job_Time += cc;
-                _job_Service += "CC+";
-            }
-
-            if (Chk_AI.Checked)
-            {
-                _job_Time += ai;
-                _job_Service += "AI+";
-            }
-
-            Lbl_Target_Time.Text = _job_Time + "";
-            Lbl_Total_Time.Text = _job_Time * _job.InputAmount + "";
-            _job_Service = _job_Service.TrimEnd('+');
-            Lbl_Service.Text = _job_Service;
-        }
-
-        void Fill_Service_Time(Price_Time price_times)
-        {
-            if (price_times != null)
-            {
-                this._price_time = price_times;
-
-                if (price_times.CP_Time != 0)
-                    Chk_CP.Checked = true;
-                else
-                    Chk_CP.Checked = false;
-
-                if (price_times.RET_Time != 0)
-                    Chk_RET.Checked = true;
-                else
-                    Chk_RET.Checked = false;
-
-                if (price_times.NJ_Time != 0)
-                    Chk_NJ.Checked = true;
-                else
-                    Chk_NJ.Checked = false;
-
-                if (price_times.MSK_Time != 0)
-                    Chk_MSK.Checked = true;
-                else
-                    Chk_MSK.Checked = false;
-
-                if (price_times.SHA_Time != 0)
-                    Chk_SHA.Checked = true;
-                else
-                    Chk_SHA.Checked = false;
-
-                if (price_times.LIQ_Time != 0)
-                    Chk_LIQ.Checked = true;
-                else
-                    Chk_LIQ.Checked = false;
-
-                if (price_times.CC_Time != 0)
-                    Chk_CC.Checked = true;
-                else
-                    Chk_CC.Checked = false;
-
-                if (price_times.AI_Time != 0)
-                    Chk_AI.Checked = true;
-                else
-                    Chk_AI.Checked = false;
-            }
-            else
-            {
-                Chk_CP.Checked = false;
-                Chk_RET.Checked = false;
-                Chk_MSK.Checked = false;
-                Chk_SHA.Checked = false;
-                Chk_LIQ.Checked = false;
-                Chk_CC.Checked = false;
-                Chk_NJ.Checked = false;
-                Chk_AI.Checked = false;
-            }
         }
 
         private void Btn_Open_Folder_Click(object sender, EventArgs e)
@@ -655,6 +371,6 @@ namespace Skill_PMS.UI_WinForm.Production.SI_Panel
                 Process.Start(location);
             else
                 MessageBox.Show(@"Folder doesn't Exist. Please Enter Correct Location...", @"Folder Not Found", MessageBoxButtons.OK, MessageBoxIcon.Error);
-        }        
+        }
     }
 }

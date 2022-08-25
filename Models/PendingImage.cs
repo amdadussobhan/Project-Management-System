@@ -12,6 +12,7 @@ namespace Skill_PMS.Models
         public string JobId { get; set; }
         public string Image { get; set; }
         public string Name { get; set; }
+        public string Status { get; set; }
         public DateTime Time { get; set; }
     }
 }

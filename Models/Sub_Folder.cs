@@ -13,5 +13,7 @@ namespace Skill_PMS.Models
         public string Path { get; set; }
         public string New_Name { get; set; }
         public string Old_Name { get; set; }
+        public DateTime Created { get; set; }
+        public DateTime Updated { get; set; }
     }
 }

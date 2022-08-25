@@ -55,21 +55,12 @@
             this.Btn_60 = new System.Windows.Forms.Button();
             this.Btn_70 = new System.Windows.Forms.Button();
             this.Btn_50 = new System.Windows.Forms.Button();
-            this.Pnl_Service = new System.Windows.Forms.Panel();
-            this.Chk_QC = new System.Windows.Forms.CheckBox();
-            this.Chk_NJ = new System.Windows.Forms.CheckBox();
-            this.Chk_CP = new System.Windows.Forms.CheckBox();
-            this.Chk_CC = new System.Windows.Forms.CheckBox();
-            this.Chk_LIQ = new System.Windows.Forms.CheckBox();
-            this.Chk_SHA = new System.Windows.Forms.CheckBox();
-            this.Chk_MSK = new System.Windows.Forms.CheckBox();
-            this.Chk_RET = new System.Windows.Forms.CheckBox();
             this.Txt_File = new System.Windows.Forms.TextBox();
             this.Btn_Find = new System.Windows.Forms.Button();
-            this.Txt_Service = new System.Windows.Forms.TextBox();
+            this.Tmr_Open = new System.Windows.Forms.Timer(this.components);
+            this.Tmr_Save = new System.Windows.Forms.Timer(this.components);
             this.Pnl_Counter.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.DGV_Files)).BeginInit();
-            this.Pnl_Service.SuspendLayout();
             this.SuspendLayout();
             // 
             // Pnl_Counter
@@ -99,7 +90,7 @@
             this.Btn_Cancel.BackColor = System.Drawing.Color.LightCoral;
             this.Btn_Cancel.Enabled = false;
             this.Btn_Cancel.Font = new System.Drawing.Font("Microsoft Sans Serif", 12.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.Btn_Cancel.Location = new System.Drawing.Point(140, 3);
+            this.Btn_Cancel.Location = new System.Drawing.Point(138, 3);
             this.Btn_Cancel.Name = "Btn_Cancel";
             this.Btn_Cancel.Size = new System.Drawing.Size(76, 35);
             this.Btn_Cancel.TabIndex = 398;
@@ -135,9 +126,9 @@
             // 
             this.Btn_Pause.Enabled = false;
             this.Btn_Pause.Font = new System.Drawing.Font("Microsoft Sans Serif", 12.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.Btn_Pause.Location = new System.Drawing.Point(218, 3);
+            this.Btn_Pause.Location = new System.Drawing.Point(215, 3);
             this.Btn_Pause.Name = "Btn_Pause";
-            this.Btn_Pause.Size = new System.Drawing.Size(76, 35);
+            this.Btn_Pause.Size = new System.Drawing.Size(80, 35);
             this.Btn_Pause.TabIndex = 396;
             this.Btn_Pause.Text = "Pause";
             this.Btn_Pause.UseVisualStyleBackColor = true;
@@ -145,6 +136,7 @@
             // 
             // DGV_Files
             // 
+            this.DGV_Files.AllowDrop = true;
             this.DGV_Files.AllowUserToAddRows = false;
             this.DGV_Files.AllowUserToDeleteRows = false;
             dataGridViewCellStyle1.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
@@ -178,7 +170,7 @@
             this.DGV_Files.DefaultCellStyle = dataGridViewCellStyle3;
             this.DGV_Files.GridColor = System.Drawing.SystemColors.ActiveBorder;
             this.DGV_Files.ImeMode = System.Windows.Forms.ImeMode.NoControl;
-            this.DGV_Files.Location = new System.Drawing.Point(10, 123);
+            this.DGV_Files.Location = new System.Drawing.Point(10, 47);
             this.DGV_Files.Name = "DGV_Files";
             dataGridViewCellStyle4.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
             dataGridViewCellStyle4.BackColor = System.Drawing.SystemColors.Control;
@@ -192,7 +184,7 @@
             this.DGV_Files.RowHeadersWidth = 30;
             this.DGV_Files.RowTemplate.Height = 30;
             this.DGV_Files.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.DGV_Files.Size = new System.Drawing.Size(360, 535);
+            this.DGV_Files.Size = new System.Drawing.Size(360, 610);
             this.DGV_Files.TabIndex = 420;
             this.DGV_Files.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.DGV_Files_CellContentClick);
             this.DGV_Files.DragDrop += new System.Windows.Forms.DragEventHandler(this.DGV_Files_DragDrop);
@@ -372,124 +364,6 @@
             this.Btn_50.UseVisualStyleBackColor = false;
             this.Btn_50.Click += new System.EventHandler(this.Btn_75_Click);
             // 
-            // Pnl_Service
-            // 
-            this.Pnl_Service.Controls.Add(this.Chk_QC);
-            this.Pnl_Service.Controls.Add(this.Chk_NJ);
-            this.Pnl_Service.Controls.Add(this.Chk_CP);
-            this.Pnl_Service.Controls.Add(this.Chk_CC);
-            this.Pnl_Service.Controls.Add(this.Chk_LIQ);
-            this.Pnl_Service.Controls.Add(this.Chk_SHA);
-            this.Pnl_Service.Controls.Add(this.Chk_MSK);
-            this.Pnl_Service.Controls.Add(this.Chk_RET);
-            this.Pnl_Service.Location = new System.Drawing.Point(8, 53);
-            this.Pnl_Service.Name = "Pnl_Service";
-            this.Pnl_Service.Size = new System.Drawing.Size(361, 65);
-            this.Pnl_Service.TabIndex = 432;
-            // 
-            // Chk_QC
-            // 
-            this.Chk_QC.AutoSize = true;
-            this.Chk_QC.Font = new System.Drawing.Font("Microsoft Sans Serif", 13F);
-            this.Chk_QC.Location = new System.Drawing.Point(298, 36);
-            this.Chk_QC.Name = "Chk_QC";
-            this.Chk_QC.Size = new System.Drawing.Size(56, 26);
-            this.Chk_QC.TabIndex = 384;
-            this.Chk_QC.Text = "QC";
-            this.Chk_QC.UseVisualStyleBackColor = true;
-            this.Chk_QC.CheckedChanged += new System.EventHandler(this.Chk_QC_CheckedChanged);
-            // 
-            // Chk_NJ
-            // 
-            this.Chk_NJ.AutoSize = true;
-            this.Chk_NJ.Enabled = false;
-            this.Chk_NJ.Font = new System.Drawing.Font("Microsoft Sans Serif", 13F);
-            this.Chk_NJ.Location = new System.Drawing.Point(298, 5);
-            this.Chk_NJ.Name = "Chk_NJ";
-            this.Chk_NJ.Size = new System.Drawing.Size(51, 26);
-            this.Chk_NJ.TabIndex = 351;
-            this.Chk_NJ.Text = "NJ";
-            this.Chk_NJ.UseVisualStyleBackColor = true;
-            this.Chk_NJ.CheckedChanged += new System.EventHandler(this.Chk_NJ_CheckedChanged);
-            // 
-            // Chk_CP
-            // 
-            this.Chk_CP.AutoSize = true;
-            this.Chk_CP.Enabled = false;
-            this.Chk_CP.Font = new System.Drawing.Font("Microsoft Sans Serif", 13F);
-            this.Chk_CP.Location = new System.Drawing.Point(18, 6);
-            this.Chk_CP.Name = "Chk_CP";
-            this.Chk_CP.Size = new System.Drawing.Size(54, 26);
-            this.Chk_CP.TabIndex = 366;
-            this.Chk_CP.Text = "CP";
-            this.Chk_CP.UseVisualStyleBackColor = true;
-            this.Chk_CP.CheckedChanged += new System.EventHandler(this.Chk_CP_CheckedChanged);
-            // 
-            // Chk_CC
-            // 
-            this.Chk_CC.AutoSize = true;
-            this.Chk_CC.Enabled = false;
-            this.Chk_CC.Font = new System.Drawing.Font("Microsoft Sans Serif", 13F);
-            this.Chk_CC.Location = new System.Drawing.Point(18, 38);
-            this.Chk_CC.Name = "Chk_CC";
-            this.Chk_CC.Size = new System.Drawing.Size(55, 26);
-            this.Chk_CC.TabIndex = 350;
-            this.Chk_CC.Text = "CC";
-            this.Chk_CC.UseVisualStyleBackColor = true;
-            this.Chk_CC.CheckedChanged += new System.EventHandler(this.Chk_CC_CheckedChanged);
-            // 
-            // Chk_LIQ
-            // 
-            this.Chk_LIQ.AutoSize = true;
-            this.Chk_LIQ.Enabled = false;
-            this.Chk_LIQ.Font = new System.Drawing.Font("Microsoft Sans Serif", 13F);
-            this.Chk_LIQ.Location = new System.Drawing.Point(104, 38);
-            this.Chk_LIQ.Name = "Chk_LIQ";
-            this.Chk_LIQ.Size = new System.Drawing.Size(57, 26);
-            this.Chk_LIQ.TabIndex = 349;
-            this.Chk_LIQ.Text = "LIQ";
-            this.Chk_LIQ.UseVisualStyleBackColor = true;
-            this.Chk_LIQ.CheckedChanged += new System.EventHandler(this.Chk_LIQ_CheckedChanged);
-            // 
-            // Chk_SHA
-            // 
-            this.Chk_SHA.AutoSize = true;
-            this.Chk_SHA.Enabled = false;
-            this.Chk_SHA.Font = new System.Drawing.Font("Microsoft Sans Serif", 13F);
-            this.Chk_SHA.Location = new System.Drawing.Point(198, 38);
-            this.Chk_SHA.Name = "Chk_SHA";
-            this.Chk_SHA.Size = new System.Drawing.Size(66, 26);
-            this.Chk_SHA.TabIndex = 348;
-            this.Chk_SHA.Text = "SHA";
-            this.Chk_SHA.UseVisualStyleBackColor = true;
-            this.Chk_SHA.CheckedChanged += new System.EventHandler(this.Chk_SHA_CheckedChanged);
-            // 
-            // Chk_MSK
-            // 
-            this.Chk_MSK.AutoSize = true;
-            this.Chk_MSK.Enabled = false;
-            this.Chk_MSK.Font = new System.Drawing.Font("Microsoft Sans Serif", 13F);
-            this.Chk_MSK.Location = new System.Drawing.Point(198, 6);
-            this.Chk_MSK.Name = "Chk_MSK";
-            this.Chk_MSK.Size = new System.Drawing.Size(67, 26);
-            this.Chk_MSK.TabIndex = 347;
-            this.Chk_MSK.Text = "MSK";
-            this.Chk_MSK.UseVisualStyleBackColor = true;
-            this.Chk_MSK.CheckedChanged += new System.EventHandler(this.Chk_MSK_CheckedChanged);
-            // 
-            // Chk_RET
-            // 
-            this.Chk_RET.AutoSize = true;
-            this.Chk_RET.Enabled = false;
-            this.Chk_RET.Font = new System.Drawing.Font("Microsoft Sans Serif", 13F);
-            this.Chk_RET.Location = new System.Drawing.Point(104, 6);
-            this.Chk_RET.Name = "Chk_RET";
-            this.Chk_RET.Size = new System.Drawing.Size(66, 26);
-            this.Chk_RET.TabIndex = 346;
-            this.Chk_RET.Text = "RET";
-            this.Chk_RET.UseVisualStyleBackColor = true;
-            this.Chk_RET.CheckedChanged += new System.EventHandler(this.Chk_RET_CheckedChanged);
-            // 
             // Txt_File
             // 
             this.Txt_File.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F);
@@ -510,17 +384,15 @@
             this.Btn_Find.UseVisualStyleBackColor = true;
             this.Btn_Find.Click += new System.EventHandler(this.Btn_Find_Click);
             // 
-            // Txt_Service
+            // Tmr_Open
             // 
-            this.Txt_Service.BackColor = System.Drawing.SystemColors.ActiveBorder;
-            this.Txt_Service.BorderStyle = System.Windows.Forms.BorderStyle.None;
-            this.Txt_Service.Font = new System.Drawing.Font("Microsoft Sans Serif", 14F);
-            this.Txt_Service.Location = new System.Drawing.Point(93, 15);
-            this.Txt_Service.Name = "Txt_Service";
-            this.Txt_Service.Size = new System.Drawing.Size(196, 22);
-            this.Txt_Service.TabIndex = 434;
-            this.Txt_Service.Text = "Service";
-            this.Txt_Service.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            this.Tmr_Open.Interval = 1;
+            this.Tmr_Open.Tick += new System.EventHandler(this.Tmr_Open_Tick);
+            // 
+            // Tmr_Save
+            // 
+            this.Tmr_Save.Interval = 1;
+            this.Tmr_Save.Tick += new System.EventHandler(this.Tmr_Save_Tick);
             // 
             // QC_Process
             // 
@@ -528,10 +400,8 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.SystemColors.ActiveBorder;
             this.ClientSize = new System.Drawing.Size(380, 772);
-            this.Controls.Add(this.Txt_Service);
             this.Controls.Add(this.Btn_Find);
             this.Controls.Add(this.Txt_File);
-            this.Controls.Add(this.Pnl_Service);
             this.Controls.Add(this.Btn_50);
             this.Controls.Add(this.Btn_70);
             this.Controls.Add(this.Btn_60);
@@ -557,8 +427,6 @@
             this.Pnl_Counter.ResumeLayout(false);
             this.Pnl_Counter.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.DGV_Files)).EndInit();
-            this.Pnl_Service.ResumeLayout(false);
-            this.Pnl_Service.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -586,18 +454,10 @@
         private System.Windows.Forms.Button Btn_60;
         private System.Windows.Forms.Button Btn_70;
         private System.Windows.Forms.Button Btn_50;
-        private System.Windows.Forms.Panel Pnl_Service;
-        private System.Windows.Forms.CheckBox Chk_NJ;
-        private System.Windows.Forms.CheckBox Chk_CP;
-        private System.Windows.Forms.CheckBox Chk_CC;
-        private System.Windows.Forms.CheckBox Chk_LIQ;
-        private System.Windows.Forms.CheckBox Chk_SHA;
-        private System.Windows.Forms.CheckBox Chk_MSK;
-        private System.Windows.Forms.CheckBox Chk_RET;
-        private System.Windows.Forms.CheckBox Chk_QC;
         private System.Windows.Forms.TextBox Txt_File;
         private System.Windows.Forms.Button Btn_Find;
-        private System.Windows.Forms.TextBox Txt_Service;
         private System.Windows.Forms.Label Lbl_Job_Time;
+        private System.Windows.Forms.Timer Tmr_Open;
+        private System.Windows.Forms.Timer Tmr_Save;
     }
 }
