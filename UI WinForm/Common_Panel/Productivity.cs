@@ -159,12 +159,13 @@ namespace Skill_PMS.UI_WinForm.Common_Panel
             }
 
             string loc = Txt_Location.Text;
-            var logCount = _db.Logs.Where(x => x.JobId == _job.JobId & x.Status == "Running").Count();
-            if (logCount > 0)
-            {
-                MessageBox.Show(@"Job is Still Running. Please inform production team to finish this job.", @"Job is Still Running.", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                return;
-            }
+
+            //var logCount = _db.Logs.Where(x => x.JobId == _job.JobId & x.Status == "Running").Count();
+            //if (logCount > 0)
+            //{
+            //    MessageBox.Show(@"Job is Still Running. Please inform production team to finish this job.", @"Job is Still Running.", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            //    return;
+            //}
 
             _job.OutputAmount = file;
             _job.OutputLocation = loc;
@@ -175,7 +176,19 @@ namespace Skill_PMS.UI_WinForm.Common_Panel
             _job.ProDone = _db.Logs.Where(x => x.JobId == _job.JobId & x.Status == "Done").Select(x => x.Image).Distinct().Count();
 
             if (_job.ProDone > 0)
-                _job.ProTime = _db.Logs.Where(x => x.JobId == _job.JobId & x.Status == "Done").Distinct().Sum(x => x.ProTime) / _job.ProDone;
+                _job.ProTime = _db.Logs.Where(x => x.JobId == _job.JobId & x.Status == "Done" & x.Service != "QC").Distinct().Sum(x => x.ProTime) / _job.ProDone;
+
+            var efficiency = 0;
+            if (_job.ProTime != 0)
+                efficiency = (int)(_job.TargetTime / _job.ProTime * 100);
+
+            _job.TargetEfficiency = efficiency;
+            
+            efficiency = 0;
+            if (_job.ProTime != 0)
+                efficiency = (int)(_job.ActualTime / _job.ProTime * 100);
+
+            _job.ActualEfficiency = efficiency;
 
             _db.SaveChanges();
             this.Close();

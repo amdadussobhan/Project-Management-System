@@ -81,9 +81,7 @@ namespace Skill_PMS.UI_WinForm.Production.QC_Panel
             //_common.UpdateJob(_user, _job, _runningJob);
 
             //My_Job Report Entry in My_Job Table
-            MyJob my_job;
-
-            my_job = _db.My_Jobs.FirstOrDefault(x => x.JobId == _job.JobId & x.Name == _user.Short_Name & x.Service == "QC" & x.Date == currentTime.Date);
+            MyJob my_job = _db.My_Jobs.FirstOrDefault(x => x.JobId == _job.JobId & x.Name == _user.Short_Name & x.Service == "QC" & x.Date == currentTime.Date);
 
             if (my_job == null)
             {

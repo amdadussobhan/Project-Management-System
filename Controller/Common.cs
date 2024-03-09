@@ -647,9 +647,9 @@ namespace Skill_PMS.Controller
             performance.WorkingTime = (int)(performance.Logout - performance.Login).TotalMinutes;
             performance.Up = 0;
 
-            var logs = _db.Logs.Where(x=>x.Name == performance.Name & x.Status != "Done");
-            foreach (var log in logs)
-                _db.Logs.Remove(log);
+            //var logs = _db.Logs.Where(x=>x.Name == performance.Name & x.Status != "Done");
+            //foreach (var log in logs)
+            //    _db.Logs.Remove(log);
 
             _db.SaveChanges();
             Application.Exit();

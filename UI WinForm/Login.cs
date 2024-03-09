@@ -32,8 +32,8 @@ namespace Skill_PMS.UI_WinForm
 
         private void Login_Load(object sender, EventArgs e)
         {
+            //Cmb_Shift.Text = _common.Current_Shift();
             Check_user();
-            Cmb_Shift.Text = _common.Current_Shift();
         }
 
         private void Btn_Login_Click(object sender, EventArgs e)
@@ -67,20 +67,53 @@ namespace Skill_PMS.UI_WinForm
                 {
                     Name = _user.Short_Name,
                     Date = date, 
-                    Login = DateTime.Now
+                    Login = DateTime.Now,
+                    OT_Start = DateTime.Now
                 };
                 _db.Performances.Add(performance);
             }
+            else
+            {
+                if (!_user.Employee_ID.Contains("10000") & _user.Role != "SI" & _user.Role != "QC" & performance.Status == "Running")
+                {
+                    MessageBox.Show(@"Your account is already login running. Please logout first", @"Account Already Running", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    this.Close();
+                }
+            }
 
-            performance.Shift = _shift;
             performance.Logout = DateTime.Now;
-            _user.Shift = _shift;
+
+            if (CMB_OT.Text == "OT Work" & (int)(performance.Logout - performance.Login).TotalHours < 7)
+            {
+                MessageBox.Show(@"You are not eligible to start OT. Talk to In-Charge", @"You are not eligible to start OT", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                this.Close();
+            }
+            else
+            {
+                if ((int)(performance.OT_Start - performance.Login).TotalMinutes < 1)
+                {
+                    performance.OT_Start = DateTime.Now;
+                    performance.IsOT = 1;
+                }
+            }
+
+            if (CMB_OT.Text != "OT Work")
+                performance.IsOT = 0;
+
+            performance.Shift = _user.Shift = _shift;
             performance.Status = "Running";
 
-            var version = Assembly.GetExecutingAssembly().GetName().Version + "";
+            // Get the Assembly information and access the informational version
+            var version = Assembly.GetExecutingAssembly()
+                                     .GetCustomAttributes<AssemblyInformationalVersionAttribute>()
+                                     .FirstOrDefault()
+                                     ?.InformationalVersion;
+
+            //var version = Assembly.GetExecutingAssembly().GetName().Version + "";
             var HostName = Dns.GetHostName() + "";
             var ipAddress = Dns.GetHostAddresses(HostName);
             performance.PC_Name = version + "_" + HostName + "_" + ipAddress[0] + "_" + ipAddress[1];
+            
             var shiftReport = _db.Shift_Reports.FirstOrDefault(x => x.Date == date & x.Shift == _shift & x.Team == "");
 
             if (shiftReport == null)
@@ -88,7 +121,8 @@ namespace Skill_PMS.UI_WinForm
 
             shiftReport.QC_Capacity = _common.QC_Capacity(date, _shift);
             shiftReport.Capacity = _common.Designer_Capacity(date, _shift) + shiftReport.QC_Capacity;
-            shiftReport.Up = 0;
+            shiftReport.Up = 0;            
+
             _db.SaveChanges();
             Task.Run(() => _common.Check_Shift_Changing());
             
@@ -130,8 +164,8 @@ namespace Skill_PMS.UI_WinForm
                 default:
                 {
                     var dashboard = Dashboard.GetInstance();
-                    Dashboard.User = _user;
-                    dashboard.Performance = performance;
+                    Dashboard._user = _user;
+                    dashboard._performance = performance;
                     dashboard.Show();
                     break;
                 }
@@ -140,18 +174,26 @@ namespace Skill_PMS.UI_WinForm
 
         private void Check_user()
         {
-            _user = _db.Users.FirstOrDefault(x => x.Employee_ID == Txt_Usr.Text);
+            try
+            {
+                Txt_Server.Visible = false;
+                _user = _db.Users.FirstOrDefault(x => x.Employee_ID == Txt_Usr.Text);
 
-            if (_user != null)
-            {
-                Txt_Name.Text = _user.Full_Name;
-                Txt_Designation.Text = _user.Designation;
+                if (_user != null)
+                {
+                    Txt_Name.Text = _user.Full_Name;
+                    Txt_Designation.Text = _user.Designation;
+                }
+                else
+                {
+                    Txt_Name.Text = "";
+                    Txt_Designation.Text = "";
+                }
             }
-            else
+            catch (Exception)
             {
-                Txt_Name.Text = "";
-                Txt_Designation.Text = "";
-            }
+                Txt_Server.Visible = true;
+            }            
         }
 
         private void Txt_Usr_TextChanged(object sender, EventArgs e)

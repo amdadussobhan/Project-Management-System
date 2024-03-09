@@ -192,7 +192,7 @@ namespace Skill_PMS.UI_WinForm.Production.Designer
             _db.SaveChanges();
 
             var dashboard = Dashboard.GetInstance();
-            dashboard.Performance = _performance;
+            dashboard._performance = _performance;
             Tmr_Close.Start();
         }
 

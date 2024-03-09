@@ -17,6 +17,7 @@ namespace Skill_PMS.Models
         public string Status { get; set; }
         public string Type { get; set; }
         public string Team { get; set; }
+        public string Loc { get; set; }
         public string Format { get; set; }
         public string Remarks { get; set; }
         public string Shift { get; set; }

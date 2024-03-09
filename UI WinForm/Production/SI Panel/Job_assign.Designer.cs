@@ -48,7 +48,7 @@
             this.label8 = new System.Windows.Forms.Label();
             this.label4 = new System.Windows.Forms.Label();
             this.label1 = new System.Windows.Forms.Label();
-            this.Btn_Ready = new System.Windows.Forms.Button();
+            this.Btn_Cancel = new System.Windows.Forms.Button();
             this.Cmb_Type = new System.Windows.Forms.ComboBox();
             this.label10 = new System.Windows.Forms.Label();
             this.Btn_Open_Folder = new System.Windows.Forms.Button();
@@ -69,6 +69,8 @@
             this.label14 = new System.Windows.Forms.Label();
             this.Lbl_Incoming = new System.Windows.Forms.Label();
             this.label9 = new System.Windows.Forms.Label();
+            this.label3 = new System.Windows.Forms.Label();
+            this.Txt_QC = new System.Windows.Forms.TextBox();
             this.jobBindingSource = new System.Windows.Forms.BindingSource(this.components);
             ((System.ComponentModel.ISupportInitialize)(this.jobBindingSource)).BeginInit();
             this.SuspendLayout();
@@ -88,7 +90,7 @@
             // Txt_Post_Process
             // 
             this.Txt_Post_Process.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.Txt_Post_Process.Location = new System.Drawing.Point(873, 370);
+            this.Txt_Post_Process.Location = new System.Drawing.Point(635, 370);
             this.Txt_Post_Process.Name = "Txt_Post_Process";
             this.Txt_Post_Process.Size = new System.Drawing.Size(60, 26);
             this.Txt_Post_Process.TabIndex = 307;
@@ -98,7 +100,7 @@
             // Txt_Pre_Process
             // 
             this.Txt_Pre_Process.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.Txt_Pre_Process.Location = new System.Drawing.Point(810, 370);
+            this.Txt_Pre_Process.Location = new System.Drawing.Point(572, 370);
             this.Txt_Pre_Process.Name = "Txt_Pre_Process";
             this.Txt_Pre_Process.Size = new System.Drawing.Size(60, 26);
             this.Txt_Pre_Process.TabIndex = 306;
@@ -108,7 +110,7 @@
             // Txt_Basics
             // 
             this.Txt_Basics.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.Txt_Basics.Location = new System.Drawing.Point(444, 370);
+            this.Txt_Basics.Location = new System.Drawing.Point(309, 370);
             this.Txt_Basics.Name = "Txt_Basics";
             this.Txt_Basics.Size = new System.Drawing.Size(92, 26);
             this.Txt_Basics.TabIndex = 303;
@@ -260,17 +262,17 @@
             this.label1.TabIndex = 313;
             this.label1.Text = "Job ID :";
             // 
-            // Btn_Ready
+            // Btn_Cancel
             // 
-            this.Btn_Ready.BackColor = System.Drawing.Color.Khaki;
-            this.Btn_Ready.Enabled = false;
-            this.Btn_Ready.Font = new System.Drawing.Font("Microsoft Sans Serif", 14F);
-            this.Btn_Ready.Location = new System.Drawing.Point(44, 410);
-            this.Btn_Ready.Name = "Btn_Ready";
-            this.Btn_Ready.Size = new System.Drawing.Size(169, 35);
-            this.Btn_Ready.TabIndex = 339;
-            this.Btn_Ready.Text = "Cancel";
-            this.Btn_Ready.UseVisualStyleBackColor = false;
+            this.Btn_Cancel.BackColor = System.Drawing.Color.Khaki;
+            this.Btn_Cancel.Font = new System.Drawing.Font("Microsoft Sans Serif", 14F);
+            this.Btn_Cancel.Location = new System.Drawing.Point(44, 410);
+            this.Btn_Cancel.Name = "Btn_Cancel";
+            this.Btn_Cancel.Size = new System.Drawing.Size(169, 35);
+            this.Btn_Cancel.TabIndex = 339;
+            this.Btn_Cancel.Text = "Cancel";
+            this.Btn_Cancel.UseVisualStyleBackColor = false;
+            this.Btn_Cancel.Click += new System.EventHandler(this.Btn_Cancel_Click);
             // 
             // Cmb_Type
             // 
@@ -372,10 +374,10 @@
             // 
             // Prb_FolderTime
             // 
-            this.Prb_FolderTime.Location = new System.Drawing.Point(0, 465);
+            this.Prb_FolderTime.Location = new System.Drawing.Point(5, 462);
             this.Prb_FolderTime.Maximum = 0;
             this.Prb_FolderTime.Name = "Prb_FolderTime";
-            this.Prb_FolderTime.Size = new System.Drawing.Size(970, 10);
+            this.Prb_FolderTime.Size = new System.Drawing.Size(960, 10);
             this.Prb_FolderTime.TabIndex = 395;
             // 
             // label2
@@ -399,7 +401,6 @@
             this.Cmb_Team.Name = "Cmb_Team";
             this.Cmb_Team.Size = new System.Drawing.Size(122, 28);
             this.Cmb_Team.TabIndex = 396;
-            this.Cmb_Team.SelectedIndexChanged += new System.EventHandler(this.Cmb_Team_SelectedIndexChanged);
             // 
             // Txt_File
             // 
@@ -409,7 +410,6 @@
             this.Txt_File.Size = new System.Drawing.Size(122, 26);
             this.Txt_File.TabIndex = 398;
             this.Txt_File.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
-            this.Txt_File.TextChanged += new System.EventHandler(this.Txt_File_TextChanged);
             // 
             // label11
             // 
@@ -455,7 +455,7 @@
             // 
             this.Lbl_Basic.AutoSize = true;
             this.Lbl_Basic.Font = new System.Drawing.Font("Microsoft Sans Serif", 16F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.Lbl_Basic.Location = new System.Drawing.Point(459, 337);
+            this.Lbl_Basic.Location = new System.Drawing.Point(324, 339);
             this.Lbl_Basic.Name = "Lbl_Basic";
             this.Lbl_Basic.Size = new System.Drawing.Size(66, 26);
             this.Lbl_Basic.TabIndex = 405;
@@ -465,7 +465,7 @@
             // 
             this.label14.AutoSize = true;
             this.label14.Font = new System.Drawing.Font("Microsoft Sans Serif", 16F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label14.Location = new System.Drawing.Point(828, 339);
+            this.label14.Location = new System.Drawing.Point(586, 339);
             this.label14.Name = "label14";
             this.label14.Size = new System.Drawing.Size(97, 26);
             this.label14.TabIndex = 406;
@@ -490,6 +490,25 @@
             this.label9.TabIndex = 408;
             this.label9.Text = "Incoming :";
             // 
+            // label3
+            // 
+            this.label3.AutoSize = true;
+            this.label3.Font = new System.Drawing.Font("Microsoft Sans Serif", 16F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label3.Location = new System.Drawing.Point(838, 339);
+            this.label3.Name = "label3";
+            this.label3.Size = new System.Drawing.Size(99, 26);
+            this.label3.TabIndex = 411;
+            this.label3.Text = "QC Time";
+            // 
+            // Txt_QC
+            // 
+            this.Txt_QC.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.Txt_QC.Location = new System.Drawing.Point(841, 370);
+            this.Txt_QC.Name = "Txt_QC";
+            this.Txt_QC.Size = new System.Drawing.Size(92, 26);
+            this.Txt_QC.TabIndex = 410;
+            this.Txt_QC.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            // 
             // jobBindingSource
             // 
             this.jobBindingSource.DataSource = typeof(Skill_PMS.Models.NewJob);
@@ -500,6 +519,8 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.SystemColors.ActiveBorder;
             this.ClientSize = new System.Drawing.Size(970, 477);
+            this.Controls.Add(this.label3);
+            this.Controls.Add(this.Txt_QC);
             this.Controls.Add(this.Lbl_Incoming);
             this.Controls.Add(this.label9);
             this.Controls.Add(this.label14);
@@ -520,7 +541,7 @@
             this.Controls.Add(this.Btn_Open_Folder);
             this.Controls.Add(this.label10);
             this.Controls.Add(this.Cmb_Type);
-            this.Controls.Add(this.Btn_Ready);
+            this.Controls.Add(this.Btn_Cancel);
             this.Controls.Add(this.Btn_Save);
             this.Controls.Add(this.Txt_Post_Process);
             this.Controls.Add(this.Txt_Pre_Process);
@@ -541,6 +562,7 @@
             this.Controls.Add(this.label4);
             this.Controls.Add(this.label1);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.Fixed3D;
+            this.MaximizeBox = false;
             this.Name = "Job_assign";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Job_assign";
@@ -572,7 +594,7 @@
         private System.Windows.Forms.Label label8;
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.Label label1;
-        private System.Windows.Forms.Button Btn_Ready;
+        private System.Windows.Forms.Button Btn_Cancel;
         private System.Windows.Forms.ComboBox Cmb_Type;
         private System.Windows.Forms.Label label10;
         private System.Windows.Forms.Button Btn_Open_Folder;
@@ -594,5 +616,7 @@
         private System.Windows.Forms.Label label14;
         private System.Windows.Forms.Label Lbl_Incoming;
         private System.Windows.Forms.Label label9;
+        private System.Windows.Forms.Label label3;
+        private System.Windows.Forms.TextBox Txt_QC;
     }
 }
