@@ -3,6 +3,7 @@ using Skill_PMS.Data;
 using Skill_PMS.Models;
 using Skill_PMS.UI_WinForm.Common_Panel;
 using Skill_PMS.UI_WinForm.Production.Designer;
+using Skill_PMS.UI_WinForm.Production.SI_Panel;
 using System;
 using System.Linq;
 using System.Threading.Tasks;
@@ -51,6 +52,8 @@ namespace Skill_PMS.UI_WinForm.Production.QC_Panel
 
         private void QC_Dashboard_Load(object sender, EventArgs e)
         {
+            Dtp_NewJobs.Value = DateTime.Now.Date;
+            Dtp_Future_Date.Value = DateTime.Now.Date.AddDays(1);
             this.Text = @"QC Panel - " + _user.Full_Name;
 
             //_shift = _common.Current_Shift();
@@ -65,11 +68,23 @@ namespace Skill_PMS.UI_WinForm.Production.QC_Panel
             //    Btn_Handload.Text = @"Handload: " + (int)_shiftReport.HandLoad;
             //    Btn_Efficiency.Text = @"Efficiency: " + _shiftReport.Efficiency + "%";
             //}
-            Tbc_QC_Panel.SelectedIndex = 1;
+            Check_Todays_Job();
         }
 
         private void Check_New_Job()
         {
+            var jobIds = _db.New_Jobs.Where(x => x.Status == "New").OrderByDescending(x => x.Id).Select(x => x.JobId);
+            foreach (var job in jobIds)
+                Cmb_New_JobID.Items.Add(job);
+
+            var jobId = Cmb_New_JobID.Text;
+            if (string.IsNullOrEmpty(jobId) | jobId.ToUpper() == "ALL")
+                jobId = null;
+
+            var folder = Txt_New_Folder.Text;
+            if (string.IsNullOrEmpty(folder) | folder.ToUpper() == "ALL")
+                folder = null;
+
             double totalWorkload = 0;
             int row = 0, sl = 1, pendingWorkload = 0, totalInput = 0;
 
@@ -80,8 +95,16 @@ namespace Skill_PMS.UI_WinForm.Production.QC_Panel
             Dgv_New_Job.Rows.Clear();
             _common.Dgv_Size(Dgv_New_Job, 11);
 
-            var jobs = _db.New_Jobs.Where(x => x.Status == "New" & (x.Type == "Regular" | x.Type == "Test")).OrderBy(x => x.Delivery).ToList();
-                       
+            var findsData = _db.New_Jobs.Where(x => x.Status == "New");
+
+            if (jobId != null)
+                findsData = findsData.Where(x => x.JobId == jobId);
+
+            if (folder != null)
+                findsData = findsData.Where(x => x.Folder.Contains(folder));
+
+            var jobs = findsData.OrderBy(x => x.Delivery).ToList();
+ 
             if (jobs.Find(x => x.Team == "Basic") != null)
             {
                 Dgv_New_Job.Rows.Add("", "", "", "Basic Team Job Workload", "", "", "", "", "", "");
@@ -131,6 +154,18 @@ namespace Skill_PMS.UI_WinForm.Production.QC_Panel
 
         private void Check_Todays_Job()
         {
+            var jobIds = _db.New_Jobs.Where(x => x.Status == "Pro").OrderByDescending(x => x.Id).Select(x => x.JobId);
+            foreach (var job in jobIds)
+                Cmb_Current_JobID.Items.Add(job);
+
+            var jobId = Cmb_Current_JobID.Text;
+            if (string.IsNullOrEmpty(jobId) | jobId.ToUpper() == "ALL")
+                jobId = null;
+
+            var folder = Txt_Current_Folder.Text;
+            if (string.IsNullOrEmpty(folder) | folder.ToUpper() == "ALL")
+                folder = null;
+
             double totalWorkload = 0;
             int row = 0, sl = 1, pendingWorkload = 0, totalInput = 0, totalOutput = 0;
             DateTime Todays = DateTime.Now.Date.AddDays(1);
@@ -142,54 +177,32 @@ namespace Skill_PMS.UI_WinForm.Production.QC_Panel
             Dgv_Todays.Rows.Clear();
             _common.Dgv_Size(Dgv_Todays, 11);
 
-            var jobs = _db.New_Jobs.Where(x => x.Status == "Pro" & x.Delivery <= Todays).OrderBy(x => x.Delivery).ToList();
+            var findsData = _db.New_Jobs.Where(x => x.Status == "Pro");
 
-            if (jobs.Find(x => x.Team == "Basic") != null)
+            if (jobId != null)
+                findsData = findsData.Where(x => x.JobId == jobId);
+
+            if (folder != null)
+                findsData = findsData.Where(x => x.Folder.Contains(folder));
+
+            var jobs = findsData.Where(x => x.Delivery <= Todays).OrderBy(x => x.Delivery).ToList();
+
+            Dgv_Todays.Rows.Add("", "", "", "QC Team Workload", "", "", "", "", "", "", "", "");
+
+            foreach (var job in jobs)
             {
-                Dgv_Todays.Rows.Add("", "", "", "Basic Team Job Workload", "", "", "", "", "", "", "", "");
+                pendingWorkload = 0;
+                if (job.InputAmount > job.ProDone)
+                    pendingWorkload = (int)((job.InputAmount - job.ProDone) * job.QcTime);
 
-                foreach (var job in jobs)
-                {
-                    if (job.Team == "Basic")
-                    {
-                        pendingWorkload = 0;
-                        if (job.InputAmount > job.ProDone)
-                            pendingWorkload = (int)((job.InputAmount - job.ProDone) * job.TargetTime);
-
-                        totalInput += job.InputAmount;
-                        totalOutput += job.ProDone;
-                        totalWorkload += pendingWorkload;
-                        Dgv_Todays.Rows.Add(sl++, job.JobId, job.Folder, job.Incoming, job.Delivery, job.InputAmount, job.ProDone, 
-                            Math.Round(job.TargetTime, 2), Math.Round(job.ProTime, 2), pendingWorkload, job.Id, job.Team);
-                    }
-                }
-
-                Dgv_Todays.Rows.Add("", "", "", "", "", totalInput, totalOutput, "", "Total Workload-->", totalWorkload, "", "", "");
+                totalInput += job.InputAmount;
+                totalOutput += job.OutputAmount;
+                totalWorkload += pendingWorkload;
+                Dgv_Todays.Rows.Add(sl++, job.JobId, job.Folder, job.Incoming, job.Delivery, job.InputAmount, job.OutputAmount,
+                    Math.Round(job.QcTime, 2), Math.Round(job.ProTime, 2), pendingWorkload, job.Id, job.Team);
             }
 
-            if (jobs.Find(x => x.Team == "Advance") != null)
-            {
-                sl = 1; totalInput = 0; totalOutput = 0; totalWorkload = 0;
-                Dgv_Todays.Rows.Add("", "", "", "Advance Team Workload", "", "", "", "", "", "", "", "");
-
-                foreach (var job in jobs)
-                {
-                    if (job.Team == "Advance")
-                    {
-                        pendingWorkload = 0;
-                        if (job.InputAmount > job.ProDone)
-                            pendingWorkload = (int)((job.InputAmount - job.ProDone) * job.TargetTime);
-
-                        totalInput += job.InputAmount;
-                        totalOutput += job.ProDone;
-                        totalWorkload += pendingWorkload;
-                        Dgv_Todays.Rows.Add(sl++, job.JobId, job.Folder, job.Incoming, job.Delivery, job.InputAmount, job.ProDone, 
-                            Math.Round(job.TargetTime, 2), Math.Round(job.ProTime, 2), pendingWorkload, job.Id, job.Team);
-                    }
-                }
-
-                Dgv_Todays.Rows.Add("", "", "", "", "", totalInput, totalOutput, "", "Total Workload-->", totalWorkload, "", "", "");
-            }
+            Dgv_Todays.Rows.Add("", "", "", "", "", totalInput, totalOutput, "", "Total Workload-->", totalWorkload, "", "", "");
 
             int max_row = Dgv_Todays.Rows.Count - 1;
             if (max_row >= 0)
@@ -204,9 +217,21 @@ namespace Skill_PMS.UI_WinForm.Production.QC_Panel
 
         private void Check_Future_Job()
         {
+            var jobIds = _db.New_Jobs.Where(x => x.Status == "Pro").OrderByDescending(x => x.Id).Select(x => x.JobId);
+            foreach (var job in jobIds)
+                Cmb_Current_JobID.Items.Add(job);
+
+            var jobId = Cmb_Current_JobID.Text;
+            if (string.IsNullOrEmpty(jobId) | jobId.ToUpper() == "ALL")
+                jobId = null;
+
+            var folder = Txt_Current_Folder.Text;
+            if (string.IsNullOrEmpty(folder) | folder.ToUpper() == "ALL")
+                folder = null;
+
             double totalWorkload = 0;
             int row = 0, sl = 1, pendingWorkload = 0, totalInput = 0, totalOutput = 0;
-            DateTime Todays = DateTime.Now.Date.AddDays(1);
+            DateTime date = Dtp_Future_Date.Value.Date;
 
             if (Dgv_Future.CurrentCell != null)
                 row = Dgv_Future.CurrentCell.RowIndex;
@@ -215,47 +240,31 @@ namespace Skill_PMS.UI_WinForm.Production.QC_Panel
             Dgv_Future.Rows.Clear();
             _common.Dgv_Size(Dgv_Future, 11);
 
-            var jobs = _db.New_Jobs.Where(x => x.Status == "Pro" & x.Delivery > Todays).OrderBy(x => x.Delivery).ToList();
+            var findsData = _db.New_Jobs.Where(x => x.Status == "Pro");
 
-            if (jobs.Find(x => x.Team == "Basic") != null)
+            if (jobId != null)
+                findsData = findsData.Where(x => x.JobId == jobId);
+
+            if (folder != null)
+                findsData = findsData.Where(x => x.Folder.Contains(folder));
+
+            var jobs = findsData.Where(x => x.Delivery > date).OrderBy(x => x.Delivery).ToList();
+
+            Dgv_Future.Rows.Add("", "", "", "QC Team Workload", "", "", "", "", "", "", "", "");
+
+            foreach (var job in jobs)
             {
-                Dgv_Future.Rows.Add("", "", "", "Basic Team Job Workload", "", "", "", "", "", "", "", "");
+                pendingWorkload = 0;
+                if (job.InputAmount > job.ProDone)
+                    pendingWorkload = (int)((job.InputAmount - job.ProDone) * job.QcTime);
 
-                foreach (var job in jobs)
-                {
-                    pendingWorkload = 0;
-                    if (job.InputAmount > job.ProDone)
-                        pendingWorkload = (int)((job.InputAmount - job.ProDone) * job.TargetTime);
-
-                    totalInput += job.InputAmount;
-                    totalOutput += job.ProDone;
-                    totalWorkload += pendingWorkload;
-                    Dgv_Future.Rows.Add(sl++, job.JobId, job.Folder, job.Incoming, job.Delivery, job.InputAmount, job.ProDone, 
-                        Math.Round(job.TargetTime, 2), Math.Round(job.ProTime, 2), pendingWorkload, job.Id, job.Team);
-                }
-                Dgv_Future.Rows.Add("", "", "", "", "", totalInput, totalOutput, "", "Total Workload-->", totalWorkload, "", "", "");
+                totalInput += job.InputAmount;
+                totalOutput += job.OutputAmount;
+                totalWorkload += pendingWorkload;
+                Dgv_Future.Rows.Add(sl++, job.JobId, job.Folder, job.Incoming, job.Delivery, job.InputAmount, job.OutputAmount,
+                    Math.Round(job.QcTime, 2), Math.Round(job.ProTime, 2), pendingWorkload, job.Id, job.Team);
             }
-
-            if (jobs.Find(x => x.Team == "Advance") != null)
-            {
-                sl = 1; totalInput = 0; totalOutput = 0; totalWorkload = 0;
-                Dgv_Future.Rows.Add("", "", "", "Advance Team Job Workload", "", "", "", "", "", "", "", "");
-
-                foreach (var job in jobs)
-                {
-                    pendingWorkload = 0;
-                    if (job.InputAmount > job.ProDone)
-                        pendingWorkload = (int)((job.InputAmount - job.ProDone) * job.TargetTime);
-
-                    totalInput += job.InputAmount;
-                    totalOutput += job.ProDone;
-                    totalWorkload += pendingWorkload;
-                    Dgv_Future.Rows.Add(sl++, job.JobId, job.Folder, job.Incoming, job.Delivery, job.InputAmount, job.ProDone, 
-                        Math.Round(job.TargetTime, 2), Math.Round(job.ProTime, 2), pendingWorkload, job.Id, job.Team);
-                }
-
-                Dgv_Future.Rows.Add("", "", "", "", "", totalInput, totalOutput, "", "Total Workload-->", totalWorkload, "", "", "");
-            }
+            Dgv_Future.Rows.Add("", "", "", "", "", totalInput, totalOutput, "", "Total Workload-->", totalWorkload, "", "", "");
 
             int max_row = Dgv_Future.Rows.Count - 1;
             if (max_row >= 0)
@@ -285,7 +294,6 @@ namespace Skill_PMS.UI_WinForm.Production.QC_Panel
                                     per.Shift,
                                     per.Login,
                                     per.Logout,
-                                    per.WorkingTime,
                                     per.File,
                                     per.JobTime,
                                     per.ProTime,
@@ -301,7 +309,7 @@ namespace Skill_PMS.UI_WinForm.Production.QC_Panel
                     start_time = per.Logout;
 
                 var Capacity = (per.Logout - start_time).TotalMinutes;
-                Dgv_Performance.Rows.Add(sl++, per.Name, per.Shift, per.Login, per.Logout, per.WorkingTime, per.File, per.JobTime, Math.Round(per.ProTime), Math.Round(Capacity - per.ProTime), per.Efficiency + "%", per.Quality + "%");
+                Dgv_Performance.Rows.Add(sl++, per.Name, per.Shift, per.Login, per.Logout, per.File, per.JobTime, Math.Round(per.ProTime), Math.Round(Capacity - per.ProTime), per.Efficiency + "%", per.Quality + "%");
             }
 
             _common.Row_Color_By_Efficiency(Dgv_Performance, "Column55");
@@ -332,7 +340,7 @@ namespace Skill_PMS.UI_WinForm.Production.QC_Panel
             _common.Dgv_Size(DgvHistory, 11);
 
             var logs = _db.Logs
-                .Where(x => x.Status == "Done")
+                .Where(x => x.Status == "Done" & x.Name == _user.Short_Name)
                 .OrderByDescending(x => x.Id)
                 .Take(999)
                 .ToList();
@@ -363,7 +371,7 @@ namespace Skill_PMS.UI_WinForm.Production.QC_Panel
             var sl = 1;
             foreach (var job in jobs)
             {
-                Dgv_Ready_Job.Rows.Add(sl++, job.JobId, job.Folder, job.InputAmount, job.OutputAmount, job.Service, job.TargetTime, job.ProTime, job.Delivery, "Edit");
+                Dgv_Ready_Job.Rows.Add(sl++, job.JobId, job.Folder, job.InputAmount, job.OutputAmount, job.Service, Math.Round(job.TargetTime,1), Math.Round(job.ProTime,1), job.Delivery, "Edit");
             }
 
             int max_row = Dgv_Ready_Job.Rows.Count - 1;
@@ -388,23 +396,23 @@ namespace Skill_PMS.UI_WinForm.Production.QC_Panel
             switch (Tbc_QC_Panel.SelectedIndex)
             {
                 case 0:
-                    Check_New_Job();
-                    break;
-
-                case 1:
                     Check_Todays_Job();
                     break;
 
-                case 2:
+                case 1:
                     Check_Future_Job();
                     break;
 
+                case 2:
+                    Check_New_Job();
+                    break;
+
                 case 3:
-                    Check_Performance();
+                    Check_Ready_Job();
                     break;
 
                 case 4:
-                    Check_Production_Error();
+                    Check_Performance();
                     break;
 
                 case 5:
@@ -412,119 +420,222 @@ namespace Skill_PMS.UI_WinForm.Production.QC_Panel
                     break;
 
                 case 6:
-                    Check_Ready_Job();
-                    break;
-
-                case 7:
+                    Check_Production_Error();
                     break;
             }
         }
 
         private void Tmr_Count_Tick(object sender, EventArgs e)
         {
-            _db = new SkillContext();
-            _shift = _common.Current_Shift();
-            _db.SaveChanges();
+            //_shift = _common.Current_Shift();
+            //_db.SaveChanges();
 
-            var date = _common.Shift_Date(DateTime.Now, _shift);
-            _shiftReport = _db.Shift_Reports.FirstOrDefault(x => x.Date == date & x.Shift == _shift & x.Team == "");
+            //var date = _common.Shift_Date(DateTime.Now, _shift);
+            //_shiftReport = _db.Shift_Reports.FirstOrDefault(x => x.Date == date & x.Shift == _shift & x.Team == "");
 
-            if (_shiftReport != null)
+            //if (_shiftReport != null)
+            //{
+            //    Btn_Capacity.Text = @"Capacity: " + _shiftReport.Capacity;
+            //    Btn_Workload.Text = @"Workload: " + (int)_shiftReport.TotalLoad;
+            //    Btn_Achieve.Text = @"Achieve: " + (int)_shiftReport.LoadAchieve;
+            //    Btn_Handload.Text = @"Handload: " + (int)_shiftReport.HandLoad;
+            //    Btn_Efficiency.Text = @"Efficiency: " + _shiftReport.Efficiency + "%";
+            //}
+
+            try
             {
-                Btn_Capacity.Text = @"Capacity: " + _shiftReport.Capacity;
-                Btn_Workload.Text = @"Workload: " + (int)_shiftReport.TotalLoad;
-                Btn_Achieve.Text = @"Achieve: " + (int)_shiftReport.LoadAchieve;
-                Btn_Handload.Text = @"Handload: " + (int)_shiftReport.HandLoad;
-                Btn_Efficiency.Text = @"Efficiency: " + _shiftReport.Efficiency + "%";
-            }
+                Txt_Server.Visible = false;
+                _db = new SkillContext();
 
-            switch (Tbc_QC_Panel.SelectedIndex)
+                switch (Tbc_QC_Panel.SelectedIndex)
+                {
+                    case 0:
+                        Check_New_Job();
+                        break;
+
+                    case 1:
+                        Check_Todays_Job();
+                        break;
+
+                    case 2:
+                        Check_Future_Job();
+                        break;
+
+                    case 3:
+                        break;
+                }
+            }
+            catch (Exception)
             {
-                case 0:
-                    Check_New_Job();
-                    break;
-
-                case 1:
-                    Check_Todays_Job();
-                    break;
-
-                case 2:
-                    Check_Future_Job();
-                    break;
-
-                case 3:
-                    break;
-            }
+                Txt_Server.Visible = true;
+            }            
         }
 
         private void Dgv_Todays_CellContentClick(object sender, DataGridViewCellEventArgs e)
         {
-            if (Dgv_Todays.Columns[Dgv_Todays.CurrentCell.ColumnIndex].HeaderText.Contains("Job_ID"))
+            string Job_ID = Dgv_Todays.Rows[e.RowIndex].Cells[1].Value.ToString();
+            if (!string.IsNullOrEmpty(Job_ID))
             {
-                if (Dgv_Todays.Rows[e.RowIndex].Cells[e.ColumnIndex].Value != null)
+                if (Dgv_Todays.Columns[Dgv_Todays.CurrentCell.ColumnIndex].HeaderText.Contains("Job_ID"))
                 {
-                    string jobId = Dgv_Todays.Rows[e.RowIndex].Cells[e.ColumnIndex].Value.ToString();
-
                     var qcProcess = QC_Process.getInstance();
-                    qcProcess._job.JobId = jobId;
+                    qcProcess._job.JobId = Job_ID;
                     QC_Process._user = _user;
                     qcProcess._performance = _performance;
                     qcProcess.Show();
 
                     Tmr_Count.Stop();
                 }
-            }
 
-            if (Dgv_Todays.Columns[Dgv_Todays.CurrentCell.ColumnIndex].HeaderText.Contains("Folder"))
-            {
-                var productivity = Productivity.getInstance();
-                if (Dgv_Todays.Rows[e.RowIndex].Cells[e.ColumnIndex].Value != null)
+                if (Dgv_Todays.Columns[Dgv_Todays.CurrentCell.ColumnIndex].HeaderText.Contains("Folder"))
                 {
-                    string team = Dgv_Todays.Rows[e.RowIndex].Cells[11].Value.ToString();
-                    productivity._jobID = Dgv_Todays.Rows[e.RowIndex].Cells[1].Value.ToString();
+                    var processing = Processing.GetInstance();
+                    processing._job.JobId = Job_ID;
+                    processing.User = _user;
+                    processing._performance = _performance;
+                    processing.Show();
+
+                    Tmr_Count.Stop();
+                }
+
+                if (Dgv_Todays.Columns[Dgv_Todays.CurrentCell.ColumnIndex].HeaderText.Contains("Incoming"))
+                {
+                    var productivity = Productivity.getInstance();
+                    productivity._jobID = Job_ID;
                     productivity._user = _user;
-                    productivity._team = team;
+                    productivity._team = Dgv_Todays.Rows[e.RowIndex].Cells[11].Value.ToString();
                     productivity.Show();
                 }
+
+                if (Dgv_Todays.Columns[Dgv_Todays.CurrentCell.ColumnIndex].HeaderText.Contains("Delivery"))
+                {
+                    var productivity = Productivity.getInstance();
+                    productivity._jobID = Job_ID;
+                    productivity._user = _user;
+                    productivity._team = Dgv_Todays.Rows[e.RowIndex].Cells[11].Value.ToString();
+                    productivity.Show();
+                }
+
+                if (Dgv_Todays.Columns[Dgv_Todays.CurrentCell.ColumnIndex].HeaderText.Contains("QC_Time"))
+                {
+                    var qcTimeAssign = QC_Time_Assign.getInstance();
+                    qcTimeAssign._job.JobId = Job_ID;
+                    qcTimeAssign.User = _user;
+                    qcTimeAssign.Show();
+                }
             }
-        }
-
-        private void Dtp_Date_ValueChanged(object sender, EventArgs e)
-        {
-
         }
 
         private void Dgv_Future_CellContentClick(object sender, DataGridViewCellEventArgs e)
         {
-            if (Dgv_Future.Columns[Dgv_Future.CurrentCell.ColumnIndex].HeaderText.Contains("Job_ID"))
+            string Job_ID = Dgv_Future.Rows[e.RowIndex].Cells[1].Value.ToString();
+            if (!string.IsNullOrEmpty(Job_ID))
             {
-                if (Dgv_Future.Rows[e.RowIndex].Cells[e.ColumnIndex].Value != null)
+                if (Dgv_Future.Columns[Dgv_Future.CurrentCell.ColumnIndex].HeaderText.Contains("Job_ID"))
                 {
-                    string jobId = Dgv_Future.Rows[e.RowIndex].Cells[e.ColumnIndex].Value.ToString();
-
                     var qcProcess = QC_Process.getInstance();
-                    qcProcess._job.JobId = jobId;
+                    qcProcess._job.JobId = Job_ID;
                     QC_Process._user = _user;
                     qcProcess._performance = _performance;
                     qcProcess.Show();
 
                     Tmr_Count.Stop();
                 }
-            }
 
-            if (Dgv_Future.Columns[Dgv_Future.CurrentCell.ColumnIndex].HeaderText.Contains("Folder"))
-            {
-                var productivity = Productivity.getInstance();
-                if (Dgv_Future.Rows[e.RowIndex].Cells[e.ColumnIndex].Value != null)
+                if (Dgv_Future.Columns[Dgv_Future.CurrentCell.ColumnIndex].HeaderText.Contains("Folder"))
                 {
-                    string team = Dgv_Future.Rows[e.RowIndex].Cells[11].Value.ToString();
+                    var processing = Processing.GetInstance();
+                    processing._job.JobId = Job_ID;
+                    processing.User = _user;
+                    processing._performance = _performance;
+                    processing.Show();
 
-                    productivity._jobID = Dgv_Future.Rows[e.RowIndex].Cells[1].Value.ToString();
+                    Tmr_Count.Stop();
+                }
+
+                if (Dgv_Future.Columns[Dgv_Future.CurrentCell.ColumnIndex].HeaderText.Contains("Incoming"))
+                {
+                    var productivity = Productivity.getInstance();
+                    productivity._jobID = Job_ID;
                     productivity._user = _user;
-                    productivity._team = team;
+                    productivity._team = Dgv_Future.Rows[e.RowIndex].Cells[11].Value.ToString();
                     productivity.Show();
                 }
+
+                if (Dgv_Future.Columns[Dgv_Future.CurrentCell.ColumnIndex].HeaderText.Contains("Delivery"))
+                {
+                    var productivity = Productivity.getInstance();
+                    productivity._jobID = Job_ID;
+                    productivity._user = _user;
+                    productivity._team = Dgv_Future.Rows[e.RowIndex].Cells[11].Value.ToString();
+                    productivity.Show();
+                }
+
+                if (Dgv_Todays.Columns[Dgv_Todays.CurrentCell.ColumnIndex].HeaderText.Contains("QC_Time"))
+                {
+                    var qcTimeAssign = QC_Time_Assign.getInstance();
+                    qcTimeAssign._job.JobId = Job_ID;
+                    qcTimeAssign.User = _user;
+                    qcTimeAssign.Show();
+                }
             }
+        }
+
+        private void Btn_Add_New_Job_Click(object sender, EventArgs e)
+        {
+            var addJob = new Add_Feedback { User = _user };
+            addJob.Show();
+        }
+
+        private void Btn_New_Find_Click(object sender, EventArgs e)
+        {
+            Check_New_Job();
+        }
+
+        private void Btn_Current_Find_Click(object sender, EventArgs e)
+        {
+            Check_Todays_Job();
+        }
+
+        private void Btn_Missing_Click(object sender, EventArgs e)
+        {
+            var missingFiles = MissingFiles.getInstance();
+            missingFiles.Show();
+        }
+
+        private void Txt_Current_Folder_TextChanged(object sender, EventArgs e)
+        {
+            Check_Todays_Job();
+        }
+
+        private void Cmb_Current_JobID_TextChanged(object sender, EventArgs e)
+        {
+            Check_Todays_Job();
+        }
+
+        private void Cmb_Future_JobID_TextChanged(object sender, EventArgs e)
+        {
+            
+        }
+
+        private void Txt_Future_Folder_TextChanged(object sender, EventArgs e)
+        {
+            
+        }
+
+        private void Btn_Future_Find_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void Cmb_New_JobID_TextChanged(object sender, EventArgs e)
+        {
+            Check_New_Job();
+        }
+
+        private void Txt_New_Folder_TextChanged(object sender, EventArgs e)
+        {
+            Check_New_Job();
         }
     }
 }

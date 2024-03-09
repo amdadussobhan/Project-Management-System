@@ -258,7 +258,7 @@ namespace Skill_PMS.UI_WinForm.Production.QC_Panel
             _db = new SkillContext();
             string[] data = (string[])e.Data.GetData(DataFormats.FileDrop);
             _files = data.ToList();
-            Tmr_Open.Start();            
+            Tmr_Open.Start();
         }
 
         private void Btn_Save_Click(object sender, EventArgs e)
@@ -409,13 +409,13 @@ namespace Skill_PMS.UI_WinForm.Production.QC_Panel
                 }
 
                 log.Service = "QC";
-                log.TargetTime = _job.TargetTime*0.1;
+                log.TargetTime = _job.QcTime;
                 log.Shift = _performance.Shift;
                 log.Status = "Running";
                 log.Up = 0;
             }
 
-            TimeSpan timespan = TimeSpan.FromSeconds(_job.TargetTime * 0.1 * 60 * _fileAmount);
+            TimeSpan timespan = TimeSpan.FromSeconds(_job.QcTime * 60 * _fileAmount);
             Lbl_Job_Time.Text = "Time " + timespan.ToString(@"h\:mm\:s");
 
             _db.SaveChanges();

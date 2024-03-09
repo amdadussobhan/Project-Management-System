@@ -16,15 +16,12 @@ namespace Skill_PMS.UI_WinForm.Production.SI_Panel
 {
     public partial class Time_assign : Form
     {
-        SkillContext _db = new SkillContext();
-        private static Time_assign _instance;
-        public string _jobId, _type, _team, _loc, _service;
-        public double _jobTime, _clipping = 0, _basic = 0, _pre_process = 0, _post_process = 0;
-
         public Time_assign()
         {
             InitializeComponent();
         }
+
+        private static Time_assign _instance;
 
         public static Time_assign GetInstance()
         {
@@ -34,6 +31,10 @@ namespace Skill_PMS.UI_WinForm.Production.SI_Panel
                 _instance.BringToFront();
             return _instance;
         }
+
+        SkillContext _db = new SkillContext();
+        public string _jobId, _type, _team, _loc, _service;
+        public double _jobTime, _clipping = 0, _basic = 0, _pre_process = 0, _post_process = 0;
 
         private async void Time_assign_Load(object sender, EventArgs e)
         {

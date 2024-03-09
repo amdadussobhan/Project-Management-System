@@ -25,13 +25,8 @@ namespace Skill_PMS.UI_WinForm.CS_Panel
         public bool _isRedo = false;
 
         public User User { get; set; }
-
-        public JobEntry()
-        {
-            InitializeComponent();
-        }
-
         private static JobEntry _instance;
+
         public static JobEntry GetInstance()
         {
             if (_instance == null || _instance.IsDisposed)
@@ -39,6 +34,11 @@ namespace Skill_PMS.UI_WinForm.CS_Panel
             else
                 _instance.BringToFront();
             return _instance;
+        }
+
+        public JobEntry()
+        {
+            InitializeComponent();
         }
 
         private void Add_Job_Load(object sender, EventArgs e)
@@ -53,34 +53,8 @@ namespace Skill_PMS.UI_WinForm.CS_Panel
             foreach (var rate in rates)
                 Cmb_Currency.Items.Add(rate);
 
-            if (_isModify | _isRedo)
-            {
-                _newJob = _db.New_Jobs.FirstOrDefault(x => x.JobId == _newJob.JobId);
-
-                Cmb_Client.Text = _newJob.Client;
-                Cmb_Catagory.Text = _newJob.Category;
-            }
-
-            if (_isModify)
-            {
-                Cmb_Job_Type.Text = _newJob.Type + "";
-                Txt_Job_Time.Text = _newJob.ActualTime + "";
-                Txt_Amount.Text = _newJob.InputAmount + "";
-                Dtp_Delivery.Value = _newJob.Delivery;
-                Txt_Location.Text = _newJob.InputLocation;
-                Txt_Job_ID.Text = _newJob.JobId;
-            }
-            else
-            {
-                Dtp_Delivery.Value = DateTime.Now.AddHours(1);
-                Create_Job_ID();
-            }
-
-            if (_isRedo)
-            {
-                Txt_Job_Time.Text = "";
-                Cmb_Job_Type.Text = "Feedback";
-            }
+            Dtp_Delivery.Value = DateTime.Now.AddHours(1);
+            Create_Job_ID();
         }
 
         private void Create_Job_ID()
@@ -147,14 +121,21 @@ namespace Skill_PMS.UI_WinForm.CS_Panel
             var type = Cmb_Job_Type.Text;
             if (string.IsNullOrEmpty(type) | (type != "Regular" & type != "Test" & type != "Feedback"))
             {
-                MessageBox.Show(@"Invalid Job Type Selection.!!! Please Only select within existing Option", @"Invalid Job Type Selection", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show(@"Invalid Job Type Selected.!!! Please Only select within existing Option", @"Invalid Job Type Selection", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;
             }
 
             var service = Cmb_Service.Text;
             if (string.IsNullOrEmpty(service) | (service != "Advance" & service != "Basic"))
             {
-                MessageBox.Show(@"Invalid Job Service Selection.!!! Please Only select within existing Option", @"Invalid Job Service Selection", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show(@"Invalid Job Service Selected.!!! Please Only select within existing Option", @"Invalid Job Service Selection", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
+
+            var location = Cmb_Loc.Text;
+            if (string.IsNullOrEmpty(location))
+            {
+                MessageBox.Show(@"Invalid Job Location Selected.!!! Please Enter Correct Job Location", @"Invalid Job Location Selected", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;
             }
 
@@ -194,7 +175,7 @@ namespace Skill_PMS.UI_WinForm.CS_Panel
             _newJob.Type = type;
             _newJob.Folder = folder;
             _newJob.InputAmount = _file;
-            _newJob.InputLocation = loc;
+            _newJob.InputLocation = _newJob.WorkingLocation = loc;
             _newJob.Price = _price;
             _newJob.Taka = _taka;
             _newJob.ActualTime = _newJob.TargetTime = _time;
@@ -202,8 +183,11 @@ namespace Skill_PMS.UI_WinForm.CS_Panel
             _newJob.Receiver = User.Short_Name;
             _newJob.Updator = User.Short_Name;
             _newJob.Updated = DateTime.Now;
+            _newJob.ProStart = DateTime.Now;
+            _newJob.ProEnd = DateTime.Now;
             _newJob.Shift = shift;
             _newJob.Team = service;
+            _newJob.Loc = location;
             _newJob.Up = 0;
 
             _priceTime.Up = 0;
@@ -216,8 +200,6 @@ namespace Skill_PMS.UI_WinForm.CS_Panel
                 _newJob.Date = DateTime.Now.Date;
                 _newJob.Incoming = DateTime.Now;
                 _newJob.Created = DateTime.Now;
-                _newJob.ProStart = DateTime.Now;
-                _newJob.ProEnd = DateTime.Now;
                 _db.New_Jobs.Add(_newJob);
             }
             //--End update job table

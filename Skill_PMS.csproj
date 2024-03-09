@@ -25,7 +25,7 @@
     <UpdatePackageVersion>False</UpdatePackageVersion>
     <AssemblyInfoVersionType>SettingsVersion</AssemblyInfoVersionType>
     <InheritWinAppVersionFrom>None</InheritWinAppVersionFrom>
-    <PublishUrl>H:\Project\Skill Soft\Publish\</PublishUrl>
+    <PublishUrl>D:\Project\Skill Soft\Publish\</PublishUrl>
     <Install>true</Install>
     <InstallFrom>Unc</InstallFrom>
     <UpdateEnabled>true</UpdateEnabled>
@@ -35,7 +35,7 @@
     <UpdatePeriodically>false</UpdatePeriodically>
     <UpdateRequired>false</UpdateRequired>
     <MapFileExtensions>true</MapFileExtensions>
-    <InstallUrl>\\192.168.1.147\Skill_Server\8.Software\Skill_PMS_DHK\</InstallUrl>
+    <InstallUrl>\\192.168.1.120\Download\Skill_PMS\</InstallUrl>
     <SupportUrl>http://www.skillservice.biz/login</SupportUrl>
     <TargetCulture>en</TargetCulture>
     <ProductName>Skill_PMS</ProductName>
@@ -43,8 +43,8 @@
     <SuiteName>SBN</SuiteName>
     <MinimumRequiredVersion>1.0.0.2</MinimumRequiredVersion>
     <AutorunEnabled>true</AutorunEnabled>
-    <ApplicationRevision>7</ApplicationRevision>
-    <ApplicationVersion>1.2.4.%2a</ApplicationVersion>
+    <ApplicationRevision>8</ApplicationRevision>
+    <ApplicationVersion>1.2.7.%2a</ApplicationVersion>
     <UseApplicationTrust>true</UseApplicationTrust>
     <CreateDesktopShortcut>true</CreateDesktopShortcut>
     <PublishWizardCompleted>true</PublishWizardCompleted>
@@ -108,6 +108,9 @@
     </Reference>
     <Reference Include="Google.Protobuf, Version=3.6.1.0, Culture=neutral, PublicKeyToken=a7d26565bac4d604, processorArchitecture=MSIL">
       <HintPath>packages\Google.Protobuf.3.6.1\lib\net45\Google.Protobuf.dll</HintPath>
+    </Reference>
+    <Reference Include="HtmlAgilityPack, Version=1.11.46.0, Culture=neutral, PublicKeyToken=bd319b19eaf3b43a, processorArchitecture=MSIL">
+      <HintPath>packages\HtmlAgilityPack.1.11.46\lib\Net45\HtmlAgilityPack.dll</HintPath>
     </Reference>
     <Reference Include="K4os.Compression.LZ4, Version=1.1.11.0, Culture=neutral, PublicKeyToken=2186fa9121ef231d, processorArchitecture=MSIL">
       <HintPath>packages\K4os.Compression.LZ4.1.1.11\lib\net46\K4os.Compression.LZ4.dll</HintPath>
@@ -346,6 +349,22 @@
     <Compile Include="Migrations\202208240738068_add revenue and support.designer.cs">
       <DependentUpon>202208240738068_add revenue and support.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202302122255060_Loc added in job list.cs" />
+    <Compile Include="Migrations\202302122255060_Loc added in job list.designer.cs">
+      <DependentUpon>202302122255060_Loc added in job list.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202309172249408_OT added.cs" />
+    <Compile Include="Migrations\202309172249408_OT added.designer.cs">
+      <DependentUpon>202309172249408_OT added.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202309172252019_OT added in performance.cs" />
+    <Compile Include="Migrations\202309172252019_OT added in performance.designer.cs">
+      <DependentUpon>202309172252019_OT added in performance.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202309172356023_OT Start field added in Performance.cs" />
+    <Compile Include="Migrations\202309172356023_OT Start field added in Performance.designer.cs">
+      <DependentUpon>202309172356023_OT Start field added in Performance.cs</DependentUpon>
+    </Compile>
     <Compile Include="Models\Assign_Time.cs" />
     <Compile Include="Models\Feedback.cs" />
     <Compile Include="Models\ImageTime.cs" />
@@ -356,6 +375,18 @@
     <Compile Include="Models\Shift_Report.cs" />
     <Compile Include="Models\Sub_Folder.cs" />
     <Compile Include="Models\Workload.cs" />
+    <Compile Include="UI WinForm\CS Panel\Edit_Job.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="UI WinForm\CS Panel\Edit_Job.Designer.cs">
+      <DependentUpon>Edit_Job.cs</DependentUpon>
+    </Compile>
+    <Compile Include="UI WinForm\CS Panel\Modify_200.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="UI WinForm\CS Panel\Modify_200.Designer.cs">
+      <DependentUpon>Modify_200.cs</DependentUpon>
+    </Compile>
     <Compile Include="UI WinForm\CS Panel\Rename.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -449,6 +480,12 @@
     <Compile Include="UI WinForm\Production\Designer\Dashboard.Designer.cs">
       <DependentUpon>Dashboard.cs</DependentUpon>
     </Compile>
+    <Compile Include="UI WinForm\Production\Designer\Manual_Job_Add.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="UI WinForm\Production\Designer\Manual_Job_Add.Designer.cs">
+      <DependentUpon>Manual_Job_Add.cs</DependentUpon>
+    </Compile>
     <Compile Include="UI WinForm\Production\Designer\Processing.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -460,6 +497,12 @@
     </Compile>
     <Compile Include="UI WinForm\Production\Designer\Saving_Progress.Designer.cs">
       <DependentUpon>Saving_Progress.cs</DependentUpon>
+    </Compile>
+    <Compile Include="UI WinForm\Production\QC Panel\Add_Feedback.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="UI WinForm\Production\QC Panel\Add_Feedback.Designer.cs">
+      <DependentUpon>Add_Feedback.cs</DependentUpon>
     </Compile>
     <Compile Include="UI WinForm\Production\QC Panel\Pro_Feedback.cs">
       <SubType>Form</SubType>
@@ -491,6 +534,12 @@
     <Compile Include="UI WinForm\Production\QC Panel\QC_Progress.Designer.cs">
       <DependentUpon>QC_Progress.cs</DependentUpon>
     </Compile>
+    <Compile Include="UI WinForm\Production\QC Panel\QC_Time_Assign.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="UI WinForm\Production\QC Panel\QC_Time_Assign.Designer.cs">
+      <DependentUpon>QC_Time_Assign.cs</DependentUpon>
+    </Compile>
     <Compile Include="UI WinForm\Production\SI Panel\Double_Login.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -502,6 +551,18 @@
     </Compile>
     <Compile Include="UI WinForm\Production\SI Panel\Job_assign.Designer.cs">
       <DependentUpon>Job_assign.cs</DependentUpon>
+    </Compile>
+    <Compile Include="UI WinForm\Production\SI Panel\Manualy_Job_Approve.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="UI WinForm\Production\SI Panel\Manualy_Job_Approve.Designer.cs">
+      <DependentUpon>Manualy_Job_Approve.cs</DependentUpon>
+    </Compile>
+    <Compile Include="UI WinForm\Production\SI Panel\MissingFiles.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="UI WinForm\Production\SI Panel\MissingFiles.Designer.cs">
+      <DependentUpon>MissingFiles.cs</DependentUpon>
     </Compile>
     <Compile Include="UI WinForm\Production\SI Panel\SI_Dashboard.cs">
       <SubType>Form</SubType>
@@ -632,6 +693,24 @@
     <EmbeddedResource Include="Migrations\202208240738068_add revenue and support.resx">
       <DependentUpon>202208240738068_add revenue and support.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202302122255060_Loc added in job list.resx">
+      <DependentUpon>202302122255060_Loc added in job list.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202309172249408_OT added.resx">
+      <DependentUpon>202309172249408_OT added.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202309172252019_OT added in performance.resx">
+      <DependentUpon>202309172252019_OT added in performance.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202309172356023_OT Start field added in Performance.resx">
+      <DependentUpon>202309172356023_OT Start field added in Performance.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UI WinForm\CS Panel\Edit_Job.resx">
+      <DependentUpon>Edit_Job.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UI WinForm\CS Panel\Modify_200.resx">
+      <DependentUpon>Modify_200.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="UI WinForm\CS Panel\Rename.resx">
       <DependentUpon>Rename.cs</DependentUpon>
     </EmbeddedResource>
@@ -685,11 +764,17 @@
       <DependentUpon>Dashboard.cs</DependentUpon>
       <SubType>Designer</SubType>
     </EmbeddedResource>
+    <EmbeddedResource Include="UI WinForm\Production\Designer\Manual_Job_Add.resx">
+      <DependentUpon>Manual_Job_Add.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="UI WinForm\Production\Designer\Processing.resx">
       <DependentUpon>Processing.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="UI WinForm\Production\Designer\Saving_Progress.resx">
       <DependentUpon>Saving_Progress.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UI WinForm\Production\QC Panel\Add_Feedback.resx">
+      <DependentUpon>Add_Feedback.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="UI WinForm\Production\QC Panel\Pro_Feedback.resx">
       <DependentUpon>Pro_Feedback.cs</DependentUpon>
@@ -706,11 +791,20 @@
     <EmbeddedResource Include="UI WinForm\Production\QC Panel\QC_Progress.resx">
       <DependentUpon>QC_Progress.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="UI WinForm\Production\QC Panel\QC_Time_Assign.resx">
+      <DependentUpon>QC_Time_Assign.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="UI WinForm\Production\SI Panel\Double_Login.resx">
       <DependentUpon>Double_Login.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="UI WinForm\Production\SI Panel\Job_assign.resx">
       <DependentUpon>Job_assign.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UI WinForm\Production\SI Panel\Manualy_Job_Approve.resx">
+      <DependentUpon>Manualy_Job_Approve.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UI WinForm\Production\SI Panel\MissingFiles.resx">
+      <DependentUpon>MissingFiles.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="UI WinForm\Production\SI Panel\SI_Dashboard.resx">
       <DependentUpon>SI_Dashboard.cs</DependentUpon>

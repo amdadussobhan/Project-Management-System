@@ -30,11 +30,11 @@ namespace Skill_PMS
         private void InitializeComponent()
         {
             this.Txt_Location = new System.Windows.Forms.TextBox();
-            this.Btn_Backup = new System.Windows.Forms.Button();
             this.Btn_Restore = new System.Windows.Forms.Button();
             this.Cmb_Job_ID = new System.Windows.Forms.ComboBox();
             this.Lbl_Job_ID = new System.Windows.Forms.Label();
             this.Prb_Rename = new System.Windows.Forms.ProgressBar();
+            this.Btn_Backup = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // Txt_Location
@@ -44,17 +44,6 @@ namespace Skill_PMS
             this.Txt_Location.Name = "Txt_Location";
             this.Txt_Location.Size = new System.Drawing.Size(634, 29);
             this.Txt_Location.TabIndex = 0;
-            // 
-            // Btn_Backup
-            // 
-            this.Btn_Backup.Font = new System.Drawing.Font("Microsoft Sans Serif", 14F);
-            this.Btn_Backup.Location = new System.Drawing.Point(75, 138);
-            this.Btn_Backup.Name = "Btn_Backup";
-            this.Btn_Backup.Size = new System.Drawing.Size(150, 35);
-            this.Btn_Backup.TabIndex = 1;
-            this.Btn_Backup.Text = "Backup";
-            this.Btn_Backup.UseVisualStyleBackColor = true;
-            this.Btn_Backup.Click += new System.EventHandler(this.Btn_Backup_Click);
             // 
             // Btn_Restore
             // 
@@ -94,6 +83,17 @@ namespace Skill_PMS
             this.Prb_Rename.Size = new System.Drawing.Size(780, 10);
             this.Prb_Rename.TabIndex = 144;
             // 
+            // Btn_Backup
+            // 
+            this.Btn_Backup.Font = new System.Drawing.Font("Microsoft Sans Serif", 14F);
+            this.Btn_Backup.Location = new System.Drawing.Point(75, 138);
+            this.Btn_Backup.Name = "Btn_Backup";
+            this.Btn_Backup.Size = new System.Drawing.Size(150, 35);
+            this.Btn_Backup.TabIndex = 1;
+            this.Btn_Backup.Text = "Backup";
+            this.Btn_Backup.UseVisualStyleBackColor = true;
+            this.Btn_Backup.Click += new System.EventHandler(this.Btn_Backup_Click);
+            // 
             // Rename
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -108,8 +108,9 @@ namespace Skill_PMS
             this.Controls.Add(this.Txt_Location);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.Fixed3D;
             this.Location = new System.Drawing.Point(600, 100);
+            this.MaximizeBox = false;
             this.Name = "Rename";
-            this.StartPosition = System.Windows.Forms.FormStartPosition.Manual;
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Rename";
             this.TopMost = true;
             this.Load += new System.EventHandler(this.Rename_Load);
@@ -121,10 +122,10 @@ namespace Skill_PMS
         #endregion
 
         private System.Windows.Forms.TextBox Txt_Location;
-        private System.Windows.Forms.Button Btn_Backup;
         private System.Windows.Forms.Button Btn_Restore;
         private System.Windows.Forms.ComboBox Cmb_Job_ID;
         private System.Windows.Forms.Label Lbl_Job_ID;
         private System.Windows.Forms.ProgressBar Prb_Rename;
+        private System.Windows.Forms.Button Btn_Backup;
     }
 }

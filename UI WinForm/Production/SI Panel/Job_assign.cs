@@ -26,9 +26,9 @@ namespace Skill_PMS.UI_WinForm.Production.SI_Panel
         public Sub_Folder _subFolder;
         private Job_assign instance;
         private Assign_Time _assignTime;
-        public int _runningJobsId, _inputFile = 0;
-        double _jobTime = 0, _clipping = 0, _pre_process= 0, _post_process = 0, _basic = 0, _totalTime;
-        string _team, _type, _loc;
+        public int _runningJobsId;
+        double _jobTime = 0, _clipping = 0, _pre_process= 0, _post_process = 0, _basic = 0;
+        string _type;
 
         public Job_assign()
         {
@@ -165,12 +165,6 @@ namespace Skill_PMS.UI_WinForm.Production.SI_Panel
             Check_Time();
         }
 
-        private void Cmb_Team_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            _team = Cmb_Team.Text;
-            //Check_Time();
-        }
-
         private void Check_Time()
         {
             _assignTime = _db.Assign_Time.FirstOrDefault(x => x.Client == _job.Client & x.Type == _type);
@@ -211,21 +205,12 @@ namespace Skill_PMS.UI_WinForm.Production.SI_Panel
             Time_Calculate();
         }
 
-        private void Txt_File_TextChanged(object sender, EventArgs e)
-        {
-            if (!string.IsNullOrEmpty(Txt_File.Text))
-                _inputFile = Convert.ToInt32(Txt_File.Text);
-            else
-                _inputFile = 0;
-
-            Time_Calculate();
-        }
-
         private void Time_Calculate()
         {
             _jobTime = _clipping + _basic + _pre_process + _post_process;
             Lbl_Target_Time.Text = _jobTime + "";
-            _totalTime = _jobTime * _inputFile;
+
+            Txt_QC.Text = _jobTime * 0.1 + "";
         }
 
         public void Assign_Time()
@@ -233,8 +218,8 @@ namespace Skill_PMS.UI_WinForm.Production.SI_Panel
             if (Job_Validated())
             {
                 var timeAssign = Time_assign.GetInstance();
-                timeAssign._loc = _loc;
-                timeAssign._team = _team;
+                timeAssign._loc = Txt_Location.Text;
+                timeAssign._team = Cmb_Team.Text;
                 timeAssign._type = _type;
                 timeAssign._jobId = _job.JobId;
                 timeAssign._jobTime = _jobTime;
@@ -247,17 +232,20 @@ namespace Skill_PMS.UI_WinForm.Production.SI_Panel
             }
         }
 
+        private void Btn_Cancel_Click(object sender, EventArgs e)
+        {
+            this.Close();
+        }
+
         bool Job_Validated()
         {
-            _loc = Txt_Location.Text;
-
-            if (!Directory.Exists(_loc))
+            if (!Directory.Exists(Txt_Location.Text))
             {
-                MessageBox.Show(@"Invalid Folder Location Entered.!!! Please Enter Correct Folder Location", @"Invalid Location Entered", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show(@"Invalid Location Entered.!!! Please Enter Correct Folder Location", @"Invalid Location Entered", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return false;
             }
 
-            if (string.IsNullOrEmpty(_team))
+            if (string.IsNullOrEmpty(Cmb_Team.Text))
             {
                 MessageBox.Show(@"Job Team is empty.!!! Please Select a Job Team", @"Job Team is empty", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return false;
@@ -275,12 +263,6 @@ namespace Skill_PMS.UI_WinForm.Production.SI_Panel
                 return false;
             }
 
-            if (string.IsNullOrEmpty(_job.Format))
-            {
-                MessageBox.Show(@"File format can't be empty.!!! Please Select a file format", @"File format is empty", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                return false;
-            }
-
             return true;
         }
 
@@ -288,9 +270,21 @@ namespace Skill_PMS.UI_WinForm.Production.SI_Panel
         {
             if (Job_Validated())
             {
-                if (_inputFile == 0)
+                if (string.IsNullOrEmpty(Txt_File.Text))
                 {
                     MessageBox.Show(@"Job File is empty.!!! Please enter actual job file count", @"Job File is empty", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    return;
+                }
+
+                if (string.IsNullOrEmpty(Txt_QC.Text))
+                {
+                    MessageBox.Show(@"QC Time is empty.!!! Please enter actual QC time", @"QC Time is empty", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    return;
+                }
+
+                if (string.IsNullOrEmpty(_job.Format))
+                {
+                    MessageBox.Show(@"File format can't be empty.!!! Please Select a file format", @"File format is empty", MessageBoxButtons.OK, MessageBoxIcon.Error);
                     return;
                 }
 
@@ -299,9 +293,15 @@ namespace Skill_PMS.UI_WinForm.Production.SI_Panel
                     Assign_Time();
 
                 //--Update Job Table
-                _job.Team = _team;
+                _job.Team = Cmb_Team.Text;
+
+                if (_job.Status == "New")
+                    _job.ProStart = DateTime.Now;
+
                 _job.Status = "Pro";
-                _job.WorkingLocation = _loc;
+                _job.InputAmount = Convert.ToInt32(Txt_File.Text);
+                _job.QcTime = Convert.ToDouble(Txt_QC.Text);
+                _job.WorkingLocation = Txt_Location.Text;
                 _job.SiName = User.Short_Name;
 
                 count = _db.ImageTime.Where(x => x.Job_ID == _job.JobId).Select(x=>x.Total_Time).Distinct().Count();
@@ -340,14 +340,14 @@ namespace Skill_PMS.UI_WinForm.Production.SI_Panel
         private void Job_assign_Load(object sender, EventArgs e)
         {
             this.Text = "Job assign - " + User.Full_Name;
-            _job = _db.New_Jobs.FirstOrDefault(x => x.JobId == _job.JobId);         
+            _job = _db.New_Jobs.FirstOrDefault(x => x.JobId == _job.JobId);
 
             Lbl_Job_ID.Text = _job.JobId;
             Lbl_Incoming.Text = _job.Incoming.ToString("ddd dd-MMM hh:mm tt");
             Lbl_Delivery.Text = _job.Delivery.ToString("ddd dd-MMM hh:mm tt");
             Lbl_Amount.Text = _job.InputAmount + "";
             Lbl_Actual_Time.Text = _job.ActualTime + "";
-            Txt_Location.Text = _job.InputLocation + "";
+            Txt_Location.Text = _job.WorkingLocation + "";
             Txt_File.Text = _job.InputAmount + "";
             Txt_Folder.Text = _job.Folder + "";
             Cmb_Team.Text = _job.Team + "";

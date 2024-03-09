@@ -29,5 +29,6 @@ namespace Skill_PMS.Models
         public double Support { get; set; }
         public double Revenue { get; set; }
         public int Up { get; set; }
+        public int IsOT { get; set; }
     }
 }
