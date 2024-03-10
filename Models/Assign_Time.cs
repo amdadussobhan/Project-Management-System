@@ -12,6 +12,7 @@ namespace Skill_PMS.Models
         public string Client { get; set; }
         public string Type { get; set; }
         public string Format { get; set; }
+        public string Service { get; set; }
         public double Clipping_Time { get; set; }
         public double Basic_Time { get; set; }
         public double Pre_Process { get; set; }

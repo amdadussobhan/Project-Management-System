@@ -28,7 +28,7 @@ namespace Skill_PMS.UI_WinForm.Production.SI_Panel
         private Assign_Time _assignTime;
         public int _runningJobsId;
         double _jobTime = 0, _clipping = 0, _pre_process= 0, _post_process = 0, _basic = 0;
-        string _type;
+        string _type, _service;
 
         public Job_assign()
         {
@@ -146,17 +146,17 @@ namespace Skill_PMS.UI_WinForm.Production.SI_Panel
             else
                 _clipping = 0;
 
-            Time_Calculate();
+            Calculate_Target_Time();
         }
 
         private void Txt_Basics_TextChanged(object sender, EventArgs e)
         {
-            if (!string.IsNullOrEmpty(Txt_Basics.Text))
-                _basic = Convert.ToInt32(Txt_Basics.Text);
+            if (!string.IsNullOrEmpty(Txt_Retouch.Text))
+                _basic = Convert.ToInt32(Txt_Retouch.Text);
             else
                 _basic = 0;
 
-            Time_Calculate();
+            Calculate_Target_Time();
         }
 
         private void Cmb_Type_SelectedIndexChanged(object sender, EventArgs e)
@@ -172,40 +172,40 @@ namespace Skill_PMS.UI_WinForm.Production.SI_Panel
             if (_assignTime != null)
             {
                 Txt_Clipping.Text = _assignTime.Clipping_Time + "";
-                Txt_Basics.Text = _assignTime.Basic_Time + "";
-                Txt_Pre_Process.Text = _assignTime.Pre_Process + "";
-                Txt_Post_Process.Text = _assignTime.Post_Process + "";
+                Txt_Retouch.Text = _assignTime.Basic_Time + "";
+                Txt_Pre_Pro.Text = _assignTime.Pre_Process + "";
+                Txt_Post_Pro.Text = _assignTime.Post_Process + "";
             }
             else
             {
                 Txt_Clipping.Text = "";
-                Txt_Basics.Text = "";
-                Txt_Pre_Process.Text = "";
-                Txt_Post_Process.Text = "";
+                Txt_Retouch.Text = "";
+                Txt_Pre_Pro.Text = "";
+                Txt_Post_Pro.Text = "";
             }
         }
 
         private void Txt_Pre_Process_TextChanged(object sender, EventArgs e)
         {
-            if (!string.IsNullOrEmpty(Txt_Pre_Process.Text))
-                _pre_process = Convert.ToInt32(Txt_Pre_Process.Text);
+            if (!string.IsNullOrEmpty(Txt_Pre_Pro.Text))
+                _pre_process = Convert.ToInt32(Txt_Pre_Pro.Text);
             else
                 _pre_process = 0;
 
-            Time_Calculate();
+            Calculate_Target_Time();
         }
 
         private void Txt_Post_Process_TextChanged(object sender, EventArgs e)
         {
-            if (!string.IsNullOrEmpty(Txt_Post_Process.Text))
-                _post_process = Convert.ToInt32(Txt_Post_Process.Text);
+            if (!string.IsNullOrEmpty(Txt_Post_Pro.Text))
+                _post_process = Convert.ToInt32(Txt_Post_Pro.Text);
             else
                 _post_process = 0;
 
-            Time_Calculate();
+            Calculate_Target_Time();
         }
 
-        private void Time_Calculate()
+        private void Calculate_Target_Time()
         {
             _jobTime = _clipping + _basic + _pre_process + _post_process;
             Lbl_Target_Time.Text = _jobTime + "";
@@ -227,6 +227,7 @@ namespace Skill_PMS.UI_WinForm.Production.SI_Panel
                 timeAssign._basic = _basic;
                 timeAssign._pre_process = _pre_process;
                 timeAssign._post_process = _post_process;
+                timeAssign.User = User;
 
                 timeAssign.Show();
             }
@@ -235,6 +236,77 @@ namespace Skill_PMS.UI_WinForm.Production.SI_Panel
         private void Btn_Cancel_Click(object sender, EventArgs e)
         {
             this.Close();
+        }
+
+        private void Chk_MSK_CheckedChanged(object sender, EventArgs e)
+        {
+            Generate_Service();
+            Check_Post_Process();
+        }
+
+        private void Chk_NJ_CheckedChanged(object sender, EventArgs e)
+        {
+            Generate_Service();
+            Check_Post_Process();
+        }
+
+        private void Chk_SHA_CheckedChanged(object sender, EventArgs e)
+        {
+            Generate_Service();
+            Check_Post_Process();
+        }
+
+        private void Chk_CC_CheckedChanged(object sender, EventArgs e)
+        {
+            Generate_Service();
+            Check_Post_Process();
+        }
+
+        private void Check_Post_Process()
+        {
+            Txt_Post_Pro.Enabled = false;
+            if (_service.Contains("MSK") | _service.Contains("NJ") | _service.Contains("SHA") | _service.Contains("CC"))
+                Txt_Post_Pro.Enabled = true;
+        }
+
+        private void Generate_Service()
+        {
+            _service = "";
+            if (!string.IsNullOrEmpty(Txt_Clipping.Text))
+            {
+                if (Convert.ToInt32(Txt_Clipping.Text) > 0)
+                    _service += "CP+";
+            }
+
+            if (!string.IsNullOrEmpty(Txt_Retouch.Text))
+            {
+                if (Convert.ToInt32(Txt_Retouch.Text) > 0)
+                    _service += "RET+";
+            }
+
+            if (!string.IsNullOrEmpty(Txt_Pre_Pro.Text))
+            {
+                if (Convert.ToInt32(Txt_Pre_Pro.Text) > 0)
+                    _service += "LIQ+";
+            }
+
+            if (Chk_MSK.Checked)
+                _service += "MSK+";
+
+            if (Chk_NJ.Checked)
+                _service += "NJ+";
+
+            if (Chk_SHA.Checked)
+                _service += "SHA+";
+
+            if (Chk_CC.Checked)
+                _service += "CC+";
+
+            if (Chk_RES.Checked)
+                _service += "RES+";
+
+
+            _service = _service.TrimEnd('+');
         }
 
         bool Job_Validated()
@@ -299,6 +371,7 @@ namespace Skill_PMS.UI_WinForm.Production.SI_Panel
                     _job.ProStart = DateTime.Now;
 
                 _job.Status = "Pro";
+                _job.Service = _service;
                 _job.InputAmount = Convert.ToInt32(Txt_File.Text);
                 _job.QcTime = Convert.ToDouble(Txt_QC.Text);
                 _job.WorkingLocation = Txt_Location.Text;
@@ -326,6 +399,7 @@ namespace Skill_PMS.UI_WinForm.Production.SI_Panel
                 }
 
                 _assignTime.Format = _job.Format;
+                _assignTime.Service = _service;
                 _assignTime.Clipping_Time = _clipping;
                 _assignTime.Basic_Time = _basic;
                 _assignTime.Pre_Process = _pre_process;

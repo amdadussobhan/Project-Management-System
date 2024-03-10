@@ -16,6 +16,7 @@ using System.Threading.Tasks;
 using System.Data.SqlClient;
 using Microsoft.SqlServer.Management.Common;
 using Microsoft.SqlServer.Management.Smo;
+using System.Text;
 
 namespace Skill_PMS.UI_WinForm.admin_Panel
 {
@@ -47,6 +48,7 @@ namespace Skill_PMS.UI_WinForm.admin_Panel
             var shift = _common.Current_Shift();
             var date = _common.Shift_Date(_nowTime, shift);
             var shiftReport = _db.Shift_Reports.FirstOrDefault(x => x.Date == date & x.Shift == shift & x.Team == "");
+            await Task.Run(() => Upload_Logs());
         }
 
         private async void Tmr_Count_Tick(object sender, EventArgs e)
@@ -184,6 +186,146 @@ namespace Skill_PMS.UI_WinForm.admin_Panel
 
         public void Upload_Logs()
         {
+            //var logs = _db.Logs
+            //    .Where(x => x.Up == 0 && x.Status == "Done" && x.ProTime != 0 && x.Efficiency != 0)
+            //    .OrderByDescending(x => x.Id)
+            //    .Take(3)
+            //    .ToList();
+
+            //using (var connection = Common.Active_ON())
+            //{
+            //    var insertQuery = new StringBuilder("INSERT INTO `logs` (`SL`, `Loc`, `Date`, `IsOT`) VALUES ");
+            //    var updateQuery = new StringBuilder(" ON DUPLICATE KEY UPDATE `Date`=VALUES(`Date`), `IsOT`=VALUES(`IsOT`);");
+
+            //    using (var command = new MySqlCommand())
+            //    {
+            //        command.Connection = connection;
+
+            //        for (int i = 0; i < logs.Count; i++)
+            //        {
+            //            var log = logs[i];
+            //            insertQuery.Append($"(@Id{i}, 'DHK', @Date{i}, @IsOT{i}),");
+            //            command.Parameters.AddWithValue($"@Id{i}", log.Id);
+            //            command.Parameters.AddWithValue($"@Date{i}", log.Date.ToString("yyyy-MM-dd"));
+            //            command.Parameters.AddWithValue($"@IsOT{i}", log.IsOT);
+            //        }
+
+
+            //        insertQuery.Length--;
+            //        command.CommandText = insertQuery.ToString() + updateQuery.ToString();
+            //        command.ExecuteNonQuery();
+            //    }
+            //    connection.Close();
+            //}
+
+
+
+
+
+            //int count = 0;
+
+            //var logs = _db.Logs
+            //    .Where(x => x.Up == 0 && x.Status == "Done" && x.ProTime != 0 && x.Efficiency != 0)
+            //    .OrderByDescending(x => x.Id)
+            //    .ToList();
+
+            //using (var connection = Common.Active_ON())
+            //{
+            //    using (var command = new MySqlCommand("", connection))
+            //    {
+            //        foreach (var log in logs)
+            //        {
+            //            var image = log.Image.Contains("'") ? log.Image.Replace("'", "''") : log.Image;
+            //            var existsQuery = "SELECT EXISTS (SELECT 1 FROM `logs` WHERE `SL` = @Id AND `Loc` = 'DHK')";
+
+            //            command.CommandText = existsQuery;
+            //            command.Parameters.Clear();
+            //            command.Parameters.AddWithValue("@Id", log.Id);
+
+            //            var result = command.ExecuteScalar();
+            //            var exists = (result != null && result != DBNull.Value) && Convert.ToInt32(result) > 0;
+
+
+            //            if (exists)
+            //            {
+            //                var updateQuery = @"UPDATE `logs` SET 
+            //                    Date = @Date, Shift = @Shift, EndTime = @EndTime, Name = @Name, JobId = @JobId, Service = @Service, 
+            //                    Status = @Status, Type = @Type, ActualTime = @ActualTime, TargetTime = @TargetTime, ProTime = @ProTime, 
+            //                    Rest_Time = @Rest_Time, Pause_Time = @Pause_Time, Image = @Image, Remarks = @Remarks, 
+            //                    Efficiency = @Efficiency, Quality = @Quality,
+            //                    Revenue = @Revenue, Support = @Support, IsOT = @IsOT WHERE `SL` = @Id AND `Loc` = 'DHK'";
+            //                command.CommandText = updateQuery;
+            //                command.Parameters.AddWithValue("@Date", log.Date.ToString("yyyy-MM-dd"));
+            //                command.Parameters.AddWithValue("@Shift", log.Shift);
+            //                command.Parameters.AddWithValue("@EndTime", log.EndTime.ToString("yyyy-MM-dd HH:mm:ss"));
+            //                command.Parameters.AddWithValue("@Name", log.Name);
+            //                command.Parameters.AddWithValue("@JobId", log.JobId);
+            //                command.Parameters.AddWithValue("@Service", log.Service);
+            //                command.Parameters.AddWithValue("@Status", log.Status);
+            //                command.Parameters.AddWithValue("@Type", log.Type);
+            //                command.Parameters.AddWithValue("@ActualTime", log.ActualTime);
+            //                command.Parameters.AddWithValue("@TargetTime", log.TargetTime);
+            //                command.Parameters.AddWithValue("@ProTime", log.ProTime);
+            //                command.Parameters.AddWithValue("@Rest_Time", log.RestTime);
+            //                command.Parameters.AddWithValue("@Pause_Time", log.PauseTime);
+            //                command.Parameters.AddWithValue("@Image", log.Image);
+            //                command.Parameters.AddWithValue("@Remarks", log.Remarks);
+            //                command.Parameters.AddWithValue("@Efficiency", log.Efficiency);
+            //                command.Parameters.AddWithValue("@Quality", log.Quality);
+            //                command.Parameters.AddWithValue("@Revenue", log.Revenue);
+            //                command.Parameters.AddWithValue("@Support", log.Support);
+            //                command.Parameters.AddWithValue("@IsOT", log.IsOT);
+            //                command.ExecuteNonQuery();
+            //            }
+            //            else
+            //            {
+            //                var insertQuery = @"INSERT INTO `logs`(`SL`, `Loc`, `Date`, `Shift`, `Revenue`, `Support`, `StartTime`, 
+            //                    `EndTime`, `Name`, `JobId`, `Service`, `Type`, `Status`, `ActualTime`, `TargetTime`, `ProTime`, 
+            //                    `Rest_Time`, `Pause_Time`, `Image`,`Remarks`,`Efficiency`,`Quality`,`IsOT`) 
+            //                    VALUES (@Idd, 'DHK', @Date, @Shift, @Revenue, @Support, @StartTime, @EndTime, @Name, @JobId, @Service, @Type, @Status, 
+            //                    @ActualTime, @TargetTime, @ProTime, @RestTime, @PauseTime, @Image, @Remarks, @Efficiency, @Quality, @IsOT)";
+            //                command.CommandText = insertQuery;
+            //                command.Parameters.AddWithValue("@Idd", log.Id);
+            //                command.Parameters.AddWithValue("@Date", log.Date.ToString("yyyy-MM-dd"));
+            //                command.Parameters.AddWithValue("@Shift", log.Shift);
+            //                command.Parameters.AddWithValue("@Revenue", log.Revenue);
+            //                command.Parameters.AddWithValue("@Support", log.Support);
+            //                command.Parameters.AddWithValue("@StartTime", log.StartTime.ToString("yyyy-MM-dd HH:mm:ss"));
+            //                command.Parameters.AddWithValue("@EndTime", log.EndTime.ToString("yyyy-MM-dd HH:mm:ss"));
+            //                command.Parameters.AddWithValue("@Name", log.Name);
+            //                command.Parameters.AddWithValue("@JobId", log.JobId);
+            //                command.Parameters.AddWithValue("@Service", log.Service);
+            //                command.Parameters.AddWithValue("@Type", log.Type);
+            //                command.Parameters.AddWithValue("@Status", log.Status);
+            //                command.Parameters.AddWithValue("@ActualTime", log.ActualTime);
+            //                command.Parameters.AddWithValue("@TargetTime", log.TargetTime);
+            //                command.Parameters.AddWithValue("@ProTime", log.ProTime);
+            //                command.Parameters.AddWithValue("@RestTime", log.RestTime);
+            //                command.Parameters.AddWithValue("@PauseTime", log.PauseTime);
+            //                command.Parameters.AddWithValue("@Image", log.Image);
+            //                command.Parameters.AddWithValue("@Remarks", log.Remarks);
+            //                command.Parameters.AddWithValue("@Efficiency", log.Efficiency);
+            //                command.Parameters.AddWithValue("@Quality", log.Quality);
+            //                command.Parameters.AddWithValue("@IsOT", log.IsOT);
+            //                command.ExecuteNonQuery();
+            //            }
+
+            //            log.Up = 1;
+
+            //            if (count++ > 9)
+            //                _db.SaveChanges();
+
+            //            if (count++ > 44)
+            //            {
+            //                _db.SaveChanges();
+            //                break;
+            //            }
+            //        }
+            //    }
+            //}
+
+            //Common.Online.Close();
+
             int count = 0;
             var logs = _db.Logs
                 .Where(x => x.Up == 0 & x.Status == "Done" & x.ProTime != 0 & x.Efficiency != 0)
@@ -205,7 +347,7 @@ namespace Skill_PMS.UI_WinForm.admin_Panel
                         + log.Service + "', Status = '" + log.Status + "', Type = '" + log.Type + "', ActualTime = '" + log.ActualTime + "', TargetTime = '"
                         + log.TargetTime + "', ProTime = '" + log.ProTime + "', Rest_Time = '" + log.RestTime + "', Pause_Time = '" + log.PauseTime + "', Image = '"
                         + log.Image + "', Remarks = '" + log.Remarks + "', Efficiency = '" + log.Efficiency + "', Quality = '" + log.Quality + "', Revenue = '"
-                        + log.Revenue + "', Support = '" + log.Support + "', IsOT = '" + log.IsOT+ "' Where `SL` = '" + log.Id + "' and `Loc` = 'DHK' ";
+                        + log.Revenue + "', Support = '" + log.Support + "', IsOT = '" + log.IsOT + "' Where `SL` = '" + log.Id + "' and `Loc` = 'DHK' ";
                 }
                 else
                 {
