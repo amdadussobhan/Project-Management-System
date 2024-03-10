@@ -43,7 +43,7 @@
     <SuiteName>SBN</SuiteName>
     <MinimumRequiredVersion>1.0.0.2</MinimumRequiredVersion>
     <AutorunEnabled>true</AutorunEnabled>
-    <ApplicationRevision>8</ApplicationRevision>
+    <ApplicationRevision>10</ApplicationRevision>
     <ApplicationVersion>1.2.7.%2a</ApplicationVersion>
     <UseApplicationTrust>true</UseApplicationTrust>
     <CreateDesktopShortcut>true</CreateDesktopShortcut>
@@ -364,6 +364,10 @@
     <Compile Include="Migrations\202309172356023_OT Start field added in Performance.cs" />
     <Compile Include="Migrations\202309172356023_OT Start field added in Performance.designer.cs">
       <DependentUpon>202309172356023_OT Start field added in Performance.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202403092116371_Service added in Assign Time Table.cs" />
+    <Compile Include="Migrations\202403092116371_Service added in Assign Time Table.designer.cs">
+      <DependentUpon>202403092116371_Service added in Assign Time Table.cs</DependentUpon>
     </Compile>
     <Compile Include="Models\Assign_Time.cs" />
     <Compile Include="Models\Feedback.cs" />
@@ -704,6 +708,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202309172356023_OT Start field added in Performance.resx">
       <DependentUpon>202309172356023_OT Start field added in Performance.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202403092116371_Service added in Assign Time Table.resx">
+      <DependentUpon>202403092116371_Service added in Assign Time Table.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="UI WinForm\CS Panel\Edit_Job.resx">
       <DependentUpon>Edit_Job.cs</DependentUpon>

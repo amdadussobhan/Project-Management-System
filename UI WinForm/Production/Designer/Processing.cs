@@ -66,6 +66,25 @@ namespace Skill_PMS.UI_WinForm.Production.Designer
                 _instruction = Path.Combine(_instruction, @"ins.txt");
 
                 _ext = _job.Format;
+
+                if (_job.Service != null)
+                {
+                    var service = "";
+
+                    if (_job.Service.Contains("MSK"))
+                        service += "MSK+";
+
+                    if (_job.Service.Contains("NJ"))
+                        service += "NJ+";
+
+                    if (_job.Service.Contains("SHA"))
+                        service += "SHA+";
+
+                    if (_job.Service.Contains("CC"))
+                        service += "CC+";
+
+                    Chk_Post_Process.Text = service.TrimEnd('+');
+                }
             }
 
             switch (_ext)
@@ -343,7 +362,7 @@ namespace Skill_PMS.UI_WinForm.Production.Designer
         private void Generate_Service()
         {
             _myService = "";
-
+            
             if (Chk_Clipping_Path.Checked)
                 _myService += "CP+";
 
@@ -552,10 +571,10 @@ namespace Skill_PMS.UI_WinForm.Production.Designer
 
             _db.SaveChanges();
 
-            _job.ProDone = _db.Logs.Where(x => x.JobId == _job.JobId & x.Status == "Done" & x.Service != "QC").Select(x => x.Image).Distinct().Count();
+            _job.ProDone = _db.Logs.Where(x => x.JobId == _job.JobId & x.Status == "Done").Select(x => x.Image).Distinct().Count();
 
             if (_job.ProDone > 0)
-                _job.ProTime = _db.Logs.Where(x => x.JobId == _job.JobId & x.Status == "Done" & x.Service != "QC").Distinct().Sum(x => x.ProTime) / _job.ProDone;
+                _job.ProTime = _db.Logs.Where(x => x.JobId == _job.JobId & x.Status == "Done").Distinct().Sum(x => x.ProTime) / _job.ProDone;
 
             var efficiency = 0;
             if (_job.ProTime != 0)

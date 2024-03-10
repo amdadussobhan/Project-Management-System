@@ -191,7 +191,7 @@
             // 
             // Btn_Reject
             // 
-            this.Btn_Reject.BackColor = System.Drawing.Color.Khaki;
+            this.Btn_Reject.BackColor = System.Drawing.Color.Salmon;
             this.Btn_Reject.Font = new System.Drawing.Font("Microsoft Sans Serif", 14F);
             this.Btn_Reject.Location = new System.Drawing.Point(41, 303);
             this.Btn_Reject.Name = "Btn_Reject";

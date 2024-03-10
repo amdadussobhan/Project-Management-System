@@ -555,3 +555,4 @@ D:\Project\Skill Soft\Skill_PMS_DHK\obj\Debug\Skill_PMS.Migrations.OTaddedinperf
 D:\Project\Skill Soft\Skill_PMS_DHK\obj\Debug\Skill_PMS.Migrations.OTStartfieldaddedinPerformance.resources
 D:\Project\Skill Soft\Skill_PMS_DHK\obj\Debug\Skill_PMS.UI_WinForm.Production.Designer.Manual_Job_Add.resources
 D:\Project\Skill Soft\Skill_PMS_DHK\obj\Debug\Skill_PMS.UI_WinForm.Production.SI_Panel.Manualy_Job_Approve.resources
+D:\Project\Skill Soft\Skill_PMS_DHK\obj\Debug\Skill_PMS.Migrations.ServiceaddedinAssignTimeTable.resources

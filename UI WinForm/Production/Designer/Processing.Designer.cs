@@ -34,16 +34,10 @@
             this.Chk_Post_Process = new System.Windows.Forms.CheckBox();
             this.Chk_Pre_Process = new System.Windows.Forms.CheckBox();
             this.Chk_Clipping_Path = new System.Windows.Forms.CheckBox();
-            this.Btn_Job_Folder = new System.Windows.Forms.Button();
             this.Btn_Start = new System.Windows.Forms.Button();
-            this.Btn_Ready_Folder = new System.Windows.Forms.Button();
-            this.Btn_Save = new System.Windows.Forms.Button();
-            this.Btn_Pause = new System.Windows.Forms.Button();
             this.Lbl_Count = new System.Windows.Forms.Label();
-            this.Btn_Cancel = new System.Windows.Forms.Button();
             this.Tmr_Count_Processing = new System.Windows.Forms.Timer(this.components);
             this.Pnl_Counter = new System.Windows.Forms.Panel();
-            this.Btn_Play = new System.Windows.Forms.Button();
             this.Lbl_Job_Time = new System.Windows.Forms.Label();
             this.Pnl_Service = new System.Windows.Forms.Panel();
             this.Pnl_Format = new System.Windows.Forms.Panel();
@@ -54,11 +48,17 @@
             this.Rdb_TIF = new System.Windows.Forms.RadioButton();
             this.Pnl_Drop = new System.Windows.Forms.Panel();
             this.Pnl_Start_Job = new System.Windows.Forms.Panel();
-            this.Btn_My_Folder = new System.Windows.Forms.Button();
             this.CMB_Share = new System.Windows.Forms.ComboBox();
             this.BTN_Share = new System.Windows.Forms.Button();
             this.Txt_Mnt = new System.Windows.Forms.TextBox();
             this.Tmr_Pause = new System.Windows.Forms.Timer(this.components);
+            this.Btn_My_Folder = new System.Windows.Forms.Button();
+            this.Btn_Ready_Folder = new System.Windows.Forms.Button();
+            this.Btn_Job_Folder = new System.Windows.Forms.Button();
+            this.Btn_Play = new System.Windows.Forms.Button();
+            this.Btn_Cancel = new System.Windows.Forms.Button();
+            this.Btn_Save = new System.Windows.Forms.Button();
+            this.Btn_Pause = new System.Windows.Forms.Button();
             this.Pnl_Counter.SuspendLayout();
             this.Pnl_Service.SuspendLayout();
             this.Pnl_Format.SuspendLayout();
@@ -69,11 +69,11 @@
             this.Chk_Basic_Process.AutoSize = true;
             this.Chk_Basic_Process.Enabled = false;
             this.Chk_Basic_Process.Font = new System.Drawing.Font("Microsoft Sans Serif", 13F);
-            this.Chk_Basic_Process.Location = new System.Drawing.Point(15, 34);
+            this.Chk_Basic_Process.Location = new System.Drawing.Point(52, 34);
             this.Chk_Basic_Process.Name = "Chk_Basic_Process";
-            this.Chk_Basic_Process.Size = new System.Drawing.Size(143, 26);
+            this.Chk_Basic_Process.Size = new System.Drawing.Size(120, 26);
             this.Chk_Basic_Process.TabIndex = 346;
-            this.Chk_Basic_Process.Text = "Basic Process";
+            this.Chk_Basic_Process.Text = "Retouching";
             this.Chk_Basic_Process.UseVisualStyleBackColor = true;
             this.Chk_Basic_Process.CheckedChanged += new System.EventHandler(this.Chk_Basic_Process_CheckedChanged);
             // 
@@ -82,7 +82,7 @@
             this.Chk_Post_Process.AutoSize = true;
             this.Chk_Post_Process.Enabled = false;
             this.Chk_Post_Process.Font = new System.Drawing.Font("Microsoft Sans Serif", 13F);
-            this.Chk_Post_Process.Location = new System.Drawing.Point(308, 34);
+            this.Chk_Post_Process.Location = new System.Drawing.Point(246, 34);
             this.Chk_Post_Process.Name = "Chk_Post_Process";
             this.Chk_Post_Process.Size = new System.Drawing.Size(135, 26);
             this.Chk_Post_Process.TabIndex = 349;
@@ -95,11 +95,11 @@
             this.Chk_Pre_Process.AutoSize = true;
             this.Chk_Pre_Process.Enabled = false;
             this.Chk_Pre_Process.Font = new System.Drawing.Font("Microsoft Sans Serif", 13F);
-            this.Chk_Pre_Process.Location = new System.Drawing.Point(308, 5);
+            this.Chk_Pre_Process.Location = new System.Drawing.Point(246, 5);
             this.Chk_Pre_Process.Name = "Chk_Pre_Process";
-            this.Chk_Pre_Process.Size = new System.Drawing.Size(127, 26);
+            this.Chk_Pre_Process.Size = new System.Drawing.Size(135, 26);
             this.Chk_Pre_Process.TabIndex = 350;
-            this.Chk_Pre_Process.Text = "Pre Process";
+            this.Chk_Pre_Process.Text = "Pre Pro (LIQ)";
             this.Chk_Pre_Process.UseVisualStyleBackColor = true;
             this.Chk_Pre_Process.CheckedChanged += new System.EventHandler(this.Chk_Pre_Process_CheckedChanged);
             // 
@@ -108,28 +108,13 @@
             this.Chk_Clipping_Path.AutoSize = true;
             this.Chk_Clipping_Path.Enabled = false;
             this.Chk_Clipping_Path.Font = new System.Drawing.Font("Microsoft Sans Serif", 13F);
-            this.Chk_Clipping_Path.Location = new System.Drawing.Point(15, 5);
+            this.Chk_Clipping_Path.Location = new System.Drawing.Point(52, 5);
             this.Chk_Clipping_Path.Name = "Chk_Clipping_Path";
             this.Chk_Clipping_Path.Size = new System.Drawing.Size(136, 26);
             this.Chk_Clipping_Path.TabIndex = 366;
             this.Chk_Clipping_Path.Text = "Clipping Path";
             this.Chk_Clipping_Path.UseVisualStyleBackColor = true;
             this.Chk_Clipping_Path.CheckedChanged += new System.EventHandler(this.Chk_Clipping_Path_CheckedChanged);
-            // 
-            // Btn_Job_Folder
-            // 
-            this.Btn_Job_Folder.BackColor = System.Drawing.SystemColors.ActiveBorder;
-            this.Btn_Job_Folder.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("Btn_Job_Folder.BackgroundImage")));
-            this.Btn_Job_Folder.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center;
-            this.Btn_Job_Folder.FlatAppearance.BorderSize = 0;
-            this.Btn_Job_Folder.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.Btn_Job_Folder.Font = new System.Drawing.Font("Microsoft Sans Serif", 12.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.Btn_Job_Folder.Location = new System.Drawing.Point(2, -1);
-            this.Btn_Job_Folder.Name = "Btn_Job_Folder";
-            this.Btn_Job_Folder.Size = new System.Drawing.Size(44, 37);
-            this.Btn_Job_Folder.TabIndex = 0;
-            this.Btn_Job_Folder.UseVisualStyleBackColor = false;
-            this.Btn_Job_Folder.Click += new System.EventHandler(this.Btn_Job_Folder_Click);
             // 
             // Btn_Start
             // 
@@ -144,44 +129,6 @@
             this.Btn_Start.UseVisualStyleBackColor = false;
             this.Btn_Start.Click += new System.EventHandler(this.Btn_Start_Click);
             // 
-            // Btn_Ready_Folder
-            // 
-            this.Btn_Ready_Folder.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("Btn_Ready_Folder.BackgroundImage")));
-            this.Btn_Ready_Folder.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center;
-            this.Btn_Ready_Folder.FlatAppearance.BorderSize = 0;
-            this.Btn_Ready_Folder.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.Btn_Ready_Folder.Font = new System.Drawing.Font("Microsoft Sans Serif", 12.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.Btn_Ready_Folder.Location = new System.Drawing.Point(83, -2);
-            this.Btn_Ready_Folder.Name = "Btn_Ready_Folder";
-            this.Btn_Ready_Folder.Size = new System.Drawing.Size(49, 39);
-            this.Btn_Ready_Folder.TabIndex = 394;
-            this.Btn_Ready_Folder.UseVisualStyleBackColor = true;
-            this.Btn_Ready_Folder.Click += new System.EventHandler(this.Btn_Ready_Folder_Click);
-            // 
-            // Btn_Save
-            // 
-            this.Btn_Save.BackColor = System.Drawing.SystemColors.ButtonHighlight;
-            this.Btn_Save.Enabled = false;
-            this.Btn_Save.Font = new System.Drawing.Font("Microsoft Sans Serif", 12.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.Btn_Save.Image = ((System.Drawing.Image)(resources.GetObject("Btn_Save.Image")));
-            this.Btn_Save.Location = new System.Drawing.Point(349, 3);
-            this.Btn_Save.Name = "Btn_Save";
-            this.Btn_Save.Size = new System.Drawing.Size(99, 33);
-            this.Btn_Save.TabIndex = 395;
-            this.Btn_Save.UseVisualStyleBackColor = false;
-            this.Btn_Save.Click += new System.EventHandler(this.Btn_Save_Click);
-            // 
-            // Btn_Pause
-            // 
-            this.Btn_Pause.Font = new System.Drawing.Font("Microsoft Sans Serif", 12.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.Btn_Pause.Image = ((System.Drawing.Image)(resources.GetObject("Btn_Pause.Image")));
-            this.Btn_Pause.Location = new System.Drawing.Point(244, 3);
-            this.Btn_Pause.Name = "Btn_Pause";
-            this.Btn_Pause.Size = new System.Drawing.Size(99, 33);
-            this.Btn_Pause.TabIndex = 396;
-            this.Btn_Pause.UseVisualStyleBackColor = true;
-            this.Btn_Pause.Click += new System.EventHandler(this.Btn_Pause_Click);
-            // 
             // Lbl_Count
             // 
             this.Lbl_Count.AutoSize = true;
@@ -192,19 +139,6 @@
             this.Lbl_Count.Size = new System.Drawing.Size(130, 39);
             this.Lbl_Count.TabIndex = 397;
             this.Lbl_Count.Text = "0:00:00";
-            // 
-            // Btn_Cancel
-            // 
-            this.Btn_Cancel.BackColor = System.Drawing.SystemColors.ButtonHighlight;
-            this.Btn_Cancel.Enabled = false;
-            this.Btn_Cancel.Font = new System.Drawing.Font("Microsoft Sans Serif", 12.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.Btn_Cancel.Image = ((System.Drawing.Image)(resources.GetObject("Btn_Cancel.Image")));
-            this.Btn_Cancel.Location = new System.Drawing.Point(139, 3);
-            this.Btn_Cancel.Name = "Btn_Cancel";
-            this.Btn_Cancel.Size = new System.Drawing.Size(99, 33);
-            this.Btn_Cancel.TabIndex = 398;
-            this.Btn_Cancel.UseVisualStyleBackColor = false;
-            this.Btn_Cancel.Click += new System.EventHandler(this.Btn_Cancel_Click);
             // 
             // Tmr_Count_Processing
             // 
@@ -225,18 +159,6 @@
             this.Pnl_Counter.Size = new System.Drawing.Size(455, 40);
             this.Pnl_Counter.TabIndex = 399;
             this.Pnl_Counter.Visible = false;
-            // 
-            // Btn_Play
-            // 
-            this.Btn_Play.Font = new System.Drawing.Font("Microsoft Sans Serif", 12.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.Btn_Play.Image = ((System.Drawing.Image)(resources.GetObject("Btn_Play.Image")));
-            this.Btn_Play.Location = new System.Drawing.Point(244, 3);
-            this.Btn_Play.Name = "Btn_Play";
-            this.Btn_Play.Size = new System.Drawing.Size(99, 33);
-            this.Btn_Play.TabIndex = 411;
-            this.Btn_Play.UseVisualStyleBackColor = true;
-            this.Btn_Play.Visible = false;
-            this.Btn_Play.Click += new System.EventHandler(this.Btn_Play_Click);
             // 
             // Lbl_Job_Time
             // 
@@ -357,22 +279,6 @@
             this.Pnl_Start_Job.Size = new System.Drawing.Size(455, 40);
             this.Pnl_Start_Job.TabIndex = 400;
             // 
-            // Btn_My_Folder
-            // 
-            this.Btn_My_Folder.BackColor = System.Drawing.SystemColors.ActiveBorder;
-            this.Btn_My_Folder.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("Btn_My_Folder.BackgroundImage")));
-            this.Btn_My_Folder.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center;
-            this.Btn_My_Folder.Enabled = false;
-            this.Btn_My_Folder.FlatAppearance.BorderSize = 0;
-            this.Btn_My_Folder.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.Btn_My_Folder.Font = new System.Drawing.Font("Microsoft Sans Serif", 12.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.Btn_My_Folder.Location = new System.Drawing.Point(43, -2);
-            this.Btn_My_Folder.Name = "Btn_My_Folder";
-            this.Btn_My_Folder.Size = new System.Drawing.Size(45, 41);
-            this.Btn_My_Folder.TabIndex = 404;
-            this.Btn_My_Folder.UseVisualStyleBackColor = false;
-            this.Btn_My_Folder.Click += new System.EventHandler(this.Btn_My_Folder_Click);
-            // 
             // CMB_Share
             // 
             this.CMB_Share.Enabled = false;
@@ -411,6 +317,100 @@
             // 
             this.Tmr_Pause.Interval = 10000;
             this.Tmr_Pause.Tick += new System.EventHandler(this.Tmr_Pause_Tick);
+            // 
+            // Btn_My_Folder
+            // 
+            this.Btn_My_Folder.BackColor = System.Drawing.SystemColors.ActiveBorder;
+            this.Btn_My_Folder.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("Btn_My_Folder.BackgroundImage")));
+            this.Btn_My_Folder.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center;
+            this.Btn_My_Folder.Enabled = false;
+            this.Btn_My_Folder.FlatAppearance.BorderSize = 0;
+            this.Btn_My_Folder.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.Btn_My_Folder.Font = new System.Drawing.Font("Microsoft Sans Serif", 12.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.Btn_My_Folder.Location = new System.Drawing.Point(43, -2);
+            this.Btn_My_Folder.Name = "Btn_My_Folder";
+            this.Btn_My_Folder.Size = new System.Drawing.Size(45, 41);
+            this.Btn_My_Folder.TabIndex = 404;
+            this.Btn_My_Folder.UseVisualStyleBackColor = false;
+            this.Btn_My_Folder.Click += new System.EventHandler(this.Btn_My_Folder_Click);
+            // 
+            // Btn_Ready_Folder
+            // 
+            this.Btn_Ready_Folder.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("Btn_Ready_Folder.BackgroundImage")));
+            this.Btn_Ready_Folder.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center;
+            this.Btn_Ready_Folder.FlatAppearance.BorderSize = 0;
+            this.Btn_Ready_Folder.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.Btn_Ready_Folder.Font = new System.Drawing.Font("Microsoft Sans Serif", 12.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.Btn_Ready_Folder.Location = new System.Drawing.Point(83, -2);
+            this.Btn_Ready_Folder.Name = "Btn_Ready_Folder";
+            this.Btn_Ready_Folder.Size = new System.Drawing.Size(49, 39);
+            this.Btn_Ready_Folder.TabIndex = 394;
+            this.Btn_Ready_Folder.UseVisualStyleBackColor = true;
+            this.Btn_Ready_Folder.Click += new System.EventHandler(this.Btn_Ready_Folder_Click);
+            // 
+            // Btn_Job_Folder
+            // 
+            this.Btn_Job_Folder.BackColor = System.Drawing.SystemColors.ActiveBorder;
+            this.Btn_Job_Folder.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("Btn_Job_Folder.BackgroundImage")));
+            this.Btn_Job_Folder.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center;
+            this.Btn_Job_Folder.FlatAppearance.BorderSize = 0;
+            this.Btn_Job_Folder.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.Btn_Job_Folder.Font = new System.Drawing.Font("Microsoft Sans Serif", 12.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.Btn_Job_Folder.Location = new System.Drawing.Point(2, -1);
+            this.Btn_Job_Folder.Name = "Btn_Job_Folder";
+            this.Btn_Job_Folder.Size = new System.Drawing.Size(44, 37);
+            this.Btn_Job_Folder.TabIndex = 0;
+            this.Btn_Job_Folder.UseVisualStyleBackColor = false;
+            this.Btn_Job_Folder.Click += new System.EventHandler(this.Btn_Job_Folder_Click);
+            // 
+            // Btn_Play
+            // 
+            this.Btn_Play.Font = new System.Drawing.Font("Microsoft Sans Serif", 12.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.Btn_Play.Image = ((System.Drawing.Image)(resources.GetObject("Btn_Play.Image")));
+            this.Btn_Play.Location = new System.Drawing.Point(244, 3);
+            this.Btn_Play.Name = "Btn_Play";
+            this.Btn_Play.Size = new System.Drawing.Size(99, 33);
+            this.Btn_Play.TabIndex = 411;
+            this.Btn_Play.UseVisualStyleBackColor = true;
+            this.Btn_Play.Visible = false;
+            this.Btn_Play.Click += new System.EventHandler(this.Btn_Play_Click);
+            // 
+            // Btn_Cancel
+            // 
+            this.Btn_Cancel.BackColor = System.Drawing.SystemColors.ButtonHighlight;
+            this.Btn_Cancel.Enabled = false;
+            this.Btn_Cancel.Font = new System.Drawing.Font("Microsoft Sans Serif", 12.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.Btn_Cancel.Image = ((System.Drawing.Image)(resources.GetObject("Btn_Cancel.Image")));
+            this.Btn_Cancel.Location = new System.Drawing.Point(139, 3);
+            this.Btn_Cancel.Name = "Btn_Cancel";
+            this.Btn_Cancel.Size = new System.Drawing.Size(99, 33);
+            this.Btn_Cancel.TabIndex = 398;
+            this.Btn_Cancel.UseVisualStyleBackColor = false;
+            this.Btn_Cancel.Click += new System.EventHandler(this.Btn_Cancel_Click);
+            // 
+            // Btn_Save
+            // 
+            this.Btn_Save.BackColor = System.Drawing.SystemColors.ButtonHighlight;
+            this.Btn_Save.Enabled = false;
+            this.Btn_Save.Font = new System.Drawing.Font("Microsoft Sans Serif", 12.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.Btn_Save.Image = ((System.Drawing.Image)(resources.GetObject("Btn_Save.Image")));
+            this.Btn_Save.Location = new System.Drawing.Point(349, 3);
+            this.Btn_Save.Name = "Btn_Save";
+            this.Btn_Save.Size = new System.Drawing.Size(99, 33);
+            this.Btn_Save.TabIndex = 395;
+            this.Btn_Save.UseVisualStyleBackColor = false;
+            this.Btn_Save.Click += new System.EventHandler(this.Btn_Save_Click);
+            // 
+            // Btn_Pause
+            // 
+            this.Btn_Pause.Font = new System.Drawing.Font("Microsoft Sans Serif", 12.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.Btn_Pause.Image = ((System.Drawing.Image)(resources.GetObject("Btn_Pause.Image")));
+            this.Btn_Pause.Location = new System.Drawing.Point(244, 3);
+            this.Btn_Pause.Name = "Btn_Pause";
+            this.Btn_Pause.Size = new System.Drawing.Size(99, 33);
+            this.Btn_Pause.TabIndex = 396;
+            this.Btn_Pause.UseVisualStyleBackColor = true;
+            this.Btn_Pause.Click += new System.EventHandler(this.Btn_Pause_Click);
             // 
             // Processing
             // 

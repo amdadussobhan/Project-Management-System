@@ -176,7 +176,7 @@ namespace Skill_PMS.UI_WinForm.Common_Panel
             _job.ProDone = _db.Logs.Where(x => x.JobId == _job.JobId & x.Status == "Done").Select(x => x.Image).Distinct().Count();
 
             if (_job.ProDone > 0)
-                _job.ProTime = _db.Logs.Where(x => x.JobId == _job.JobId & x.Status == "Done" & x.Service != "QC").Distinct().Sum(x => x.ProTime) / _job.ProDone;
+                _job.ProTime = _db.Logs.Where(x => x.JobId == _job.JobId & x.Status == "Done").Distinct().Sum(x => x.ProTime) / _job.ProDone;
 
             var efficiency = 0;
             if (_job.ProTime != 0)

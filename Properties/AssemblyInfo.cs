@@ -8,9 +8,9 @@ using System.Runtime.InteropServices;
 [assembly: AssemblyTitle("Skill_PMS")]
 [assembly: AssemblyDescription("Production Management Software")]
 [assembly: AssemblyConfiguration("")]
-[assembly: AssemblyCompany("Skill Services Ltd.")]
+[assembly: AssemblyCompany("Skill Services Limited.")]
 [assembly: AssemblyProduct("Skill_PMS")]
-[assembly: AssemblyCopyright("Copyright ©  2022")]
+[assembly: AssemblyCopyright("Copyright ©  2024")]
 [assembly: AssemblyTrademark("SBN")]
 [assembly: AssemblyCulture("")]
 
