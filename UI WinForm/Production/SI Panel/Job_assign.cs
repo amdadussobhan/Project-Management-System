@@ -162,11 +162,7 @@ namespace Skill_PMS.UI_WinForm.Production.SI_Panel
         private void Cmb_Type_SelectedIndexChanged(object sender, EventArgs e)
         {
             _type = Cmb_Type.Text;
-            Check_Time();
-        }
 
-        private void Check_Time()
-        {
             _assignTime = _db.Assign_Time.FirstOrDefault(x => x.Client == _job.Client & x.Type == _type);
 
             if (_assignTime != null)
@@ -174,7 +170,6 @@ namespace Skill_PMS.UI_WinForm.Production.SI_Panel
                 Txt_Clipping.Text = _assignTime.Clipping_Time + "";
                 Txt_Retouch.Text = _assignTime.Basic_Time + "";
                 Txt_Pre_Pro.Text = _assignTime.Pre_Process + "";
-                Txt_Post_Pro.Text = _assignTime.Post_Process + "";
             }
             else
             {
@@ -183,6 +178,8 @@ namespace Skill_PMS.UI_WinForm.Production.SI_Panel
                 Txt_Pre_Pro.Text = "";
                 Txt_Post_Pro.Text = "";
             }
+
+            Generate_Service();
         }
 
         private void Txt_Pre_Process_TextChanged(object sender, EventArgs e)
@@ -211,6 +208,7 @@ namespace Skill_PMS.UI_WinForm.Production.SI_Panel
             Lbl_Target_Time.Text = _jobTime + "";
 
             Txt_QC.Text = _jobTime * 0.1 + "";
+            Generate_Service();
         }
 
         public void Assign_Time()
@@ -241,32 +239,21 @@ namespace Skill_PMS.UI_WinForm.Production.SI_Panel
         private void Chk_MSK_CheckedChanged(object sender, EventArgs e)
         {
             Generate_Service();
-            Check_Post_Process();
         }
 
         private void Chk_NJ_CheckedChanged(object sender, EventArgs e)
         {
             Generate_Service();
-            Check_Post_Process();
         }
 
         private void Chk_SHA_CheckedChanged(object sender, EventArgs e)
         {
             Generate_Service();
-            Check_Post_Process();
         }
 
-        private void Chk_CC_CheckedChanged(object sender, EventArgs e)
+        private void Chk_LIQ2_CheckedChanged(object sender, EventArgs e)
         {
             Generate_Service();
-            Check_Post_Process();
-        }
-
-        private void Check_Post_Process()
-        {
-            Txt_Post_Pro.Enabled = false;
-            if (_service.Contains("MSK") | _service.Contains("NJ") | _service.Contains("SHA") | _service.Contains("CC"))
-                Txt_Post_Pro.Enabled = true;
         }
 
         private void Generate_Service()
@@ -287,8 +274,11 @@ namespace Skill_PMS.UI_WinForm.Production.SI_Panel
             if (!string.IsNullOrEmpty(Txt_Pre_Pro.Text))
             {
                 if (Convert.ToInt32(Txt_Pre_Pro.Text) > 0)
-                    _service += "LIQ+";
+                    _service += "LIQ1+";
             }
+
+            if (Chk_LIQ2.Checked)
+                _service += "LIQ2+";
 
             if (Chk_MSK.Checked)
                 _service += "MSK+";
@@ -299,14 +289,18 @@ namespace Skill_PMS.UI_WinForm.Production.SI_Panel
             if (Chk_SHA.Checked)
                 _service += "SHA+";
 
-            if (Chk_CC.Checked)
-                _service += "CC+";
-
             if (Chk_RES.Checked)
                 _service += "RES+";
 
-
             _service = _service.TrimEnd('+');
+
+            //Txt_Post_Pro.Enabled = false;
+            //if (_service.Contains("LIQ2") | _service.Contains("MSK") | _service.Contains("NJ") | _service.Contains("SHA"))
+            //{
+            //    Txt_Post_Pro.Enabled = true;
+            //    if (_assignTime != null)
+            //        Txt_Post_Pro.Text = _assignTime.Post_Process + "";
+            //}
         }
 
         bool Job_Validated()
@@ -360,9 +354,15 @@ namespace Skill_PMS.UI_WinForm.Production.SI_Panel
                     return;
                 }
 
-                var count = _db.ImageTime.Where(x => x.Job_ID == _job.JobId & x.Type == _type).Count();
-                if (count == 0)
-                    Assign_Time();
+                if (_service == null)
+                {
+                    MessageBox.Show(@"Service is empty.!!! Please Select Proper Job Service", @"Service is empty", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    return;
+                }
+
+                //var count = _db.ImageTime.Where(x => x.Job_ID == _job.JobId & x.Type == _type).Count();
+                //if (count == 0)
+                //    Assign_Time();
 
                 //--Update Job Table
                 _job.Team = Cmb_Team.Text;
@@ -377,7 +377,7 @@ namespace Skill_PMS.UI_WinForm.Production.SI_Panel
                 _job.WorkingLocation = Txt_Location.Text;
                 _job.SiName = User.Short_Name;
 
-                count = _db.ImageTime.Where(x => x.Job_ID == _job.JobId).Select(x=>x.Total_Time).Distinct().Count();
+                var count = _db.ImageTime.Where(x => x.Job_ID == _job.JobId).Select(x=>x.Total_Time).Distinct().Count();
 
                 if (count != 0)
                     _job.TargetTime = _db.ImageTime.Where(x => x.Job_ID == _job.JobId).Select(x => x.Total_Time).Distinct().Average();

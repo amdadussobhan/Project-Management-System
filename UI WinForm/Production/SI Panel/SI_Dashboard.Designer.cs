@@ -60,6 +60,17 @@
             this.dateTimePicker8 = new System.Windows.Forms.DateTimePicker();
             this.Btn_Reload_NewJobs = new System.Windows.Forms.Button();
             this.Dgv_New_Job = new System.Windows.Forms.DataGridView();
+            this.dataGridViewTextBoxColumn50 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.dataGridViewTextBoxColumn51 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Column25 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.dataGridViewTextBoxColumn52 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.dataGridViewTextBoxColumn53 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Column8 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.dataGridViewTextBoxColumn55 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.dataGridViewTextBoxColumn57 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.dataGridViewTextBoxColumn59 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.dataGridViewTextBoxColumn60 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.dataGridViewTextBoxColumn61 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.tabPage3 = new System.Windows.Forms.TabPage();
             this.panel4 = new System.Windows.Forms.Panel();
             this.Txt_Current_Folder = new System.Windows.Forms.TextBox();
@@ -226,17 +237,6 @@
             this.Column3 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Column2 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Column1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.dataGridViewTextBoxColumn50 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.dataGridViewTextBoxColumn51 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Column25 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.dataGridViewTextBoxColumn52 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.dataGridViewTextBoxColumn53 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Column8 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.dataGridViewTextBoxColumn55 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.dataGridViewTextBoxColumn57 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.dataGridViewTextBoxColumn59 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.dataGridViewTextBoxColumn60 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.dataGridViewTextBoxColumn61 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Tbc_SI_Panel.SuspendLayout();
             this.tabPage2.SuspendLayout();
             this.panel5.SuspendLayout();
@@ -278,7 +278,7 @@
             this.Tbc_SI_Panel.Location = new System.Drawing.Point(0, 0);
             this.Tbc_SI_Panel.Name = "Tbc_SI_Panel";
             this.Tbc_SI_Panel.SelectedIndex = 0;
-            this.Tbc_SI_Panel.Size = new System.Drawing.Size(1630, 804);
+            this.Tbc_SI_Panel.Size = new System.Drawing.Size(1531, 722);
             this.Tbc_SI_Panel.TabIndex = 2;
             this.Tbc_SI_Panel.SelectedIndexChanged += new System.EventHandler(this.Tbc_CS_Panel_SelectedIndexChanged);
             // 
@@ -291,7 +291,7 @@
             this.tabPage2.Controls.Add(this.Dgv_New_Job);
             this.tabPage2.Location = new System.Drawing.Point(4, 33);
             this.tabPage2.Name = "tabPage2";
-            this.tabPage2.Size = new System.Drawing.Size(1622, 767);
+            this.tabPage2.Size = new System.Drawing.Size(1523, 685);
             this.tabPage2.TabIndex = 19;
             this.tabPage2.Text = "    New Job List    ";
             // 
@@ -307,7 +307,7 @@
             this.panel5.Controls.Add(this.label18);
             this.panel5.Controls.Add(this.label19);
             this.panel5.Controls.Add(this.dateTimePicker8);
-            this.panel5.Location = new System.Drawing.Point(238, 4);
+            this.panel5.Location = new System.Drawing.Point(187, 4);
             this.panel5.Name = "panel5";
             this.panel5.Size = new System.Drawing.Size(1156, 52);
             this.panel5.TabIndex = 139;
@@ -473,13 +473,90 @@
             dataGridViewCellStyle2.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
             this.Dgv_New_Job.DefaultCellStyle = dataGridViewCellStyle2;
             this.Dgv_New_Job.GridColor = System.Drawing.SystemColors.ActiveBorder;
-            this.Dgv_New_Job.Location = new System.Drawing.Point(60, 60);
+            this.Dgv_New_Job.Location = new System.Drawing.Point(38, 60);
             this.Dgv_New_Job.Name = "Dgv_New_Job";
+            this.Dgv_New_Job.ReadOnly = true;
             this.Dgv_New_Job.RowTemplate.Height = 30;
             this.Dgv_New_Job.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.Dgv_New_Job.Size = new System.Drawing.Size(1500, 660);
+            this.Dgv_New_Job.Size = new System.Drawing.Size(1441, 585);
             this.Dgv_New_Job.TabIndex = 24;
             this.Dgv_New_Job.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.Dgv_New_Job_CellContentClick);
+            // 
+            // dataGridViewTextBoxColumn50
+            // 
+            this.dataGridViewTextBoxColumn50.HeaderText = "SL";
+            this.dataGridViewTextBoxColumn50.Name = "dataGridViewTextBoxColumn50";
+            this.dataGridViewTextBoxColumn50.ReadOnly = true;
+            this.dataGridViewTextBoxColumn50.Width = 50;
+            // 
+            // dataGridViewTextBoxColumn51
+            // 
+            this.dataGridViewTextBoxColumn51.HeaderText = "Job_ID";
+            this.dataGridViewTextBoxColumn51.Name = "dataGridViewTextBoxColumn51";
+            this.dataGridViewTextBoxColumn51.ReadOnly = true;
+            this.dataGridViewTextBoxColumn51.Width = 200;
+            // 
+            // Column25
+            // 
+            this.Column25.HeaderText = "Team";
+            this.Column25.Name = "Column25";
+            this.Column25.ReadOnly = true;
+            // 
+            // dataGridViewTextBoxColumn52
+            // 
+            this.dataGridViewTextBoxColumn52.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
+            this.dataGridViewTextBoxColumn52.HeaderText = "Folder";
+            this.dataGridViewTextBoxColumn52.Name = "dataGridViewTextBoxColumn52";
+            this.dataGridViewTextBoxColumn52.ReadOnly = true;
+            // 
+            // dataGridViewTextBoxColumn53
+            // 
+            this.dataGridViewTextBoxColumn53.HeaderText = "Incoming";
+            this.dataGridViewTextBoxColumn53.Name = "dataGridViewTextBoxColumn53";
+            this.dataGridViewTextBoxColumn53.ReadOnly = true;
+            this.dataGridViewTextBoxColumn53.Width = 230;
+            // 
+            // Column8
+            // 
+            this.Column8.HeaderText = "Delivery";
+            this.Column8.Name = "Column8";
+            this.Column8.ReadOnly = true;
+            this.Column8.Width = 230;
+            // 
+            // dataGridViewTextBoxColumn55
+            // 
+            this.dataGridViewTextBoxColumn55.HeaderText = "Input_File";
+            this.dataGridViewTextBoxColumn55.Name = "dataGridViewTextBoxColumn55";
+            this.dataGridViewTextBoxColumn55.ReadOnly = true;
+            this.dataGridViewTextBoxColumn55.Width = 170;
+            // 
+            // dataGridViewTextBoxColumn57
+            // 
+            this.dataGridViewTextBoxColumn57.HeaderText = "Job_Time";
+            this.dataGridViewTextBoxColumn57.Name = "dataGridViewTextBoxColumn57";
+            this.dataGridViewTextBoxColumn57.ReadOnly = true;
+            this.dataGridViewTextBoxColumn57.Width = 170;
+            // 
+            // dataGridViewTextBoxColumn59
+            // 
+            this.dataGridViewTextBoxColumn59.HeaderText = "Total_Time";
+            this.dataGridViewTextBoxColumn59.Name = "dataGridViewTextBoxColumn59";
+            this.dataGridViewTextBoxColumn59.ReadOnly = true;
+            this.dataGridViewTextBoxColumn59.Width = 170;
+            // 
+            // dataGridViewTextBoxColumn60
+            // 
+            this.dataGridViewTextBoxColumn60.HeaderText = "ID";
+            this.dataGridViewTextBoxColumn60.Name = "dataGridViewTextBoxColumn60";
+            this.dataGridViewTextBoxColumn60.ReadOnly = true;
+            this.dataGridViewTextBoxColumn60.Visible = false;
+            // 
+            // dataGridViewTextBoxColumn61
+            // 
+            this.dataGridViewTextBoxColumn61.HeaderText = "Team";
+            this.dataGridViewTextBoxColumn61.Name = "dataGridViewTextBoxColumn61";
+            this.dataGridViewTextBoxColumn61.ReadOnly = true;
+            this.dataGridViewTextBoxColumn61.Visible = false;
             // 
             // tabPage3
             // 
@@ -491,9 +568,9 @@
             this.tabPage3.Location = new System.Drawing.Point(4, 33);
             this.tabPage3.Name = "tabPage3";
             this.tabPage3.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage3.Size = new System.Drawing.Size(1622, 767);
+            this.tabPage3.Size = new System.Drawing.Size(1523, 685);
             this.tabPage3.TabIndex = 2;
-            this.tabPage3.Text = "  Current Deadline  ";
+            this.tabPage3.Text = "  Todays Deadline  ";
             // 
             // panel4
             // 
@@ -507,7 +584,7 @@
             this.panel4.Controls.Add(this.label14);
             this.panel4.Controls.Add(this.label15);
             this.panel4.Controls.Add(this.dateTimePicker6);
-            this.panel4.Location = new System.Drawing.Point(238, 4);
+            this.panel4.Location = new System.Drawing.Point(187, 4);
             this.panel4.Name = "panel4";
             this.panel4.Size = new System.Drawing.Size(1156, 52);
             this.panel4.TabIndex = 139;
@@ -660,11 +737,12 @@
             dataGridViewCellStyle4.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
             this.Dgv_Todays.DefaultCellStyle = dataGridViewCellStyle4;
             this.Dgv_Todays.GridColor = System.Drawing.SystemColors.ActiveBorder;
-            this.Dgv_Todays.Location = new System.Drawing.Point(60, 60);
+            this.Dgv_Todays.Location = new System.Drawing.Point(38, 60);
             this.Dgv_Todays.Name = "Dgv_Todays";
+            this.Dgv_Todays.ReadOnly = true;
             this.Dgv_Todays.RowTemplate.Height = 30;
             this.Dgv_Todays.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.Dgv_Todays.Size = new System.Drawing.Size(1500, 660);
+            this.Dgv_Todays.Size = new System.Drawing.Size(1441, 585);
             this.Dgv_Todays.TabIndex = 23;
             this.Dgv_Todays.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.Dgv_Todays_CellContentClick);
             // 
@@ -672,77 +750,90 @@
             // 
             this.Column29.HeaderText = "SL";
             this.Column29.Name = "Column29";
+            this.Column29.ReadOnly = true;
             this.Column29.Width = 50;
             // 
             // Column30
             // 
             this.Column30.HeaderText = "Job_ID";
             this.Column30.Name = "Column30";
+            this.Column30.ReadOnly = true;
             this.Column30.Width = 160;
             // 
             // Column27
             // 
             this.Column27.HeaderText = "Team";
             this.Column27.Name = "Column27";
+            this.Column27.ReadOnly = true;
             // 
             // Column31
             // 
             this.Column31.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
             this.Column31.HeaderText = "Folder";
             this.Column31.Name = "Column31";
+            this.Column31.ReadOnly = true;
             // 
             // Column37
             // 
             this.Column37.HeaderText = "Incoming";
             this.Column37.Name = "Column37";
+            this.Column37.ReadOnly = true;
             this.Column37.Width = 210;
             // 
             // Column33
             // 
             this.Column33.HeaderText = "Delivery";
             this.Column33.Name = "Column33";
+            this.Column33.ReadOnly = true;
             this.Column33.Width = 210;
             // 
             // Column32
             // 
             this.Column32.HeaderText = "Input_File";
             this.Column32.Name = "Column32";
+            this.Column32.ReadOnly = true;
             this.Column32.Width = 120;
             // 
             // Column34
             // 
             this.Column34.HeaderText = "Output_File";
             this.Column34.Name = "Column34";
+            this.Column34.ReadOnly = true;
             this.Column34.Width = 120;
             // 
             // Column38
             // 
-            this.Column38.HeaderText = "Target_Time";
+            this.Column38.HeaderText = "Job_Time";
             this.Column38.Name = "Column38";
+            this.Column38.ReadOnly = true;
             this.Column38.Width = 120;
             // 
             // Column56
             // 
             this.Column56.HeaderText = "Pro_Time";
             this.Column56.Name = "Column56";
+            this.Column56.ReadOnly = true;
             this.Column56.Width = 120;
             // 
             // Column45
             // 
             this.Column45.HeaderText = "Total_Time";
             this.Column45.Name = "Column45";
+            this.Column45.ReadOnly = true;
             this.Column45.Width = 120;
             // 
             // Column51
             // 
             this.Column51.HeaderText = "ID";
             this.Column51.Name = "Column51";
+            this.Column51.ReadOnly = true;
             this.Column51.Visible = false;
             // 
             // Column54
             // 
             this.Column54.HeaderText = "Team";
             this.Column54.Name = "Column54";
+            this.Column54.ReadOnly = true;
             this.Column54.Visible = false;
             // 
             // Btn_Todays_Reload
@@ -769,7 +860,7 @@
             this.tabPage8.Controls.Add(this.Btn_Future_Reload);
             this.tabPage8.Location = new System.Drawing.Point(4, 33);
             this.tabPage8.Name = "tabPage8";
-            this.tabPage8.Size = new System.Drawing.Size(1622, 767);
+            this.tabPage8.Size = new System.Drawing.Size(1523, 685);
             this.tabPage8.TabIndex = 15;
             this.tabPage8.Text = "  Future Deadline  ";
             // 
@@ -785,7 +876,7 @@
             this.panel2.Controls.Add(this.label11);
             this.panel2.Controls.Add(this.label12);
             this.panel2.Controls.Add(this.dateTimePicker4);
-            this.panel2.Location = new System.Drawing.Point(238, 4);
+            this.panel2.Location = new System.Drawing.Point(187, 4);
             this.panel2.Name = "panel2";
             this.panel2.Size = new System.Drawing.Size(1156, 52);
             this.panel2.TabIndex = 138;
@@ -938,11 +1029,12 @@
             dataGridViewCellStyle6.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
             this.Dgv_Future.DefaultCellStyle = dataGridViewCellStyle6;
             this.Dgv_Future.GridColor = System.Drawing.SystemColors.ActiveBorder;
-            this.Dgv_Future.Location = new System.Drawing.Point(60, 60);
+            this.Dgv_Future.Location = new System.Drawing.Point(38, 60);
             this.Dgv_Future.Name = "Dgv_Future";
+            this.Dgv_Future.ReadOnly = true;
             this.Dgv_Future.RowTemplate.Height = 30;
             this.Dgv_Future.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.Dgv_Future.Size = new System.Drawing.Size(1500, 660);
+            this.Dgv_Future.Size = new System.Drawing.Size(1441, 585);
             this.Dgv_Future.TabIndex = 34;
             this.Dgv_Future.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.Dgv_Future_CellContentClick);
             // 
@@ -950,77 +1042,90 @@
             // 
             this.dataGridViewTextBoxColumn5.HeaderText = "SL";
             this.dataGridViewTextBoxColumn5.Name = "dataGridViewTextBoxColumn5";
+            this.dataGridViewTextBoxColumn5.ReadOnly = true;
             this.dataGridViewTextBoxColumn5.Width = 50;
             // 
             // dataGridViewTextBoxColumn14
             // 
             this.dataGridViewTextBoxColumn14.HeaderText = "Job_ID";
             this.dataGridViewTextBoxColumn14.Name = "dataGridViewTextBoxColumn14";
+            this.dataGridViewTextBoxColumn14.ReadOnly = true;
             this.dataGridViewTextBoxColumn14.Width = 160;
             // 
             // Column26
             // 
             this.Column26.HeaderText = "Team";
             this.Column26.Name = "Column26";
+            this.Column26.ReadOnly = true;
             // 
             // dataGridViewTextBoxColumn23
             // 
             this.dataGridViewTextBoxColumn23.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
             this.dataGridViewTextBoxColumn23.HeaderText = "Folder";
             this.dataGridViewTextBoxColumn23.Name = "dataGridViewTextBoxColumn23";
+            this.dataGridViewTextBoxColumn23.ReadOnly = true;
             // 
             // dataGridViewTextBoxColumn25
             // 
             this.dataGridViewTextBoxColumn25.HeaderText = "Incoming";
             this.dataGridViewTextBoxColumn25.Name = "dataGridViewTextBoxColumn25";
+            this.dataGridViewTextBoxColumn25.ReadOnly = true;
             this.dataGridViewTextBoxColumn25.Width = 210;
             // 
             // Column9
             // 
             this.Column9.HeaderText = "Delivery";
             this.Column9.Name = "Column9";
+            this.Column9.ReadOnly = true;
             this.Column9.Width = 210;
             // 
             // dataGridViewTextBoxColumn26
             // 
             this.dataGridViewTextBoxColumn26.HeaderText = "Input_File";
             this.dataGridViewTextBoxColumn26.Name = "dataGridViewTextBoxColumn26";
+            this.dataGridViewTextBoxColumn26.ReadOnly = true;
             this.dataGridViewTextBoxColumn26.Width = 120;
             // 
             // dataGridViewTextBoxColumn27
             // 
             this.dataGridViewTextBoxColumn27.HeaderText = "Output_File";
             this.dataGridViewTextBoxColumn27.Name = "dataGridViewTextBoxColumn27";
+            this.dataGridViewTextBoxColumn27.ReadOnly = true;
             this.dataGridViewTextBoxColumn27.Width = 120;
             // 
             // dataGridViewTextBoxColumn28
             // 
-            this.dataGridViewTextBoxColumn28.HeaderText = "Target_Time";
+            this.dataGridViewTextBoxColumn28.HeaderText = "Job_Time";
             this.dataGridViewTextBoxColumn28.Name = "dataGridViewTextBoxColumn28";
+            this.dataGridViewTextBoxColumn28.ReadOnly = true;
             this.dataGridViewTextBoxColumn28.Width = 120;
             // 
             // dataGridViewTextBoxColumn32
             // 
             this.dataGridViewTextBoxColumn32.HeaderText = "Pro_Time";
             this.dataGridViewTextBoxColumn32.Name = "dataGridViewTextBoxColumn32";
+            this.dataGridViewTextBoxColumn32.ReadOnly = true;
             this.dataGridViewTextBoxColumn32.Width = 120;
             // 
             // Column46
             // 
             this.Column46.HeaderText = "Total_Time";
             this.Column46.Name = "Column46";
+            this.Column46.ReadOnly = true;
             this.Column46.Width = 120;
             // 
             // Column53
             // 
             this.Column53.HeaderText = "ID";
             this.Column53.Name = "Column53";
+            this.Column53.ReadOnly = true;
             this.Column53.Visible = false;
             // 
             // Column55
             // 
             this.Column55.HeaderText = "Team";
             this.Column55.Name = "Column55";
+            this.Column55.ReadOnly = true;
             this.Column55.Visible = false;
             // 
             // Btn_Future_Reload
@@ -1047,7 +1152,7 @@
             this.tabPage4.Location = new System.Drawing.Point(4, 33);
             this.tabPage4.Name = "tabPage4";
             this.tabPage4.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage4.Size = new System.Drawing.Size(1622, 767);
+            this.tabPage4.Size = new System.Drawing.Size(1523, 685);
             this.tabPage4.TabIndex = 3;
             this.tabPage4.Text = "     Ready Jobs     ";
             // 
@@ -1063,7 +1168,7 @@
             this.panel3.Controls.Add(this.label6);
             this.panel3.Controls.Add(this.label7);
             this.panel3.Controls.Add(this.dateTimePicker2);
-            this.panel3.Location = new System.Drawing.Point(238, 4);
+            this.panel3.Location = new System.Drawing.Point(187, 4);
             this.panel3.Name = "panel3";
             this.panel3.Size = new System.Drawing.Size(1156, 52);
             this.panel3.TabIndex = 137;
@@ -1213,11 +1318,12 @@
             dataGridViewCellStyle8.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
             this.Dgv_Ready_Job.DefaultCellStyle = dataGridViewCellStyle8;
             this.Dgv_Ready_Job.GridColor = System.Drawing.SystemColors.ActiveBorder;
-            this.Dgv_Ready_Job.Location = new System.Drawing.Point(60, 60);
+            this.Dgv_Ready_Job.Location = new System.Drawing.Point(38, 60);
             this.Dgv_Ready_Job.Name = "Dgv_Ready_Job";
+            this.Dgv_Ready_Job.ReadOnly = true;
             this.Dgv_Ready_Job.RowTemplate.Height = 30;
             this.Dgv_Ready_Job.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.Dgv_Ready_Job.Size = new System.Drawing.Size(1500, 666);
+            this.Dgv_Ready_Job.Size = new System.Drawing.Size(1441, 585);
             this.Dgv_Ready_Job.TabIndex = 10;
             this.Dgv_Ready_Job.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.Dgv_Ready_Job_CellContentClick);
             // 
@@ -1225,12 +1331,14 @@
             // 
             this.Column10.HeaderText = "SL";
             this.Column10.Name = "Column10";
+            this.Column10.ReadOnly = true;
             this.Column10.Width = 50;
             // 
             // Column11
             // 
             this.Column11.HeaderText = "Job_ID";
             this.Column11.Name = "Column11";
+            this.Column11.ReadOnly = true;
             this.Column11.Width = 220;
             // 
             // Column12
@@ -1238,47 +1346,55 @@
             this.Column12.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
             this.Column12.HeaderText = "Folder";
             this.Column12.Name = "Column12";
+            this.Column12.ReadOnly = true;
             // 
             // Column15
             // 
             this.Column15.HeaderText = "Input_amt";
             this.Column15.Name = "Column15";
+            this.Column15.ReadOnly = true;
             this.Column15.Width = 120;
             // 
             // Column39
             // 
             this.Column39.HeaderText = "Output_amt";
             this.Column39.Name = "Column39";
+            this.Column39.ReadOnly = true;
             this.Column39.Width = 120;
             // 
             // Column41
             // 
             this.Column41.HeaderText = "Service";
             this.Column41.Name = "Column41";
+            this.Column41.ReadOnly = true;
             this.Column41.Width = 250;
             // 
             // Column16
             // 
             this.Column16.HeaderText = "Job_Time";
             this.Column16.Name = "Column16";
+            this.Column16.ReadOnly = true;
             this.Column16.Width = 120;
             // 
             // Column18
             // 
             this.Column18.HeaderText = "Pro_Time";
             this.Column18.Name = "Column18";
+            this.Column18.ReadOnly = true;
             this.Column18.Width = 120;
             // 
             // Column17
             // 
             this.Column17.HeaderText = "Delivery";
             this.Column17.Name = "Column17";
+            this.Column17.ReadOnly = true;
             this.Column17.Width = 220;
             // 
             // Column58
             // 
             this.Column58.HeaderText = "Efficiency";
             this.Column58.Name = "Column58";
+            this.Column58.ReadOnly = true;
             this.Column58.Width = 120;
             // 
             // tabPage7
@@ -1288,7 +1404,7 @@
             this.tabPage7.Controls.Add(this.Dgv_Performance);
             this.tabPage7.Location = new System.Drawing.Point(4, 33);
             this.tabPage7.Name = "tabPage7";
-            this.tabPage7.Size = new System.Drawing.Size(1622, 767);
+            this.tabPage7.Size = new System.Drawing.Size(1523, 685);
             this.tabPage7.TabIndex = 16;
             this.tabPage7.Text = "   Performance   ";
             // 
@@ -1335,11 +1451,12 @@
             dataGridViewCellStyle10.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
             this.Dgv_Performance.DefaultCellStyle = dataGridViewCellStyle10;
             this.Dgv_Performance.GridColor = System.Drawing.SystemColors.ActiveBorder;
-            this.Dgv_Performance.Location = new System.Drawing.Point(60, 60);
+            this.Dgv_Performance.Location = new System.Drawing.Point(38, 60);
             this.Dgv_Performance.Name = "Dgv_Performance";
+            this.Dgv_Performance.ReadOnly = true;
             this.Dgv_Performance.RowTemplate.Height = 30;
             this.Dgv_Performance.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.Dgv_Performance.Size = new System.Drawing.Size(1494, 666);
+            this.Dgv_Performance.Size = new System.Drawing.Size(1441, 585);
             this.Dgv_Performance.TabIndex = 25;
             this.Dgv_Performance.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.Dgv_Performance_CellContentClick);
             // 
@@ -1347,6 +1464,7 @@
             // 
             this.dataGridViewTextBoxColumn29.HeaderText = "Rank";
             this.dataGridViewTextBoxColumn29.Name = "dataGridViewTextBoxColumn29";
+            this.dataGridViewTextBoxColumn29.ReadOnly = true;
             this.dataGridViewTextBoxColumn29.Width = 80;
             // 
             // dataGridViewTextBoxColumn30
@@ -1354,59 +1472,69 @@
             this.dataGridViewTextBoxColumn30.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
             this.dataGridViewTextBoxColumn30.HeaderText = "Name";
             this.dataGridViewTextBoxColumn30.Name = "dataGridViewTextBoxColumn30";
+            this.dataGridViewTextBoxColumn30.ReadOnly = true;
             // 
             // Column50
             // 
             this.Column50.HeaderText = "Shift";
             this.Column50.Name = "Column50";
+            this.Column50.ReadOnly = true;
             this.Column50.Width = 120;
             // 
             // dataGridViewTextBoxColumn31
             // 
             this.dataGridViewTextBoxColumn31.HeaderText = "First_Login";
             this.dataGridViewTextBoxColumn31.Name = "dataGridViewTextBoxColumn31";
+            this.dataGridViewTextBoxColumn31.ReadOnly = true;
             this.dataGridViewTextBoxColumn31.Width = 230;
             // 
             // Column40
             // 
             this.Column40.HeaderText = "Last_activity";
             this.Column40.Name = "Column40";
+            this.Column40.ReadOnly = true;
             this.Column40.Width = 230;
             // 
             // Column19
             // 
             this.Column19.HeaderText = "Status";
             this.Column19.Name = "Column19";
+            this.Column19.ReadOnly = true;
             this.Column19.Width = 130;
             // 
             // dataGridViewTextBoxColumn33
             // 
             this.dataGridViewTextBoxColumn33.HeaderText = "Total_File";
             this.dataGridViewTextBoxColumn33.Name = "dataGridViewTextBoxColumn33";
+            this.dataGridViewTextBoxColumn33.ReadOnly = true;
             this.dataGridViewTextBoxColumn33.Width = 130;
             // 
             // dataGridViewTextBoxColumn34
             // 
-            this.dataGridViewTextBoxColumn34.HeaderText = "Job_Time";
+            this.dataGridViewTextBoxColumn34.HeaderText = "Est_Time";
             this.dataGridViewTextBoxColumn34.Name = "dataGridViewTextBoxColumn34";
+            this.dataGridViewTextBoxColumn34.ReadOnly = true;
             this.dataGridViewTextBoxColumn34.Width = 120;
             // 
             // dataGridViewTextBoxColumn35
             // 
             this.dataGridViewTextBoxColumn35.HeaderText = "Pro_Time";
             this.dataGridViewTextBoxColumn35.Name = "dataGridViewTextBoxColumn35";
+            this.dataGridViewTextBoxColumn35.ReadOnly = true;
             this.dataGridViewTextBoxColumn35.Width = 120;
             // 
             // Column23
             // 
             this.Column23.HeaderText = "Rest_Time";
             this.Column23.Name = "Column23";
+            this.Column23.ReadOnly = true;
             this.Column23.Width = 120;
             // 
             // Column13
             // 
             this.Column13.HeaderText = "Efficiency";
             this.Column13.Name = "Column13";
+            this.Column13.ReadOnly = true;
             this.Column13.Width = 120;
             // 
             // tabPage9
@@ -1416,7 +1544,7 @@
             this.tabPage9.Controls.Add(this.DgvHistory);
             this.tabPage9.Location = new System.Drawing.Point(4, 33);
             this.tabPage9.Name = "tabPage9";
-            this.tabPage9.Size = new System.Drawing.Size(1622, 767);
+            this.tabPage9.Size = new System.Drawing.Size(1523, 685);
             this.tabPage9.TabIndex = 17;
             this.tabPage9.Text = "       History       ";
             // 
@@ -1463,35 +1591,40 @@
             dataGridViewCellStyle12.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
             this.DgvHistory.DefaultCellStyle = dataGridViewCellStyle12;
             this.DgvHistory.GridColor = System.Drawing.SystemColors.ActiveBorder;
-            this.DgvHistory.Location = new System.Drawing.Point(60, 60);
+            this.DgvHistory.Location = new System.Drawing.Point(38, 60);
             this.DgvHistory.Name = "DgvHistory";
+            this.DgvHistory.ReadOnly = true;
             this.DgvHistory.RowTemplate.Height = 30;
             this.DgvHistory.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.DgvHistory.Size = new System.Drawing.Size(1494, 666);
+            this.DgvHistory.Size = new System.Drawing.Size(1441, 585);
             this.DgvHistory.TabIndex = 24;
             // 
             // dataGridViewTextBoxColumn36
             // 
             this.dataGridViewTextBoxColumn36.HeaderText = "SL";
             this.dataGridViewTextBoxColumn36.Name = "dataGridViewTextBoxColumn36";
+            this.dataGridViewTextBoxColumn36.ReadOnly = true;
             this.dataGridViewTextBoxColumn36.Width = 50;
             // 
             // Column14
             // 
             this.Column14.HeaderText = "Name";
             this.Column14.Name = "Column14";
+            this.Column14.ReadOnly = true;
             this.Column14.Width = 150;
             // 
             // dataGridViewTextBoxColumn38
             // 
             this.dataGridViewTextBoxColumn38.HeaderText = "Job_ID";
             this.dataGridViewTextBoxColumn38.Name = "dataGridViewTextBoxColumn38";
+            this.dataGridViewTextBoxColumn38.ReadOnly = true;
             this.dataGridViewTextBoxColumn38.Width = 150;
             // 
             // dataGridViewTextBoxColumn39
             // 
             this.dataGridViewTextBoxColumn39.HeaderText = "Category";
             this.dataGridViewTextBoxColumn39.Name = "dataGridViewTextBoxColumn39";
+            this.dataGridViewTextBoxColumn39.ReadOnly = true;
             this.dataGridViewTextBoxColumn39.Width = 120;
             // 
             // dataGridViewTextBoxColumn40
@@ -1499,41 +1632,48 @@
             this.dataGridViewTextBoxColumn40.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
             this.dataGridViewTextBoxColumn40.HeaderText = "Image";
             this.dataGridViewTextBoxColumn40.Name = "dataGridViewTextBoxColumn40";
+            this.dataGridViewTextBoxColumn40.ReadOnly = true;
             // 
             // dataGridViewTextBoxColumn41
             // 
             this.dataGridViewTextBoxColumn41.HeaderText = "Service";
             this.dataGridViewTextBoxColumn41.Name = "dataGridViewTextBoxColumn41";
+            this.dataGridViewTextBoxColumn41.ReadOnly = true;
             this.dataGridViewTextBoxColumn41.Width = 150;
             // 
             // dataGridViewTextBoxColumn46
             // 
             this.dataGridViewTextBoxColumn46.HeaderText = "Start_Time";
             this.dataGridViewTextBoxColumn46.Name = "dataGridViewTextBoxColumn46";
+            this.dataGridViewTextBoxColumn46.ReadOnly = true;
             this.dataGridViewTextBoxColumn46.Width = 200;
             // 
             // dataGridViewTextBoxColumn47
             // 
             this.dataGridViewTextBoxColumn47.HeaderText = "End_Time";
             this.dataGridViewTextBoxColumn47.Name = "dataGridViewTextBoxColumn47";
+            this.dataGridViewTextBoxColumn47.ReadOnly = true;
             this.dataGridViewTextBoxColumn47.Width = 200;
             // 
             // dataGridViewTextBoxColumn42
             // 
-            this.dataGridViewTextBoxColumn42.HeaderText = "Job_Time";
+            this.dataGridViewTextBoxColumn42.HeaderText = "Est_Time";
             this.dataGridViewTextBoxColumn42.Name = "dataGridViewTextBoxColumn42";
+            this.dataGridViewTextBoxColumn42.ReadOnly = true;
             this.dataGridViewTextBoxColumn42.Width = 120;
             // 
             // dataGridViewTextBoxColumn43
             // 
             this.dataGridViewTextBoxColumn43.HeaderText = "Pro_Time";
             this.dataGridViewTextBoxColumn43.Name = "dataGridViewTextBoxColumn43";
+            this.dataGridViewTextBoxColumn43.ReadOnly = true;
             this.dataGridViewTextBoxColumn43.Width = 120;
             // 
             // Column24
             // 
             this.Column24.HeaderText = "Efficiency";
             this.Column24.Name = "Column24";
+            this.Column24.ReadOnly = true;
             // 
             // tabPage10
             // 
@@ -1543,9 +1683,9 @@
             this.tabPage10.Location = new System.Drawing.Point(4, 33);
             this.tabPage10.Name = "tabPage10";
             this.tabPage10.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage10.Size = new System.Drawing.Size(1622, 767);
+            this.tabPage10.Size = new System.Drawing.Size(1523, 685);
             this.tabPage10.TabIndex = 18;
-            this.tabPage10.Text = "  QC_Feedback  ";
+            this.tabPage10.Text = "  QC_Report  ";
             // 
             // Dgv_Production_Error
             // 
@@ -1587,41 +1727,47 @@
             dataGridViewCellStyle14.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
             this.Dgv_Production_Error.DefaultCellStyle = dataGridViewCellStyle14;
             this.Dgv_Production_Error.GridColor = System.Drawing.SystemColors.ActiveBorder;
-            this.Dgv_Production_Error.Location = new System.Drawing.Point(60, 60);
+            this.Dgv_Production_Error.Location = new System.Drawing.Point(38, 60);
             this.Dgv_Production_Error.Name = "Dgv_Production_Error";
+            this.Dgv_Production_Error.ReadOnly = true;
             this.Dgv_Production_Error.RowTemplate.Height = 30;
             this.Dgv_Production_Error.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.Dgv_Production_Error.Size = new System.Drawing.Size(1492, 666);
+            this.Dgv_Production_Error.Size = new System.Drawing.Size(1441, 585);
             this.Dgv_Production_Error.TabIndex = 28;
             // 
             // dataGridViewTextBoxColumn44
             // 
             this.dataGridViewTextBoxColumn44.HeaderText = "SL";
             this.dataGridViewTextBoxColumn44.Name = "dataGridViewTextBoxColumn44";
+            this.dataGridViewTextBoxColumn44.ReadOnly = true;
             this.dataGridViewTextBoxColumn44.Width = 80;
             // 
             // dataGridViewTextBoxColumn45
             // 
             this.dataGridViewTextBoxColumn45.HeaderText = "Name";
             this.dataGridViewTextBoxColumn45.Name = "dataGridViewTextBoxColumn45";
+            this.dataGridViewTextBoxColumn45.ReadOnly = true;
             this.dataGridViewTextBoxColumn45.Width = 150;
             // 
             // dataGridViewTextBoxColumn71
             // 
             this.dataGridViewTextBoxColumn71.HeaderText = "Job_ID";
             this.dataGridViewTextBoxColumn71.Name = "dataGridViewTextBoxColumn71";
+            this.dataGridViewTextBoxColumn71.ReadOnly = true;
             this.dataGridViewTextBoxColumn71.Width = 150;
             // 
             // dataGridViewTextBoxColumn72
             // 
             this.dataGridViewTextBoxColumn72.HeaderText = "Folder";
             this.dataGridViewTextBoxColumn72.Name = "dataGridViewTextBoxColumn72";
+            this.dataGridViewTextBoxColumn72.ReadOnly = true;
             this.dataGridViewTextBoxColumn72.Width = 300;
             // 
             // dataGridViewTextBoxColumn70
             // 
             this.dataGridViewTextBoxColumn70.HeaderText = "Image";
             this.dataGridViewTextBoxColumn70.Name = "dataGridViewTextBoxColumn70";
+            this.dataGridViewTextBoxColumn70.ReadOnly = true;
             this.dataGridViewTextBoxColumn70.Width = 250;
             // 
             // dataGridViewTextBoxColumn73
@@ -1629,17 +1775,20 @@
             this.dataGridViewTextBoxColumn73.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
             this.dataGridViewTextBoxColumn73.HeaderText = "Error_Details";
             this.dataGridViewTextBoxColumn73.Name = "dataGridViewTextBoxColumn73";
+            this.dataGridViewTextBoxColumn73.ReadOnly = true;
             // 
             // dataGridViewTextBoxColumn48
             // 
             this.dataGridViewTextBoxColumn48.HeaderText = "Report_Time";
             this.dataGridViewTextBoxColumn48.Name = "dataGridViewTextBoxColumn48";
+            this.dataGridViewTextBoxColumn48.ReadOnly = true;
             this.dataGridViewTextBoxColumn48.Width = 200;
             // 
             // dataGridViewTextBoxColumn49
             // 
             this.dataGridViewTextBoxColumn49.HeaderText = "Reporter";
             this.dataGridViewTextBoxColumn49.Name = "dataGridViewTextBoxColumn49";
+            this.dataGridViewTextBoxColumn49.ReadOnly = true;
             this.dataGridViewTextBoxColumn49.Width = 150;
             // 
             // tabPage1
@@ -1649,7 +1798,7 @@
             this.tabPage1.Controls.Add(this.Dgv_Manual_Job);
             this.tabPage1.Location = new System.Drawing.Point(4, 33);
             this.tabPage1.Name = "tabPage1";
-            this.tabPage1.Size = new System.Drawing.Size(1622, 767);
+            this.tabPage1.Size = new System.Drawing.Size(1523, 685);
             this.tabPage1.TabIndex = 20;
             this.tabPage1.Text = "    Manual_Job    ";
             // 
@@ -1696,11 +1845,12 @@
             dataGridViewCellStyle16.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
             this.Dgv_Manual_Job.DefaultCellStyle = dataGridViewCellStyle16;
             this.Dgv_Manual_Job.GridColor = System.Drawing.SystemColors.ActiveBorder;
-            this.Dgv_Manual_Job.Location = new System.Drawing.Point(60, 60);
+            this.Dgv_Manual_Job.Location = new System.Drawing.Point(38, 60);
             this.Dgv_Manual_Job.Name = "Dgv_Manual_Job";
+            this.Dgv_Manual_Job.ReadOnly = true;
             this.Dgv_Manual_Job.RowTemplate.Height = 30;
             this.Dgv_Manual_Job.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.Dgv_Manual_Job.Size = new System.Drawing.Size(1494, 666);
+            this.Dgv_Manual_Job.Size = new System.Drawing.Size(1441, 585);
             this.Dgv_Manual_Job.TabIndex = 25;
             this.Dgv_Manual_Job.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.Dgv_Manual_Job_CellContentClick);
             // 
@@ -1708,30 +1858,35 @@
             // 
             this.dataGridViewTextBoxColumn7.HeaderText = "SL";
             this.dataGridViewTextBoxColumn7.Name = "dataGridViewTextBoxColumn7";
+            this.dataGridViewTextBoxColumn7.ReadOnly = true;
             this.dataGridViewTextBoxColumn7.Width = 50;
             // 
             // dataGridViewTextBoxColumn8
             // 
             this.dataGridViewTextBoxColumn8.HeaderText = "Name";
             this.dataGridViewTextBoxColumn8.Name = "dataGridViewTextBoxColumn8";
+            this.dataGridViewTextBoxColumn8.ReadOnly = true;
             this.dataGridViewTextBoxColumn8.Width = 150;
             // 
             // dataGridViewTextBoxColumn9
             // 
             this.dataGridViewTextBoxColumn9.HeaderText = "Job_ID";
             this.dataGridViewTextBoxColumn9.Name = "dataGridViewTextBoxColumn9";
+            this.dataGridViewTextBoxColumn9.ReadOnly = true;
             this.dataGridViewTextBoxColumn9.Width = 150;
             // 
             // dataGridViewTextBoxColumn11
             // 
             this.dataGridViewTextBoxColumn11.HeaderText = "Image";
             this.dataGridViewTextBoxColumn11.Name = "dataGridViewTextBoxColumn11";
+            this.dataGridViewTextBoxColumn11.ReadOnly = true;
             this.dataGridViewTextBoxColumn11.Width = 250;
             // 
             // dataGridViewTextBoxColumn12
             // 
             this.dataGridViewTextBoxColumn12.HeaderText = "Service";
             this.dataGridViewTextBoxColumn12.Name = "dataGridViewTextBoxColumn12";
+            this.dataGridViewTextBoxColumn12.ReadOnly = true;
             this.dataGridViewTextBoxColumn12.Width = 150;
             // 
             // dataGridViewTextBoxColumn18
@@ -1739,35 +1894,41 @@
             this.dataGridViewTextBoxColumn18.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
             this.dataGridViewTextBoxColumn18.HeaderText = "Reason";
             this.dataGridViewTextBoxColumn18.Name = "dataGridViewTextBoxColumn18";
+            this.dataGridViewTextBoxColumn18.ReadOnly = true;
             // 
             // dataGridViewTextBoxColumn13
             // 
             this.dataGridViewTextBoxColumn13.HeaderText = "Start_Time";
             this.dataGridViewTextBoxColumn13.Name = "dataGridViewTextBoxColumn13";
+            this.dataGridViewTextBoxColumn13.ReadOnly = true;
             this.dataGridViewTextBoxColumn13.Width = 200;
             // 
             // dataGridViewTextBoxColumn15
             // 
             this.dataGridViewTextBoxColumn15.HeaderText = "End_Time";
             this.dataGridViewTextBoxColumn15.Name = "dataGridViewTextBoxColumn15";
+            this.dataGridViewTextBoxColumn15.ReadOnly = true;
             this.dataGridViewTextBoxColumn15.Width = 200;
             // 
             // dataGridViewTextBoxColumn16
             // 
-            this.dataGridViewTextBoxColumn16.HeaderText = "Job_Time";
+            this.dataGridViewTextBoxColumn16.HeaderText = "Est_Time";
             this.dataGridViewTextBoxColumn16.Name = "dataGridViewTextBoxColumn16";
+            this.dataGridViewTextBoxColumn16.ReadOnly = true;
             this.dataGridViewTextBoxColumn16.Width = 120;
             // 
             // dataGridViewTextBoxColumn17
             // 
             this.dataGridViewTextBoxColumn17.HeaderText = "Pro_Time";
             this.dataGridViewTextBoxColumn17.Name = "dataGridViewTextBoxColumn17";
+            this.dataGridViewTextBoxColumn17.ReadOnly = true;
             this.dataGridViewTextBoxColumn17.Width = 120;
             // 
             // Column28
             // 
             this.Column28.HeaderText = "Column28";
             this.Column28.Name = "Column28";
+            this.Column28.ReadOnly = true;
             this.Column28.Visible = false;
             // 
             // panel1
@@ -1779,9 +1940,9 @@
             this.panel1.Controls.Add(this.Btn_Workload);
             this.panel1.Controls.Add(this.Btn_Capacity);
             this.panel1.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.panel1.Location = new System.Drawing.Point(0, 807);
+            this.panel1.Location = new System.Drawing.Point(0, 725);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(1630, 50);
+            this.panel1.Size = new System.Drawing.Size(1531, 50);
             this.panel1.TabIndex = 25;
             // 
             // Txt_Server
@@ -1791,7 +1952,7 @@
             this.Txt_Server.BorderStyle = System.Windows.Forms.BorderStyle.None;
             this.Txt_Server.Font = new System.Drawing.Font("Microsoft Sans Serif", 11F, System.Drawing.FontStyle.Bold);
             this.Txt_Server.ForeColor = System.Drawing.Color.Red;
-            this.Txt_Server.Location = new System.Drawing.Point(714, 18);
+            this.Txt_Server.Location = new System.Drawing.Point(664, 18);
             this.Txt_Server.Name = "Txt_Server";
             this.Txt_Server.ReadOnly = true;
             this.Txt_Server.Size = new System.Drawing.Size(203, 17);
@@ -1825,7 +1986,7 @@
             this.Btn_Missing.Font = new System.Drawing.Font("Arial", 15F);
             this.Btn_Missing.ForeColor = System.Drawing.SystemColors.ControlText;
             this.Btn_Missing.Image = ((System.Drawing.Image)(resources.GetObject("Btn_Missing.Image")));
-            this.Btn_Missing.Location = new System.Drawing.Point(1456, 2);
+            this.Btn_Missing.Location = new System.Drawing.Point(1357, 2);
             this.Btn_Missing.Name = "Btn_Missing";
             this.Btn_Missing.Size = new System.Drawing.Size(170, 46);
             this.Btn_Missing.TabIndex = 12;
@@ -2173,77 +2334,12 @@
             this.Column1.Name = "Column1";
             this.Column1.Width = 50;
             // 
-            // dataGridViewTextBoxColumn50
-            // 
-            this.dataGridViewTextBoxColumn50.HeaderText = "SL";
-            this.dataGridViewTextBoxColumn50.Name = "dataGridViewTextBoxColumn50";
-            this.dataGridViewTextBoxColumn50.Width = 50;
-            // 
-            // dataGridViewTextBoxColumn51
-            // 
-            this.dataGridViewTextBoxColumn51.HeaderText = "Job_ID";
-            this.dataGridViewTextBoxColumn51.Name = "dataGridViewTextBoxColumn51";
-            this.dataGridViewTextBoxColumn51.Width = 200;
-            // 
-            // Column25
-            // 
-            this.Column25.HeaderText = "Team";
-            this.Column25.Name = "Column25";
-            // 
-            // dataGridViewTextBoxColumn52
-            // 
-            this.dataGridViewTextBoxColumn52.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
-            this.dataGridViewTextBoxColumn52.HeaderText = "Folder";
-            this.dataGridViewTextBoxColumn52.Name = "dataGridViewTextBoxColumn52";
-            // 
-            // dataGridViewTextBoxColumn53
-            // 
-            this.dataGridViewTextBoxColumn53.HeaderText = "Incoming";
-            this.dataGridViewTextBoxColumn53.Name = "dataGridViewTextBoxColumn53";
-            this.dataGridViewTextBoxColumn53.Width = 230;
-            // 
-            // Column8
-            // 
-            this.Column8.HeaderText = "Delivery";
-            this.Column8.Name = "Column8";
-            this.Column8.Width = 230;
-            // 
-            // dataGridViewTextBoxColumn55
-            // 
-            this.dataGridViewTextBoxColumn55.HeaderText = "Input_File";
-            this.dataGridViewTextBoxColumn55.Name = "dataGridViewTextBoxColumn55";
-            this.dataGridViewTextBoxColumn55.Width = 170;
-            // 
-            // dataGridViewTextBoxColumn57
-            // 
-            this.dataGridViewTextBoxColumn57.HeaderText = "Lock_Time";
-            this.dataGridViewTextBoxColumn57.Name = "dataGridViewTextBoxColumn57";
-            this.dataGridViewTextBoxColumn57.Width = 170;
-            // 
-            // dataGridViewTextBoxColumn59
-            // 
-            this.dataGridViewTextBoxColumn59.HeaderText = "Total_Time";
-            this.dataGridViewTextBoxColumn59.Name = "dataGridViewTextBoxColumn59";
-            this.dataGridViewTextBoxColumn59.Width = 170;
-            // 
-            // dataGridViewTextBoxColumn60
-            // 
-            this.dataGridViewTextBoxColumn60.HeaderText = "ID";
-            this.dataGridViewTextBoxColumn60.Name = "dataGridViewTextBoxColumn60";
-            this.dataGridViewTextBoxColumn60.Visible = false;
-            // 
-            // dataGridViewTextBoxColumn61
-            // 
-            this.dataGridViewTextBoxColumn61.HeaderText = "Team";
-            this.dataGridViewTextBoxColumn61.Name = "dataGridViewTextBoxColumn61";
-            this.dataGridViewTextBoxColumn61.Visible = false;
-            // 
             // SiDashboard
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.SystemColors.ActiveBorder;
-            this.ClientSize = new System.Drawing.Size(1630, 857);
+            this.ClientSize = new System.Drawing.Size(1531, 775);
             this.Controls.Add(this.panel1);
             this.Controls.Add(this.Tbc_SI_Panel);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.Fixed3D;
@@ -2395,6 +2491,29 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn Column3;
         private System.Windows.Forms.DataGridViewTextBoxColumn Column2;
         private System.Windows.Forms.DataGridViewTextBoxColumn Column1;
+        private System.Windows.Forms.TabPage tabPage1;
+        private System.Windows.Forms.DataGridView Dgv_Manual_Job;
+        private System.Windows.Forms.DataGridViewTextBoxColumn Column10;
+        private System.Windows.Forms.DataGridViewTextBoxColumn Column11;
+        private System.Windows.Forms.DataGridViewTextBoxColumn Column12;
+        private System.Windows.Forms.DataGridViewTextBoxColumn Column15;
+        private System.Windows.Forms.DataGridViewTextBoxColumn Column39;
+        private System.Windows.Forms.DataGridViewTextBoxColumn Column41;
+        private System.Windows.Forms.DataGridViewTextBoxColumn Column16;
+        private System.Windows.Forms.DataGridViewTextBoxColumn Column18;
+        private System.Windows.Forms.DataGridViewTextBoxColumn Column17;
+        private System.Windows.Forms.DataGridViewTextBoxColumn Column58;
+        private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn50;
+        private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn51;
+        private System.Windows.Forms.DataGridViewTextBoxColumn Column25;
+        private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn52;
+        private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn53;
+        private System.Windows.Forms.DataGridViewTextBoxColumn Column8;
+        private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn55;
+        private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn57;
+        private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn59;
+        private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn60;
+        private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn61;
         private System.Windows.Forms.DataGridViewTextBoxColumn Column29;
         private System.Windows.Forms.DataGridViewTextBoxColumn Column30;
         private System.Windows.Forms.DataGridViewTextBoxColumn Column27;
@@ -2421,40 +2540,6 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn Column46;
         private System.Windows.Forms.DataGridViewTextBoxColumn Column53;
         private System.Windows.Forms.DataGridViewTextBoxColumn Column55;
-        private System.Windows.Forms.TabPage tabPage1;
-        private System.Windows.Forms.DataGridView Dgv_Manual_Job;
-        private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn7;
-        private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn8;
-        private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn9;
-        private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn11;
-        private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn12;
-        private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn18;
-        private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn13;
-        private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn15;
-        private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn16;
-        private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn17;
-        private System.Windows.Forms.DataGridViewTextBoxColumn Column28;
-        private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn36;
-        private System.Windows.Forms.DataGridViewTextBoxColumn Column14;
-        private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn38;
-        private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn39;
-        private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn40;
-        private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn41;
-        private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn46;
-        private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn47;
-        private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn42;
-        private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn43;
-        private System.Windows.Forms.DataGridViewTextBoxColumn Column24;
-        private System.Windows.Forms.DataGridViewTextBoxColumn Column10;
-        private System.Windows.Forms.DataGridViewTextBoxColumn Column11;
-        private System.Windows.Forms.DataGridViewTextBoxColumn Column12;
-        private System.Windows.Forms.DataGridViewTextBoxColumn Column15;
-        private System.Windows.Forms.DataGridViewTextBoxColumn Column39;
-        private System.Windows.Forms.DataGridViewTextBoxColumn Column41;
-        private System.Windows.Forms.DataGridViewTextBoxColumn Column16;
-        private System.Windows.Forms.DataGridViewTextBoxColumn Column18;
-        private System.Windows.Forms.DataGridViewTextBoxColumn Column17;
-        private System.Windows.Forms.DataGridViewTextBoxColumn Column58;
         private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn29;
         private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn30;
         private System.Windows.Forms.DataGridViewTextBoxColumn Column50;
@@ -2466,16 +2551,27 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn35;
         private System.Windows.Forms.DataGridViewTextBoxColumn Column23;
         private System.Windows.Forms.DataGridViewTextBoxColumn Column13;
-        private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn50;
-        private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn51;
-        private System.Windows.Forms.DataGridViewTextBoxColumn Column25;
-        private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn52;
-        private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn53;
-        private System.Windows.Forms.DataGridViewTextBoxColumn Column8;
-        private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn55;
-        private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn57;
-        private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn59;
-        private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn60;
-        private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn61;
+        private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn36;
+        private System.Windows.Forms.DataGridViewTextBoxColumn Column14;
+        private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn38;
+        private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn39;
+        private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn40;
+        private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn41;
+        private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn46;
+        private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn47;
+        private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn42;
+        private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn43;
+        private System.Windows.Forms.DataGridViewTextBoxColumn Column24;
+        private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn7;
+        private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn8;
+        private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn9;
+        private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn11;
+        private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn12;
+        private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn18;
+        private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn13;
+        private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn15;
+        private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn16;
+        private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn17;
+        private System.Windows.Forms.DataGridViewTextBoxColumn Column28;
     }
 }

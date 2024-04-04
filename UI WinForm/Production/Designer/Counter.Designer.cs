@@ -57,7 +57,7 @@
             this.ControlBox = false;
             this.Controls.Add(this.Lbl_Count);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
-            this.Location = new System.Drawing.Point(0, 930);
+            this.Location = new System.Drawing.Point(50, 930);
             this.MaximizeBox = false;
             this.MinimizeBox = false;
             this.Name = "Counter";

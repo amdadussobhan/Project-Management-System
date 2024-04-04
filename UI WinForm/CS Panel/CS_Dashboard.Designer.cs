@@ -77,18 +77,6 @@
             this.label8 = new System.Windows.Forms.Label();
             this.dateTimePicker4 = new System.Windows.Forms.DateTimePicker();
             this.Dgv_Running_Job = new System.Windows.Forms.DataGridView();
-            this.dataGridViewTextBoxColumn16 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.dataGridViewTextBoxColumn17 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.dataGridViewTextBoxColumn18 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.dataGridViewTextBoxColumn19 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Column23 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.dataGridViewTextBoxColumn20 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.dataGridViewTextBoxColumn21 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.dataGridViewTextBoxColumn22 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.dataGridViewTextBoxColumn23 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.dataGridViewTextBoxColumn24 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.dataGridViewTextBoxColumn26 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.dataGridViewTextBoxColumn27 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.tabPage4 = new System.Windows.Forms.TabPage();
             this.panel3 = new System.Windows.Forms.Panel();
             this.Txt_Ready_Folder = new System.Windows.Forms.TextBox();
@@ -101,6 +89,34 @@
             this.label6 = new System.Windows.Forms.Label();
             this.dateTimePicker2 = new System.Windows.Forms.DateTimePicker();
             this.Dgv_Ready_Job = new System.Windows.Forms.DataGridView();
+            this.tabPage12 = new System.Windows.Forms.TabPage();
+            this.Dgv_Done_Job = new System.Windows.Forms.DataGridView();
+            this.tabPage5 = new System.Windows.Forms.TabPage();
+            this.Dgv_Performance = new System.Windows.Forms.DataGridView();
+            this.tabPage8 = new System.Windows.Forms.TabPage();
+            this.DgvHistory = new System.Windows.Forms.DataGridView();
+            this.panel1 = new System.Windows.Forms.Panel();
+            this.Modify_200 = new System.Windows.Forms.Button();
+            this.Btn_Capacity = new System.Windows.Forms.Button();
+            this.Btn_Achieve = new System.Windows.Forms.Button();
+            this.Btn_Workload = new System.Windows.Forms.Button();
+            this.Btn_Rename = new System.Windows.Forms.Button();
+            this.Btn_Efficiency = new System.Windows.Forms.Button();
+            this.Btn_Handload = new System.Windows.Forms.Button();
+            this.Btn_Add_New_Job = new System.Windows.Forms.Button();
+            this.Tmr_Count = new System.Windows.Forms.Timer(this.components);
+            this.dataGridViewTextBoxColumn16 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.dataGridViewTextBoxColumn17 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.dataGridViewTextBoxColumn18 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.dataGridViewTextBoxColumn19 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Column23 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.dataGridViewTextBoxColumn20 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.dataGridViewTextBoxColumn21 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.dataGridViewTextBoxColumn22 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.dataGridViewTextBoxColumn23 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.dataGridViewTextBoxColumn24 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.dataGridViewTextBoxColumn26 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.dataGridViewTextBoxColumn27 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Column10 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Column11 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Column12 = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -112,20 +128,17 @@
             this.Column17 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Column24 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Column19 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.tabPage12 = new System.Windows.Forms.TabPage();
-            this.Dgv_Done_Job = new System.Windows.Forms.DataGridView();
-            this.Column1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Column2 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Column3 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Column4 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Column57 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Column6 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Column7 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Column20 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Column21 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Column5 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.tabPage5 = new System.Windows.Forms.TabPage();
-            this.Dgv_Performance = new System.Windows.Forms.DataGridView();
+            this.dataGridViewTextBoxColumn36 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.dataGridViewTextBoxColumn5 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.dataGridViewTextBoxColumn38 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.dataGridViewTextBoxColumn39 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.dataGridViewTextBoxColumn40 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.dataGridViewTextBoxColumn41 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.dataGridViewTextBoxColumn46 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.dataGridViewTextBoxColumn47 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.dataGridViewTextBoxColumn42 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.dataGridViewTextBoxColumn43 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Column30 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.dataGridViewTextBoxColumn29 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.dataGridViewTextBoxColumn30 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Column50 = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -138,29 +151,16 @@
             this.dataGridViewTextBoxColumn14 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Column29 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.dataGridViewTextBoxColumn37 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.tabPage8 = new System.Windows.Forms.TabPage();
-            this.DgvHistory = new System.Windows.Forms.DataGridView();
-            this.dataGridViewTextBoxColumn36 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.dataGridViewTextBoxColumn5 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.dataGridViewTextBoxColumn38 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.dataGridViewTextBoxColumn39 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.dataGridViewTextBoxColumn40 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.dataGridViewTextBoxColumn41 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.dataGridViewTextBoxColumn46 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.dataGridViewTextBoxColumn47 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.dataGridViewTextBoxColumn42 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.dataGridViewTextBoxColumn43 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Column30 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.panel1 = new System.Windows.Forms.Panel();
-            this.Modify_200 = new System.Windows.Forms.Button();
-            this.Btn_Capacity = new System.Windows.Forms.Button();
-            this.Btn_Achieve = new System.Windows.Forms.Button();
-            this.Btn_Workload = new System.Windows.Forms.Button();
-            this.Btn_Rename = new System.Windows.Forms.Button();
-            this.Btn_Efficiency = new System.Windows.Forms.Button();
-            this.Btn_Handload = new System.Windows.Forms.Button();
-            this.Btn_Add_New_Job = new System.Windows.Forms.Button();
-            this.Tmr_Count = new System.Windows.Forms.Timer(this.components);
+            this.Column1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Column2 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Column3 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Column4 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Column57 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Column6 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Column7 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Column20 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Column21 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Column5 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Tbc_CS_Panel.SuspendLayout();
             this.tabPage1.SuspendLayout();
             this.panel4.SuspendLayout();
@@ -195,7 +195,7 @@
             this.Tbc_CS_Panel.Location = new System.Drawing.Point(2, 2);
             this.Tbc_CS_Panel.Name = "Tbc_CS_Panel";
             this.Tbc_CS_Panel.SelectedIndex = 0;
-            this.Tbc_CS_Panel.Size = new System.Drawing.Size(1632, 808);
+            this.Tbc_CS_Panel.Size = new System.Drawing.Size(1529, 722);
             this.Tbc_CS_Panel.TabIndex = 1;
             this.Tbc_CS_Panel.SelectedIndexChanged += new System.EventHandler(this.Tbc_CS_Panel_SelectedIndexChanged);
             // 
@@ -208,7 +208,7 @@
             this.tabPage1.Location = new System.Drawing.Point(4, 33);
             this.tabPage1.Name = "tabPage1";
             this.tabPage1.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage1.Size = new System.Drawing.Size(1624, 771);
+            this.tabPage1.Size = new System.Drawing.Size(1521, 685);
             this.tabPage1.TabIndex = 16;
             this.tabPage1.Text = "  New Job List  ";
             // 
@@ -224,7 +224,7 @@
             this.panel4.Controls.Add(this.label11);
             this.panel4.Controls.Add(this.label12);
             this.panel4.Controls.Add(this.dateTimePicker6);
-            this.panel4.Location = new System.Drawing.Point(238, 4);
+            this.panel4.Location = new System.Drawing.Point(186, 4);
             this.panel4.Name = "panel4";
             this.panel4.Size = new System.Drawing.Size(1156, 52);
             this.panel4.TabIndex = 137;
@@ -376,7 +376,7 @@
             this.Dgv_New_Jobs.Name = "Dgv_New_Jobs";
             this.Dgv_New_Jobs.RowTemplate.Height = 30;
             this.Dgv_New_Jobs.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.Dgv_New_Jobs.Size = new System.Drawing.Size(1500, 660);
+            this.Dgv_New_Jobs.Size = new System.Drawing.Size(1397, 574);
             this.Dgv_New_Jobs.TabIndex = 24;
             this.Dgv_New_Jobs.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.Dgv_New_Jobs_CellContentClick);
             // 
@@ -622,78 +622,6 @@
             this.Dgv_Running_Job.Size = new System.Drawing.Size(1500, 660);
             this.Dgv_Running_Job.TabIndex = 25;
             // 
-            // dataGridViewTextBoxColumn16
-            // 
-            this.dataGridViewTextBoxColumn16.HeaderText = "SL";
-            this.dataGridViewTextBoxColumn16.Name = "dataGridViewTextBoxColumn16";
-            this.dataGridViewTextBoxColumn16.Width = 50;
-            // 
-            // dataGridViewTextBoxColumn17
-            // 
-            this.dataGridViewTextBoxColumn17.HeaderText = "Job_ID";
-            this.dataGridViewTextBoxColumn17.Name = "dataGridViewTextBoxColumn17";
-            this.dataGridViewTextBoxColumn17.Width = 160;
-            // 
-            // dataGridViewTextBoxColumn18
-            // 
-            this.dataGridViewTextBoxColumn18.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
-            this.dataGridViewTextBoxColumn18.HeaderText = "Folder";
-            this.dataGridViewTextBoxColumn18.Name = "dataGridViewTextBoxColumn18";
-            // 
-            // dataGridViewTextBoxColumn19
-            // 
-            this.dataGridViewTextBoxColumn19.HeaderText = "Incoming";
-            this.dataGridViewTextBoxColumn19.Name = "dataGridViewTextBoxColumn19";
-            this.dataGridViewTextBoxColumn19.Width = 200;
-            // 
-            // Column23
-            // 
-            this.Column23.HeaderText = "Delivery";
-            this.Column23.Name = "Column23";
-            this.Column23.Width = 200;
-            // 
-            // dataGridViewTextBoxColumn20
-            // 
-            this.dataGridViewTextBoxColumn20.HeaderText = "Input_File";
-            this.dataGridViewTextBoxColumn20.Name = "dataGridViewTextBoxColumn20";
-            this.dataGridViewTextBoxColumn20.Width = 120;
-            // 
-            // dataGridViewTextBoxColumn21
-            // 
-            this.dataGridViewTextBoxColumn21.HeaderText = "Output_File";
-            this.dataGridViewTextBoxColumn21.Name = "dataGridViewTextBoxColumn21";
-            this.dataGridViewTextBoxColumn21.Width = 120;
-            // 
-            // dataGridViewTextBoxColumn22
-            // 
-            this.dataGridViewTextBoxColumn22.HeaderText = "Target_Time";
-            this.dataGridViewTextBoxColumn22.Name = "dataGridViewTextBoxColumn22";
-            this.dataGridViewTextBoxColumn22.Width = 120;
-            // 
-            // dataGridViewTextBoxColumn23
-            // 
-            this.dataGridViewTextBoxColumn23.HeaderText = "Pro_Time";
-            this.dataGridViewTextBoxColumn23.Name = "dataGridViewTextBoxColumn23";
-            this.dataGridViewTextBoxColumn23.Width = 150;
-            // 
-            // dataGridViewTextBoxColumn24
-            // 
-            this.dataGridViewTextBoxColumn24.HeaderText = "Total_Time";
-            this.dataGridViewTextBoxColumn24.Name = "dataGridViewTextBoxColumn24";
-            this.dataGridViewTextBoxColumn24.Width = 120;
-            // 
-            // dataGridViewTextBoxColumn26
-            // 
-            this.dataGridViewTextBoxColumn26.HeaderText = "ID";
-            this.dataGridViewTextBoxColumn26.Name = "dataGridViewTextBoxColumn26";
-            this.dataGridViewTextBoxColumn26.Visible = false;
-            // 
-            // dataGridViewTextBoxColumn27
-            // 
-            this.dataGridViewTextBoxColumn27.HeaderText = "Team";
-            this.dataGridViewTextBoxColumn27.Name = "dataGridViewTextBoxColumn27";
-            this.dataGridViewTextBoxColumn27.Visible = false;
-            // 
             // tabPage4
             // 
             this.tabPage4.BackColor = System.Drawing.SystemColors.ActiveBorder;
@@ -876,71 +804,6 @@
             this.Dgv_Ready_Job.TabIndex = 10;
             this.Dgv_Ready_Job.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.Dgv_Ready_Job_CellContentClick);
             // 
-            // Column10
-            // 
-            this.Column10.HeaderText = "SL";
-            this.Column10.Name = "Column10";
-            this.Column10.Width = 50;
-            // 
-            // Column11
-            // 
-            this.Column11.HeaderText = "Job_ID";
-            this.Column11.Name = "Column11";
-            this.Column11.Width = 160;
-            // 
-            // Column12
-            // 
-            this.Column12.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
-            this.Column12.HeaderText = "Folder";
-            this.Column12.Name = "Column12";
-            // 
-            // Column15
-            // 
-            this.Column15.HeaderText = "Input_amt";
-            this.Column15.Name = "Column15";
-            this.Column15.Width = 120;
-            // 
-            // Column39
-            // 
-            this.Column39.HeaderText = "Output_amt";
-            this.Column39.Name = "Column39";
-            this.Column39.Width = 120;
-            // 
-            // Column41
-            // 
-            this.Column41.HeaderText = "Service";
-            this.Column41.Name = "Column41";
-            this.Column41.Width = 200;
-            // 
-            // Column16
-            // 
-            this.Column16.HeaderText = "Job_Time";
-            this.Column16.Name = "Column16";
-            this.Column16.Width = 120;
-            // 
-            // Column18
-            // 
-            this.Column18.HeaderText = "Pro_Time";
-            this.Column18.Name = "Column18";
-            this.Column18.Width = 120;
-            // 
-            // Column17
-            // 
-            this.Column17.HeaderText = "Delivery";
-            this.Column17.Name = "Column17";
-            this.Column17.Width = 200;
-            // 
-            // Column24
-            // 
-            this.Column24.HeaderText = "Efficiency";
-            this.Column24.Name = "Column24";
-            this.Column24.Width = 120;
-            // 
-            // Column19
-            // 
-            this.Column19.HeaderText = "Action";
-            this.Column19.Name = "Column19";
-            // 
             // tabPage12
             // 
             this.tabPage12.BackColor = System.Drawing.SystemColors.ActiveBorder;
@@ -954,6 +817,8 @@
             // 
             // Dgv_Done_Job
             // 
+            this.Dgv_Done_Job.AllowUserToAddRows = false;
+            this.Dgv_Done_Job.AllowUserToDeleteRows = false;
             this.Dgv_Done_Job.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
@@ -998,63 +863,6 @@
             this.Dgv_Done_Job.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
             this.Dgv_Done_Job.Size = new System.Drawing.Size(1500, 705);
             this.Dgv_Done_Job.TabIndex = 24;
-            // 
-            // Column1
-            // 
-            this.Column1.HeaderText = "SL";
-            this.Column1.Name = "Column1";
-            this.Column1.Width = 50;
-            // 
-            // Column2
-            // 
-            this.Column2.HeaderText = "Job_ID";
-            this.Column2.Name = "Column2";
-            this.Column2.Width = 250;
-            // 
-            // Column3
-            // 
-            this.Column3.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
-            this.Column3.HeaderText = "Folder";
-            this.Column3.Name = "Column3";
-            // 
-            // Column4
-            // 
-            this.Column4.HeaderText = "Input_amt";
-            this.Column4.Name = "Column4";
-            // 
-            // Column57
-            // 
-            this.Column57.HeaderText = "Output_amt";
-            this.Column57.Name = "Column57";
-            this.Column57.Width = 120;
-            // 
-            // Column6
-            // 
-            this.Column6.HeaderText = "Service";
-            this.Column6.Name = "Column6";
-            this.Column6.Width = 250;
-            // 
-            // Column7
-            // 
-            this.Column7.HeaderText = "Job_Time";
-            this.Column7.Name = "Column7";
-            // 
-            // Column20
-            // 
-            this.Column20.HeaderText = "Pro_Time";
-            this.Column20.Name = "Column20";
-            // 
-            // Column21
-            // 
-            this.Column21.HeaderText = "Incoming";
-            this.Column21.Name = "Column21";
-            this.Column21.Width = 180;
-            // 
-            // Column5
-            // 
-            this.Column5.HeaderText = "Delivery";
-            this.Column5.Name = "Column5";
-            this.Column5.Width = 180;
             // 
             // tabPage5
             // 
@@ -1119,77 +927,6 @@
             this.Dgv_Performance.Size = new System.Drawing.Size(1494, 708);
             this.Dgv_Performance.TabIndex = 26;
             // 
-            // dataGridViewTextBoxColumn29
-            // 
-            this.dataGridViewTextBoxColumn29.HeaderText = "Rank";
-            this.dataGridViewTextBoxColumn29.Name = "dataGridViewTextBoxColumn29";
-            this.dataGridViewTextBoxColumn29.Width = 80;
-            // 
-            // dataGridViewTextBoxColumn30
-            // 
-            this.dataGridViewTextBoxColumn30.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
-            this.dataGridViewTextBoxColumn30.HeaderText = "Name";
-            this.dataGridViewTextBoxColumn30.Name = "dataGridViewTextBoxColumn30";
-            // 
-            // Column50
-            // 
-            this.Column50.HeaderText = "Shift";
-            this.Column50.Name = "Column50";
-            this.Column50.Width = 120;
-            // 
-            // dataGridViewTextBoxColumn31
-            // 
-            this.dataGridViewTextBoxColumn31.HeaderText = "First_Login";
-            this.dataGridViewTextBoxColumn31.Name = "dataGridViewTextBoxColumn31";
-            this.dataGridViewTextBoxColumn31.Width = 220;
-            // 
-            // Column40
-            // 
-            this.Column40.HeaderText = "Last_activity";
-            this.Column40.Name = "Column40";
-            this.Column40.Width = 220;
-            // 
-            // dataGridViewTextBoxColumn13
-            // 
-            this.dataGridViewTextBoxColumn13.HeaderText = "Work_Time";
-            this.dataGridViewTextBoxColumn13.Name = "dataGridViewTextBoxColumn13";
-            this.dataGridViewTextBoxColumn13.Width = 130;
-            // 
-            // dataGridViewTextBoxColumn33
-            // 
-            this.dataGridViewTextBoxColumn33.HeaderText = "Total_File";
-            this.dataGridViewTextBoxColumn33.Name = "dataGridViewTextBoxColumn33";
-            this.dataGridViewTextBoxColumn33.Width = 130;
-            // 
-            // dataGridViewTextBoxColumn34
-            // 
-            this.dataGridViewTextBoxColumn34.HeaderText = "Job_Time";
-            this.dataGridViewTextBoxColumn34.Name = "dataGridViewTextBoxColumn34";
-            this.dataGridViewTextBoxColumn34.Width = 120;
-            // 
-            // dataGridViewTextBoxColumn35
-            // 
-            this.dataGridViewTextBoxColumn35.HeaderText = "Pro_Time";
-            this.dataGridViewTextBoxColumn35.Name = "dataGridViewTextBoxColumn35";
-            this.dataGridViewTextBoxColumn35.Width = 120;
-            // 
-            // dataGridViewTextBoxColumn14
-            // 
-            this.dataGridViewTextBoxColumn14.HeaderText = "Rest_Time";
-            this.dataGridViewTextBoxColumn14.Name = "dataGridViewTextBoxColumn14";
-            this.dataGridViewTextBoxColumn14.Width = 120;
-            // 
-            // Column29
-            // 
-            this.Column29.HeaderText = "Efficiency";
-            this.Column29.Name = "Column29";
-            // 
-            // dataGridViewTextBoxColumn37
-            // 
-            this.dataGridViewTextBoxColumn37.HeaderText = "Quality";
-            this.dataGridViewTextBoxColumn37.Name = "dataGridViewTextBoxColumn37";
-            this.dataGridViewTextBoxColumn37.Width = 120;
-            // 
             // tabPage8
             // 
             this.tabPage8.BackColor = System.Drawing.SystemColors.ActiveBorder;
@@ -1251,6 +988,288 @@
             this.DgvHistory.Size = new System.Drawing.Size(1494, 708);
             this.DgvHistory.TabIndex = 25;
             // 
+            // panel1
+            // 
+            this.panel1.Controls.Add(this.Modify_200);
+            this.panel1.Controls.Add(this.Btn_Capacity);
+            this.panel1.Controls.Add(this.Btn_Achieve);
+            this.panel1.Controls.Add(this.Btn_Workload);
+            this.panel1.Controls.Add(this.Btn_Rename);
+            this.panel1.Controls.Add(this.Btn_Efficiency);
+            this.panel1.Controls.Add(this.Btn_Handload);
+            this.panel1.Controls.Add(this.Btn_Add_New_Job);
+            this.panel1.Dock = System.Windows.Forms.DockStyle.Bottom;
+            this.panel1.Location = new System.Drawing.Point(0, 725);
+            this.panel1.Name = "panel1";
+            this.panel1.Size = new System.Drawing.Size(1531, 50);
+            this.panel1.TabIndex = 24;
+            // 
+            // Modify_200
+            // 
+            this.Modify_200.FlatAppearance.BorderSize = 0;
+            this.Modify_200.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.Modify_200.Font = new System.Drawing.Font("Arial", 15F);
+            this.Modify_200.ForeColor = System.Drawing.SystemColors.ControlText;
+            this.Modify_200.ImageAlign = System.Drawing.ContentAlignment.MiddleRight;
+            this.Modify_200.Location = new System.Drawing.Point(351, 2);
+            this.Modify_200.Name = "Modify_200";
+            this.Modify_200.Size = new System.Drawing.Size(170, 46);
+            this.Modify_200.TabIndex = 23;
+            this.Modify_200.Text = "Modify_200";
+            this.Modify_200.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
+            this.Modify_200.UseVisualStyleBackColor = true;
+            this.Modify_200.Visible = false;
+            this.Modify_200.Click += new System.EventHandler(this.Modify_200_Click);
+            // 
+            // Btn_Capacity
+            // 
+            this.Btn_Capacity.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.Btn_Capacity.FlatAppearance.BorderSize = 0;
+            this.Btn_Capacity.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.Btn_Capacity.Font = new System.Drawing.Font("Arial", 15F);
+            this.Btn_Capacity.ForeColor = System.Drawing.SystemColors.ControlText;
+            this.Btn_Capacity.Location = new System.Drawing.Point(657, 3);
+            this.Btn_Capacity.Name = "Btn_Capacity";
+            this.Btn_Capacity.Size = new System.Drawing.Size(170, 45);
+            this.Btn_Capacity.TabIndex = 21;
+            this.Btn_Capacity.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
+            this.Btn_Capacity.UseVisualStyleBackColor = true;
+            // 
+            // Btn_Achieve
+            // 
+            this.Btn_Achieve.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.Btn_Achieve.FlatAppearance.BorderSize = 0;
+            this.Btn_Achieve.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.Btn_Achieve.Font = new System.Drawing.Font("Arial", 15F);
+            this.Btn_Achieve.ForeColor = System.Drawing.SystemColors.ControlText;
+            this.Btn_Achieve.Location = new System.Drawing.Point(1007, 3);
+            this.Btn_Achieve.Name = "Btn_Achieve";
+            this.Btn_Achieve.Size = new System.Drawing.Size(170, 45);
+            this.Btn_Achieve.TabIndex = 20;
+            this.Btn_Achieve.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
+            this.Btn_Achieve.UseVisualStyleBackColor = true;
+            // 
+            // Btn_Workload
+            // 
+            this.Btn_Workload.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.Btn_Workload.FlatAppearance.BorderSize = 0;
+            this.Btn_Workload.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.Btn_Workload.Font = new System.Drawing.Font("Arial", 15F);
+            this.Btn_Workload.ForeColor = System.Drawing.SystemColors.ControlText;
+            this.Btn_Workload.Location = new System.Drawing.Point(832, 2);
+            this.Btn_Workload.Name = "Btn_Workload";
+            this.Btn_Workload.Size = new System.Drawing.Size(170, 45);
+            this.Btn_Workload.TabIndex = 19;
+            this.Btn_Workload.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
+            this.Btn_Workload.UseVisualStyleBackColor = true;
+            // 
+            // Btn_Rename
+            // 
+            this.Btn_Rename.FlatAppearance.BorderSize = 0;
+            this.Btn_Rename.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.Btn_Rename.Font = new System.Drawing.Font("Arial", 15F);
+            this.Btn_Rename.ForeColor = System.Drawing.SystemColors.ControlText;
+            this.Btn_Rename.Image = ((System.Drawing.Image)(resources.GetObject("Btn_Rename.Image")));
+            this.Btn_Rename.ImageAlign = System.Drawing.ContentAlignment.MiddleRight;
+            this.Btn_Rename.Location = new System.Drawing.Point(177, 3);
+            this.Btn_Rename.Name = "Btn_Rename";
+            this.Btn_Rename.Size = new System.Drawing.Size(170, 46);
+            this.Btn_Rename.TabIndex = 18;
+            this.Btn_Rename.Text = " Rename";
+            this.Btn_Rename.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
+            this.Btn_Rename.UseVisualStyleBackColor = true;
+            this.Btn_Rename.Click += new System.EventHandler(this.Btn_Rename_Click);
+            // 
+            // Btn_Efficiency
+            // 
+            this.Btn_Efficiency.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.Btn_Efficiency.FlatAppearance.BorderSize = 0;
+            this.Btn_Efficiency.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.Btn_Efficiency.Font = new System.Drawing.Font("Arial", 15F);
+            this.Btn_Efficiency.ForeColor = System.Drawing.SystemColors.ControlText;
+            this.Btn_Efficiency.Location = new System.Drawing.Point(1357, 3);
+            this.Btn_Efficiency.Name = "Btn_Efficiency";
+            this.Btn_Efficiency.Size = new System.Drawing.Size(170, 45);
+            this.Btn_Efficiency.TabIndex = 17;
+            this.Btn_Efficiency.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
+            this.Btn_Efficiency.UseVisualStyleBackColor = true;
+            this.Btn_Efficiency.Click += new System.EventHandler(this.Btn_Workload_Click);
+            // 
+            // Btn_Handload
+            // 
+            this.Btn_Handload.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.Btn_Handload.FlatAppearance.BorderSize = 0;
+            this.Btn_Handload.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.Btn_Handload.Font = new System.Drawing.Font("Arial", 15F);
+            this.Btn_Handload.ForeColor = System.Drawing.SystemColors.ControlText;
+            this.Btn_Handload.Location = new System.Drawing.Point(1182, 2);
+            this.Btn_Handload.Name = "Btn_Handload";
+            this.Btn_Handload.Size = new System.Drawing.Size(170, 45);
+            this.Btn_Handload.TabIndex = 16;
+            this.Btn_Handload.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
+            this.Btn_Handload.UseVisualStyleBackColor = true;
+            this.Btn_Handload.Click += new System.EventHandler(this.Btn_Capacity_Click);
+            // 
+            // Btn_Add_New_Job
+            // 
+            this.Btn_Add_New_Job.FlatAppearance.BorderSize = 0;
+            this.Btn_Add_New_Job.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.Btn_Add_New_Job.Font = new System.Drawing.Font("Arial", 15F);
+            this.Btn_Add_New_Job.ForeColor = System.Drawing.SystemColors.ControlText;
+            this.Btn_Add_New_Job.Image = ((System.Drawing.Image)(resources.GetObject("Btn_Add_New_Job.Image")));
+            this.Btn_Add_New_Job.ImageAlign = System.Drawing.ContentAlignment.MiddleRight;
+            this.Btn_Add_New_Job.Location = new System.Drawing.Point(3, 3);
+            this.Btn_Add_New_Job.Name = "Btn_Add_New_Job";
+            this.Btn_Add_New_Job.Size = new System.Drawing.Size(170, 46);
+            this.Btn_Add_New_Job.TabIndex = 2;
+            this.Btn_Add_New_Job.Text = " Add Job";
+            this.Btn_Add_New_Job.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
+            this.Btn_Add_New_Job.UseVisualStyleBackColor = true;
+            this.Btn_Add_New_Job.Click += new System.EventHandler(this.Btn_Add_New_Job_Click);
+            // 
+            // Tmr_Count
+            // 
+            this.Tmr_Count.Enabled = true;
+            this.Tmr_Count.Interval = 10000;
+            this.Tmr_Count.Tick += new System.EventHandler(this.Tmr_Count_Tick);
+            // 
+            // dataGridViewTextBoxColumn16
+            // 
+            this.dataGridViewTextBoxColumn16.HeaderText = "SL";
+            this.dataGridViewTextBoxColumn16.Name = "dataGridViewTextBoxColumn16";
+            this.dataGridViewTextBoxColumn16.Width = 50;
+            // 
+            // dataGridViewTextBoxColumn17
+            // 
+            this.dataGridViewTextBoxColumn17.HeaderText = "Job_ID";
+            this.dataGridViewTextBoxColumn17.Name = "dataGridViewTextBoxColumn17";
+            this.dataGridViewTextBoxColumn17.Width = 160;
+            // 
+            // dataGridViewTextBoxColumn18
+            // 
+            this.dataGridViewTextBoxColumn18.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
+            this.dataGridViewTextBoxColumn18.HeaderText = "Folder";
+            this.dataGridViewTextBoxColumn18.Name = "dataGridViewTextBoxColumn18";
+            // 
+            // dataGridViewTextBoxColumn19
+            // 
+            this.dataGridViewTextBoxColumn19.HeaderText = "Incoming";
+            this.dataGridViewTextBoxColumn19.Name = "dataGridViewTextBoxColumn19";
+            this.dataGridViewTextBoxColumn19.Width = 200;
+            // 
+            // Column23
+            // 
+            this.Column23.HeaderText = "Delivery";
+            this.Column23.Name = "Column23";
+            this.Column23.Width = 200;
+            // 
+            // dataGridViewTextBoxColumn20
+            // 
+            this.dataGridViewTextBoxColumn20.HeaderText = "Input_File";
+            this.dataGridViewTextBoxColumn20.Name = "dataGridViewTextBoxColumn20";
+            this.dataGridViewTextBoxColumn20.Width = 120;
+            // 
+            // dataGridViewTextBoxColumn21
+            // 
+            this.dataGridViewTextBoxColumn21.HeaderText = "Output_File";
+            this.dataGridViewTextBoxColumn21.Name = "dataGridViewTextBoxColumn21";
+            this.dataGridViewTextBoxColumn21.Width = 120;
+            // 
+            // dataGridViewTextBoxColumn22
+            // 
+            this.dataGridViewTextBoxColumn22.HeaderText = "Est_Time";
+            this.dataGridViewTextBoxColumn22.Name = "dataGridViewTextBoxColumn22";
+            this.dataGridViewTextBoxColumn22.Width = 120;
+            // 
+            // dataGridViewTextBoxColumn23
+            // 
+            this.dataGridViewTextBoxColumn23.HeaderText = "Pro_Time";
+            this.dataGridViewTextBoxColumn23.Name = "dataGridViewTextBoxColumn23";
+            this.dataGridViewTextBoxColumn23.Width = 150;
+            // 
+            // dataGridViewTextBoxColumn24
+            // 
+            this.dataGridViewTextBoxColumn24.HeaderText = "Total_Time";
+            this.dataGridViewTextBoxColumn24.Name = "dataGridViewTextBoxColumn24";
+            this.dataGridViewTextBoxColumn24.Width = 120;
+            // 
+            // dataGridViewTextBoxColumn26
+            // 
+            this.dataGridViewTextBoxColumn26.HeaderText = "ID";
+            this.dataGridViewTextBoxColumn26.Name = "dataGridViewTextBoxColumn26";
+            this.dataGridViewTextBoxColumn26.Visible = false;
+            // 
+            // dataGridViewTextBoxColumn27
+            // 
+            this.dataGridViewTextBoxColumn27.HeaderText = "Team";
+            this.dataGridViewTextBoxColumn27.Name = "dataGridViewTextBoxColumn27";
+            this.dataGridViewTextBoxColumn27.Visible = false;
+            // 
+            // Column10
+            // 
+            this.Column10.HeaderText = "SL";
+            this.Column10.Name = "Column10";
+            this.Column10.Width = 50;
+            // 
+            // Column11
+            // 
+            this.Column11.HeaderText = "Job_ID";
+            this.Column11.Name = "Column11";
+            this.Column11.Width = 160;
+            // 
+            // Column12
+            // 
+            this.Column12.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
+            this.Column12.HeaderText = "Folder";
+            this.Column12.Name = "Column12";
+            // 
+            // Column15
+            // 
+            this.Column15.HeaderText = "Input_amt";
+            this.Column15.Name = "Column15";
+            this.Column15.Width = 120;
+            // 
+            // Column39
+            // 
+            this.Column39.HeaderText = "Output_amt";
+            this.Column39.Name = "Column39";
+            this.Column39.Width = 120;
+            // 
+            // Column41
+            // 
+            this.Column41.HeaderText = "Service";
+            this.Column41.Name = "Column41";
+            this.Column41.Width = 200;
+            // 
+            // Column16
+            // 
+            this.Column16.HeaderText = "Est_Time";
+            this.Column16.Name = "Column16";
+            this.Column16.Width = 120;
+            // 
+            // Column18
+            // 
+            this.Column18.HeaderText = "Pro_Time";
+            this.Column18.Name = "Column18";
+            this.Column18.Width = 120;
+            // 
+            // Column17
+            // 
+            this.Column17.HeaderText = "Delivery";
+            this.Column17.Name = "Column17";
+            this.Column17.Width = 200;
+            // 
+            // Column24
+            // 
+            this.Column24.HeaderText = "Efficiency";
+            this.Column24.Name = "Column24";
+            this.Column24.Width = 120;
+            // 
+            // Column19
+            // 
+            this.Column19.HeaderText = "Action";
+            this.Column19.Name = "Column19";
+            // 
             // dataGridViewTextBoxColumn36
             // 
             this.dataGridViewTextBoxColumn36.HeaderText = "SL";
@@ -1301,7 +1320,7 @@
             // 
             // dataGridViewTextBoxColumn42
             // 
-            this.dataGridViewTextBoxColumn42.HeaderText = "Job_Time";
+            this.dataGridViewTextBoxColumn42.HeaderText = "Est_Time";
             this.dataGridViewTextBoxColumn42.Name = "dataGridViewTextBoxColumn42";
             this.dataGridViewTextBoxColumn42.Width = 120;
             // 
@@ -1316,157 +1335,140 @@
             this.Column30.HeaderText = "Efficiency";
             this.Column30.Name = "Column30";
             // 
-            // panel1
+            // dataGridViewTextBoxColumn29
             // 
-            this.panel1.Controls.Add(this.Modify_200);
-            this.panel1.Controls.Add(this.Btn_Capacity);
-            this.panel1.Controls.Add(this.Btn_Achieve);
-            this.panel1.Controls.Add(this.Btn_Workload);
-            this.panel1.Controls.Add(this.Btn_Rename);
-            this.panel1.Controls.Add(this.Btn_Efficiency);
-            this.panel1.Controls.Add(this.Btn_Handload);
-            this.panel1.Controls.Add(this.Btn_Add_New_Job);
-            this.panel1.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.panel1.Location = new System.Drawing.Point(0, 811);
-            this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(1634, 50);
-            this.panel1.TabIndex = 24;
+            this.dataGridViewTextBoxColumn29.HeaderText = "Rank";
+            this.dataGridViewTextBoxColumn29.Name = "dataGridViewTextBoxColumn29";
+            this.dataGridViewTextBoxColumn29.Width = 80;
             // 
-            // Modify_200
+            // dataGridViewTextBoxColumn30
             // 
-            this.Modify_200.FlatAppearance.BorderSize = 0;
-            this.Modify_200.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.Modify_200.Font = new System.Drawing.Font("Arial", 15F);
-            this.Modify_200.ForeColor = System.Drawing.SystemColors.ControlText;
-            this.Modify_200.ImageAlign = System.Drawing.ContentAlignment.MiddleRight;
-            this.Modify_200.Location = new System.Drawing.Point(351, 2);
-            this.Modify_200.Name = "Modify_200";
-            this.Modify_200.Size = new System.Drawing.Size(170, 46);
-            this.Modify_200.TabIndex = 23;
-            this.Modify_200.Text = "Modify_200";
-            this.Modify_200.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
-            this.Modify_200.UseVisualStyleBackColor = true;
-            this.Modify_200.Visible = false;
-            this.Modify_200.Click += new System.EventHandler(this.Modify_200_Click);
+            this.dataGridViewTextBoxColumn30.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
+            this.dataGridViewTextBoxColumn30.HeaderText = "Name";
+            this.dataGridViewTextBoxColumn30.Name = "dataGridViewTextBoxColumn30";
             // 
-            // Btn_Capacity
+            // Column50
             // 
-            this.Btn_Capacity.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.Btn_Capacity.FlatAppearance.BorderSize = 0;
-            this.Btn_Capacity.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.Btn_Capacity.Font = new System.Drawing.Font("Arial", 15F);
-            this.Btn_Capacity.ForeColor = System.Drawing.SystemColors.ControlText;
-            this.Btn_Capacity.Location = new System.Drawing.Point(760, 3);
-            this.Btn_Capacity.Name = "Btn_Capacity";
-            this.Btn_Capacity.Size = new System.Drawing.Size(170, 45);
-            this.Btn_Capacity.TabIndex = 21;
-            this.Btn_Capacity.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
-            this.Btn_Capacity.UseVisualStyleBackColor = true;
+            this.Column50.HeaderText = "Shift";
+            this.Column50.Name = "Column50";
+            this.Column50.Width = 120;
             // 
-            // Btn_Achieve
+            // dataGridViewTextBoxColumn31
             // 
-            this.Btn_Achieve.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.Btn_Achieve.FlatAppearance.BorderSize = 0;
-            this.Btn_Achieve.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.Btn_Achieve.Font = new System.Drawing.Font("Arial", 15F);
-            this.Btn_Achieve.ForeColor = System.Drawing.SystemColors.ControlText;
-            this.Btn_Achieve.Location = new System.Drawing.Point(1110, 3);
-            this.Btn_Achieve.Name = "Btn_Achieve";
-            this.Btn_Achieve.Size = new System.Drawing.Size(170, 45);
-            this.Btn_Achieve.TabIndex = 20;
-            this.Btn_Achieve.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
-            this.Btn_Achieve.UseVisualStyleBackColor = true;
+            this.dataGridViewTextBoxColumn31.HeaderText = "First_Login";
+            this.dataGridViewTextBoxColumn31.Name = "dataGridViewTextBoxColumn31";
+            this.dataGridViewTextBoxColumn31.Width = 220;
             // 
-            // Btn_Workload
+            // Column40
             // 
-            this.Btn_Workload.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.Btn_Workload.FlatAppearance.BorderSize = 0;
-            this.Btn_Workload.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.Btn_Workload.Font = new System.Drawing.Font("Arial", 15F);
-            this.Btn_Workload.ForeColor = System.Drawing.SystemColors.ControlText;
-            this.Btn_Workload.Location = new System.Drawing.Point(935, 2);
-            this.Btn_Workload.Name = "Btn_Workload";
-            this.Btn_Workload.Size = new System.Drawing.Size(170, 45);
-            this.Btn_Workload.TabIndex = 19;
-            this.Btn_Workload.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
-            this.Btn_Workload.UseVisualStyleBackColor = true;
+            this.Column40.HeaderText = "Last_activity";
+            this.Column40.Name = "Column40";
+            this.Column40.Width = 220;
             // 
-            // Btn_Rename
+            // dataGridViewTextBoxColumn13
             // 
-            this.Btn_Rename.FlatAppearance.BorderSize = 0;
-            this.Btn_Rename.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.Btn_Rename.Font = new System.Drawing.Font("Arial", 15F);
-            this.Btn_Rename.ForeColor = System.Drawing.SystemColors.ControlText;
-            this.Btn_Rename.Image = ((System.Drawing.Image)(resources.GetObject("Btn_Rename.Image")));
-            this.Btn_Rename.ImageAlign = System.Drawing.ContentAlignment.MiddleRight;
-            this.Btn_Rename.Location = new System.Drawing.Point(177, 3);
-            this.Btn_Rename.Name = "Btn_Rename";
-            this.Btn_Rename.Size = new System.Drawing.Size(170, 46);
-            this.Btn_Rename.TabIndex = 18;
-            this.Btn_Rename.Text = " Rename";
-            this.Btn_Rename.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
-            this.Btn_Rename.UseVisualStyleBackColor = true;
-            this.Btn_Rename.Click += new System.EventHandler(this.Btn_Rename_Click);
+            this.dataGridViewTextBoxColumn13.HeaderText = "Work_Time";
+            this.dataGridViewTextBoxColumn13.Name = "dataGridViewTextBoxColumn13";
+            this.dataGridViewTextBoxColumn13.Width = 130;
             // 
-            // Btn_Efficiency
+            // dataGridViewTextBoxColumn33
             // 
-            this.Btn_Efficiency.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.Btn_Efficiency.FlatAppearance.BorderSize = 0;
-            this.Btn_Efficiency.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.Btn_Efficiency.Font = new System.Drawing.Font("Arial", 15F);
-            this.Btn_Efficiency.ForeColor = System.Drawing.SystemColors.ControlText;
-            this.Btn_Efficiency.Location = new System.Drawing.Point(1460, 3);
-            this.Btn_Efficiency.Name = "Btn_Efficiency";
-            this.Btn_Efficiency.Size = new System.Drawing.Size(170, 45);
-            this.Btn_Efficiency.TabIndex = 17;
-            this.Btn_Efficiency.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
-            this.Btn_Efficiency.UseVisualStyleBackColor = true;
-            this.Btn_Efficiency.Click += new System.EventHandler(this.Btn_Workload_Click);
+            this.dataGridViewTextBoxColumn33.HeaderText = "Total_File";
+            this.dataGridViewTextBoxColumn33.Name = "dataGridViewTextBoxColumn33";
+            this.dataGridViewTextBoxColumn33.Width = 130;
             // 
-            // Btn_Handload
+            // dataGridViewTextBoxColumn34
             // 
-            this.Btn_Handload.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.Btn_Handload.FlatAppearance.BorderSize = 0;
-            this.Btn_Handload.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.Btn_Handload.Font = new System.Drawing.Font("Arial", 15F);
-            this.Btn_Handload.ForeColor = System.Drawing.SystemColors.ControlText;
-            this.Btn_Handload.Location = new System.Drawing.Point(1285, 2);
-            this.Btn_Handload.Name = "Btn_Handload";
-            this.Btn_Handload.Size = new System.Drawing.Size(170, 45);
-            this.Btn_Handload.TabIndex = 16;
-            this.Btn_Handload.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
-            this.Btn_Handload.UseVisualStyleBackColor = true;
-            this.Btn_Handload.Click += new System.EventHandler(this.Btn_Capacity_Click);
+            this.dataGridViewTextBoxColumn34.HeaderText = "Est_Time";
+            this.dataGridViewTextBoxColumn34.Name = "dataGridViewTextBoxColumn34";
+            this.dataGridViewTextBoxColumn34.Width = 120;
             // 
-            // Btn_Add_New_Job
+            // dataGridViewTextBoxColumn35
             // 
-            this.Btn_Add_New_Job.FlatAppearance.BorderSize = 0;
-            this.Btn_Add_New_Job.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.Btn_Add_New_Job.Font = new System.Drawing.Font("Arial", 15F);
-            this.Btn_Add_New_Job.ForeColor = System.Drawing.SystemColors.ControlText;
-            this.Btn_Add_New_Job.Image = ((System.Drawing.Image)(resources.GetObject("Btn_Add_New_Job.Image")));
-            this.Btn_Add_New_Job.ImageAlign = System.Drawing.ContentAlignment.MiddleRight;
-            this.Btn_Add_New_Job.Location = new System.Drawing.Point(3, 3);
-            this.Btn_Add_New_Job.Name = "Btn_Add_New_Job";
-            this.Btn_Add_New_Job.Size = new System.Drawing.Size(170, 46);
-            this.Btn_Add_New_Job.TabIndex = 2;
-            this.Btn_Add_New_Job.Text = " Add Job";
-            this.Btn_Add_New_Job.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
-            this.Btn_Add_New_Job.UseVisualStyleBackColor = true;
-            this.Btn_Add_New_Job.Click += new System.EventHandler(this.Btn_Add_New_Job_Click);
+            this.dataGridViewTextBoxColumn35.HeaderText = "Pro_Time";
+            this.dataGridViewTextBoxColumn35.Name = "dataGridViewTextBoxColumn35";
+            this.dataGridViewTextBoxColumn35.Width = 120;
             // 
-            // Tmr_Count
+            // dataGridViewTextBoxColumn14
             // 
-            this.Tmr_Count.Enabled = true;
-            this.Tmr_Count.Interval = 10000;
-            this.Tmr_Count.Tick += new System.EventHandler(this.Tmr_Count_Tick);
+            this.dataGridViewTextBoxColumn14.HeaderText = "Rest_Time";
+            this.dataGridViewTextBoxColumn14.Name = "dataGridViewTextBoxColumn14";
+            this.dataGridViewTextBoxColumn14.Width = 120;
+            // 
+            // Column29
+            // 
+            this.Column29.HeaderText = "Efficiency";
+            this.Column29.Name = "Column29";
+            // 
+            // dataGridViewTextBoxColumn37
+            // 
+            this.dataGridViewTextBoxColumn37.HeaderText = "Quality";
+            this.dataGridViewTextBoxColumn37.Name = "dataGridViewTextBoxColumn37";
+            this.dataGridViewTextBoxColumn37.Width = 120;
+            // 
+            // Column1
+            // 
+            this.Column1.HeaderText = "SL";
+            this.Column1.Name = "Column1";
+            this.Column1.Width = 50;
+            // 
+            // Column2
+            // 
+            this.Column2.HeaderText = "Job_ID";
+            this.Column2.Name = "Column2";
+            this.Column2.Width = 250;
+            // 
+            // Column3
+            // 
+            this.Column3.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
+            this.Column3.HeaderText = "Folder";
+            this.Column3.Name = "Column3";
+            // 
+            // Column4
+            // 
+            this.Column4.HeaderText = "Input_amt";
+            this.Column4.Name = "Column4";
+            // 
+            // Column57
+            // 
+            this.Column57.HeaderText = "Output_amt";
+            this.Column57.Name = "Column57";
+            this.Column57.Width = 120;
+            // 
+            // Column6
+            // 
+            this.Column6.HeaderText = "Service";
+            this.Column6.Name = "Column6";
+            this.Column6.Width = 250;
+            // 
+            // Column7
+            // 
+            this.Column7.HeaderText = "Est_Time";
+            this.Column7.Name = "Column7";
+            // 
+            // Column20
+            // 
+            this.Column20.HeaderText = "Pro_Time";
+            this.Column20.Name = "Column20";
+            // 
+            // Column21
+            // 
+            this.Column21.HeaderText = "Incoming";
+            this.Column21.Name = "Column21";
+            this.Column21.Width = 180;
+            // 
+            // Column5
+            // 
+            this.Column5.HeaderText = "Delivery";
+            this.Column5.Name = "Column5";
+            this.Column5.Width = 180;
             // 
             // CsDashboard
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.SystemColors.ActiveBorder;
-            this.ClientSize = new System.Drawing.Size(1634, 861);
+            this.ClientSize = new System.Drawing.Size(1531, 775);
             this.Controls.Add(this.panel1);
             this.Controls.Add(this.Tbc_CS_Panel);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.Fixed3D;
@@ -1511,16 +1513,6 @@
         private System.Windows.Forms.Panel panel1;
         private System.Windows.Forms.Button Btn_Add_New_Job;
         private System.Windows.Forms.DataGridView Dgv_Done_Job;
-        private System.Windows.Forms.DataGridViewTextBoxColumn Column1;
-        private System.Windows.Forms.DataGridViewTextBoxColumn Column2;
-        private System.Windows.Forms.DataGridViewTextBoxColumn Column3;
-        private System.Windows.Forms.DataGridViewTextBoxColumn Column4;
-        private System.Windows.Forms.DataGridViewTextBoxColumn Column57;
-        private System.Windows.Forms.DataGridViewTextBoxColumn Column6;
-        private System.Windows.Forms.DataGridViewTextBoxColumn Column7;
-        private System.Windows.Forms.DataGridViewTextBoxColumn Column20;
-        private System.Windows.Forms.DataGridViewTextBoxColumn Column21;
-        private System.Windows.Forms.DataGridViewTextBoxColumn Column5;
         private System.Windows.Forms.Timer Tmr_Count;
         private System.Windows.Forms.Button Btn_Efficiency;
         private System.Windows.Forms.Button Btn_Handload;
@@ -1544,52 +1536,6 @@
         private System.Windows.Forms.DataGridView DgvHistory;
         private System.Windows.Forms.DataGridView Dgv_Performance;
         private System.Windows.Forms.DataGridView Dgv_Running_Job;
-        private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn29;
-        private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn30;
-        private System.Windows.Forms.DataGridViewTextBoxColumn Column50;
-        private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn31;
-        private System.Windows.Forms.DataGridViewTextBoxColumn Column40;
-        private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn13;
-        private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn33;
-        private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn34;
-        private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn35;
-        private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn14;
-        private System.Windows.Forms.DataGridViewTextBoxColumn Column29;
-        private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn37;
-        private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn36;
-        private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn5;
-        private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn38;
-        private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn39;
-        private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn40;
-        private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn41;
-        private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn46;
-        private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn47;
-        private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn42;
-        private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn43;
-        private System.Windows.Forms.DataGridViewTextBoxColumn Column30;
-        private System.Windows.Forms.DataGridViewTextBoxColumn Column10;
-        private System.Windows.Forms.DataGridViewTextBoxColumn Column11;
-        private System.Windows.Forms.DataGridViewTextBoxColumn Column12;
-        private System.Windows.Forms.DataGridViewTextBoxColumn Column15;
-        private System.Windows.Forms.DataGridViewTextBoxColumn Column39;
-        private System.Windows.Forms.DataGridViewTextBoxColumn Column41;
-        private System.Windows.Forms.DataGridViewTextBoxColumn Column16;
-        private System.Windows.Forms.DataGridViewTextBoxColumn Column18;
-        private System.Windows.Forms.DataGridViewTextBoxColumn Column17;
-        private System.Windows.Forms.DataGridViewTextBoxColumn Column24;
-        private System.Windows.Forms.DataGridViewTextBoxColumn Column19;
-        private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn16;
-        private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn17;
-        private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn18;
-        private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn19;
-        private System.Windows.Forms.DataGridViewTextBoxColumn Column23;
-        private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn20;
-        private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn21;
-        private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn22;
-        private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn23;
-        private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn24;
-        private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn26;
-        private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn27;
         private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn1;
         private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn2;
         private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn3;
@@ -1621,5 +1567,61 @@
         private System.Windows.Forms.Label label7;
         private System.Windows.Forms.Label label8;
         private System.Windows.Forms.DateTimePicker dateTimePicker4;
+        private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn16;
+        private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn17;
+        private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn18;
+        private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn19;
+        private System.Windows.Forms.DataGridViewTextBoxColumn Column23;
+        private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn20;
+        private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn21;
+        private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn22;
+        private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn23;
+        private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn24;
+        private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn26;
+        private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn27;
+        private System.Windows.Forms.DataGridViewTextBoxColumn Column10;
+        private System.Windows.Forms.DataGridViewTextBoxColumn Column11;
+        private System.Windows.Forms.DataGridViewTextBoxColumn Column12;
+        private System.Windows.Forms.DataGridViewTextBoxColumn Column15;
+        private System.Windows.Forms.DataGridViewTextBoxColumn Column39;
+        private System.Windows.Forms.DataGridViewTextBoxColumn Column41;
+        private System.Windows.Forms.DataGridViewTextBoxColumn Column16;
+        private System.Windows.Forms.DataGridViewTextBoxColumn Column18;
+        private System.Windows.Forms.DataGridViewTextBoxColumn Column17;
+        private System.Windows.Forms.DataGridViewTextBoxColumn Column24;
+        private System.Windows.Forms.DataGridViewTextBoxColumn Column19;
+        private System.Windows.Forms.DataGridViewTextBoxColumn Column1;
+        private System.Windows.Forms.DataGridViewTextBoxColumn Column2;
+        private System.Windows.Forms.DataGridViewTextBoxColumn Column3;
+        private System.Windows.Forms.DataGridViewTextBoxColumn Column4;
+        private System.Windows.Forms.DataGridViewTextBoxColumn Column57;
+        private System.Windows.Forms.DataGridViewTextBoxColumn Column6;
+        private System.Windows.Forms.DataGridViewTextBoxColumn Column7;
+        private System.Windows.Forms.DataGridViewTextBoxColumn Column20;
+        private System.Windows.Forms.DataGridViewTextBoxColumn Column21;
+        private System.Windows.Forms.DataGridViewTextBoxColumn Column5;
+        private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn29;
+        private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn30;
+        private System.Windows.Forms.DataGridViewTextBoxColumn Column50;
+        private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn31;
+        private System.Windows.Forms.DataGridViewTextBoxColumn Column40;
+        private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn13;
+        private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn33;
+        private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn34;
+        private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn35;
+        private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn14;
+        private System.Windows.Forms.DataGridViewTextBoxColumn Column29;
+        private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn37;
+        private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn36;
+        private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn5;
+        private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn38;
+        private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn39;
+        private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn40;
+        private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn41;
+        private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn46;
+        private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn47;
+        private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn42;
+        private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn43;
+        private System.Windows.Forms.DataGridViewTextBoxColumn Column30;
     }
 }

@@ -79,8 +79,8 @@
             this.groupBox2 = new System.Windows.Forms.GroupBox();
             this.groupBox3 = new System.Windows.Forms.GroupBox();
             this.groupBox4 = new System.Windows.Forms.GroupBox();
+            this.Chk_LIQ2 = new System.Windows.Forms.CheckBox();
             this.groupBox5 = new System.Windows.Forms.GroupBox();
-            this.Chk_CC = new System.Windows.Forms.CheckBox();
             this.Chk_RES = new System.Windows.Forms.CheckBox();
             this.jobBindingSource = new System.Windows.Forms.BindingSource(this.components);
             this.groupBox1.SuspendLayout();
@@ -99,13 +99,12 @@
             this.Btn_Save.Name = "Btn_Save";
             this.Btn_Save.Size = new System.Drawing.Size(134, 35);
             this.Btn_Save.TabIndex = 317;
-            this.Btn_Save.Text = "Save";
+            this.Btn_Save.Text = "Live";
             this.Btn_Save.UseVisualStyleBackColor = false;
             this.Btn_Save.Click += new System.EventHandler(this.Btn_Save_Click);
             // 
             // Txt_Post_Pro
             // 
-            this.Txt_Post_Pro.Enabled = false;
             this.Txt_Post_Pro.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.Txt_Post_Pro.Location = new System.Drawing.Point(126, 45);
             this.Txt_Post_Pro.Name = "Txt_Post_Pro";
@@ -530,7 +529,7 @@
             // 
             this.Chk_MSK.AutoSize = true;
             this.Chk_MSK.Font = new System.Drawing.Font("Microsoft Sans Serif", 11F, System.Drawing.FontStyle.Bold);
-            this.Chk_MSK.Location = new System.Drawing.Point(7, 15);
+            this.Chk_MSK.Location = new System.Drawing.Point(67, 14);
             this.Chk_MSK.Name = "Chk_MSK";
             this.Chk_MSK.Size = new System.Drawing.Size(63, 22);
             this.Chk_MSK.TabIndex = 4;
@@ -542,7 +541,7 @@
             // 
             this.Chk_SHA.AutoSize = true;
             this.Chk_SHA.Font = new System.Drawing.Font("Microsoft Sans Serif", 11F, System.Drawing.FontStyle.Bold);
-            this.Chk_SHA.Location = new System.Drawing.Point(130, 15);
+            this.Chk_SHA.Location = new System.Drawing.Point(191, 14);
             this.Chk_SHA.Name = "Chk_SHA";
             this.Chk_SHA.Size = new System.Drawing.Size(60, 22);
             this.Chk_SHA.TabIndex = 3;
@@ -554,7 +553,7 @@
             // 
             this.Chk_NJ.AutoSize = true;
             this.Chk_NJ.Font = new System.Drawing.Font("Microsoft Sans Serif", 11F, System.Drawing.FontStyle.Bold);
-            this.Chk_NJ.Location = new System.Drawing.Point(76, 15);
+            this.Chk_NJ.Location = new System.Drawing.Point(137, 14);
             this.Chk_NJ.Name = "Chk_NJ";
             this.Chk_NJ.Size = new System.Drawing.Size(48, 22);
             this.Chk_NJ.TabIndex = 407;
@@ -604,17 +603,29 @@
             // 
             // groupBox4
             // 
-            this.groupBox4.Controls.Add(this.Chk_CC);
+            this.groupBox4.Controls.Add(this.Chk_LIQ2);
             this.groupBox4.Controls.Add(this.Chk_MSK);
-            this.groupBox4.Controls.Add(this.Chk_NJ);
             this.groupBox4.Controls.Add(this.Txt_Post_Pro);
-            this.groupBox4.Controls.Add(this.Chk_SHA);
             this.groupBox4.Controls.Add(this.label14);
+            this.groupBox4.Controls.Add(this.Chk_NJ);
+            this.groupBox4.Controls.Add(this.Chk_SHA);
             this.groupBox4.Location = new System.Drawing.Point(527, 318);
             this.groupBox4.Name = "groupBox4";
             this.groupBox4.Size = new System.Drawing.Size(252, 77);
             this.groupBox4.TabIndex = 420;
             this.groupBox4.TabStop = false;
+            // 
+            // Chk_LIQ2
+            // 
+            this.Chk_LIQ2.AutoSize = true;
+            this.Chk_LIQ2.Font = new System.Drawing.Font("Microsoft Sans Serif", 11F, System.Drawing.FontStyle.Bold);
+            this.Chk_LIQ2.Location = new System.Drawing.Point(6, 14);
+            this.Chk_LIQ2.Name = "Chk_LIQ2";
+            this.Chk_LIQ2.Size = new System.Drawing.Size(53, 22);
+            this.Chk_LIQ2.TabIndex = 408;
+            this.Chk_LIQ2.Text = "LIQ";
+            this.Chk_LIQ2.UseVisualStyleBackColor = true;
+            this.Chk_LIQ2.CheckedChanged += new System.EventHandler(this.Chk_LIQ2_CheckedChanged);
             // 
             // groupBox5
             // 
@@ -626,18 +637,6 @@
             this.groupBox5.Size = new System.Drawing.Size(131, 77);
             this.groupBox5.TabIndex = 420;
             this.groupBox5.TabStop = false;
-            // 
-            // Chk_CC
-            // 
-            this.Chk_CC.AutoSize = true;
-            this.Chk_CC.Font = new System.Drawing.Font("Microsoft Sans Serif", 11F, System.Drawing.FontStyle.Bold);
-            this.Chk_CC.Location = new System.Drawing.Point(196, 15);
-            this.Chk_CC.Name = "Chk_CC";
-            this.Chk_CC.Size = new System.Drawing.Size(51, 22);
-            this.Chk_CC.TabIndex = 408;
-            this.Chk_CC.Text = "CC";
-            this.Chk_CC.UseVisualStyleBackColor = true;
-            this.Chk_CC.CheckedChanged += new System.EventHandler(this.Chk_CC_CheckedChanged);
             // 
             // Chk_RES
             // 
@@ -774,7 +773,7 @@
         private System.Windows.Forms.GroupBox groupBox3;
         private System.Windows.Forms.GroupBox groupBox4;
         private System.Windows.Forms.GroupBox groupBox5;
-        private System.Windows.Forms.CheckBox Chk_CC;
+        private System.Windows.Forms.CheckBox Chk_LIQ2;
         private System.Windows.Forms.CheckBox Chk_RES;
     }
 }

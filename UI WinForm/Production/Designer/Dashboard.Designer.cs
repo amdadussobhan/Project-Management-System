@@ -42,6 +42,16 @@
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Dashboard));
             this.Tbc_Designer = new System.Windows.Forms.TabControl();
             this.tabPage2 = new System.Windows.Forms.TabPage();
+            this.panel5 = new System.Windows.Forms.Panel();
+            this.Txt_New_Folder = new System.Windows.Forms.TextBox();
+            this.label16 = new System.Windows.Forms.Label();
+            this.Cmb_New_JobID = new System.Windows.Forms.ComboBox();
+            this.label17 = new System.Windows.Forms.Label();
+            this.Dtp_NewJobs = new System.Windows.Forms.DateTimePicker();
+            this.Btn_New_Find = new System.Windows.Forms.Button();
+            this.label18 = new System.Windows.Forms.Label();
+            this.label19 = new System.Windows.Forms.Label();
+            this.Dtp_NewJobs_To = new System.Windows.Forms.DateTimePicker();
             this.Dgv_New_Job = new System.Windows.Forms.DataGridView();
             this.Column8 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Column25 = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -55,6 +65,15 @@
             this.Column23 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.tabPage3 = new System.Windows.Forms.TabPage();
             this.Dgv_Performance = new System.Windows.Forms.DataGridView();
+            this.dataGridViewTextBoxColumn3 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.dataGridViewTextBoxColumn9 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Column18 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Column17 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Column11 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Column19 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.dataGridViewTextBoxColumn10 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.dataGridViewTextBoxColumn14 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Column16 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.tabPage1 = new System.Windows.Forms.TabPage();
             this.DgvHistory = new System.Windows.Forms.DataGridView();
             this.tabPage4 = new System.Windows.Forms.TabPage();
@@ -70,44 +89,6 @@
             this.Column31 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.tabPage12 = new System.Windows.Forms.TabPage();
             this.Dgv_Done_Job = new System.Windows.Forms.DataGridView();
-            this.panel1 = new System.Windows.Forms.Panel();
-            this.Txt_Server = new System.Windows.Forms.TextBox();
-            this.Btn_Efficiency = new System.Windows.Forms.Button();
-            this.Btn_Loss_Time = new System.Windows.Forms.Button();
-            this.Btn_Pro_Time = new System.Windows.Forms.Button();
-            this.Btn_Leave_Apply = new System.Windows.Forms.Button();
-            this.Tmr_Count_Dashboard = new System.Windows.Forms.Timer(this.components);
-            this.Btn_Logout = new System.Windows.Forms.Button();
-            this.Btn_Manual_Job = new System.Windows.Forms.Button();
-            this.panel5 = new System.Windows.Forms.Panel();
-            this.Txt_New_Folder = new System.Windows.Forms.TextBox();
-            this.label16 = new System.Windows.Forms.Label();
-            this.Cmb_New_JobID = new System.Windows.Forms.ComboBox();
-            this.label17 = new System.Windows.Forms.Label();
-            this.Dtp_NewJobs = new System.Windows.Forms.DateTimePicker();
-            this.Btn_New_Find = new System.Windows.Forms.Button();
-            this.label18 = new System.Windows.Forms.Label();
-            this.label19 = new System.Windows.Forms.Label();
-            this.Dtp_NewJobs_To = new System.Windows.Forms.DateTimePicker();
-            this.dataGridViewTextBoxColumn1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.dataGridViewTextBoxColumn2 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.dataGridViewTextBoxColumn4 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.dataGridViewTextBoxColumn8 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.dataGridViewTextBoxColumn5 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Column12 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Column15 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.dataGridViewTextBoxColumn6 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.dataGridViewTextBoxColumn7 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Column10 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.dataGridViewTextBoxColumn3 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.dataGridViewTextBoxColumn9 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Column18 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Column17 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Column11 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Column19 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.dataGridViewTextBoxColumn10 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.dataGridViewTextBoxColumn14 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Column16 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Column1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Column2 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Column3 = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -119,8 +100,28 @@
             this.Column5 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Column57 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Column9 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.panel1 = new System.Windows.Forms.Panel();
+            this.Txt_Server = new System.Windows.Forms.TextBox();
+            this.Btn_Logout = new System.Windows.Forms.Button();
+            this.Btn_Efficiency = new System.Windows.Forms.Button();
+            this.Btn_Loss_Time = new System.Windows.Forms.Button();
+            this.Btn_Pro_Time = new System.Windows.Forms.Button();
+            this.Btn_Leave_Apply = new System.Windows.Forms.Button();
+            this.Btn_Manual_Job = new System.Windows.Forms.Button();
+            this.Tmr_Count = new System.Windows.Forms.Timer(this.components);
+            this.dataGridViewTextBoxColumn1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.dataGridViewTextBoxColumn2 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.dataGridViewTextBoxColumn4 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.dataGridViewTextBoxColumn8 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.dataGridViewTextBoxColumn5 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Column12 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Column15 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.dataGridViewTextBoxColumn6 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.dataGridViewTextBoxColumn7 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Column10 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Tbc_Designer.SuspendLayout();
             this.tabPage2.SuspendLayout();
+            this.panel5.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.Dgv_New_Job)).BeginInit();
             this.tabPage3.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.Dgv_Performance)).BeginInit();
@@ -131,7 +132,6 @@
             this.tabPage12.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.Dgv_Done_Job)).BeginInit();
             this.panel1.SuspendLayout();
-            this.panel5.SuspendLayout();
             this.SuspendLayout();
             // 
             // Tbc_Designer
@@ -148,7 +148,7 @@
             this.Tbc_Designer.Location = new System.Drawing.Point(0, 1);
             this.Tbc_Designer.Name = "Tbc_Designer";
             this.Tbc_Designer.SelectedIndex = 0;
-            this.Tbc_Designer.Size = new System.Drawing.Size(1630, 815);
+            this.Tbc_Designer.Size = new System.Drawing.Size(1531, 733);
             this.Tbc_Designer.TabIndex = 3;
             this.Tbc_Designer.SelectedIndexChanged += new System.EventHandler(this.Tbc_Designer_SelectedIndexChanged);
             // 
@@ -164,6 +164,126 @@
             this.tabPage2.Size = new System.Drawing.Size(1622, 778);
             this.tabPage2.TabIndex = 1;
             this.tabPage2.Text = "       New  Jobs       ";
+            // 
+            // panel5
+            // 
+            this.panel5.Anchor = System.Windows.Forms.AnchorStyles.Top;
+            this.panel5.Controls.Add(this.Txt_New_Folder);
+            this.panel5.Controls.Add(this.label16);
+            this.panel5.Controls.Add(this.Cmb_New_JobID);
+            this.panel5.Controls.Add(this.label17);
+            this.panel5.Controls.Add(this.Dtp_NewJobs);
+            this.panel5.Controls.Add(this.Btn_New_Find);
+            this.panel5.Controls.Add(this.label18);
+            this.panel5.Controls.Add(this.label19);
+            this.panel5.Controls.Add(this.Dtp_NewJobs_To);
+            this.panel5.Location = new System.Drawing.Point(232, 4);
+            this.panel5.Name = "panel5";
+            this.panel5.Size = new System.Drawing.Size(1156, 52);
+            this.panel5.TabIndex = 141;
+            // 
+            // Txt_New_Folder
+            // 
+            this.Txt_New_Folder.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F);
+            this.Txt_New_Folder.Location = new System.Drawing.Point(834, 13);
+            this.Txt_New_Folder.Name = "Txt_New_Folder";
+            this.Txt_New_Folder.Size = new System.Drawing.Size(180, 26);
+            this.Txt_New_Folder.TabIndex = 144;
+            this.Txt_New_Folder.TextChanged += new System.EventHandler(this.Txt_New_Folder_TextChanged);
+            // 
+            // label16
+            // 
+            this.label16.AutoSize = true;
+            this.label16.BackColor = System.Drawing.SystemColors.ActiveBorder;
+            this.label16.Font = new System.Drawing.Font("Microsoft Sans Serif", 13F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label16.ForeColor = System.Drawing.Color.Black;
+            this.label16.Location = new System.Drawing.Point(765, 15);
+            this.label16.Name = "label16";
+            this.label16.Size = new System.Drawing.Size(71, 22);
+            this.label16.TabIndex = 138;
+            this.label16.Text = "Folder :";
+            // 
+            // Cmb_New_JobID
+            // 
+            this.Cmb_New_JobID.Font = new System.Drawing.Font("Microsoft Sans Serif", 11F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.Cmb_New_JobID.FormattingEnabled = true;
+            this.Cmb_New_JobID.Items.AddRange(new object[] {
+            "",
+            "ALL"});
+            this.Cmb_New_JobID.Location = new System.Drawing.Point(576, 13);
+            this.Cmb_New_JobID.Name = "Cmb_New_JobID";
+            this.Cmb_New_JobID.Size = new System.Drawing.Size(180, 26);
+            this.Cmb_New_JobID.TabIndex = 137;
+            this.Cmb_New_JobID.Text = "ALL";
+            this.Cmb_New_JobID.TextChanged += new System.EventHandler(this.Cmb_New_JobID_TextChanged);
+            // 
+            // label17
+            // 
+            this.label17.AutoSize = true;
+            this.label17.BackColor = System.Drawing.SystemColors.ActiveBorder;
+            this.label17.Font = new System.Drawing.Font("Microsoft Sans Serif", 13F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label17.ForeColor = System.Drawing.Color.Black;
+            this.label17.Location = new System.Drawing.Point(504, 15);
+            this.label17.Name = "label17";
+            this.label17.Size = new System.Drawing.Size(71, 22);
+            this.label17.TabIndex = 136;
+            this.label17.Text = "Job_ID:";
+            // 
+            // Dtp_NewJobs
+            // 
+            this.Dtp_NewJobs.CustomFormat = "dd-MMM-yy hh:mm tt";
+            this.Dtp_NewJobs.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.Dtp_NewJobs.Format = System.Windows.Forms.DateTimePickerFormat.Custom;
+            this.Dtp_NewJobs.Location = new System.Drawing.Point(66, 12);
+            this.Dtp_NewJobs.Name = "Dtp_NewJobs";
+            this.Dtp_NewJobs.Size = new System.Drawing.Size(190, 26);
+            this.Dtp_NewJobs.TabIndex = 127;
+            this.Dtp_NewJobs.Value = new System.DateTime(2020, 7, 30, 0, 0, 0, 0);
+            // 
+            // Btn_New_Find
+            // 
+            this.Btn_New_Find.Font = new System.Drawing.Font("Microsoft Sans Serif", 11F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.Btn_New_Find.Location = new System.Drawing.Point(1021, 9);
+            this.Btn_New_Find.Name = "Btn_New_Find";
+            this.Btn_New_Find.Size = new System.Drawing.Size(124, 30);
+            this.Btn_New_Find.TabIndex = 125;
+            this.Btn_New_Find.Text = "Find Data";
+            this.Btn_New_Find.UseVisualStyleBackColor = true;
+            this.Btn_New_Find.Click += new System.EventHandler(this.Btn_New_Find_Click);
+            // 
+            // label18
+            // 
+            this.label18.AutoSize = true;
+            this.label18.BackColor = System.Drawing.SystemColors.ActiveBorder;
+            this.label18.Font = new System.Drawing.Font("Microsoft Sans Serif", 13F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label18.ForeColor = System.Drawing.Color.Black;
+            this.label18.Location = new System.Drawing.Point(6, 14);
+            this.label18.Name = "label18";
+            this.label18.Size = new System.Drawing.Size(58, 22);
+            this.label18.TabIndex = 128;
+            this.label18.Text = "Date :";
+            // 
+            // label19
+            // 
+            this.label19.AutoSize = true;
+            this.label19.BackColor = System.Drawing.SystemColors.ActiveBorder;
+            this.label19.Font = new System.Drawing.Font("Microsoft Sans Serif", 13F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label19.ForeColor = System.Drawing.Color.Black;
+            this.label19.Location = new System.Drawing.Point(258, 14);
+            this.label19.Name = "label19";
+            this.label19.Size = new System.Drawing.Size(42, 22);
+            this.label19.TabIndex = 129;
+            this.label19.Text = "To :";
+            // 
+            // Dtp_NewJobs_To
+            // 
+            this.Dtp_NewJobs_To.CustomFormat = "dd-MMM-yy hh:mm tt";
+            this.Dtp_NewJobs_To.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.Dtp_NewJobs_To.Format = System.Windows.Forms.DateTimePickerFormat.Custom;
+            this.Dtp_NewJobs_To.Location = new System.Drawing.Point(304, 12);
+            this.Dtp_NewJobs_To.Name = "Dtp_NewJobs_To";
+            this.Dtp_NewJobs_To.Size = new System.Drawing.Size(190, 26);
+            this.Dtp_NewJobs_To.TabIndex = 130;
             // 
             // Dgv_New_Job
             // 
@@ -335,6 +455,59 @@
             this.Dgv_Performance.Size = new System.Drawing.Size(1494, 666);
             this.Dgv_Performance.TabIndex = 24;
             // 
+            // dataGridViewTextBoxColumn3
+            // 
+            this.dataGridViewTextBoxColumn3.HeaderText = "Rank";
+            this.dataGridViewTextBoxColumn3.Name = "dataGridViewTextBoxColumn3";
+            // 
+            // dataGridViewTextBoxColumn9
+            // 
+            this.dataGridViewTextBoxColumn9.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
+            this.dataGridViewTextBoxColumn9.HeaderText = "Name";
+            this.dataGridViewTextBoxColumn9.Name = "dataGridViewTextBoxColumn9";
+            // 
+            // Column18
+            // 
+            this.Column18.HeaderText = "Shift";
+            this.Column18.Name = "Column18";
+            this.Column18.Width = 150;
+            // 
+            // Column17
+            // 
+            this.Column17.HeaderText = "First_Login";
+            this.Column17.Name = "Column17";
+            this.Column17.Width = 270;
+            // 
+            // Column11
+            // 
+            this.Column11.HeaderText = "Last_activity ";
+            this.Column11.Name = "Column11";
+            this.Column11.Width = 270;
+            // 
+            // Column19
+            // 
+            this.Column19.HeaderText = "Login_Time";
+            this.Column19.Name = "Column19";
+            this.Column19.Width = 150;
+            // 
+            // dataGridViewTextBoxColumn10
+            // 
+            this.dataGridViewTextBoxColumn10.HeaderText = "Total_File";
+            this.dataGridViewTextBoxColumn10.Name = "dataGridViewTextBoxColumn10";
+            this.dataGridViewTextBoxColumn10.Width = 150;
+            // 
+            // dataGridViewTextBoxColumn14
+            // 
+            this.dataGridViewTextBoxColumn14.HeaderText = "Pro_Time";
+            this.dataGridViewTextBoxColumn14.Name = "dataGridViewTextBoxColumn14";
+            this.dataGridViewTextBoxColumn14.Width = 150;
+            // 
+            // Column16
+            // 
+            this.Column16.HeaderText = "Efficiency";
+            this.Column16.Name = "Column16";
+            this.Column16.Width = 150;
+            // 
             // tabPage1
             // 
             this.tabPage1.BackColor = System.Drawing.SystemColors.ActiveBorder;
@@ -343,7 +516,7 @@
             this.tabPage1.Location = new System.Drawing.Point(4, 33);
             this.tabPage1.Name = "tabPage1";
             this.tabPage1.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage1.Size = new System.Drawing.Size(1622, 778);
+            this.tabPage1.Size = new System.Drawing.Size(1523, 696);
             this.tabPage1.TabIndex = 17;
             this.tabPage1.Text = "          History          ";
             // 
@@ -393,7 +566,7 @@
             this.DgvHistory.Name = "DgvHistory";
             this.DgvHistory.RowTemplate.Height = 30;
             this.DgvHistory.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.DgvHistory.Size = new System.Drawing.Size(1494, 666);
+            this.DgvHistory.Size = new System.Drawing.Size(1395, 584);
             this.DgvHistory.TabIndex = 23;
             // 
             // tabPage4
@@ -570,368 +743,6 @@
             this.Dgv_Done_Job.Size = new System.Drawing.Size(1498, 666);
             this.Dgv_Done_Job.TabIndex = 24;
             // 
-            // panel1
-            // 
-            this.panel1.Controls.Add(this.Txt_Server);
-            this.panel1.Controls.Add(this.Btn_Logout);
-            this.panel1.Controls.Add(this.Btn_Efficiency);
-            this.panel1.Controls.Add(this.Btn_Loss_Time);
-            this.panel1.Controls.Add(this.Btn_Pro_Time);
-            this.panel1.Controls.Add(this.Btn_Leave_Apply);
-            this.panel1.Controls.Add(this.Btn_Manual_Job);
-            this.panel1.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.panel1.Location = new System.Drawing.Point(0, 817);
-            this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(1630, 40);
-            this.panel1.TabIndex = 44;
-            // 
-            // Txt_Server
-            // 
-            this.Txt_Server.BackColor = System.Drawing.SystemColors.ActiveBorder;
-            this.Txt_Server.BorderStyle = System.Windows.Forms.BorderStyle.None;
-            this.Txt_Server.Font = new System.Drawing.Font("Microsoft Sans Serif", 11F, System.Drawing.FontStyle.Bold);
-            this.Txt_Server.ForeColor = System.Drawing.Color.Red;
-            this.Txt_Server.Location = new System.Drawing.Point(714, 10);
-            this.Txt_Server.Name = "Txt_Server";
-            this.Txt_Server.ReadOnly = true;
-            this.Txt_Server.Size = new System.Drawing.Size(203, 17);
-            this.Txt_Server.TabIndex = 25;
-            this.Txt_Server.Text = "Server Disconnected";
-            this.Txt_Server.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
-            this.Txt_Server.Visible = false;
-            // 
-            // Btn_Efficiency
-            // 
-            this.Btn_Efficiency.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.Btn_Efficiency.FlatAppearance.BorderSize = 0;
-            this.Btn_Efficiency.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.Btn_Efficiency.Font = new System.Drawing.Font("Arial", 15F);
-            this.Btn_Efficiency.ForeColor = System.Drawing.SystemColors.ControlText;
-            this.Btn_Efficiency.Location = new System.Drawing.Point(1457, 3);
-            this.Btn_Efficiency.Name = "Btn_Efficiency";
-            this.Btn_Efficiency.Size = new System.Drawing.Size(170, 36);
-            this.Btn_Efficiency.TabIndex = 7;
-            this.Btn_Efficiency.Text = "Efficiency";
-            this.Btn_Efficiency.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
-            this.Btn_Efficiency.UseVisualStyleBackColor = true;
-            // 
-            // Btn_Loss_Time
-            // 
-            this.Btn_Loss_Time.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.Btn_Loss_Time.FlatAppearance.BorderSize = 0;
-            this.Btn_Loss_Time.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.Btn_Loss_Time.Font = new System.Drawing.Font("Arial", 15F);
-            this.Btn_Loss_Time.ForeColor = System.Drawing.SystemColors.ControlText;
-            this.Btn_Loss_Time.Location = new System.Drawing.Point(1284, 3);
-            this.Btn_Loss_Time.Name = "Btn_Loss_Time";
-            this.Btn_Loss_Time.Size = new System.Drawing.Size(170, 36);
-            this.Btn_Loss_Time.TabIndex = 6;
-            this.Btn_Loss_Time.Text = "Rest_Time";
-            this.Btn_Loss_Time.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
-            this.Btn_Loss_Time.UseVisualStyleBackColor = true;
-            // 
-            // Btn_Pro_Time
-            // 
-            this.Btn_Pro_Time.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.Btn_Pro_Time.FlatAppearance.BorderSize = 0;
-            this.Btn_Pro_Time.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.Btn_Pro_Time.Font = new System.Drawing.Font("Arial", 15F);
-            this.Btn_Pro_Time.ForeColor = System.Drawing.SystemColors.ControlText;
-            this.Btn_Pro_Time.Location = new System.Drawing.Point(1111, 3);
-            this.Btn_Pro_Time.Name = "Btn_Pro_Time";
-            this.Btn_Pro_Time.Size = new System.Drawing.Size(170, 36);
-            this.Btn_Pro_Time.TabIndex = 5;
-            this.Btn_Pro_Time.Text = "Pro_Time";
-            this.Btn_Pro_Time.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
-            this.Btn_Pro_Time.UseVisualStyleBackColor = true;
-            // 
-            // Btn_Leave_Apply
-            // 
-            this.Btn_Leave_Apply.FlatAppearance.BorderSize = 0;
-            this.Btn_Leave_Apply.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.Btn_Leave_Apply.Font = new System.Drawing.Font("Arial", 15F);
-            this.Btn_Leave_Apply.ForeColor = System.Drawing.SystemColors.ControlText;
-            this.Btn_Leave_Apply.Location = new System.Drawing.Point(352, 2);
-            this.Btn_Leave_Apply.Name = "Btn_Leave_Apply";
-            this.Btn_Leave_Apply.Size = new System.Drawing.Size(170, 36);
-            this.Btn_Leave_Apply.TabIndex = 4;
-            this.Btn_Leave_Apply.Text = "Leave Apply";
-            this.Btn_Leave_Apply.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
-            this.Btn_Leave_Apply.UseVisualStyleBackColor = true;
-            // 
-            // Tmr_Count_Dashboard
-            // 
-            this.Tmr_Count_Dashboard.Interval = 10000;
-            this.Tmr_Count_Dashboard.Tick += new System.EventHandler(this.Tmr_Count_Dashboard_Tick);
-            // 
-            // Btn_Logout
-            // 
-            this.Btn_Logout.FlatAppearance.BorderSize = 0;
-            this.Btn_Logout.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.Btn_Logout.Font = new System.Drawing.Font("Arial", 15F);
-            this.Btn_Logout.ForeColor = System.Drawing.SystemColors.ControlText;
-            this.Btn_Logout.Image = ((System.Drawing.Image)(resources.GetObject("Btn_Logout.Image")));
-            this.Btn_Logout.ImageAlign = System.Drawing.ContentAlignment.TopCenter;
-            this.Btn_Logout.Location = new System.Drawing.Point(4, -1);
-            this.Btn_Logout.Name = "Btn_Logout";
-            this.Btn_Logout.Size = new System.Drawing.Size(170, 36);
-            this.Btn_Logout.TabIndex = 8;
-            this.Btn_Logout.Text = "Logout";
-            this.Btn_Logout.TextAlign = System.Drawing.ContentAlignment.BottomCenter;
-            this.Btn_Logout.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
-            this.Btn_Logout.UseVisualStyleBackColor = true;
-            this.Btn_Logout.Click += new System.EventHandler(this.Btn_Logout_Click);
-            // 
-            // Btn_Manual_Job
-            // 
-            this.Btn_Manual_Job.FlatAppearance.BorderSize = 0;
-            this.Btn_Manual_Job.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.Btn_Manual_Job.Font = new System.Drawing.Font("Arial", 15F);
-            this.Btn_Manual_Job.ForeColor = System.Drawing.SystemColors.ControlText;
-            this.Btn_Manual_Job.Image = ((System.Drawing.Image)(resources.GetObject("Btn_Manual_Job.Image")));
-            this.Btn_Manual_Job.ImageAlign = System.Drawing.ContentAlignment.TopCenter;
-            this.Btn_Manual_Job.Location = new System.Drawing.Point(178, 0);
-            this.Btn_Manual_Job.Name = "Btn_Manual_Job";
-            this.Btn_Manual_Job.Size = new System.Drawing.Size(170, 36);
-            this.Btn_Manual_Job.TabIndex = 3;
-            this.Btn_Manual_Job.Text = "Manual_Job";
-            this.Btn_Manual_Job.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
-            this.Btn_Manual_Job.UseVisualStyleBackColor = true;
-            this.Btn_Manual_Job.Click += new System.EventHandler(this.Btn_Manual_Job_Click);
-            // 
-            // panel5
-            // 
-            this.panel5.Anchor = System.Windows.Forms.AnchorStyles.Top;
-            this.panel5.Controls.Add(this.Txt_New_Folder);
-            this.panel5.Controls.Add(this.label16);
-            this.panel5.Controls.Add(this.Cmb_New_JobID);
-            this.panel5.Controls.Add(this.label17);
-            this.panel5.Controls.Add(this.Dtp_NewJobs);
-            this.panel5.Controls.Add(this.Btn_New_Find);
-            this.panel5.Controls.Add(this.label18);
-            this.panel5.Controls.Add(this.label19);
-            this.panel5.Controls.Add(this.Dtp_NewJobs_To);
-            this.panel5.Location = new System.Drawing.Point(232, 4);
-            this.panel5.Name = "panel5";
-            this.panel5.Size = new System.Drawing.Size(1156, 52);
-            this.panel5.TabIndex = 141;
-            // 
-            // Txt_New_Folder
-            // 
-            this.Txt_New_Folder.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F);
-            this.Txt_New_Folder.Location = new System.Drawing.Point(834, 13);
-            this.Txt_New_Folder.Name = "Txt_New_Folder";
-            this.Txt_New_Folder.Size = new System.Drawing.Size(180, 26);
-            this.Txt_New_Folder.TabIndex = 144;
-            this.Txt_New_Folder.TextChanged += new System.EventHandler(this.Txt_New_Folder_TextChanged);
-            // 
-            // label16
-            // 
-            this.label16.AutoSize = true;
-            this.label16.BackColor = System.Drawing.SystemColors.ActiveBorder;
-            this.label16.Font = new System.Drawing.Font("Microsoft Sans Serif", 13F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label16.ForeColor = System.Drawing.Color.Black;
-            this.label16.Location = new System.Drawing.Point(765, 15);
-            this.label16.Name = "label16";
-            this.label16.Size = new System.Drawing.Size(71, 22);
-            this.label16.TabIndex = 138;
-            this.label16.Text = "Folder :";
-            // 
-            // Cmb_New_JobID
-            // 
-            this.Cmb_New_JobID.Font = new System.Drawing.Font("Microsoft Sans Serif", 11F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.Cmb_New_JobID.FormattingEnabled = true;
-            this.Cmb_New_JobID.Items.AddRange(new object[] {
-            "",
-            "ALL"});
-            this.Cmb_New_JobID.Location = new System.Drawing.Point(576, 13);
-            this.Cmb_New_JobID.Name = "Cmb_New_JobID";
-            this.Cmb_New_JobID.Size = new System.Drawing.Size(180, 26);
-            this.Cmb_New_JobID.TabIndex = 137;
-            this.Cmb_New_JobID.Text = "ALL";
-            this.Cmb_New_JobID.TextChanged += new System.EventHandler(this.Cmb_New_JobID_TextChanged);
-            // 
-            // label17
-            // 
-            this.label17.AutoSize = true;
-            this.label17.BackColor = System.Drawing.SystemColors.ActiveBorder;
-            this.label17.Font = new System.Drawing.Font("Microsoft Sans Serif", 13F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label17.ForeColor = System.Drawing.Color.Black;
-            this.label17.Location = new System.Drawing.Point(504, 15);
-            this.label17.Name = "label17";
-            this.label17.Size = new System.Drawing.Size(71, 22);
-            this.label17.TabIndex = 136;
-            this.label17.Text = "Job_ID:";
-            // 
-            // Dtp_NewJobs
-            // 
-            this.Dtp_NewJobs.CustomFormat = "dd-MMM-yy hh:mm tt";
-            this.Dtp_NewJobs.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.Dtp_NewJobs.Format = System.Windows.Forms.DateTimePickerFormat.Custom;
-            this.Dtp_NewJobs.Location = new System.Drawing.Point(66, 12);
-            this.Dtp_NewJobs.Name = "Dtp_NewJobs";
-            this.Dtp_NewJobs.Size = new System.Drawing.Size(190, 26);
-            this.Dtp_NewJobs.TabIndex = 127;
-            this.Dtp_NewJobs.Value = new System.DateTime(2020, 7, 30, 0, 0, 0, 0);
-            // 
-            // Btn_New_Find
-            // 
-            this.Btn_New_Find.Font = new System.Drawing.Font("Microsoft Sans Serif", 11F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.Btn_New_Find.Location = new System.Drawing.Point(1021, 9);
-            this.Btn_New_Find.Name = "Btn_New_Find";
-            this.Btn_New_Find.Size = new System.Drawing.Size(124, 30);
-            this.Btn_New_Find.TabIndex = 125;
-            this.Btn_New_Find.Text = "Find Data";
-            this.Btn_New_Find.UseVisualStyleBackColor = true;
-            this.Btn_New_Find.Click += new System.EventHandler(this.Btn_New_Find_Click);
-            // 
-            // label18
-            // 
-            this.label18.AutoSize = true;
-            this.label18.BackColor = System.Drawing.SystemColors.ActiveBorder;
-            this.label18.Font = new System.Drawing.Font("Microsoft Sans Serif", 13F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label18.ForeColor = System.Drawing.Color.Black;
-            this.label18.Location = new System.Drawing.Point(6, 14);
-            this.label18.Name = "label18";
-            this.label18.Size = new System.Drawing.Size(58, 22);
-            this.label18.TabIndex = 128;
-            this.label18.Text = "Date :";
-            // 
-            // label19
-            // 
-            this.label19.AutoSize = true;
-            this.label19.BackColor = System.Drawing.SystemColors.ActiveBorder;
-            this.label19.Font = new System.Drawing.Font("Microsoft Sans Serif", 13F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label19.ForeColor = System.Drawing.Color.Black;
-            this.label19.Location = new System.Drawing.Point(258, 14);
-            this.label19.Name = "label19";
-            this.label19.Size = new System.Drawing.Size(42, 22);
-            this.label19.TabIndex = 129;
-            this.label19.Text = "To :";
-            // 
-            // Dtp_NewJobs_To
-            // 
-            this.Dtp_NewJobs_To.CustomFormat = "dd-MMM-yy hh:mm tt";
-            this.Dtp_NewJobs_To.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.Dtp_NewJobs_To.Format = System.Windows.Forms.DateTimePickerFormat.Custom;
-            this.Dtp_NewJobs_To.Location = new System.Drawing.Point(304, 12);
-            this.Dtp_NewJobs_To.Name = "Dtp_NewJobs_To";
-            this.Dtp_NewJobs_To.Size = new System.Drawing.Size(190, 26);
-            this.Dtp_NewJobs_To.TabIndex = 130;
-            // 
-            // dataGridViewTextBoxColumn1
-            // 
-            this.dataGridViewTextBoxColumn1.HeaderText = "SL";
-            this.dataGridViewTextBoxColumn1.Name = "dataGridViewTextBoxColumn1";
-            this.dataGridViewTextBoxColumn1.Width = 50;
-            // 
-            // dataGridViewTextBoxColumn2
-            // 
-            this.dataGridViewTextBoxColumn2.HeaderText = "Job_ID";
-            this.dataGridViewTextBoxColumn2.Name = "dataGridViewTextBoxColumn2";
-            this.dataGridViewTextBoxColumn2.Width = 200;
-            // 
-            // dataGridViewTextBoxColumn4
-            // 
-            this.dataGridViewTextBoxColumn4.HeaderText = "Category";
-            this.dataGridViewTextBoxColumn4.Name = "dataGridViewTextBoxColumn4";
-            this.dataGridViewTextBoxColumn4.Width = 120;
-            // 
-            // dataGridViewTextBoxColumn8
-            // 
-            this.dataGridViewTextBoxColumn8.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
-            this.dataGridViewTextBoxColumn8.HeaderText = "Image";
-            this.dataGridViewTextBoxColumn8.Name = "dataGridViewTextBoxColumn8";
-            // 
-            // dataGridViewTextBoxColumn5
-            // 
-            this.dataGridViewTextBoxColumn5.HeaderText = "Service";
-            this.dataGridViewTextBoxColumn5.Name = "dataGridViewTextBoxColumn5";
-            this.dataGridViewTextBoxColumn5.Width = 180;
-            // 
-            // Column12
-            // 
-            this.Column12.HeaderText = "Start_Time";
-            this.Column12.Name = "Column12";
-            this.Column12.Width = 200;
-            // 
-            // Column15
-            // 
-            this.Column15.HeaderText = "End_Time";
-            this.Column15.Name = "Column15";
-            this.Column15.Width = 200;
-            // 
-            // dataGridViewTextBoxColumn6
-            // 
-            this.dataGridViewTextBoxColumn6.HeaderText = "Job_Time";
-            this.dataGridViewTextBoxColumn6.Name = "dataGridViewTextBoxColumn6";
-            this.dataGridViewTextBoxColumn6.Width = 130;
-            // 
-            // dataGridViewTextBoxColumn7
-            // 
-            this.dataGridViewTextBoxColumn7.HeaderText = "Pro_Time";
-            this.dataGridViewTextBoxColumn7.Name = "dataGridViewTextBoxColumn7";
-            this.dataGridViewTextBoxColumn7.Width = 130;
-            // 
-            // Column10
-            // 
-            this.Column10.HeaderText = "Efficiency";
-            this.Column10.Name = "Column10";
-            this.Column10.Width = 130;
-            // 
-            // dataGridViewTextBoxColumn3
-            // 
-            this.dataGridViewTextBoxColumn3.HeaderText = "Rank";
-            this.dataGridViewTextBoxColumn3.Name = "dataGridViewTextBoxColumn3";
-            // 
-            // dataGridViewTextBoxColumn9
-            // 
-            this.dataGridViewTextBoxColumn9.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
-            this.dataGridViewTextBoxColumn9.HeaderText = "Name";
-            this.dataGridViewTextBoxColumn9.Name = "dataGridViewTextBoxColumn9";
-            // 
-            // Column18
-            // 
-            this.Column18.HeaderText = "Shift";
-            this.Column18.Name = "Column18";
-            this.Column18.Width = 150;
-            // 
-            // Column17
-            // 
-            this.Column17.HeaderText = "First_Login";
-            this.Column17.Name = "Column17";
-            this.Column17.Width = 270;
-            // 
-            // Column11
-            // 
-            this.Column11.HeaderText = "Last_activity ";
-            this.Column11.Name = "Column11";
-            this.Column11.Width = 270;
-            // 
-            // Column19
-            // 
-            this.Column19.HeaderText = "Login_Time";
-            this.Column19.Name = "Column19";
-            this.Column19.Width = 150;
-            // 
-            // dataGridViewTextBoxColumn10
-            // 
-            this.dataGridViewTextBoxColumn10.HeaderText = "Total_File";
-            this.dataGridViewTextBoxColumn10.Name = "dataGridViewTextBoxColumn10";
-            this.dataGridViewTextBoxColumn10.Width = 150;
-            // 
-            // dataGridViewTextBoxColumn14
-            // 
-            this.dataGridViewTextBoxColumn14.HeaderText = "Pro_Time";
-            this.dataGridViewTextBoxColumn14.Name = "dataGridViewTextBoxColumn14";
-            this.dataGridViewTextBoxColumn14.Width = 150;
-            // 
-            // Column16
-            // 
-            this.Column16.HeaderText = "Efficiency";
-            this.Column16.Name = "Column16";
-            this.Column16.Width = 150;
-            // 
             // Column1
             // 
             this.Column1.HeaderText = "SL";
@@ -997,12 +808,201 @@
             this.Column9.Name = "Column9";
             this.Column9.Width = 120;
             // 
+            // panel1
+            // 
+            this.panel1.Controls.Add(this.Txt_Server);
+            this.panel1.Controls.Add(this.Btn_Logout);
+            this.panel1.Controls.Add(this.Btn_Efficiency);
+            this.panel1.Controls.Add(this.Btn_Loss_Time);
+            this.panel1.Controls.Add(this.Btn_Pro_Time);
+            this.panel1.Controls.Add(this.Btn_Leave_Apply);
+            this.panel1.Controls.Add(this.Btn_Manual_Job);
+            this.panel1.Dock = System.Windows.Forms.DockStyle.Bottom;
+            this.panel1.Location = new System.Drawing.Point(0, 735);
+            this.panel1.Name = "panel1";
+            this.panel1.Size = new System.Drawing.Size(1531, 40);
+            this.panel1.TabIndex = 44;
+            // 
+            // Txt_Server
+            // 
+            this.Txt_Server.BackColor = System.Drawing.SystemColors.ActiveBorder;
+            this.Txt_Server.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.Txt_Server.Font = new System.Drawing.Font("Microsoft Sans Serif", 11F, System.Drawing.FontStyle.Bold);
+            this.Txt_Server.ForeColor = System.Drawing.Color.Red;
+            this.Txt_Server.Location = new System.Drawing.Point(714, 10);
+            this.Txt_Server.Name = "Txt_Server";
+            this.Txt_Server.ReadOnly = true;
+            this.Txt_Server.Size = new System.Drawing.Size(203, 17);
+            this.Txt_Server.TabIndex = 25;
+            this.Txt_Server.Text = "Server Disconnected";
+            this.Txt_Server.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            this.Txt_Server.Visible = false;
+            // 
+            // Btn_Logout
+            // 
+            this.Btn_Logout.FlatAppearance.BorderSize = 0;
+            this.Btn_Logout.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.Btn_Logout.Font = new System.Drawing.Font("Arial", 15F);
+            this.Btn_Logout.ForeColor = System.Drawing.SystemColors.ControlText;
+            this.Btn_Logout.Image = ((System.Drawing.Image)(resources.GetObject("Btn_Logout.Image")));
+            this.Btn_Logout.ImageAlign = System.Drawing.ContentAlignment.TopCenter;
+            this.Btn_Logout.Location = new System.Drawing.Point(4, -1);
+            this.Btn_Logout.Name = "Btn_Logout";
+            this.Btn_Logout.Size = new System.Drawing.Size(170, 36);
+            this.Btn_Logout.TabIndex = 8;
+            this.Btn_Logout.Text = "Logout";
+            this.Btn_Logout.TextAlign = System.Drawing.ContentAlignment.BottomCenter;
+            this.Btn_Logout.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
+            this.Btn_Logout.UseVisualStyleBackColor = true;
+            this.Btn_Logout.Click += new System.EventHandler(this.Btn_Logout_Click);
+            // 
+            // Btn_Efficiency
+            // 
+            this.Btn_Efficiency.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.Btn_Efficiency.FlatAppearance.BorderSize = 0;
+            this.Btn_Efficiency.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.Btn_Efficiency.Font = new System.Drawing.Font("Arial", 15F);
+            this.Btn_Efficiency.ForeColor = System.Drawing.SystemColors.ControlText;
+            this.Btn_Efficiency.Location = new System.Drawing.Point(1358, 3);
+            this.Btn_Efficiency.Name = "Btn_Efficiency";
+            this.Btn_Efficiency.Size = new System.Drawing.Size(170, 36);
+            this.Btn_Efficiency.TabIndex = 7;
+            this.Btn_Efficiency.Text = "Efficiency";
+            this.Btn_Efficiency.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
+            this.Btn_Efficiency.UseVisualStyleBackColor = true;
+            // 
+            // Btn_Loss_Time
+            // 
+            this.Btn_Loss_Time.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.Btn_Loss_Time.FlatAppearance.BorderSize = 0;
+            this.Btn_Loss_Time.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.Btn_Loss_Time.Font = new System.Drawing.Font("Arial", 15F);
+            this.Btn_Loss_Time.ForeColor = System.Drawing.SystemColors.ControlText;
+            this.Btn_Loss_Time.Location = new System.Drawing.Point(1185, 3);
+            this.Btn_Loss_Time.Name = "Btn_Loss_Time";
+            this.Btn_Loss_Time.Size = new System.Drawing.Size(170, 36);
+            this.Btn_Loss_Time.TabIndex = 6;
+            this.Btn_Loss_Time.Text = "Rest_Time";
+            this.Btn_Loss_Time.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
+            this.Btn_Loss_Time.UseVisualStyleBackColor = true;
+            // 
+            // Btn_Pro_Time
+            // 
+            this.Btn_Pro_Time.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.Btn_Pro_Time.FlatAppearance.BorderSize = 0;
+            this.Btn_Pro_Time.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.Btn_Pro_Time.Font = new System.Drawing.Font("Arial", 15F);
+            this.Btn_Pro_Time.ForeColor = System.Drawing.SystemColors.ControlText;
+            this.Btn_Pro_Time.Location = new System.Drawing.Point(1012, 3);
+            this.Btn_Pro_Time.Name = "Btn_Pro_Time";
+            this.Btn_Pro_Time.Size = new System.Drawing.Size(170, 36);
+            this.Btn_Pro_Time.TabIndex = 5;
+            this.Btn_Pro_Time.Text = "Pro_Time";
+            this.Btn_Pro_Time.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
+            this.Btn_Pro_Time.UseVisualStyleBackColor = true;
+            // 
+            // Btn_Leave_Apply
+            // 
+            this.Btn_Leave_Apply.FlatAppearance.BorderSize = 0;
+            this.Btn_Leave_Apply.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.Btn_Leave_Apply.Font = new System.Drawing.Font("Arial", 15F);
+            this.Btn_Leave_Apply.ForeColor = System.Drawing.SystemColors.ControlText;
+            this.Btn_Leave_Apply.Location = new System.Drawing.Point(352, 2);
+            this.Btn_Leave_Apply.Name = "Btn_Leave_Apply";
+            this.Btn_Leave_Apply.Size = new System.Drawing.Size(170, 36);
+            this.Btn_Leave_Apply.TabIndex = 4;
+            this.Btn_Leave_Apply.Text = "Leave Apply";
+            this.Btn_Leave_Apply.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
+            this.Btn_Leave_Apply.UseVisualStyleBackColor = true;
+            // 
+            // Btn_Manual_Job
+            // 
+            this.Btn_Manual_Job.FlatAppearance.BorderSize = 0;
+            this.Btn_Manual_Job.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.Btn_Manual_Job.Font = new System.Drawing.Font("Arial", 15F);
+            this.Btn_Manual_Job.ForeColor = System.Drawing.SystemColors.ControlText;
+            this.Btn_Manual_Job.Image = ((System.Drawing.Image)(resources.GetObject("Btn_Manual_Job.Image")));
+            this.Btn_Manual_Job.ImageAlign = System.Drawing.ContentAlignment.TopCenter;
+            this.Btn_Manual_Job.Location = new System.Drawing.Point(178, 0);
+            this.Btn_Manual_Job.Name = "Btn_Manual_Job";
+            this.Btn_Manual_Job.Size = new System.Drawing.Size(170, 36);
+            this.Btn_Manual_Job.TabIndex = 3;
+            this.Btn_Manual_Job.Text = "Manual_Job";
+            this.Btn_Manual_Job.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
+            this.Btn_Manual_Job.UseVisualStyleBackColor = true;
+            this.Btn_Manual_Job.Click += new System.EventHandler(this.Btn_Manual_Job_Click);
+            // 
+            // Tmr_Count
+            // 
+            this.Tmr_Count.Interval = 10000;
+            this.Tmr_Count.Tick += new System.EventHandler(this.Tmr_Count_Dashboard_Tick);
+            // 
+            // dataGridViewTextBoxColumn1
+            // 
+            this.dataGridViewTextBoxColumn1.HeaderText = "SL";
+            this.dataGridViewTextBoxColumn1.Name = "dataGridViewTextBoxColumn1";
+            this.dataGridViewTextBoxColumn1.Width = 50;
+            // 
+            // dataGridViewTextBoxColumn2
+            // 
+            this.dataGridViewTextBoxColumn2.HeaderText = "Job_ID";
+            this.dataGridViewTextBoxColumn2.Name = "dataGridViewTextBoxColumn2";
+            this.dataGridViewTextBoxColumn2.Width = 200;
+            // 
+            // dataGridViewTextBoxColumn4
+            // 
+            this.dataGridViewTextBoxColumn4.HeaderText = "Category";
+            this.dataGridViewTextBoxColumn4.Name = "dataGridViewTextBoxColumn4";
+            this.dataGridViewTextBoxColumn4.Width = 120;
+            // 
+            // dataGridViewTextBoxColumn8
+            // 
+            this.dataGridViewTextBoxColumn8.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
+            this.dataGridViewTextBoxColumn8.HeaderText = "Image";
+            this.dataGridViewTextBoxColumn8.Name = "dataGridViewTextBoxColumn8";
+            // 
+            // dataGridViewTextBoxColumn5
+            // 
+            this.dataGridViewTextBoxColumn5.HeaderText = "Service";
+            this.dataGridViewTextBoxColumn5.Name = "dataGridViewTextBoxColumn5";
+            this.dataGridViewTextBoxColumn5.Width = 180;
+            // 
+            // Column12
+            // 
+            this.Column12.HeaderText = "Start_Time";
+            this.Column12.Name = "Column12";
+            this.Column12.Width = 200;
+            // 
+            // Column15
+            // 
+            this.Column15.HeaderText = "End_Time";
+            this.Column15.Name = "Column15";
+            this.Column15.Width = 200;
+            // 
+            // dataGridViewTextBoxColumn6
+            // 
+            this.dataGridViewTextBoxColumn6.HeaderText = "Est_Time";
+            this.dataGridViewTextBoxColumn6.Name = "dataGridViewTextBoxColumn6";
+            this.dataGridViewTextBoxColumn6.Width = 130;
+            // 
+            // dataGridViewTextBoxColumn7
+            // 
+            this.dataGridViewTextBoxColumn7.HeaderText = "Pro_Time";
+            this.dataGridViewTextBoxColumn7.Name = "dataGridViewTextBoxColumn7";
+            this.dataGridViewTextBoxColumn7.Width = 130;
+            // 
+            // Column10
+            // 
+            this.Column10.HeaderText = "Efficiency";
+            this.Column10.Name = "Column10";
+            this.Column10.Width = 130;
+            // 
             // Dashboard
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.SystemColors.ActiveBorder;
-            this.ClientSize = new System.Drawing.Size(1630, 857);
+            this.ClientSize = new System.Drawing.Size(1531, 775);
             this.Controls.Add(this.panel1);
             this.Controls.Add(this.Tbc_Designer);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.Fixed3D;
@@ -1012,9 +1012,10 @@
             this.WindowState = System.Windows.Forms.FormWindowState.Maximized;
             this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.Dashboard_FormClosed);
             this.Load += new System.EventHandler(this.Dashboard_Load);
-            this.Resize += new System.EventHandler(this.Dashboard_Resize);
             this.Tbc_Designer.ResumeLayout(false);
             this.tabPage2.ResumeLayout(false);
+            this.panel5.ResumeLayout(false);
+            this.panel5.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.Dgv_New_Job)).EndInit();
             this.tabPage3.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.Dgv_Performance)).EndInit();
@@ -1026,8 +1027,6 @@
             ((System.ComponentModel.ISupportInitialize)(this.Dgv_Done_Job)).EndInit();
             this.panel1.ResumeLayout(false);
             this.panel1.PerformLayout();
-            this.panel5.ResumeLayout(false);
-            this.panel5.PerformLayout();
             this.ResumeLayout(false);
 
         }
@@ -1044,7 +1043,7 @@
         private System.Windows.Forms.Button Btn_Leave_Apply;
         private System.Windows.Forms.Button Btn_Loss_Time;
         private System.Windows.Forms.Button Btn_Pro_Time;
-        private System.Windows.Forms.Timer Tmr_Count_Dashboard;
+        private System.Windows.Forms.Timer Tmr_Count;
         private System.Windows.Forms.Button Btn_Efficiency;
         private System.Windows.Forms.TabPage tabPage1;
         private System.Windows.Forms.DataGridView DgvHistory;
@@ -1083,16 +1082,6 @@
         private System.Windows.Forms.Label label18;
         private System.Windows.Forms.Label label19;
         private System.Windows.Forms.DateTimePicker Dtp_NewJobs_To;
-        private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn1;
-        private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn2;
-        private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn4;
-        private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn8;
-        private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn5;
-        private System.Windows.Forms.DataGridViewTextBoxColumn Column12;
-        private System.Windows.Forms.DataGridViewTextBoxColumn Column15;
-        private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn6;
-        private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn7;
-        private System.Windows.Forms.DataGridViewTextBoxColumn Column10;
         private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn3;
         private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn9;
         private System.Windows.Forms.DataGridViewTextBoxColumn Column18;
@@ -1113,5 +1102,15 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn Column5;
         private System.Windows.Forms.DataGridViewTextBoxColumn Column57;
         private System.Windows.Forms.DataGridViewTextBoxColumn Column9;
+        private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn1;
+        private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn2;
+        private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn4;
+        private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn8;
+        private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn5;
+        private System.Windows.Forms.DataGridViewTextBoxColumn Column12;
+        private System.Windows.Forms.DataGridViewTextBoxColumn Column15;
+        private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn6;
+        private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn7;
+        private System.Windows.Forms.DataGridViewTextBoxColumn Column10;
     }
 }

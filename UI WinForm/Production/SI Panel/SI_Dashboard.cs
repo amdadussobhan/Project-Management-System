@@ -190,7 +190,7 @@ namespace Skill_PMS.UI_WinForm.Production.SI_Panel
                         totalInput += job.InputAmount;
                         totalOutput += job.ProDone;
                         totalWorkload += pendingWorkload;
-                        Dgv_Todays.Rows.Add(sl++, job.JobId, job.Loc, job.Folder, job.Incoming, job.Delivery, job.InputAmount, job.ProDone, Math.Round(job.TargetTime, 2), Math.Round(job.ProTime, 2), pendingWorkload, job.Id, job.Team);
+                        Dgv_Todays.Rows.Add(sl++, job.JobId, job.Loc, job.Folder, job.Incoming, job.Delivery, job.InputAmount, job.ProDone, Math.Round(job.ActualTime, 1), Math.Round(job.ProTime, 1), pendingWorkload, job.Id, job.Team);
                     }
                 }
 
@@ -212,7 +212,7 @@ namespace Skill_PMS.UI_WinForm.Production.SI_Panel
                         totalInput += job.InputAmount;
                         totalOutput += job.ProDone;
                         totalWorkload += pendingWorkload;
-                        Dgv_Todays.Rows.Add(sl++, job.JobId, job.Loc, job.Folder, job.Incoming, job.Delivery, job.InputAmount, job.ProDone, Math.Round(job.TargetTime, 2), Math.Round(job.ProTime, 2), pendingWorkload, job.Id, job.Team);
+                        Dgv_Todays.Rows.Add(sl++, job.JobId, job.Loc, job.Folder, job.Incoming, job.Delivery, job.InputAmount, job.ProDone, Math.Round(job.ActualTime, 1), Math.Round(job.ProTime, 1), pendingWorkload, job.Id, job.Team);
                     }
                 }
 
@@ -282,7 +282,7 @@ namespace Skill_PMS.UI_WinForm.Production.SI_Panel
                         totalInput += job.InputAmount;
                         totalOutput += job.ProDone;
                         totalWorkload += pendingWorkload;
-                        Dgv_Future.Rows.Add(sl++, job.JobId, job.Loc, job.Folder, job.Incoming, job.Delivery, job.InputAmount, job.ProDone, Math.Round(job.TargetTime, 2), Math.Round(job.ProTime, 2), pendingWorkload, job.Id, job.Team);
+                        Dgv_Future.Rows.Add(sl++, job.JobId, job.Loc, job.Folder, job.Incoming, job.Delivery, job.InputAmount, job.ProDone, Math.Round(job.ActualTime, 1), Math.Round(job.ProTime, 1), pendingWorkload, job.Id, job.Team);
                     }
                 }
 
@@ -305,7 +305,7 @@ namespace Skill_PMS.UI_WinForm.Production.SI_Panel
                         totalInput += job.InputAmount;
                         totalOutput += job.ProDone;
                         totalWorkload += pendingWorkload;
-                        Dgv_Future.Rows.Add(sl++, job.JobId, job.Loc, job.Folder, job.Incoming, job.Delivery, job.InputAmount, job.ProDone, Math.Round(job.TargetTime, 2), Math.Round(job.ProTime, 2), pendingWorkload, job.Id, job.Team);
+                        Dgv_Future.Rows.Add(sl++, job.JobId, job.Loc, job.Folder, job.Incoming, job.Delivery, job.InputAmount, job.ProDone, Math.Round(job.ActualTime, 1), Math.Round(job.ProTime, 1), pendingWorkload, job.Id, job.Team);
                     }
                 }
 
@@ -331,7 +331,7 @@ namespace Skill_PMS.UI_WinForm.Production.SI_Panel
 
             var errors = _db.Feedback
                 .OrderByDescending(x => x.Id)
-                .Take(999)
+                .Take(99)
                 .ToList();
 
             var sl = 1;
@@ -373,7 +373,7 @@ namespace Skill_PMS.UI_WinForm.Production.SI_Panel
                     start_time = per.Login;
 
                 var Capacity = (per.Logout - start_time).TotalMinutes;
-                Dgv_Performance.Rows.Add(sl++, per.Name, per.Shift, per.Login, per.Logout, per.Status, per.File, per.JobTime, Math.Round(per.ProTime), Math.Round(Capacity - per.ProTime), per.Efficiency + "%");
+                Dgv_Performance.Rows.Add(sl++, per.Name, per.Shift, per.Login, per.Logout, per.Status, per.File, Math.Round(per.JobTime), Math.Round(per.ProTime), Math.Round(Capacity - per.ProTime), per.Efficiency + "%");
             }
 
             _common.Row_Color_By_Efficiency(Dgv_Performance, "Column13");
@@ -388,7 +388,7 @@ namespace Skill_PMS.UI_WinForm.Production.SI_Panel
             var logs = _db.Logs
                 .Where(x => x.Status == "Done")
                 .OrderByDescending(x => x.Id)
-                .Take(999)
+                .Take(99)
                 .ToList();
 
             var sl = 1;
@@ -407,12 +407,12 @@ namespace Skill_PMS.UI_WinForm.Production.SI_Panel
             var logs = _db.Logs
                 .Where(x => x.Status == "Pending")
                 .OrderByDescending(x => x.Id)
-                .Take(999)
+                .Take(99)
                 .ToList();
 
             var sl = 1;
             foreach (var log in logs)
-                Dgv_Manual_Job.Rows.Add(sl++, log.Name, log.JobId, log.Image, log.Service, log.Remarks, log.StartTime, log.EndTime, log.TargetTime, Math.Round(log.ProTime, 2), log.Id);
+                Dgv_Manual_Job.Rows.Add(sl++, log.Name, log.JobId, log.Image, log.Service, log.Remarks, log.StartTime, log.EndTime, Math.Round(log.TargetTime, 1), Math.Round(log.ProTime, 1), log.Id);
         }
 
         private void Check_Ready_Job()

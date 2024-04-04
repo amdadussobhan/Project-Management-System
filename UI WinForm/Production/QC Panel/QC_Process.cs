@@ -215,11 +215,15 @@ namespace Skill_PMS.UI_WinForm.Production.QC_Panel
 
         void Remove_File(string file)
         {
-            log = _db.Logs
-                .FirstOrDefault(x => x.JobId == _job.JobId & x.Image == file & x.Status == "Running" & x.Name == _user.Short_Name & x.Service == "QC");
+            log = _db.Logs.FirstOrDefault(x => x.JobId == _job.JobId & x.Image == file & x.Status == "Running" & x.Name == _user.Short_Name & x.Service == "QC");
 
             if (log != null)
-                _db.Logs.Remove(log);
+            {
+                if (log.ProTime == 0)
+                    _db.Logs.Remove(log);
+                else
+                    log.Status = "Done";
+            }
             
             if (--_fileAmount <= 0)
                 Reset_Process();
@@ -265,7 +269,7 @@ namespace Skill_PMS.UI_WinForm.Production.QC_Panel
         {
             Tmr_Count.Stop();
             _total_Time /= 60;
-            double pro_Time = _total_Time / _fileAmount;
+            double pro_Time = Math.Round(_total_Time / _fileAmount, 1);
 
             Reset_Process();
             Chenge_Quality_Btn(true);
@@ -281,6 +285,7 @@ namespace Skill_PMS.UI_WinForm.Production.QC_Panel
             };
 
             _qcProgress.Show();
+
             _QC_files_name = _pro_files_name.ToList();
             _pro_files_name.Clear();
         }
@@ -382,38 +387,49 @@ namespace Skill_PMS.UI_WinForm.Production.QC_Panel
             Tmr_Count.Start();
             this.WindowState = FormWindowState.Minimized;
 
-            foreach (string file in _files)
-            {
-                if (string.IsNullOrEmpty(file))
-                    break;
+            DateTime now = DateTime.Now;
+            DateTime today = now.Date;
 
+            // Assuming _files contains valid file paths
+            var nonEmptyFiles = _files.Where(file => !string.IsNullOrEmpty(file));
+
+            // Create a dictionary to store existing logs (keyed by image name)
+            var existingLogs = _db.Logs
+                .Where(x => x.JobId == _job.JobId && x.Name == _user.Short_Name && x.Service == "QC")
+                .ToDictionary(x => x.Image, StringComparer.OrdinalIgnoreCase);
+
+
+            foreach (string file in nonEmptyFiles)
+            {
                 string fileName = Path.GetFileNameWithoutExtension(file);
                 _pro_files_name.Add(fileName);
                 DGV_Files.Rows.Add(SL++, fileName, "X");
 
-                log = _db.Logs.FirstOrDefault(x => x.JobId == _job.JobId & x.Image == fileName & x.Name == _user.Short_Name & x.Service == "QC");
-
-                if (log == null)
+                if (!existingLogs.TryGetValue(fileName, out Log log))
                 {
+                    // Create a new Log record
                     log = new Log
                     {
                         JobId = _job.JobId,
                         Image = fileName,
                         Name = _user.Short_Name,
-
-                        Date = DateTime.Now.Date,
-                        StartTime = DateTime.Now,
-                        EndTime = DateTime.Now
+                        Date = today,
+                        StartTime = now,
+                        EndTime = now,
                     };
                     _db.Logs.Add(log);
                 }
 
+                //    // Update existing log
                 log.Service = "QC";
                 log.TargetTime = _job.QcTime;
                 log.Shift = _performance.Shift;
                 log.Status = "Running";
                 log.Up = 0;
             }
+
+            // Batch save changes to the database
+            _db.SaveChanges();
 
             TimeSpan timespan = TimeSpan.FromSeconds(_job.QcTime * 60 * _fileAmount);
             Lbl_Job_Time.Text = "Time " + timespan.ToString(@"h\:mm\:s");

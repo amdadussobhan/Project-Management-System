@@ -69,6 +69,7 @@ namespace Skill_PMS.UI_WinForm.Production.QC_Panel
             //    Btn_Efficiency.Text = @"Efficiency: " + _shiftReport.Efficiency + "%";
             //}
             Check_Todays_Job();
+            Cmb_Designer_History.Text = _user.Short_Name;
         }
 
         private void Check_New_Job()
@@ -287,7 +288,7 @@ namespace Skill_PMS.UI_WinForm.Production.QC_Panel
             var performances = (from per in _db.Performances
                                 join user in _db.Users
                                 on per.Name equals user.Short_Name
-                                where per.Date == date & user.Role == ""
+                                where per.Date == date && user.Role == "QC"
                                 select new
                                 {
                                     per.Name,
@@ -298,7 +299,6 @@ namespace Skill_PMS.UI_WinForm.Production.QC_Panel
                                     per.JobTime,
                                     per.ProTime,
                                     per.Efficiency,
-                                    per.Quality,
                                 }).OrderByDescending(x => x.Efficiency).ToList();
 
             var sl = 1;
@@ -309,7 +309,7 @@ namespace Skill_PMS.UI_WinForm.Production.QC_Panel
                     start_time = per.Logout;
 
                 var Capacity = (per.Logout - start_time).TotalMinutes;
-                Dgv_Performance.Rows.Add(sl++, per.Name, per.Shift, per.Login, per.Logout, per.File, per.JobTime, Math.Round(per.ProTime), Math.Round(Capacity - per.ProTime), per.Efficiency + "%", per.Quality + "%");
+                Dgv_Performance.Rows.Add(sl++, per.Name, per.Shift, per.Login, per.Logout, per.File, Math.Round(per.JobTime), Math.Round(per.ProTime), per.Efficiency + "%");
             }
 
             _common.Row_Color_By_Efficiency(Dgv_Performance, "Column55");
@@ -322,34 +322,65 @@ namespace Skill_PMS.UI_WinForm.Production.QC_Panel
             _common.Dgv_Size(Dgv_Production_Error, 11);
 
             var errors = _db.Feedback
+                .Where(x => x.Reporter == _user.Short_Name)
                 .OrderByDescending(x => x.Id)
-                .Take(999)
+                .Take(99)
                 .ToList();
 
             var sl = 1;
             foreach (var error in errors)
-                Dgv_Production_Error.Rows.Add(sl++, error.Name, error.JobId, error.Folder, error.Image, error.Remarks, error.ReportTime, error.Reporter);
+                Dgv_Production_Error.Rows.Add(sl++, error.Name, error.JobId, error.Folder, error.Image, error.Remarks, error.ReportTime);
             
             //_common.Row_Color_By_Efficiency(Dgv_Production_Error, "Column55");
         }
 
         private void Check_History()
         {
-            DgvHistory.DataSource = null;
-            DgvHistory.Rows.Clear();
-            _common.Dgv_Size(DgvHistory, 11);
+            _db = null;
+            _db = new SkillContext();
 
-            var logs = _db.Logs
-                .Where(x => x.Status == "Done" & x.Name == _user.Short_Name)
-                .OrderByDescending(x => x.Id)
-                .Take(999)
-                .ToList();
+            var designers = _db.Performances.OrderByDescending(x => x.Id).Take(999).Select(x => x.Name).Distinct();
+            foreach (var designer in designers)
+                Cmb_Designer_History.Items.Add(designer);
+
+            var name = Cmb_Designer_History.Text;
+            if (string.IsNullOrEmpty(name) | name.ToUpper() == "ALL")
+                name = null;
+
+            var jobIds = _db.New_Jobs.OrderByDescending(x => x.Id).Take(999).Select(x => x.JobId);
+            foreach (var jobId in jobIds)
+                Cmb_JobID_History.Items.Add(jobId);
+
+            var job = Cmb_JobID_History.Text;
+            if (string.IsNullOrEmpty(job) | job.ToUpper() == "ALL")
+                job = null;
+
+            var image = Txt_Image.Text;
+            if (string.IsNullOrEmpty(image) | image.ToUpper() == "ALL")
+                image = null;
+
+            Dgv_History.DataSource = null;
+            Dgv_History.Rows.Clear();
+            _common.Dgv_Size(Dgv_History, 11);
+
+            var findsData = _db.Logs.Where(x => x.Status != "");
+
+            if (name != null)
+                findsData = findsData.Where(x => x.Name == name);
+
+            if (job != null)
+                findsData = findsData.Where(x => x.JobId == job);
+
+            if (image != null)
+                findsData = findsData.Where(x => x.Image.Contains(image));
+
+            var logs = findsData.OrderByDescending(x => x.EndTime).Take(99).ToList();
 
             var sl = 1;
             foreach (var log in logs)
-                DgvHistory.Rows.Add(sl++, log.Name, log.JobId, log.Type, log.Image, log.Service, log.StartTime, log.EndTime, log.TargetTime, Math.Round(log.ProTime, 2), log.Efficiency + "%");
+                Dgv_History.Rows.Add(sl++, log.Name, log.JobId, log.Type, log.Image, log.Service, log.StartTime, log.EndTime, log.TargetTime, Math.Round(log.ProTime, 2), log.Efficiency + "%");
 
-            _common.Row_Color_By_Efficiency(DgvHistory, "Column59");
+            _common.Row_Color_By_Efficiency(Dgv_History, "Column59");
         }
 
         private void Check_Ready_Job()
@@ -419,7 +450,7 @@ namespace Skill_PMS.UI_WinForm.Production.QC_Panel
                     Check_History();
                     break;
 
-                case 6:
+                case 7:
                     Check_Production_Error();
                     break;
             }
@@ -473,6 +504,8 @@ namespace Skill_PMS.UI_WinForm.Production.QC_Panel
 
         private void Dgv_Todays_CellContentClick(object sender, DataGridViewCellEventArgs e)
         {
+            Tmr_Count.Stop();
+
             string Job_ID = Dgv_Todays.Rows[e.RowIndex].Cells[1].Value.ToString();
             if (!string.IsNullOrEmpty(Job_ID))
             {
@@ -483,8 +516,6 @@ namespace Skill_PMS.UI_WinForm.Production.QC_Panel
                     QC_Process._user = _user;
                     qcProcess._performance = _performance;
                     qcProcess.Show();
-
-                    Tmr_Count.Stop();
                 }
 
                 if (Dgv_Todays.Columns[Dgv_Todays.CurrentCell.ColumnIndex].HeaderText.Contains("Folder"))
@@ -494,8 +525,6 @@ namespace Skill_PMS.UI_WinForm.Production.QC_Panel
                     processing.User = _user;
                     processing._performance = _performance;
                     processing.Show();
-
-                    Tmr_Count.Stop();
                 }
 
                 if (Dgv_Todays.Columns[Dgv_Todays.CurrentCell.ColumnIndex].HeaderText.Contains("Incoming"))
@@ -524,10 +553,14 @@ namespace Skill_PMS.UI_WinForm.Production.QC_Panel
                     qcTimeAssign.Show();
                 }
             }
+
+            Tmr_Count.Start();
         }
 
         private void Dgv_Future_CellContentClick(object sender, DataGridViewCellEventArgs e)
         {
+            Tmr_Count.Stop();
+
             string Job_ID = Dgv_Future.Rows[e.RowIndex].Cells[1].Value.ToString();
             if (!string.IsNullOrEmpty(Job_ID))
             {
@@ -538,8 +571,6 @@ namespace Skill_PMS.UI_WinForm.Production.QC_Panel
                     QC_Process._user = _user;
                     qcProcess._performance = _performance;
                     qcProcess.Show();
-
-                    Tmr_Count.Stop();
                 }
 
                 if (Dgv_Future.Columns[Dgv_Future.CurrentCell.ColumnIndex].HeaderText.Contains("Folder"))
@@ -549,8 +580,6 @@ namespace Skill_PMS.UI_WinForm.Production.QC_Panel
                     processing.User = _user;
                     processing._performance = _performance;
                     processing.Show();
-
-                    Tmr_Count.Stop();
                 }
 
                 if (Dgv_Future.Columns[Dgv_Future.CurrentCell.ColumnIndex].HeaderText.Contains("Incoming"))
@@ -579,6 +608,8 @@ namespace Skill_PMS.UI_WinForm.Production.QC_Panel
                     qcTimeAssign.Show();
                 }
             }
+
+            Tmr_Count.Start();
         }
 
         private void Btn_Add_New_Job_Click(object sender, EventArgs e)
@@ -636,6 +667,26 @@ namespace Skill_PMS.UI_WinForm.Production.QC_Panel
         private void Txt_New_Folder_TextChanged(object sender, EventArgs e)
         {
             Check_New_Job();
+        }
+
+        private void Btn_Find_History_Click(object sender, EventArgs e)
+        {
+            Check_History();
+        }
+
+        private void Cmb_Designer_History_TextChanged(object sender, EventArgs e)
+        {
+            Check_History();
+        }
+
+        private void Cmb_JobID_History_TextChanged(object sender, EventArgs e)
+        {
+            Check_History();
+        }
+
+        private void Txt_Image_TextChanged(object sender, EventArgs e)
+        {
+            Check_History();
         }
     }
 }

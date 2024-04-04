@@ -30,6 +30,7 @@ namespace Skill_PMS.Models
         public DateTime Updated { get; set; }
         public int InputAmount { get; set; }
         public int ProDone { get; set; }
+        public int ScriptAmount { get; set; }
         public int OutputAmount { get; set; }
         public string InputLocation { get; set; }
         public string WorkingLocation { get; set; }

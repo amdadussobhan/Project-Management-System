@@ -56,25 +56,83 @@ namespace Skill_PMS.UI_WinForm.Production.QC_Panel
             //Prb_Copier.Increment(1);
 
             //My_Job Report Entry in Log Table
+
+
+            //Optimized 1
+            // Retrieve all relevant logs in a single query
+            //var relevantLogs = _db.Logs
+            //    .Where(x =>
+            //        x.JobId == _job.JobId &&
+            //        x.Status == "Running" &&
+            //        x.Name == _user.Short_Name &&
+            //        x.Service == "QC" &&
+            //        _pro_files_name.Contains(x.Image))
+            //    .ToList();
+
+            //foreach (var log in relevantLogs)
+            //{
+            //    log.ProTime += pro_Time;
+            //    log.EndTime = currentTime;
+            //    log.Status = "Done";
+            //    log.Quality = 100;
+            //    log.Up = 0;
+
+            //    if (log.ProTime != 0)
+            //    {
+            //        log.Efficiency = (int)(log.TargetTime / log.ProTime * 100);
+            //    }
+
+            //    --_fileAmount;
+            //}
+
+
+            //Optimized 2
+            // Create a dictionary to store logs by image file name
+            var logDictionary = _db.Logs.Where(x => x.JobId == _job.JobId && x.Status == "Running" && x.Name == _user.Short_Name && x.Service == "QC" &&
+                    _pro_files_name.Contains(x.Image)).ToDictionary(x => x.Image, StringComparer.OrdinalIgnoreCase);
+
             foreach (string file in _pro_files_name)
             {
-                if (file == null)
-                    break;
+                if (logDictionary.TryGetValue(file, out log))
+                {
+                    log.ProTime += pro_Time;
+                    log.EndTime = currentTime;
+                    log.Status = "Done";
+                    log.Quality = 100;
+                    log.Up = 0;
 
-                log = _db.Logs.FirstOrDefault(x => x.JobId == _job.JobId & x.Image == file & x.Status == "Running" & x.Name == _user.Short_Name & x.Service == "QC");
+                    if (log.ProTime != 0)
+                    {
+                        log.Efficiency = (int)(log.TargetTime / log.ProTime * 100);
+                    }
 
-                log.ProTime += pro_Time;
-                log.EndTime = currentTime;
-                log.Status = "Done";
-                log.Quality = 100;
-                log.Up = 0;
-
-                if (log.ProTime != 0)
-                    log.Efficiency = (int)(log.TargetTime / log.ProTime * 100);
-
-                --_fileAmount;
-                //Prb_Copier.Increment(1);
+                    --_fileAmount;
+                }
             }
+
+
+            //Original
+            //foreach (string file in _pro_files_name)
+            //{
+            //    if (file == null)
+            //        break;
+
+            //    log = _db.Logs.FirstOrDefault(x => x.JobId == _job.JobId & x.Image == file & x.Status == "Running" & x.Name == _user.Short_Name & x.Service == "QC");
+
+            //    log.ProTime += pro_Time;
+            //    log.EndTime = currentTime;
+            //    log.Status = "Done";
+            //    log.Quality = 100;
+            //    log.Up = 0;
+
+            //    if (log.ProTime != 0)
+            //        log.Efficiency = (int)(log.TargetTime / log.ProTime * 100);
+
+            //    --_fileAmount;
+            //    //Prb_Copier.Increment(1);
+            //}
+
+
             _db.SaveChanges();
 
             //2022

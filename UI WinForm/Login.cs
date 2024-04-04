@@ -24,6 +24,7 @@ namespace Skill_PMS.UI_WinForm
         private readonly Common _common = new Common();
         private readonly SkillContext _db = new SkillContext();
         private string _shift;
+        private string _version = "1.2.9.7";
 
         public Login()
         {
@@ -32,6 +33,7 @@ namespace Skill_PMS.UI_WinForm
 
         private void Login_Load(object sender, EventArgs e)
         {
+            this.Text = "Skill_PMS Login_V"+_version;
             //Cmb_Shift.Text = _common.Current_Shift();
             Check_user();
         }
@@ -77,7 +79,7 @@ namespace Skill_PMS.UI_WinForm
                 if (!_user.Employee_ID.Contains("10000") & _user.Role != "SI" & _user.Role != "QC" & performance.Status == "Running")
                 {
                     MessageBox.Show(@"Your account is already login running. Please logout first", @"Account Already Running", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                    this.Close();
+                    Application.Exit();
                 }
             }
 
@@ -86,7 +88,7 @@ namespace Skill_PMS.UI_WinForm
             if (CMB_OT.Text == "OT Work" & (int)(performance.Logout - performance.Login).TotalHours < 7)
             {
                 MessageBox.Show(@"You are not eligible to start OT. Talk to In-Charge", @"You are not eligible to start OT", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                this.Close();
+                Application.Exit();
             }
             else
             {
@@ -104,15 +106,15 @@ namespace Skill_PMS.UI_WinForm
             performance.Status = "Running";
 
             // Get the Assembly information and access the informational version
-            var version = Assembly.GetExecutingAssembly()
-                                     .GetCustomAttributes<AssemblyInformationalVersionAttribute>()
-                                     .FirstOrDefault()
-                                     ?.InformationalVersion;
+            //var version = Assembly.GetExecutingAssembly()
+            //                         .GetCustomAttributes<AssemblyInformationalVersionAttribute>()
+            //                         .FirstOrDefault()
+            //                         ?.InformationalVersion;
 
             //var version = Assembly.GetExecutingAssembly().GetName().Version + "";
             var HostName = Dns.GetHostName() + "";
             var ipAddress = Dns.GetHostAddresses(HostName);
-            performance.PC_Name = version + "_" + HostName + "_" + ipAddress[0] + "_" + ipAddress[1];
+            performance.PC_Name = _version + "_" + HostName + "_" + ipAddress[0] + "_" + ipAddress[1];
             
             var shiftReport = _db.Shift_Reports.FirstOrDefault(x => x.Date == date & x.Shift == _shift & x.Team == "");
 
