@@ -35,7 +35,7 @@ namespace Skill_PMS.UI_WinForm.Production.Designer
         private void Dashboard_Load(object sender, EventArgs e)
         {
             this.Text = @"Dashboard - " + _user.Full_Name;
-            Tmr_Count_Dashboard.Start();
+            Tmr_Count.Start();
             Check_New_Job();
             Check_Data();
         }
@@ -225,7 +225,7 @@ namespace Skill_PMS.UI_WinForm.Production.Designer
 
                 if (!string.IsNullOrWhiteSpace(Dgv_New_Job.CurrentCell.EditedFormattedValue.ToString()))
                 {
-                    Tmr_Count_Dashboard.Stop();
+                    Tmr_Count.Stop();
                     this.Hide();
                     processing.User = _user;
                     processing._performance = _performance;
@@ -248,22 +248,37 @@ namespace Skill_PMS.UI_WinForm.Production.Designer
                     start_time = start_time.AddDays(-1);
             }
 
-            _performance = _db.Performances
-                .FirstOrDefault(x => x.Id == _performance.Id);
+            //_performance = _db.Performances
+            //    .FirstOrDefault(x => x.Id == _performance.Id);
+            double targetTime =0, proTime=0, efficiency = 0;
+            var logs = _db.Logs.Where(x=> x.Name == _performance.Name && x.Date == _performance.Date).ToList();
 
-            Btn_Pro_Time.Text = @"Pro Time: " + Math.Round(_performance.ProTime);
-            Btn_Efficiency.Text = @"Efficiency: " + _performance.Efficiency + @"%";
+            if (logs != null)
+            {
+                targetTime = logs.Sum(x => x.TargetTime);
+                proTime = logs.Sum(x=>x.ProTime);
+
+                if (proTime > 0)
+                    efficiency = targetTime / proTime * 100;
+            }
+
+            Btn_Pro_Time.Text = @"Pro Time: " + Math.Round(proTime);
+            Btn_Efficiency.Text = @"Efficiency: " + Math.Round(efficiency)+ @"%";
 
             if (start_time > currentTime)
                 start_time = currentTime;
 
-            var Capacity = (currentTime - start_time).TotalMinutes;
-            Btn_Loss_Time.Text = @"Rest Time: " + Math.Round(Capacity - _performance.ProTime);
+            var capacity = (currentTime - start_time).TotalMinutes;
+            var restTime = capacity - proTime - (capacity * 0.167);
+            if (restTime < 0)
+                restTime = 0;
+
+            Btn_Loss_Time.Text = @"Rest Time: " + Math.Round(restTime);
         }
 
         private void Tbc_Designer_SelectedIndexChanged(object sender, EventArgs e)
         {
-            Tmr_Count_Dashboard.Start();
+            Tmr_Count.Start();
             switch (Tbc_Designer.SelectedIndex)
             {
                 case 0:
@@ -281,15 +296,6 @@ namespace Skill_PMS.UI_WinForm.Production.Designer
                 case 4:
                     Check_Done_Job();
                     break;
-            }
-        }
-
-        private void Dashboard_Resize(object sender, EventArgs e)
-        {
-            if (this.WindowState != FormWindowState.Minimized)
-            {
-                Check_Data();
-                Tmr_Count_Dashboard.Start();
             }
         }
 

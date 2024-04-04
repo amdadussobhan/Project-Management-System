@@ -451,8 +451,6 @@ D:\Project\Skill Soft\Skill_PMS_DHK\bin\Debug\System.Buffers.dll
 D:\Project\Skill Soft\Skill_PMS_DHK\bin\Debug\System.Memory.dll
 D:\Project\Skill Soft\Skill_PMS_DHK\bin\Debug\System.Numerics.Vectors.dll
 D:\Project\Skill Soft\Skill_PMS_DHK\bin\Debug\System.Runtime.CompilerServices.Unsafe.dll
-D:\Project\Skill Soft\Skill_PMS_DHK\bin\Debug\Ubiety.Dns.Core.dll
-D:\Project\Skill Soft\Skill_PMS_DHK\bin\Debug\Zstandard.Net.dll
 D:\Project\Skill Soft\Skill_PMS_DHK\bin\Debug\EntityFramework.xml
 D:\Project\Skill Soft\Skill_PMS_DHK\bin\Debug\EntityFramework.SqlServer.xml
 D:\Project\Skill Soft\Skill_PMS_DHK\bin\Debug\Google.Protobuf.xml
@@ -556,3 +554,17 @@ D:\Project\Skill Soft\Skill_PMS_DHK\obj\Debug\Skill_PMS.Migrations.OTStartfielda
 D:\Project\Skill Soft\Skill_PMS_DHK\obj\Debug\Skill_PMS.UI_WinForm.Production.Designer.Manual_Job_Add.resources
 D:\Project\Skill Soft\Skill_PMS_DHK\obj\Debug\Skill_PMS.UI_WinForm.Production.SI_Panel.Manualy_Job_Approve.resources
 D:\Project\Skill Soft\Skill_PMS_DHK\obj\Debug\Skill_PMS.Migrations.ServiceaddedinAssignTimeTable.resources
+D:\Project\Skill Soft\Skill_PMS_DHK\bin\Debug\BouncyCastle.Cryptography.dll
+D:\Project\Skill Soft\Skill_PMS_DHK\bin\Debug\Microsoft.Bcl.AsyncInterfaces.dll
+D:\Project\Skill Soft\Skill_PMS_DHK\bin\Debug\System.Configuration.ConfigurationManager.dll
+D:\Project\Skill Soft\Skill_PMS_DHK\bin\Debug\System.Diagnostics.DiagnosticSource.dll
+D:\Project\Skill Soft\Skill_PMS_DHK\bin\Debug\System.IO.Pipelines.dll
+D:\Project\Skill Soft\Skill_PMS_DHK\bin\Debug\System.Threading.Tasks.Extensions.dll
+D:\Project\Skill Soft\Skill_PMS_DHK\bin\Debug\ZstdSharp.dll
+D:\Project\Skill Soft\Skill_PMS_DHK\bin\Debug\BouncyCastle.Cryptography.xml
+D:\Project\Skill Soft\Skill_PMS_DHK\bin\Debug\Google.Protobuf.pdb
+D:\Project\Skill Soft\Skill_PMS_DHK\bin\Debug\Microsoft.Bcl.AsyncInterfaces.xml
+D:\Project\Skill Soft\Skill_PMS_DHK\bin\Debug\System.Diagnostics.DiagnosticSource.xml
+D:\Project\Skill Soft\Skill_PMS_DHK\bin\Debug\System.IO.Pipelines.xml
+D:\Project\Skill Soft\Skill_PMS_DHK\bin\Debug\System.Threading.Tasks.Extensions.xml
+D:\Project\Skill Soft\Skill_PMS_DHK\obj\Debug\Skill_PMS.Migrations.addedautotimeassign.resources

@@ -55,40 +55,88 @@ namespace Skill_PMS.UI_WinForm.Production.SI_Panel
             string[] files = Directory.GetFiles(_loc, "*", SearchOption.AllDirectories);
             int index = 1, totalProgress = files.Count();
 
-            var fileNames = files.Select(Path.GetFileNameWithoutExtension).ToList();
-            var existingImageTimes = _db.ImageTime
-                .Where(it => fileNames.Contains(it.Image) && it.Job_ID == _jobId)
-                .ToDictionary(it => it.Image);
+            var relevantLogs = _db.ImageTime
+            .Where(it => it.Job_ID == _jobId)
+            .ToList(); // Retrieve relevant records
 
-            return Task.Run(() => {
-                foreach (string file in files)
-                {
+            return Task.Run(() =>{
+                foreach (string file in files){
                     string fileName = Path.GetFileNameWithoutExtension(file);
-                    if (!existingImageTimes.TryGetValue(fileName, out var imageTime))
+                    var existingImageTime = relevantLogs.FirstOrDefault(it => it.Image == fileName);
+
+                    if (existingImageTime == null)
                     {
-                        imageTime = new ImageTime
+                        // Create a new ImageTime record
+                        existingImageTime = new ImageTime
                         {
                             Job_ID = _jobId,
                             Image = fileName,
                         };
-                        _db.ImageTime.Add(imageTime);
+                        _db.ImageTime.Add(existingImageTime);
                     }
 
                     // Update properties
-                    imageTime.Type = _type;
-                    imageTime.Total_Time = _jobTime;
-                    imageTime.Clipping_Time = _clipping;
-                    imageTime.Basic_Time = _basic;
-                    imageTime.Pre_Process = _pre_process;
-                    imageTime.Post_Process = _post_process;
-                    imageTime.Assigner = User.Short_Name;
+                    existingImageTime.Type = _type;
+                    existingImageTime.Total_Time = _jobTime;
+                    existingImageTime.Clipping_Time = _clipping;
+                    existingImageTime.Basic_Time = _basic;
+                    existingImageTime.Pre_Process = _pre_process;
+                    existingImageTime.Post_Process = _post_process;
+                    existingImageTime.Assigner = User.Short_Name;
+                    existingImageTime.Created = DateTime.Now;
+                    existingImageTime.Updated = DateTime.Now;
 
                     // Update progress
                     progressReport.PercentComplete = index++ * 100 / totalProgress;
                     progress.Report(progressReport);
                 }
+
                 _db.SaveChanges();
             });
+
+
+
+            //var progressReport = new ProgressReport();
+            //string[] files = Directory.GetFiles(_loc, "*", SearchOption.AllDirectories);
+            //int index = 1, totalProgress = files.Count();
+
+            //var fileNames = files.Select(Path.GetFileNameWithoutExtension).ToList();
+            //var existingImageTimes = _db.ImageTime
+            //    .Where(it => fileNames.Contains(it.Image) && it.Job_ID == _jobId)
+            //    .ToDictionary(it => it.Image);
+
+            //return Task.Run(() => {
+            //    foreach (string file in files)
+            //    {
+            //        string fileName = Path.GetFileNameWithoutExtension(file);
+            //        if (!existingImageTimes.TryGetValue(fileName, out var imageTime))
+            //        {
+            //            imageTime = new ImageTime
+            //            {
+            //                Job_ID = _jobId,
+            //                Image = fileName,
+            //            };
+            //            _db.ImageTime.Add(imageTime);
+            //        }
+
+            //        // Update properties
+            //        imageTime.Type = _type;
+            //        imageTime.Total_Time = _jobTime;
+            //        imageTime.Clipping_Time = _clipping;
+            //        imageTime.Basic_Time = _basic;
+            //        imageTime.Pre_Process = _pre_process;
+            //        imageTime.Post_Process = _post_process;
+            //        imageTime.Assigner = User.Short_Name;
+
+            //        // Update progress
+            //        progressReport.PercentComplete = index++ * 100 / totalProgress;
+            //        progress.Report(progressReport);
+            //    }
+            //    _db.SaveChanges();
+            //});
+
+
+
 
             //var progressReport = new ProgressReport();
             //string[] files = Directory.GetFiles(_loc, "*", SearchOption.AllDirectories);

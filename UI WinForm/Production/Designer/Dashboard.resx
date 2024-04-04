@@ -268,7 +268,7 @@
   <data name="Btn_Logout.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
         iVBORw0KGgoAAAANSUhEUgAAAB8AAAAfCAYAAAAfrhY5AAAAIGNIUk0AAHolAACAgwAA+f8AAIDpAAB1
-        MAAA6mAAADqYAAAXb5JfxUYAAAAJcEhZcwAADr0AAA69AUf7kK0AAAerSURBVFhHrVcJUM5pHP4VOhy7
+        MAAA6mAAADqYAAAXb5JfxUYAAAAJcEhZcwAADrwAAA68AZW8ckkAAAerSURBVFhHrVcJUM5pHP4VOhy7
         48w1DGarcaTJKrQ7KJJNjjDFmiRktSasahylEpnsxIy7cY4QOccIOUKEkCMUOZIrSSG6dHz7PO/M1/47
         1rKzzfym//e97/99fsfze37vJ/n5+dX29u1bKS8vl5ycHPH09JQNGzbI0aNH5e7du/L06VP1fUpKioSF
         hcny5ct/Dg4ODly8eLHTlClTZPfu3XL58mU5deqU3Lp1S9mOHTtk9OjRcu3aNcnLy5NPnz5JYWFhtX0T
@@ -335,7 +335,7 @@
         AElFTkSuQmCC
 </value>
   </data>
-  <metadata name="Tmr_Count_Dashboard.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
+  <metadata name="Tmr_Count.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
     <value>2, 2</value>
   </metadata>
   <metadata name="$this.TrayHeight" type="System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">

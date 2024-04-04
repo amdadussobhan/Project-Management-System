@@ -273,7 +273,7 @@ namespace Skill_PMS.UI_WinForm.CS_Panel
                     start_time = per.Login;
 
                 var Capacity = (per.Logout - start_time).TotalMinutes;
-                Dgv_Performance.Rows.Add(sl++, per.Name, per.Shift, per.Login, per.Logout, per.WorkingTime, per.File, per.JobTime, Math.Round(per.ProTime), Math.Round(Capacity - per.ProTime), per.Efficiency + "%", per.Quality + "%");
+                Dgv_Performance.Rows.Add(sl++, per.Name, per.Shift, per.Login, per.Logout, per.WorkingTime, per.File, Math.Round(per.JobTime), Math.Round(per.ProTime), Math.Round(Capacity - per.ProTime), per.Efficiency + "%", per.Quality + "%");
             }
 
             _common.Row_Color_By_Efficiency(Dgv_Performance, "Column29");

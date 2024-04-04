@@ -36,9 +36,13 @@
             this.Chk_Clipping_Path = new System.Windows.Forms.CheckBox();
             this.Btn_Start = new System.Windows.Forms.Button();
             this.Lbl_Count = new System.Windows.Forms.Label();
-            this.Tmr_Count_Processing = new System.Windows.Forms.Timer(this.components);
+            this.Tmr_Count = new System.Windows.Forms.Timer(this.components);
             this.Pnl_Counter = new System.Windows.Forms.Panel();
+            this.Btn_Play = new System.Windows.Forms.Button();
             this.Lbl_Job_Time = new System.Windows.Forms.Label();
+            this.Btn_Cancel = new System.Windows.Forms.Button();
+            this.Btn_Save = new System.Windows.Forms.Button();
+            this.Btn_Pause = new System.Windows.Forms.Button();
             this.Pnl_Service = new System.Windows.Forms.Panel();
             this.Pnl_Format = new System.Windows.Forms.Panel();
             this.Rdb_PSD = new System.Windows.Forms.RadioButton();
@@ -55,10 +59,6 @@
             this.Btn_My_Folder = new System.Windows.Forms.Button();
             this.Btn_Ready_Folder = new System.Windows.Forms.Button();
             this.Btn_Job_Folder = new System.Windows.Forms.Button();
-            this.Btn_Play = new System.Windows.Forms.Button();
-            this.Btn_Cancel = new System.Windows.Forms.Button();
-            this.Btn_Save = new System.Windows.Forms.Button();
-            this.Btn_Pause = new System.Windows.Forms.Button();
             this.Pnl_Counter.SuspendLayout();
             this.Pnl_Service.SuspendLayout();
             this.Pnl_Format.SuspendLayout();
@@ -140,10 +140,10 @@
             this.Lbl_Count.TabIndex = 397;
             this.Lbl_Count.Text = "0:00:00";
             // 
-            // Tmr_Count_Processing
+            // Tmr_Count
             // 
-            this.Tmr_Count_Processing.Interval = 1000;
-            this.Tmr_Count_Processing.Tick += new System.EventHandler(this.Tmr_Count_Tick);
+            this.Tmr_Count.Interval = 1000;
+            this.Tmr_Count.Tick += new System.EventHandler(this.Tmr_Count_Tick);
             // 
             // Pnl_Counter
             // 
@@ -160,15 +160,64 @@
             this.Pnl_Counter.TabIndex = 399;
             this.Pnl_Counter.Visible = false;
             // 
+            // Btn_Play
+            // 
+            this.Btn_Play.Font = new System.Drawing.Font("Microsoft Sans Serif", 12.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.Btn_Play.Image = ((System.Drawing.Image)(resources.GetObject("Btn_Play.Image")));
+            this.Btn_Play.Location = new System.Drawing.Point(250, 3);
+            this.Btn_Play.Name = "Btn_Play";
+            this.Btn_Play.Size = new System.Drawing.Size(99, 33);
+            this.Btn_Play.TabIndex = 411;
+            this.Btn_Play.UseVisualStyleBackColor = true;
+            this.Btn_Play.Visible = false;
+            this.Btn_Play.Click += new System.EventHandler(this.Btn_Play_Click);
+            // 
             // Lbl_Job_Time
             // 
             this.Lbl_Job_Time.AutoSize = true;
             this.Lbl_Job_Time.Font = new System.Drawing.Font("Microsoft Sans Serif", 14F);
-            this.Lbl_Job_Time.Location = new System.Drawing.Point(9, 7);
+            this.Lbl_Job_Time.Location = new System.Drawing.Point(7, 7);
             this.Lbl_Job_Time.Name = "Lbl_Job_Time";
-            this.Lbl_Job_Time.Size = new System.Drawing.Size(89, 24);
+            this.Lbl_Job_Time.Size = new System.Drawing.Size(69, 24);
             this.Lbl_Job_Time.TabIndex = 399;
-            this.Lbl_Job_Time.Text = "Job Time";
+            this.Lbl_Job_Time.Text = "Target:";
+            // 
+            // Btn_Cancel
+            // 
+            this.Btn_Cancel.BackColor = System.Drawing.SystemColors.ButtonHighlight;
+            this.Btn_Cancel.Enabled = false;
+            this.Btn_Cancel.Font = new System.Drawing.Font("Microsoft Sans Serif", 12.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.Btn_Cancel.Image = ((System.Drawing.Image)(resources.GetObject("Btn_Cancel.Image")));
+            this.Btn_Cancel.Location = new System.Drawing.Point(147, 3);
+            this.Btn_Cancel.Name = "Btn_Cancel";
+            this.Btn_Cancel.Size = new System.Drawing.Size(99, 33);
+            this.Btn_Cancel.TabIndex = 398;
+            this.Btn_Cancel.UseVisualStyleBackColor = false;
+            this.Btn_Cancel.Click += new System.EventHandler(this.Btn_Cancel_Click);
+            // 
+            // Btn_Save
+            // 
+            this.Btn_Save.BackColor = System.Drawing.SystemColors.ButtonHighlight;
+            this.Btn_Save.Enabled = false;
+            this.Btn_Save.Font = new System.Drawing.Font("Microsoft Sans Serif", 12.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.Btn_Save.Image = ((System.Drawing.Image)(resources.GetObject("Btn_Save.Image")));
+            this.Btn_Save.Location = new System.Drawing.Point(352, 3);
+            this.Btn_Save.Name = "Btn_Save";
+            this.Btn_Save.Size = new System.Drawing.Size(99, 33);
+            this.Btn_Save.TabIndex = 395;
+            this.Btn_Save.UseVisualStyleBackColor = false;
+            this.Btn_Save.Click += new System.EventHandler(this.Btn_Save_Click);
+            // 
+            // Btn_Pause
+            // 
+            this.Btn_Pause.Font = new System.Drawing.Font("Microsoft Sans Serif", 12.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.Btn_Pause.Image = ((System.Drawing.Image)(resources.GetObject("Btn_Pause.Image")));
+            this.Btn_Pause.Location = new System.Drawing.Point(250, 3);
+            this.Btn_Pause.Name = "Btn_Pause";
+            this.Btn_Pause.Size = new System.Drawing.Size(99, 33);
+            this.Btn_Pause.TabIndex = 396;
+            this.Btn_Pause.UseVisualStyleBackColor = true;
+            this.Btn_Pause.Click += new System.EventHandler(this.Btn_Pause_Click);
             // 
             // Pnl_Service
             // 
@@ -315,7 +364,7 @@
             // 
             // Tmr_Pause
             // 
-            this.Tmr_Pause.Interval = 10000;
+            this.Tmr_Pause.Interval = 15000;
             this.Tmr_Pause.Tick += new System.EventHandler(this.Tmr_Pause_Tick);
             // 
             // Btn_My_Folder
@@ -363,55 +412,6 @@
             this.Btn_Job_Folder.UseVisualStyleBackColor = false;
             this.Btn_Job_Folder.Click += new System.EventHandler(this.Btn_Job_Folder_Click);
             // 
-            // Btn_Play
-            // 
-            this.Btn_Play.Font = new System.Drawing.Font("Microsoft Sans Serif", 12.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.Btn_Play.Image = ((System.Drawing.Image)(resources.GetObject("Btn_Play.Image")));
-            this.Btn_Play.Location = new System.Drawing.Point(244, 3);
-            this.Btn_Play.Name = "Btn_Play";
-            this.Btn_Play.Size = new System.Drawing.Size(99, 33);
-            this.Btn_Play.TabIndex = 411;
-            this.Btn_Play.UseVisualStyleBackColor = true;
-            this.Btn_Play.Visible = false;
-            this.Btn_Play.Click += new System.EventHandler(this.Btn_Play_Click);
-            // 
-            // Btn_Cancel
-            // 
-            this.Btn_Cancel.BackColor = System.Drawing.SystemColors.ButtonHighlight;
-            this.Btn_Cancel.Enabled = false;
-            this.Btn_Cancel.Font = new System.Drawing.Font("Microsoft Sans Serif", 12.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.Btn_Cancel.Image = ((System.Drawing.Image)(resources.GetObject("Btn_Cancel.Image")));
-            this.Btn_Cancel.Location = new System.Drawing.Point(139, 3);
-            this.Btn_Cancel.Name = "Btn_Cancel";
-            this.Btn_Cancel.Size = new System.Drawing.Size(99, 33);
-            this.Btn_Cancel.TabIndex = 398;
-            this.Btn_Cancel.UseVisualStyleBackColor = false;
-            this.Btn_Cancel.Click += new System.EventHandler(this.Btn_Cancel_Click);
-            // 
-            // Btn_Save
-            // 
-            this.Btn_Save.BackColor = System.Drawing.SystemColors.ButtonHighlight;
-            this.Btn_Save.Enabled = false;
-            this.Btn_Save.Font = new System.Drawing.Font("Microsoft Sans Serif", 12.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.Btn_Save.Image = ((System.Drawing.Image)(resources.GetObject("Btn_Save.Image")));
-            this.Btn_Save.Location = new System.Drawing.Point(349, 3);
-            this.Btn_Save.Name = "Btn_Save";
-            this.Btn_Save.Size = new System.Drawing.Size(99, 33);
-            this.Btn_Save.TabIndex = 395;
-            this.Btn_Save.UseVisualStyleBackColor = false;
-            this.Btn_Save.Click += new System.EventHandler(this.Btn_Save_Click);
-            // 
-            // Btn_Pause
-            // 
-            this.Btn_Pause.Font = new System.Drawing.Font("Microsoft Sans Serif", 12.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.Btn_Pause.Image = ((System.Drawing.Image)(resources.GetObject("Btn_Pause.Image")));
-            this.Btn_Pause.Location = new System.Drawing.Point(244, 3);
-            this.Btn_Pause.Name = "Btn_Pause";
-            this.Btn_Pause.Size = new System.Drawing.Size(99, 33);
-            this.Btn_Pause.TabIndex = 396;
-            this.Btn_Pause.UseVisualStyleBackColor = true;
-            this.Btn_Pause.Click += new System.EventHandler(this.Btn_Pause_Click);
-            // 
             // Processing
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -431,7 +431,7 @@
             this.Controls.Add(this.Pnl_Counter);
             this.Controls.Add(this.Pnl_Start_Job);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.Fixed3D;
-            this.Location = new System.Drawing.Point(50, 777);
+            this.Location = new System.Drawing.Point(40, 797);
             this.MaximizeBox = false;
             this.Name = "Processing";
             this.StartPosition = System.Windows.Forms.FormStartPosition.Manual;
@@ -463,7 +463,7 @@
         private System.Windows.Forms.Button Btn_Pause;
         private System.Windows.Forms.Label Lbl_Count;
         private System.Windows.Forms.Button Btn_Cancel;
-        private System.Windows.Forms.Timer Tmr_Count_Processing;
+        private System.Windows.Forms.Timer Tmr_Count;
         private System.Windows.Forms.Panel Pnl_Counter;
         private System.Windows.Forms.Panel Pnl_Service;
         private System.Windows.Forms.Panel Pnl_Format;

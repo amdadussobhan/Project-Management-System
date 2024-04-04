@@ -17,6 +17,9 @@ using System.Data.SqlClient;
 using Microsoft.SqlServer.Management.Common;
 using Microsoft.SqlServer.Management.Smo;
 using System.Text;
+using System.Transactions;
+using System.Data.Common;
+using Microsoft.SqlServer.Management.Smo.Agent;
 
 namespace Skill_PMS.UI_WinForm.admin_Panel
 {
@@ -48,59 +51,31 @@ namespace Skill_PMS.UI_WinForm.admin_Panel
             var shift = _common.Current_Shift();
             var date = _common.Shift_Date(_nowTime, shift);
             var shiftReport = _db.Shift_Reports.FirstOrDefault(x => x.Date == date & x.Shift == shift & x.Team == "");
-            await Task.Run(() => Upload_Logs());
         }
 
         private async void Tmr_Count_Tick(object sender, EventArgs e)
         {
             Tmr_Count.Stop();
-            _nowTime = DateTime.Now;
             _db = null;
             _db = new SkillContext();
+            _nowTime = DateTime.Now;
 
-            if (Lbl_Status.Text == @"Running")
-            {
-                Lbl_Status.Text = @"Updated";
-                Lbl_Status.ForeColor = Color.Green;
-            }
-            else
-            {
-                Lbl_Status.Text = @"Running";
-                Lbl_Status.ForeColor = Color.OrangeRed;
-            }
+            var pending = _db.Logs.Where(x => x.Up == 0 && x.Status == "Done" && x.ProTime != 0 && x.Efficiency != 0).ToList().Count;
+            Lbl_Title.Text = "Total Data Upload : " + pending;
+            Lbl_Title.ForeColor = Color.DarkGreen;
 
             await Task.Run(() => Upload_Users());
             await Task.Run(() => Upload_New_Jobs());
             await Task.Run(() => Upload_Performances());
+            await Task.Run(() => Upload_Logs());
 
-            if (_count++ >= 9)
-            {
-                await Task.Run(() => Upload_Logs());
-                _count = 0;
-            }
+            Thread.Sleep(2222);
+            pending = _db.Logs.Where(x => x.Up == 0 && x.Status == "Done" && x.ProTime != 0 && x.Efficiency != 0).ToList().Count;
+            Lbl_Title.Text = "Total Data Pending: " + pending;
+            Lbl_Title.ForeColor = Color.Red;
+
             Tmr_Count.Start();
         }
-
-        //public void sync()
-        //{
-        //    using (var mysqlContext = new MySqlDbContext())
-        //    {
-        //        foreach (var item in dataToSync)
-        //        {
-        //            var existingRecord = mysqlContext.YourEntities.FirstOrDefault(e => e.Id == item.Id);
-
-        //            if (existingRecord == null)
-        //            {
-        //                mysqlContext.YourEntities.Add(item);
-        //            }
-        //            else
-        //            {
-        //                existingRecord.Property1 = item.Property1;
-        //            }
-        //        }
-        //        mysqlContext.SaveChanges();
-        //    }
-        //}
 
         public void Upload_New_Jobs()
         {
@@ -186,196 +161,70 @@ namespace Skill_PMS.UI_WinForm.admin_Panel
 
         public void Upload_Logs()
         {
-            //var logs = _db.Logs
-            //    .Where(x => x.Up == 0 && x.Status == "Done" && x.ProTime != 0 && x.Efficiency != 0)
-            //    .OrderByDescending(x => x.Id)
-            //    .Take(3)
-            //    .ToList();
-
-            //using (var connection = Common.Active_ON())
-            //{
-            //    var insertQuery = new StringBuilder("INSERT INTO `logs` (`SL`, `Loc`, `Date`, `IsOT`) VALUES ");
-            //    var updateQuery = new StringBuilder(" ON DUPLICATE KEY UPDATE `Date`=VALUES(`Date`), `IsOT`=VALUES(`IsOT`);");
-
-            //    using (var command = new MySqlCommand())
-            //    {
-            //        command.Connection = connection;
-
-            //        for (int i = 0; i < logs.Count; i++)
-            //        {
-            //            var log = logs[i];
-            //            insertQuery.Append($"(@Id{i}, 'DHK', @Date{i}, @IsOT{i}),");
-            //            command.Parameters.AddWithValue($"@Id{i}", log.Id);
-            //            command.Parameters.AddWithValue($"@Date{i}", log.Date.ToString("yyyy-MM-dd"));
-            //            command.Parameters.AddWithValue($"@IsOT{i}", log.IsOT);
-            //        }
-
-
-            //        insertQuery.Length--;
-            //        command.CommandText = insertQuery.ToString() + updateQuery.ToString();
-            //        command.ExecuteNonQuery();
-            //    }
-            //    connection.Close();
-            //}
-
-
-
-
-
-            //int count = 0;
-
-            //var logs = _db.Logs
-            //    .Where(x => x.Up == 0 && x.Status == "Done" && x.ProTime != 0 && x.Efficiency != 0)
-            //    .OrderByDescending(x => x.Id)
-            //    .ToList();
-
-            //using (var connection = Common.Active_ON())
-            //{
-            //    using (var command = new MySqlCommand("", connection))
-            //    {
-            //        foreach (var log in logs)
-            //        {
-            //            var image = log.Image.Contains("'") ? log.Image.Replace("'", "''") : log.Image;
-            //            var existsQuery = "SELECT EXISTS (SELECT 1 FROM `logs` WHERE `SL` = @Id AND `Loc` = 'DHK')";
-
-            //            command.CommandText = existsQuery;
-            //            command.Parameters.Clear();
-            //            command.Parameters.AddWithValue("@Id", log.Id);
-
-            //            var result = command.ExecuteScalar();
-            //            var exists = (result != null && result != DBNull.Value) && Convert.ToInt32(result) > 0;
-
-
-            //            if (exists)
-            //            {
-            //                var updateQuery = @"UPDATE `logs` SET 
-            //                    Date = @Date, Shift = @Shift, EndTime = @EndTime, Name = @Name, JobId = @JobId, Service = @Service, 
-            //                    Status = @Status, Type = @Type, ActualTime = @ActualTime, TargetTime = @TargetTime, ProTime = @ProTime, 
-            //                    Rest_Time = @Rest_Time, Pause_Time = @Pause_Time, Image = @Image, Remarks = @Remarks, 
-            //                    Efficiency = @Efficiency, Quality = @Quality,
-            //                    Revenue = @Revenue, Support = @Support, IsOT = @IsOT WHERE `SL` = @Id AND `Loc` = 'DHK'";
-            //                command.CommandText = updateQuery;
-            //                command.Parameters.AddWithValue("@Date", log.Date.ToString("yyyy-MM-dd"));
-            //                command.Parameters.AddWithValue("@Shift", log.Shift);
-            //                command.Parameters.AddWithValue("@EndTime", log.EndTime.ToString("yyyy-MM-dd HH:mm:ss"));
-            //                command.Parameters.AddWithValue("@Name", log.Name);
-            //                command.Parameters.AddWithValue("@JobId", log.JobId);
-            //                command.Parameters.AddWithValue("@Service", log.Service);
-            //                command.Parameters.AddWithValue("@Status", log.Status);
-            //                command.Parameters.AddWithValue("@Type", log.Type);
-            //                command.Parameters.AddWithValue("@ActualTime", log.ActualTime);
-            //                command.Parameters.AddWithValue("@TargetTime", log.TargetTime);
-            //                command.Parameters.AddWithValue("@ProTime", log.ProTime);
-            //                command.Parameters.AddWithValue("@Rest_Time", log.RestTime);
-            //                command.Parameters.AddWithValue("@Pause_Time", log.PauseTime);
-            //                command.Parameters.AddWithValue("@Image", log.Image);
-            //                command.Parameters.AddWithValue("@Remarks", log.Remarks);
-            //                command.Parameters.AddWithValue("@Efficiency", log.Efficiency);
-            //                command.Parameters.AddWithValue("@Quality", log.Quality);
-            //                command.Parameters.AddWithValue("@Revenue", log.Revenue);
-            //                command.Parameters.AddWithValue("@Support", log.Support);
-            //                command.Parameters.AddWithValue("@IsOT", log.IsOT);
-            //                command.ExecuteNonQuery();
-            //            }
-            //            else
-            //            {
-            //                var insertQuery = @"INSERT INTO `logs`(`SL`, `Loc`, `Date`, `Shift`, `Revenue`, `Support`, `StartTime`, 
-            //                    `EndTime`, `Name`, `JobId`, `Service`, `Type`, `Status`, `ActualTime`, `TargetTime`, `ProTime`, 
-            //                    `Rest_Time`, `Pause_Time`, `Image`,`Remarks`,`Efficiency`,`Quality`,`IsOT`) 
-            //                    VALUES (@Idd, 'DHK', @Date, @Shift, @Revenue, @Support, @StartTime, @EndTime, @Name, @JobId, @Service, @Type, @Status, 
-            //                    @ActualTime, @TargetTime, @ProTime, @RestTime, @PauseTime, @Image, @Remarks, @Efficiency, @Quality, @IsOT)";
-            //                command.CommandText = insertQuery;
-            //                command.Parameters.AddWithValue("@Idd", log.Id);
-            //                command.Parameters.AddWithValue("@Date", log.Date.ToString("yyyy-MM-dd"));
-            //                command.Parameters.AddWithValue("@Shift", log.Shift);
-            //                command.Parameters.AddWithValue("@Revenue", log.Revenue);
-            //                command.Parameters.AddWithValue("@Support", log.Support);
-            //                command.Parameters.AddWithValue("@StartTime", log.StartTime.ToString("yyyy-MM-dd HH:mm:ss"));
-            //                command.Parameters.AddWithValue("@EndTime", log.EndTime.ToString("yyyy-MM-dd HH:mm:ss"));
-            //                command.Parameters.AddWithValue("@Name", log.Name);
-            //                command.Parameters.AddWithValue("@JobId", log.JobId);
-            //                command.Parameters.AddWithValue("@Service", log.Service);
-            //                command.Parameters.AddWithValue("@Type", log.Type);
-            //                command.Parameters.AddWithValue("@Status", log.Status);
-            //                command.Parameters.AddWithValue("@ActualTime", log.ActualTime);
-            //                command.Parameters.AddWithValue("@TargetTime", log.TargetTime);
-            //                command.Parameters.AddWithValue("@ProTime", log.ProTime);
-            //                command.Parameters.AddWithValue("@RestTime", log.RestTime);
-            //                command.Parameters.AddWithValue("@PauseTime", log.PauseTime);
-            //                command.Parameters.AddWithValue("@Image", log.Image);
-            //                command.Parameters.AddWithValue("@Remarks", log.Remarks);
-            //                command.Parameters.AddWithValue("@Efficiency", log.Efficiency);
-            //                command.Parameters.AddWithValue("@Quality", log.Quality);
-            //                command.Parameters.AddWithValue("@IsOT", log.IsOT);
-            //                command.ExecuteNonQuery();
-            //            }
-
-            //            log.Up = 1;
-
-            //            if (count++ > 9)
-            //                _db.SaveChanges();
-
-            //            if (count++ > 44)
-            //            {
-            //                _db.SaveChanges();
-            //                break;
-            //            }
-            //        }
-            //    }
-            //}
-
-            //Common.Online.Close();
-
-            int count = 0;
             var logs = _db.Logs
-                .Where(x => x.Up == 0 & x.Status == "Done" & x.ProTime != 0 & x.Efficiency != 0)
+                .Where(x => x.Up == 0 && x.Status == "Done" && x.ProTime != 0 && x.Efficiency != 0)
                 .OrderByDescending(x => x.Id)
+                .Take(999)
                 .ToList();
+            if (logs.Count == 0)
+                return;
 
-            foreach (var log in logs)
+            var updatedIds = logs.Select(x => x.Id).ToList();
+            using (MySqlConnection connection = new MySqlConnection(Common.connectionString))
             {
-                var image = log.Image;
-                if (image.Contains("\'"))
-                    image = image.Replace("\'", "");
+                connection.Open();
+                var insertQuery = new StringBuilder("INSERT INTO `logs` (`SL`,`Loc`,`Date`,`Shift`,`StartTime`,`EndTime`,`Name`,`JobId`,`Service`,`Status`,`Type`,`ActualTime`," +
+                    " `TargetTime`,`ProTime`,`Rest_Time`,`Pause_Time`,`Image`,`Remarks`,`Efficiency`,`Quality`,`Revenue`,`Support`,`IsOT`) VALUES ");
 
-                var query = @" Select * From `logs` Where `SL` = '" + log.Id + "' and `Loc` = 'DHK' ";
+                var updateQuery = new StringBuilder(" ON DUPLICATE KEY UPDATE `Date`=VALUES(`Date`),`Shift`=VALUES(`Shift`),`StartTime`=VALUES(`StartTime`),`EndTime`=VALUES(`EndTime`),`Name`=VALUES(`Name`),`JobId`=VALUES(`JobId`)," +
+                    " `Service`=VALUES(`Service`), `Status`=VALUES(`Status`),`Type`=VALUES(`Type`),`ActualTime`=VALUES(`ActualTime`),`TargetTime`=VALUES(`TargetTime`),`ProTime`=VALUES(`ProTime`),`Rest_Time`=VALUES(`Rest_Time`)," +
+                    " `Pause_Time`=VALUES(`Pause_Time`),`Image`=VALUES(`Image`),`Remarks`=VALUES(`Remarks`),`Efficiency`=VALUES(`Efficiency`),`Quality`=VALUES(`Quality`),`Revenue`=VALUES(`Revenue`),`Support`=VALUES(`Support`),`IsOT`=VALUES(`IsOT`);");
 
-                if (_common.IsExist(query))
+                using (var command = new MySqlCommand())
                 {
-                    query = @" Update `logs` Set Date = '" + log.Date.ToString("yyyy-MM-dd") + "', Shift = '" + log.Shift + "', EndTime = '"
-                        + log.EndTime.ToString("yyyy-MM-dd HH:mm:ss") + "', Name = '" + log.Name + "', JobId = '" + log.JobId + "', Service = '"
-                        + log.Service + "', Status = '" + log.Status + "', Type = '" + log.Type + "', ActualTime = '" + log.ActualTime + "', TargetTime = '"
-                        + log.TargetTime + "', ProTime = '" + log.ProTime + "', Rest_Time = '" + log.RestTime + "', Pause_Time = '" + log.PauseTime + "', Image = '"
-                        + log.Image + "', Remarks = '" + log.Remarks + "', Efficiency = '" + log.Efficiency + "', Quality = '" + log.Quality + "', Revenue = '"
-                        + log.Revenue + "', Support = '" + log.Support + "', IsOT = '" + log.IsOT + "' Where `SL` = '" + log.Id + "' and `Loc` = 'DHK' ";
-                }
-                else
-                {
-                    query =
-                        @" INSERT INTO `logs`(`SL`, `Loc`, `Date`, `Shift`, `Revenue`, `Support`, `StartTime`, `EndTime`, `Name`, `JobId`, `Service`, `Type`, `Status`, 
-                            `ActualTime`, `TargetTime`, `ProTime`, `Rest_Time`, `Pause_Time`, `Image`,`Remarks`,`Efficiency`,`Quality`,`IsOT`) 
-                        Values('" + log.Id + "', 'DHK', '" + log.Date.ToString("yyyy-MM-dd") + "', '" + log.Shift + "', '" + log.Revenue + "', '" + log.Support + "','"
-                        + log.StartTime.ToString("yyyy-MM-dd HH:mm:ss") + "', '" + log.EndTime.ToString("yyyy-MM-dd HH:mm:ss") + "', '" + log.Name + "', '" + log.JobId + "', '"
-                        + log.Service + "', '" + log.Type + "', '" + log.Status + "', '" + log.ActualTime + "', '" + log.TargetTime + "', '" + log.ProTime + "', '"
-                        + log.RestTime + "', '" + log.PauseTime + "', '" + image + "', '" + log.Remarks + "', '" + log.Efficiency + "', '" + log.Quality + "', '" + log.IsOT + "') ";
-                }
+                    command.Connection = connection;
 
-                var cmd = new MySqlCommand(query, Common.Active_ON());
-                cmd.ExecuteNonQuery();
+                    for (int i = 0; i < logs.Count; i++)
+                    {
+                        var log = logs[i];
+                        insertQuery.Append($"(@Id{i}, 'DHK', @Date{i}, @Shift{i}, @StartTime{i}, @EndTime{i}, @Name{i}, @JobId{i}, @Service{i}, @Status{i}, @Type{i}, @ActualTime{i}," +
+                            $" @TargetTime{i}, @ProTime{i}, @Rest_Time{i}, @Pause_Time{i}, @Image{i}, @Remarks{i}, @Efficiency{i}, @Quality{i}, @Revenue{i}, @Support{i}, @IsOT{i}),");
 
-                log.Up = 1;
+                        command.Parameters.AddWithValue($"@Id{i}", log.Id);
+                        command.Parameters.AddWithValue($"@Date{i}", log.Date.ToString("yyyy-MM-dd"));
+                        command.Parameters.AddWithValue($"@Shift{i}", log.Shift);
+                        command.Parameters.AddWithValue($"@StartTime{i}", log.StartTime.ToString("yyyy-MM-dd HH:mm:ss"));
+                        command.Parameters.AddWithValue($"@EndTime{i}", log.EndTime.ToString("yyyy-MM-dd HH:mm:ss"));
+                        command.Parameters.AddWithValue($"@Name{i}", log.Name);
+                        command.Parameters.AddWithValue($"@JobId{i}", log.JobId);
+                        command.Parameters.AddWithValue($"@Service{i}", log.Service);
+                        command.Parameters.AddWithValue($"@Status{i}", log.Status);
+                        command.Parameters.AddWithValue($"@Type{i}", log.Type);
+                        command.Parameters.AddWithValue($"@ActualTime{i}", log.ActualTime);
+                        command.Parameters.AddWithValue($"@TargetTime{i}", log.TargetTime);
+                        command.Parameters.AddWithValue($"@ProTime{i}", log.ProTime);
+                        command.Parameters.AddWithValue($"@Rest_Time{i}", log.RestTime);
+                        command.Parameters.AddWithValue($"@Pause_Time{i}", log.PauseTime);
+                        command.Parameters.AddWithValue($"@Image{i}", log.Image);
+                        command.Parameters.AddWithValue($"@Remarks{i}", log.Remarks);
+                        command.Parameters.AddWithValue($"@Efficiency{i}", log.Efficiency);
+                        command.Parameters.AddWithValue($"@Quality{i}", log.Quality);
+                        command.Parameters.AddWithValue($"@Revenue{i}", log.Revenue);
+                        command.Parameters.AddWithValue($"@Support{i}", log.Support);
+                        command.Parameters.AddWithValue($"@IsOT{i}", log.IsOT);
+                    }
 
-                if (count++ > 9)
+                    insertQuery.Length--;
+                    command.CommandText = insertQuery.ToString() + updateQuery.ToString();
+
+                    command.ExecuteNonQuery();
+
+                    var logsToUpdate = _db.Logs.Where(x => updatedIds.Contains(x.Id)).ToList();
+                    logsToUpdate.ForEach(x => x.Up = 1);
                     _db.SaveChanges();
-
-                if (count++ > 44)
-                {
-                    _db.SaveChanges();
-                    break;
                 }
+                connection.Close();
             }
-
-            Common.Online.Close();
         }
 
         public void Upload_Performances()

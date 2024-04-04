@@ -18,5 +18,8 @@ namespace Skill_PMS.Models
         public double Pre_Process { get; set; }
         public double Post_Process { get; set; }
         public string Assigner { get; set; }
+        public Boolean IsFixed { get; set; }
+        public DateTime Created { get; set; }
+        public DateTime Updated { get; set; }
     }
 }
