@@ -23,7 +23,7 @@ namespace Skill_PMS.UI_WinForm.CS_Panel
         private Price_Time _priceTime = new Price_Time();
 
         private int _file = 0;
-        private double _priceRate = 0, _time = 0, _price = 0, _taka = 0;
+        private double _priceRate = 0, _time = 0, _taka = 0;
         public string _newJobId = "", _oldJobId = "", _client = "", _category = "";
 
         public User User { get; set; }

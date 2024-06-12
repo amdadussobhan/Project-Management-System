@@ -260,7 +260,7 @@
             this.MaximizeBox = false;
             this.Name = "Manualy_Job_Approve";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
-            this.Text = "Manualy_Job_Approve";
+            this.Text = "Manualy_Job";
             this.TopMost = true;
             this.Load += new System.EventHandler(this.Manualy_Job_Approve_Load);
             this.ResumeLayout(false);

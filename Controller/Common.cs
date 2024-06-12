@@ -27,8 +27,12 @@ namespace Skill_PMS.Controller
         private readonly DateTime _nightStart = Convert.ToDateTime(DateTime.Now.ToString("dd-MM-yy ")+"23:00:00");
         private readonly DateTime _nightEnd = Convert.ToDateTime(DateTime.Now.ToString("dd-MM-yy ") + "07:01:30");
         private readonly DateTime _lastNightStart = Convert.ToDateTime(DateTime.Now.AddDays(-1).ToString("dd-MM-yy ") + "23:00:00");
-        public static string connectionString = "SERVER=166.62.10.143; PORT=3306; DATABASE=SKILL; UID=skill_pms; PWD=@dm!n$k!11;";
-        public static MySqlConnection Online = new MySqlConnection("SERVER=166.62.10.143; PORT=3306; DATABASE=SKILL; UID=skill_pms; PWD=@dm!n$k!11; Connect Timeout = 28800;Charset=utf8;");
+        
+        //public static string connectionString = "SERVER=166.62.10.143; PORT=3306; DATABASE=SKILL; UID=skill_pms; PWD=@dm!n$k!11;";
+        public static string connectionString = "SERVER=193.203.184.93; PORT=3306; DATABASE=u112824911_PMS; UID=u112824911_PMS; PWD=@dm!n$K!11;";
+
+        //public static MySqlConnection Online = new MySqlConnection("SERVER=166.62.10.143; PORT=3306; DATABASE=SKILL; UID=skill_pms; PWD=@dm!n$k!11; Connect Timeout = 28800;Charset=utf8;");
+        public static MySqlConnection Online = new MySqlConnection("SERVER=193.203.184.93; PORT=3306; DATABASE=u112824911_PMS; UID=u112824911_PMS; PWD=@dm!n$K!11; Connect Timeout = 28800;Charset=utf8;");
 
         public static MySqlConnection Active_ON()
         {

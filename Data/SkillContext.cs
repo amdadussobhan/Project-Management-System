@@ -25,6 +25,8 @@ namespace Skill_PMS.Data
         public DbSet<ImageTime> ImageTime { get; set; }
         public DbSet<PendingImage> PendingImage { get; set; }
         public DbSet<Feedback> Feedback { get; set; }
+        public DbSet<Leave> Leave { get; set; }
+        public DbSet<Misc_Task> Misc_Task { get; set; }
 
         public SkillContext() : base("SkillContext")
         {

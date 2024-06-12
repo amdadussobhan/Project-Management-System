@@ -7,6 +7,10 @@ using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Windows.Forms;
+using static System.Windows.Forms.VisualStyles.VisualStyleElement.Tab;
+using static System.Windows.Forms.VisualStyles.VisualStyleElement;
+using Microsoft.SqlServer.Management.Smo.Agent;
+using System.Threading.Tasks;
 
 namespace Skill_PMS.UI_WinForm.Production.Designer
 {
@@ -35,9 +39,126 @@ namespace Skill_PMS.UI_WinForm.Production.Designer
         private void Dashboard_Load(object sender, EventArgs e)
         {
             this.Text = @"Dashboard - " + _user.Full_Name;
+            Lbl_Name.Text = _user.Full_Name;
+            Lbl_Designation.Text = _user.Designation;
+            Lbl_Blood.Text = "Blood Group : "+_user.Blood;
+            Lbl_Join_date.Text = "Join Date : "+_user.Join_Date.ToString("dd-MMM-yyyy");
+            Lbl_Total_Work.Text = "Total Work : " + CalculateDetailedAge(_user.Join_Date);
             Tmr_Count.Start();
             Check_New_Job();
             Check_Data();
+            Tmr_Profile_Report.Start();
+        }
+
+        static string CalculateDetailedAge(DateTime birthdate)
+        {
+            DateTime today = DateTime.Today;
+
+            int years = today.Year - birthdate.Year;
+            int months = today.Month - birthdate.Month;
+            int days = today.Day - birthdate.Day;
+
+            if (months < 0 || (months == 0 && days < 0))
+            {
+                years--;
+                months += 12;
+            }
+
+            if (days < 0)
+            {
+                months--;
+                days += DateTime.DaysInMonth(today.Year, today.Month);
+            }
+
+            return $"{years}Y {months}M {days}D";
+        }
+
+        private void Check_Daily_Report()
+        {
+            var date = Dtp_Date.Value;
+            var date_to= Dtp_Date_To.Value;
+
+            int row = 0, sl = 1;
+            if (Dgv_Daily.CurrentCell != null)
+                row = Dgv_Daily.CurrentCell.RowIndex;
+
+            Dgv_Daily.DataSource = null;
+            Dgv_Daily.Rows.Clear();
+            _common.Dgv_Size(Dgv_New_Job, 11);
+
+            var datewiseReport = _db.Logs
+                .Where(x => x.Name == _user.Short_Name && x.Status == "Done")
+                .GroupBy(x => x.Date)
+                .Select(group => new
+                {
+                    Date = group.Key,
+                    Files = group.Count(),
+                    TargetTime = group.Sum(x => x.TargetTime),
+                    ProTime = group.Sum(x => x.ProTime),
+                })
+                .OrderByDescending(x => x.Date)
+                .Take(30)
+                .ToList();
+
+            foreach (var item in datewiseReport)
+            {
+                Dgv_Daily.Rows.Add(sl++, item.Date.ToString("dd-MMM-yy"), item.Files, Math.Round(item.ProTime), "", "", Math.Round(item.TargetTime / item.ProTime * 100) + "%");
+            }
+
+            int max_row = Dgv_Daily.Rows.Count - 1;
+            if (max_row >= 0)
+            {
+                Dgv_Daily.CurrentCell = Dgv_Daily.Rows[max_row].Cells[3];
+                if (max_row >= row)
+                    Dgv_Daily.CurrentCell = Dgv_Daily.Rows[row].Cells[3];
+            }
+
+            _common.Row_Color_By_Efficiency(Dgv_Daily, "Column34");
+        }
+
+        private void Check_Monthly_Report()
+        {
+            var date = Dtp_Date.Value;
+            var date_to = Dtp_Date_To.Value;
+
+            int row = 0, sl = 1;
+            if (Dgv_Monthly.CurrentCell != null)
+                row = Dgv_Monthly.CurrentCell.RowIndex;
+
+            Dgv_Monthly.DataSource = null;
+            Dgv_Monthly.Rows.Clear();
+            _common.Dgv_Size(Dgv_New_Job, 11);
+
+            var monthlyReport = _db.Logs
+                .Where(x => x.Name == _user.Short_Name && x.Status == "Done")
+                .GroupBy(x => new { x.Date.Year, x.Date.Month })
+                .Select(g => new
+                {
+                    g.Key.Year,
+                    g.Key.Month,
+                    TargetTime = g.Sum(x => x.TargetTime),
+                    ProTime = g.Sum(x => x.ProTime),
+                    Files = g.Count()
+                })
+                .OrderByDescending(r => r.Year).ThenByDescending(r => r.Month)  // Ordering by Year and Month
+                .Take(20)
+                .ToList();
+
+            foreach (var item in monthlyReport)
+            {
+                string month = new DateTime(item.Year, item.Month, 1).ToString("MMM-yy");
+                Dgv_Monthly.Rows.Add(sl++, month, item.Files, Math.Round(item.ProTime), "", "", Math.Round(item.TargetTime / item.ProTime * 100) + "%");
+            }
+
+            int max_row = Dgv_Monthly.Rows.Count - 1;
+            if (max_row >= 0)
+            {
+                Dgv_Monthly.CurrentCell = Dgv_Monthly.Rows[max_row].Cells[3];
+                if (max_row >= row)
+                    Dgv_Monthly.CurrentCell = Dgv_Monthly.Rows[row].Cells[3];
+            }
+
+            _common.Row_Color_By_Efficiency(Dgv_Monthly, "Column36");
         }
 
         private void Check_New_Job()
@@ -122,6 +243,44 @@ namespace Skill_PMS.UI_WinForm.Production.Designer
                 DgvHistory.Rows.Add(sl++, log.JobId, log.Type, log.Image, log.Service, log.StartTime, log.EndTime, Math.Round(log.TargetTime, 1), Math.Round(log.ProTime, 2), log.Efficiency + "%", Math.Round(log.Revenue/13, 1));
 
             _common.Row_Color_By_Efficiency(DgvHistory, "Column10");
+        }
+
+        private void Check_Leave()
+        {
+            Dgv_Leave.DataSource = null;
+            Dgv_Leave.Rows.Clear();
+            _common.Dgv_Size(Dgv_Leave, 11);
+
+            var leaves = _db.Leave
+                .Where(x => x.Name == _user.Short_Name)
+                .OrderByDescending(x => x.ID)
+                .Take(99)
+                .ToList();
+
+            var sl = 1;
+            foreach (var leave in leaves)
+                Dgv_Leave.Rows.Add(sl++, leave.Apply_Date.ToString("dd-MMM-yy"), leave.Type, leave.Reason, leave.Leave_Date.ToString("dd-MMM-yy"), leave.SI_Status, leave.PM_Status, leave.HR_Status, leave.Status);
+
+            //_common.Row_Color_By_Efficiency(DgvHistory, "Column10");
+        }
+
+        public void Check_Misc_Task()
+        {
+            Dgv_Misc_Task.DataSource = null;
+            Dgv_Misc_Task.Rows.Clear();
+            _common.Dgv_Size(Dgv_Misc_Task, 11);
+
+            var miscTasks = _db.Misc_Task
+                .Where(x => x.Name == _user.Short_Name)
+                .OrderByDescending(x => x.ID)
+                .Take(99)
+                .ToList();
+
+            var sl = 1;
+            foreach (var miscTask in miscTasks)
+                Dgv_Misc_Task.Rows.Add(sl++, miscTask.Apply_Time.Date.ToString("dd-MMM-yy"), miscTask.Type, miscTask.Start_Time.ToString("hh:mm tt"), miscTask.End_Time.ToString("hh:mm tt"), miscTask.Time, miscTask.Status);
+
+            //_common.Row_Color_By_Efficiency(DgvHistory, "Column10");
         }
 
         private void Check_Production_Error()
@@ -234,7 +393,7 @@ namespace Skill_PMS.UI_WinForm.Production.Designer
             }
         }
 
-        private void Check_Data()
+        public void Check_Data()
         {
             _db = new SkillContext();
             //check performance data
@@ -248,10 +407,9 @@ namespace Skill_PMS.UI_WinForm.Production.Designer
                     start_time = start_time.AddDays(-1);
             }
 
-            //_performance = _db.Performances
-            //    .FirstOrDefault(x => x.Id == _performance.Id);
+            _performance = _db.Performances.FirstOrDefault(x => x.Id == _performance.Id);
             double targetTime =0, proTime=0, efficiency = 0;
-            var logs = _db.Logs.Where(x=> x.Name == _performance.Name && x.Date == _performance.Date).ToList();
+            var logs = _db.Logs.Where(x=> x.Name == _performance.Name && x.Date == _performance.Date && x.Status == "Done").ToList();
 
             if (logs != null)
             {
@@ -262,18 +420,29 @@ namespace Skill_PMS.UI_WinForm.Production.Designer
                     efficiency = targetTime / proTime * 100;
             }
 
-            Btn_Pro_Time.Text = @"Pro Time: " + Math.Round(proTime);
+            Btn_Pro_Time.Text = @"Pro_Time: " + Math.Round(proTime);
             Btn_Efficiency.Text = @"Efficiency: " + Math.Round(efficiency)+ @"%";
 
             if (start_time > currentTime)
                 start_time = currentTime;
 
             var capacity = (currentTime - start_time).TotalMinutes;
-            var restTime = capacity - proTime - (capacity * 0.167);
-            if (restTime < 0)
-                restTime = 0;
 
-            Btn_Loss_Time.Text = @"Rest Time: " + Math.Round(restTime);
+            double miscTime = 0;
+            var miscTask = _db.Misc_Task.Where(x => x.Name == _performance.Name && x.Apply_Time == _performance.Date && x.Status == "Approved").ToList();
+
+            if (miscTask != null)
+                miscTime = miscTask.Sum(x => x.Time);
+
+            Btn_Misc_Time.Text = @"Misc_Time: " + Math.Round(miscTime);
+
+            var restTime = 0.0;
+            var total_time = proTime + (capacity * 0.1875) + miscTime;
+
+            if (total_time < capacity)
+                restTime = capacity - total_time;
+
+            Btn_Gap_Time.Text = @"Gap_Time: " + Math.Round(restTime);
         }
 
         private void Tbc_Designer_SelectedIndexChanged(object sender, EventArgs e)
@@ -282,19 +451,28 @@ namespace Skill_PMS.UI_WinForm.Production.Designer
             switch (Tbc_Designer.SelectedIndex)
             {
                 case 0:
-                    Check_New_Job();
+                    Tmr_Profile_Report.Start();
                     break;
                 case 1:
-                    Check_Performance();
+                    Check_New_Job();
                     break;
                 case 2:
-                    Check_History();
+                    Check_Done_Job();
                     break;
                 case 3:
-                    Check_Production_Error();
+                    Check_Performance();
                     break;
                 case 4:
-                    Check_Done_Job();
+                    Check_History();
+                    break;
+                case 5:
+                    Check_Production_Error();
+                    break;
+                case 6:
+                    Check_Leave();
+                    break;
+                case 7:
+                    Check_Misc_Task();
                     break;
             }
         }
@@ -354,6 +532,38 @@ namespace Skill_PMS.UI_WinForm.Production.Designer
         private void Cmb_New_JobID_TextChanged(object sender, EventArgs e)
         {
             Check_New_Job();
+        }
+
+        private void Btn_Misc_Task_Click(object sender, EventArgs e)
+        {
+            Tbc_Designer.SelectedIndex = 7;
+            var miscTask = Misc_Task_Add.GetInstance();
+            miscTask._user = _user;
+            miscTask.Show();
+        }
+
+        private void Btn_Leave_Click(object sender, EventArgs e)
+        {
+            var leaveApply = Leave_Apply.GetInstance();
+            leaveApply._user = _user;
+            leaveApply.Show();
+        }
+
+        private void Tmr_Profile_Report_Tick(object sender, EventArgs e)
+        {
+            Tmr_Profile_Report.Stop();
+            Check_Daily_Report();
+            Check_Monthly_Report();
+        }
+
+        private void Btn_Misc_Time_Click(object sender, EventArgs e)
+        {
+            Tbc_Designer.SelectedIndex = 7;
+        }
+
+        private void Btn_Pro_Time_Click(object sender, EventArgs e)
+        {
+            Tbc_Designer.SelectedIndex = 4;
         }
     }
 }

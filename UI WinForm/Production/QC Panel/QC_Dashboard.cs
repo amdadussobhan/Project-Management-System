@@ -26,9 +26,7 @@ namespace Skill_PMS.UI_WinForm.Production.QC_Panel
         }
 
         private static QcDashboard _instance;
-        private int _counter = 0;
         private string _shift;
-        ShiftReport _shiftReport;
 
         public static QcDashboard GetInstance()
         {
@@ -458,7 +456,7 @@ namespace Skill_PMS.UI_WinForm.Production.QC_Panel
 
         private void Tmr_Count_Tick(object sender, EventArgs e)
         {
-            //_shift = _common.Current_Shift();
+            _shift = _common.Current_Shift();
             //_db.SaveChanges();
 
             //var date = _common.Shift_Date(DateTime.Now, _shift);

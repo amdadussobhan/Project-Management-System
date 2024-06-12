@@ -77,34 +77,6 @@
             this.label8 = new System.Windows.Forms.Label();
             this.dateTimePicker4 = new System.Windows.Forms.DateTimePicker();
             this.Dgv_Running_Job = new System.Windows.Forms.DataGridView();
-            this.tabPage4 = new System.Windows.Forms.TabPage();
-            this.panel3 = new System.Windows.Forms.Panel();
-            this.Txt_Ready_Folder = new System.Windows.Forms.TextBox();
-            this.label1 = new System.Windows.Forms.Label();
-            this.Cmb_Ready_JobID = new System.Windows.Forms.ComboBox();
-            this.label4 = new System.Windows.Forms.Label();
-            this.dateTimePicker1 = new System.Windows.Forms.DateTimePicker();
-            this.Btn_Ready_Find = new System.Windows.Forms.Button();
-            this.label5 = new System.Windows.Forms.Label();
-            this.label6 = new System.Windows.Forms.Label();
-            this.dateTimePicker2 = new System.Windows.Forms.DateTimePicker();
-            this.Dgv_Ready_Job = new System.Windows.Forms.DataGridView();
-            this.tabPage12 = new System.Windows.Forms.TabPage();
-            this.Dgv_Done_Job = new System.Windows.Forms.DataGridView();
-            this.tabPage5 = new System.Windows.Forms.TabPage();
-            this.Dgv_Performance = new System.Windows.Forms.DataGridView();
-            this.tabPage8 = new System.Windows.Forms.TabPage();
-            this.DgvHistory = new System.Windows.Forms.DataGridView();
-            this.panel1 = new System.Windows.Forms.Panel();
-            this.Modify_200 = new System.Windows.Forms.Button();
-            this.Btn_Capacity = new System.Windows.Forms.Button();
-            this.Btn_Achieve = new System.Windows.Forms.Button();
-            this.Btn_Workload = new System.Windows.Forms.Button();
-            this.Btn_Rename = new System.Windows.Forms.Button();
-            this.Btn_Efficiency = new System.Windows.Forms.Button();
-            this.Btn_Handload = new System.Windows.Forms.Button();
-            this.Btn_Add_New_Job = new System.Windows.Forms.Button();
-            this.Tmr_Count = new System.Windows.Forms.Timer(this.components);
             this.dataGridViewTextBoxColumn16 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.dataGridViewTextBoxColumn17 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.dataGridViewTextBoxColumn18 = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -117,6 +89,18 @@
             this.dataGridViewTextBoxColumn24 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.dataGridViewTextBoxColumn26 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.dataGridViewTextBoxColumn27 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.tabPage4 = new System.Windows.Forms.TabPage();
+            this.panel3 = new System.Windows.Forms.Panel();
+            this.Txt_Ready_Folder = new System.Windows.Forms.TextBox();
+            this.label1 = new System.Windows.Forms.Label();
+            this.Cmb_Ready_JobID = new System.Windows.Forms.ComboBox();
+            this.label4 = new System.Windows.Forms.Label();
+            this.dateTimePicker1 = new System.Windows.Forms.DateTimePicker();
+            this.Btn_Ready_Find = new System.Windows.Forms.Button();
+            this.label5 = new System.Windows.Forms.Label();
+            this.label6 = new System.Windows.Forms.Label();
+            this.dateTimePicker2 = new System.Windows.Forms.DateTimePicker();
+            this.Dgv_Ready_Job = new System.Windows.Forms.DataGridView();
             this.Column10 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Column11 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Column12 = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -128,17 +112,20 @@
             this.Column17 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Column24 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Column19 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.dataGridViewTextBoxColumn36 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.dataGridViewTextBoxColumn5 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.dataGridViewTextBoxColumn38 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.dataGridViewTextBoxColumn39 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.dataGridViewTextBoxColumn40 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.dataGridViewTextBoxColumn41 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.dataGridViewTextBoxColumn46 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.dataGridViewTextBoxColumn47 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.dataGridViewTextBoxColumn42 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.dataGridViewTextBoxColumn43 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Column30 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.tabPage12 = new System.Windows.Forms.TabPage();
+            this.Dgv_Done_Job = new System.Windows.Forms.DataGridView();
+            this.Column1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Column2 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Column3 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Column4 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Column57 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Column6 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Column7 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Column20 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Column21 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Column5 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.tabPage5 = new System.Windows.Forms.TabPage();
+            this.Dgv_Performance = new System.Windows.Forms.DataGridView();
             this.dataGridViewTextBoxColumn29 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.dataGridViewTextBoxColumn30 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Column50 = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -151,16 +138,29 @@
             this.dataGridViewTextBoxColumn14 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Column29 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.dataGridViewTextBoxColumn37 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Column1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Column2 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Column3 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Column4 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Column57 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Column6 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Column7 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Column20 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Column21 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Column5 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.tabPage8 = new System.Windows.Forms.TabPage();
+            this.DgvHistory = new System.Windows.Forms.DataGridView();
+            this.dataGridViewTextBoxColumn36 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.dataGridViewTextBoxColumn5 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.dataGridViewTextBoxColumn38 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.dataGridViewTextBoxColumn39 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.dataGridViewTextBoxColumn40 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.dataGridViewTextBoxColumn41 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.dataGridViewTextBoxColumn46 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.dataGridViewTextBoxColumn47 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.dataGridViewTextBoxColumn42 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.dataGridViewTextBoxColumn43 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Column30 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.panel1 = new System.Windows.Forms.Panel();
+            this.Modify_200 = new System.Windows.Forms.Button();
+            this.Btn_Capacity = new System.Windows.Forms.Button();
+            this.Btn_Achieve = new System.Windows.Forms.Button();
+            this.Btn_Workload = new System.Windows.Forms.Button();
+            this.Btn_Rename = new System.Windows.Forms.Button();
+            this.Btn_Efficiency = new System.Windows.Forms.Button();
+            this.Btn_Handload = new System.Windows.Forms.Button();
+            this.Btn_Add_New_Job = new System.Windows.Forms.Button();
+            this.Tmr_Count = new System.Windows.Forms.Timer(this.components);
             this.Tbc_CS_Panel.SuspendLayout();
             this.tabPage1.SuspendLayout();
             this.panel4.SuspendLayout();
@@ -376,7 +376,7 @@
             this.Dgv_New_Jobs.Name = "Dgv_New_Jobs";
             this.Dgv_New_Jobs.RowTemplate.Height = 30;
             this.Dgv_New_Jobs.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.Dgv_New_Jobs.Size = new System.Drawing.Size(1397, 574);
+            this.Dgv_New_Jobs.Size = new System.Drawing.Size(1395, 575);
             this.Dgv_New_Jobs.TabIndex = 24;
             this.Dgv_New_Jobs.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.Dgv_New_Jobs_CellContentClick);
             // 
@@ -449,7 +449,7 @@
             this.tabPage3.Location = new System.Drawing.Point(4, 33);
             this.tabPage3.Name = "tabPage3";
             this.tabPage3.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage3.Size = new System.Drawing.Size(1624, 771);
+            this.tabPage3.Size = new System.Drawing.Size(1521, 685);
             this.tabPage3.TabIndex = 2;
             this.tabPage3.Text = "   Running Job  ";
             // 
@@ -619,8 +619,80 @@
             this.Dgv_Running_Job.Name = "Dgv_Running_Job";
             this.Dgv_Running_Job.RowTemplate.Height = 30;
             this.Dgv_Running_Job.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.Dgv_Running_Job.Size = new System.Drawing.Size(1500, 660);
+            this.Dgv_Running_Job.Size = new System.Drawing.Size(1395, 575);
             this.Dgv_Running_Job.TabIndex = 25;
+            // 
+            // dataGridViewTextBoxColumn16
+            // 
+            this.dataGridViewTextBoxColumn16.HeaderText = "SL";
+            this.dataGridViewTextBoxColumn16.Name = "dataGridViewTextBoxColumn16";
+            this.dataGridViewTextBoxColumn16.Width = 50;
+            // 
+            // dataGridViewTextBoxColumn17
+            // 
+            this.dataGridViewTextBoxColumn17.HeaderText = "Job_ID";
+            this.dataGridViewTextBoxColumn17.Name = "dataGridViewTextBoxColumn17";
+            this.dataGridViewTextBoxColumn17.Width = 160;
+            // 
+            // dataGridViewTextBoxColumn18
+            // 
+            this.dataGridViewTextBoxColumn18.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
+            this.dataGridViewTextBoxColumn18.HeaderText = "Folder";
+            this.dataGridViewTextBoxColumn18.Name = "dataGridViewTextBoxColumn18";
+            // 
+            // dataGridViewTextBoxColumn19
+            // 
+            this.dataGridViewTextBoxColumn19.HeaderText = "Incoming";
+            this.dataGridViewTextBoxColumn19.Name = "dataGridViewTextBoxColumn19";
+            this.dataGridViewTextBoxColumn19.Width = 200;
+            // 
+            // Column23
+            // 
+            this.Column23.HeaderText = "Delivery";
+            this.Column23.Name = "Column23";
+            this.Column23.Width = 200;
+            // 
+            // dataGridViewTextBoxColumn20
+            // 
+            this.dataGridViewTextBoxColumn20.HeaderText = "Input_File";
+            this.dataGridViewTextBoxColumn20.Name = "dataGridViewTextBoxColumn20";
+            this.dataGridViewTextBoxColumn20.Width = 120;
+            // 
+            // dataGridViewTextBoxColumn21
+            // 
+            this.dataGridViewTextBoxColumn21.HeaderText = "Output_File";
+            this.dataGridViewTextBoxColumn21.Name = "dataGridViewTextBoxColumn21";
+            this.dataGridViewTextBoxColumn21.Width = 120;
+            // 
+            // dataGridViewTextBoxColumn22
+            // 
+            this.dataGridViewTextBoxColumn22.HeaderText = "Est_Time";
+            this.dataGridViewTextBoxColumn22.Name = "dataGridViewTextBoxColumn22";
+            this.dataGridViewTextBoxColumn22.Width = 120;
+            // 
+            // dataGridViewTextBoxColumn23
+            // 
+            this.dataGridViewTextBoxColumn23.HeaderText = "Pro_Time";
+            this.dataGridViewTextBoxColumn23.Name = "dataGridViewTextBoxColumn23";
+            this.dataGridViewTextBoxColumn23.Width = 150;
+            // 
+            // dataGridViewTextBoxColumn24
+            // 
+            this.dataGridViewTextBoxColumn24.HeaderText = "Total_Time";
+            this.dataGridViewTextBoxColumn24.Name = "dataGridViewTextBoxColumn24";
+            this.dataGridViewTextBoxColumn24.Width = 120;
+            // 
+            // dataGridViewTextBoxColumn26
+            // 
+            this.dataGridViewTextBoxColumn26.HeaderText = "ID";
+            this.dataGridViewTextBoxColumn26.Name = "dataGridViewTextBoxColumn26";
+            this.dataGridViewTextBoxColumn26.Visible = false;
+            // 
+            // dataGridViewTextBoxColumn27
+            // 
+            this.dataGridViewTextBoxColumn27.HeaderText = "Team";
+            this.dataGridViewTextBoxColumn27.Name = "dataGridViewTextBoxColumn27";
+            this.dataGridViewTextBoxColumn27.Visible = false;
             // 
             // tabPage4
             // 
@@ -631,7 +703,7 @@
             this.tabPage4.Location = new System.Drawing.Point(4, 33);
             this.tabPage4.Name = "tabPage4";
             this.tabPage4.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage4.Size = new System.Drawing.Size(1624, 771);
+            this.tabPage4.Size = new System.Drawing.Size(1521, 685);
             this.tabPage4.TabIndex = 3;
             this.tabPage4.Text = "     Ready Jobs     ";
             // 
@@ -800,9 +872,74 @@
             this.Dgv_Ready_Job.Name = "Dgv_Ready_Job";
             this.Dgv_Ready_Job.RowTemplate.Height = 30;
             this.Dgv_Ready_Job.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.Dgv_Ready_Job.Size = new System.Drawing.Size(1500, 705);
+            this.Dgv_Ready_Job.Size = new System.Drawing.Size(1395, 575);
             this.Dgv_Ready_Job.TabIndex = 10;
             this.Dgv_Ready_Job.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.Dgv_Ready_Job_CellContentClick);
+            // 
+            // Column10
+            // 
+            this.Column10.HeaderText = "SL";
+            this.Column10.Name = "Column10";
+            this.Column10.Width = 50;
+            // 
+            // Column11
+            // 
+            this.Column11.HeaderText = "Job_ID";
+            this.Column11.Name = "Column11";
+            this.Column11.Width = 160;
+            // 
+            // Column12
+            // 
+            this.Column12.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
+            this.Column12.HeaderText = "Folder";
+            this.Column12.Name = "Column12";
+            // 
+            // Column15
+            // 
+            this.Column15.HeaderText = "Input_amt";
+            this.Column15.Name = "Column15";
+            this.Column15.Width = 120;
+            // 
+            // Column39
+            // 
+            this.Column39.HeaderText = "Output_amt";
+            this.Column39.Name = "Column39";
+            this.Column39.Width = 120;
+            // 
+            // Column41
+            // 
+            this.Column41.HeaderText = "Service";
+            this.Column41.Name = "Column41";
+            this.Column41.Width = 200;
+            // 
+            // Column16
+            // 
+            this.Column16.HeaderText = "Est_Time";
+            this.Column16.Name = "Column16";
+            this.Column16.Width = 120;
+            // 
+            // Column18
+            // 
+            this.Column18.HeaderText = "Pro_Time";
+            this.Column18.Name = "Column18";
+            this.Column18.Width = 120;
+            // 
+            // Column17
+            // 
+            this.Column17.HeaderText = "Delivery";
+            this.Column17.Name = "Column17";
+            this.Column17.Width = 200;
+            // 
+            // Column24
+            // 
+            this.Column24.HeaderText = "Efficiency";
+            this.Column24.Name = "Column24";
+            this.Column24.Width = 120;
+            // 
+            // Column19
+            // 
+            this.Column19.HeaderText = "Action";
+            this.Column19.Name = "Column19";
             // 
             // tabPage12
             // 
@@ -811,7 +948,7 @@
             this.tabPage12.Controls.Add(this.Dgv_Done_Job);
             this.tabPage12.Location = new System.Drawing.Point(4, 33);
             this.tabPage12.Name = "tabPage12";
-            this.tabPage12.Size = new System.Drawing.Size(1624, 771);
+            this.tabPage12.Size = new System.Drawing.Size(1521, 685);
             this.tabPage12.TabIndex = 11;
             this.tabPage12.Text = "    Done Jobs    ";
             // 
@@ -861,8 +998,65 @@
             this.Dgv_Done_Job.Name = "Dgv_Done_Job";
             this.Dgv_Done_Job.RowTemplate.Height = 30;
             this.Dgv_Done_Job.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.Dgv_Done_Job.Size = new System.Drawing.Size(1500, 705);
+            this.Dgv_Done_Job.Size = new System.Drawing.Size(1395, 575);
             this.Dgv_Done_Job.TabIndex = 24;
+            // 
+            // Column1
+            // 
+            this.Column1.HeaderText = "SL";
+            this.Column1.Name = "Column1";
+            this.Column1.Width = 50;
+            // 
+            // Column2
+            // 
+            this.Column2.HeaderText = "Job_ID";
+            this.Column2.Name = "Column2";
+            this.Column2.Width = 250;
+            // 
+            // Column3
+            // 
+            this.Column3.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
+            this.Column3.HeaderText = "Folder";
+            this.Column3.Name = "Column3";
+            // 
+            // Column4
+            // 
+            this.Column4.HeaderText = "Input_amt";
+            this.Column4.Name = "Column4";
+            // 
+            // Column57
+            // 
+            this.Column57.HeaderText = "Output_amt";
+            this.Column57.Name = "Column57";
+            this.Column57.Width = 120;
+            // 
+            // Column6
+            // 
+            this.Column6.HeaderText = "Service";
+            this.Column6.Name = "Column6";
+            this.Column6.Width = 250;
+            // 
+            // Column7
+            // 
+            this.Column7.HeaderText = "Est_Time";
+            this.Column7.Name = "Column7";
+            // 
+            // Column20
+            // 
+            this.Column20.HeaderText = "Pro_Time";
+            this.Column20.Name = "Column20";
+            // 
+            // Column21
+            // 
+            this.Column21.HeaderText = "Incoming";
+            this.Column21.Name = "Column21";
+            this.Column21.Width = 180;
+            // 
+            // Column5
+            // 
+            this.Column5.HeaderText = "Delivery";
+            this.Column5.Name = "Column5";
+            this.Column5.Width = 180;
             // 
             // tabPage5
             // 
@@ -872,7 +1066,7 @@
             this.tabPage5.Location = new System.Drawing.Point(4, 33);
             this.tabPage5.Name = "tabPage5";
             this.tabPage5.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage5.Size = new System.Drawing.Size(1624, 771);
+            this.tabPage5.Size = new System.Drawing.Size(1521, 685);
             this.tabPage5.TabIndex = 17;
             this.tabPage5.Text = "    Performance    ";
             // 
@@ -924,8 +1118,79 @@
             this.Dgv_Performance.Name = "Dgv_Performance";
             this.Dgv_Performance.RowTemplate.Height = 30;
             this.Dgv_Performance.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.Dgv_Performance.Size = new System.Drawing.Size(1494, 708);
+            this.Dgv_Performance.Size = new System.Drawing.Size(1395, 575);
             this.Dgv_Performance.TabIndex = 26;
+            // 
+            // dataGridViewTextBoxColumn29
+            // 
+            this.dataGridViewTextBoxColumn29.HeaderText = "Rank";
+            this.dataGridViewTextBoxColumn29.Name = "dataGridViewTextBoxColumn29";
+            this.dataGridViewTextBoxColumn29.Width = 80;
+            // 
+            // dataGridViewTextBoxColumn30
+            // 
+            this.dataGridViewTextBoxColumn30.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
+            this.dataGridViewTextBoxColumn30.HeaderText = "Name";
+            this.dataGridViewTextBoxColumn30.Name = "dataGridViewTextBoxColumn30";
+            // 
+            // Column50
+            // 
+            this.Column50.HeaderText = "Shift";
+            this.Column50.Name = "Column50";
+            this.Column50.Width = 120;
+            // 
+            // dataGridViewTextBoxColumn31
+            // 
+            this.dataGridViewTextBoxColumn31.HeaderText = "First_Login";
+            this.dataGridViewTextBoxColumn31.Name = "dataGridViewTextBoxColumn31";
+            this.dataGridViewTextBoxColumn31.Width = 220;
+            // 
+            // Column40
+            // 
+            this.Column40.HeaderText = "Last_activity";
+            this.Column40.Name = "Column40";
+            this.Column40.Width = 220;
+            // 
+            // dataGridViewTextBoxColumn13
+            // 
+            this.dataGridViewTextBoxColumn13.HeaderText = "Work_Time";
+            this.dataGridViewTextBoxColumn13.Name = "dataGridViewTextBoxColumn13";
+            this.dataGridViewTextBoxColumn13.Width = 130;
+            // 
+            // dataGridViewTextBoxColumn33
+            // 
+            this.dataGridViewTextBoxColumn33.HeaderText = "Total_File";
+            this.dataGridViewTextBoxColumn33.Name = "dataGridViewTextBoxColumn33";
+            this.dataGridViewTextBoxColumn33.Width = 130;
+            // 
+            // dataGridViewTextBoxColumn34
+            // 
+            this.dataGridViewTextBoxColumn34.HeaderText = "Est_Time";
+            this.dataGridViewTextBoxColumn34.Name = "dataGridViewTextBoxColumn34";
+            this.dataGridViewTextBoxColumn34.Width = 120;
+            // 
+            // dataGridViewTextBoxColumn35
+            // 
+            this.dataGridViewTextBoxColumn35.HeaderText = "Pro_Time";
+            this.dataGridViewTextBoxColumn35.Name = "dataGridViewTextBoxColumn35";
+            this.dataGridViewTextBoxColumn35.Width = 120;
+            // 
+            // dataGridViewTextBoxColumn14
+            // 
+            this.dataGridViewTextBoxColumn14.HeaderText = "Rest_Time";
+            this.dataGridViewTextBoxColumn14.Name = "dataGridViewTextBoxColumn14";
+            this.dataGridViewTextBoxColumn14.Width = 120;
+            // 
+            // Column29
+            // 
+            this.Column29.HeaderText = "Efficiency";
+            this.Column29.Name = "Column29";
+            // 
+            // dataGridViewTextBoxColumn37
+            // 
+            this.dataGridViewTextBoxColumn37.HeaderText = "Quality";
+            this.dataGridViewTextBoxColumn37.Name = "dataGridViewTextBoxColumn37";
+            this.dataGridViewTextBoxColumn37.Width = 120;
             // 
             // tabPage8
             // 
@@ -934,7 +1199,7 @@
             this.tabPage8.Controls.Add(this.DgvHistory);
             this.tabPage8.Location = new System.Drawing.Point(4, 33);
             this.tabPage8.Name = "tabPage8";
-            this.tabPage8.Size = new System.Drawing.Size(1624, 771);
+            this.tabPage8.Size = new System.Drawing.Size(1521, 685);
             this.tabPage8.TabIndex = 15;
             this.tabPage8.Text = "      History          ";
             // 
@@ -985,8 +1250,73 @@
             this.DgvHistory.Name = "DgvHistory";
             this.DgvHistory.RowTemplate.Height = 30;
             this.DgvHistory.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.DgvHistory.Size = new System.Drawing.Size(1494, 708);
+            this.DgvHistory.Size = new System.Drawing.Size(1395, 575);
             this.DgvHistory.TabIndex = 25;
+            // 
+            // dataGridViewTextBoxColumn36
+            // 
+            this.dataGridViewTextBoxColumn36.HeaderText = "SL";
+            this.dataGridViewTextBoxColumn36.Name = "dataGridViewTextBoxColumn36";
+            this.dataGridViewTextBoxColumn36.Width = 50;
+            // 
+            // dataGridViewTextBoxColumn5
+            // 
+            this.dataGridViewTextBoxColumn5.HeaderText = "Name";
+            this.dataGridViewTextBoxColumn5.Name = "dataGridViewTextBoxColumn5";
+            this.dataGridViewTextBoxColumn5.Width = 150;
+            // 
+            // dataGridViewTextBoxColumn38
+            // 
+            this.dataGridViewTextBoxColumn38.HeaderText = "Job_ID";
+            this.dataGridViewTextBoxColumn38.Name = "dataGridViewTextBoxColumn38";
+            this.dataGridViewTextBoxColumn38.Width = 150;
+            // 
+            // dataGridViewTextBoxColumn39
+            // 
+            this.dataGridViewTextBoxColumn39.HeaderText = "Category";
+            this.dataGridViewTextBoxColumn39.Name = "dataGridViewTextBoxColumn39";
+            this.dataGridViewTextBoxColumn39.Width = 120;
+            // 
+            // dataGridViewTextBoxColumn40
+            // 
+            this.dataGridViewTextBoxColumn40.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
+            this.dataGridViewTextBoxColumn40.HeaderText = "Image";
+            this.dataGridViewTextBoxColumn40.Name = "dataGridViewTextBoxColumn40";
+            // 
+            // dataGridViewTextBoxColumn41
+            // 
+            this.dataGridViewTextBoxColumn41.HeaderText = "Service";
+            this.dataGridViewTextBoxColumn41.Name = "dataGridViewTextBoxColumn41";
+            this.dataGridViewTextBoxColumn41.Width = 150;
+            // 
+            // dataGridViewTextBoxColumn46
+            // 
+            this.dataGridViewTextBoxColumn46.HeaderText = "Start_Time";
+            this.dataGridViewTextBoxColumn46.Name = "dataGridViewTextBoxColumn46";
+            this.dataGridViewTextBoxColumn46.Width = 200;
+            // 
+            // dataGridViewTextBoxColumn47
+            // 
+            this.dataGridViewTextBoxColumn47.HeaderText = "End_Time";
+            this.dataGridViewTextBoxColumn47.Name = "dataGridViewTextBoxColumn47";
+            this.dataGridViewTextBoxColumn47.Width = 200;
+            // 
+            // dataGridViewTextBoxColumn42
+            // 
+            this.dataGridViewTextBoxColumn42.HeaderText = "Est_Time";
+            this.dataGridViewTextBoxColumn42.Name = "dataGridViewTextBoxColumn42";
+            this.dataGridViewTextBoxColumn42.Width = 120;
+            // 
+            // dataGridViewTextBoxColumn43
+            // 
+            this.dataGridViewTextBoxColumn43.HeaderText = "Pro_Time";
+            this.dataGridViewTextBoxColumn43.Name = "dataGridViewTextBoxColumn43";
+            this.dataGridViewTextBoxColumn43.Width = 120;
+            // 
+            // Column30
+            // 
+            this.Column30.HeaderText = "Efficiency";
+            this.Column30.Name = "Column30";
             // 
             // panel1
             // 
@@ -1132,336 +1462,6 @@
             this.Tmr_Count.Enabled = true;
             this.Tmr_Count.Interval = 10000;
             this.Tmr_Count.Tick += new System.EventHandler(this.Tmr_Count_Tick);
-            // 
-            // dataGridViewTextBoxColumn16
-            // 
-            this.dataGridViewTextBoxColumn16.HeaderText = "SL";
-            this.dataGridViewTextBoxColumn16.Name = "dataGridViewTextBoxColumn16";
-            this.dataGridViewTextBoxColumn16.Width = 50;
-            // 
-            // dataGridViewTextBoxColumn17
-            // 
-            this.dataGridViewTextBoxColumn17.HeaderText = "Job_ID";
-            this.dataGridViewTextBoxColumn17.Name = "dataGridViewTextBoxColumn17";
-            this.dataGridViewTextBoxColumn17.Width = 160;
-            // 
-            // dataGridViewTextBoxColumn18
-            // 
-            this.dataGridViewTextBoxColumn18.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
-            this.dataGridViewTextBoxColumn18.HeaderText = "Folder";
-            this.dataGridViewTextBoxColumn18.Name = "dataGridViewTextBoxColumn18";
-            // 
-            // dataGridViewTextBoxColumn19
-            // 
-            this.dataGridViewTextBoxColumn19.HeaderText = "Incoming";
-            this.dataGridViewTextBoxColumn19.Name = "dataGridViewTextBoxColumn19";
-            this.dataGridViewTextBoxColumn19.Width = 200;
-            // 
-            // Column23
-            // 
-            this.Column23.HeaderText = "Delivery";
-            this.Column23.Name = "Column23";
-            this.Column23.Width = 200;
-            // 
-            // dataGridViewTextBoxColumn20
-            // 
-            this.dataGridViewTextBoxColumn20.HeaderText = "Input_File";
-            this.dataGridViewTextBoxColumn20.Name = "dataGridViewTextBoxColumn20";
-            this.dataGridViewTextBoxColumn20.Width = 120;
-            // 
-            // dataGridViewTextBoxColumn21
-            // 
-            this.dataGridViewTextBoxColumn21.HeaderText = "Output_File";
-            this.dataGridViewTextBoxColumn21.Name = "dataGridViewTextBoxColumn21";
-            this.dataGridViewTextBoxColumn21.Width = 120;
-            // 
-            // dataGridViewTextBoxColumn22
-            // 
-            this.dataGridViewTextBoxColumn22.HeaderText = "Est_Time";
-            this.dataGridViewTextBoxColumn22.Name = "dataGridViewTextBoxColumn22";
-            this.dataGridViewTextBoxColumn22.Width = 120;
-            // 
-            // dataGridViewTextBoxColumn23
-            // 
-            this.dataGridViewTextBoxColumn23.HeaderText = "Pro_Time";
-            this.dataGridViewTextBoxColumn23.Name = "dataGridViewTextBoxColumn23";
-            this.dataGridViewTextBoxColumn23.Width = 150;
-            // 
-            // dataGridViewTextBoxColumn24
-            // 
-            this.dataGridViewTextBoxColumn24.HeaderText = "Total_Time";
-            this.dataGridViewTextBoxColumn24.Name = "dataGridViewTextBoxColumn24";
-            this.dataGridViewTextBoxColumn24.Width = 120;
-            // 
-            // dataGridViewTextBoxColumn26
-            // 
-            this.dataGridViewTextBoxColumn26.HeaderText = "ID";
-            this.dataGridViewTextBoxColumn26.Name = "dataGridViewTextBoxColumn26";
-            this.dataGridViewTextBoxColumn26.Visible = false;
-            // 
-            // dataGridViewTextBoxColumn27
-            // 
-            this.dataGridViewTextBoxColumn27.HeaderText = "Team";
-            this.dataGridViewTextBoxColumn27.Name = "dataGridViewTextBoxColumn27";
-            this.dataGridViewTextBoxColumn27.Visible = false;
-            // 
-            // Column10
-            // 
-            this.Column10.HeaderText = "SL";
-            this.Column10.Name = "Column10";
-            this.Column10.Width = 50;
-            // 
-            // Column11
-            // 
-            this.Column11.HeaderText = "Job_ID";
-            this.Column11.Name = "Column11";
-            this.Column11.Width = 160;
-            // 
-            // Column12
-            // 
-            this.Column12.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
-            this.Column12.HeaderText = "Folder";
-            this.Column12.Name = "Column12";
-            // 
-            // Column15
-            // 
-            this.Column15.HeaderText = "Input_amt";
-            this.Column15.Name = "Column15";
-            this.Column15.Width = 120;
-            // 
-            // Column39
-            // 
-            this.Column39.HeaderText = "Output_amt";
-            this.Column39.Name = "Column39";
-            this.Column39.Width = 120;
-            // 
-            // Column41
-            // 
-            this.Column41.HeaderText = "Service";
-            this.Column41.Name = "Column41";
-            this.Column41.Width = 200;
-            // 
-            // Column16
-            // 
-            this.Column16.HeaderText = "Est_Time";
-            this.Column16.Name = "Column16";
-            this.Column16.Width = 120;
-            // 
-            // Column18
-            // 
-            this.Column18.HeaderText = "Pro_Time";
-            this.Column18.Name = "Column18";
-            this.Column18.Width = 120;
-            // 
-            // Column17
-            // 
-            this.Column17.HeaderText = "Delivery";
-            this.Column17.Name = "Column17";
-            this.Column17.Width = 200;
-            // 
-            // Column24
-            // 
-            this.Column24.HeaderText = "Efficiency";
-            this.Column24.Name = "Column24";
-            this.Column24.Width = 120;
-            // 
-            // Column19
-            // 
-            this.Column19.HeaderText = "Action";
-            this.Column19.Name = "Column19";
-            // 
-            // dataGridViewTextBoxColumn36
-            // 
-            this.dataGridViewTextBoxColumn36.HeaderText = "SL";
-            this.dataGridViewTextBoxColumn36.Name = "dataGridViewTextBoxColumn36";
-            this.dataGridViewTextBoxColumn36.Width = 50;
-            // 
-            // dataGridViewTextBoxColumn5
-            // 
-            this.dataGridViewTextBoxColumn5.HeaderText = "Name";
-            this.dataGridViewTextBoxColumn5.Name = "dataGridViewTextBoxColumn5";
-            this.dataGridViewTextBoxColumn5.Width = 150;
-            // 
-            // dataGridViewTextBoxColumn38
-            // 
-            this.dataGridViewTextBoxColumn38.HeaderText = "Job_ID";
-            this.dataGridViewTextBoxColumn38.Name = "dataGridViewTextBoxColumn38";
-            this.dataGridViewTextBoxColumn38.Width = 150;
-            // 
-            // dataGridViewTextBoxColumn39
-            // 
-            this.dataGridViewTextBoxColumn39.HeaderText = "Category";
-            this.dataGridViewTextBoxColumn39.Name = "dataGridViewTextBoxColumn39";
-            this.dataGridViewTextBoxColumn39.Width = 120;
-            // 
-            // dataGridViewTextBoxColumn40
-            // 
-            this.dataGridViewTextBoxColumn40.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
-            this.dataGridViewTextBoxColumn40.HeaderText = "Image";
-            this.dataGridViewTextBoxColumn40.Name = "dataGridViewTextBoxColumn40";
-            // 
-            // dataGridViewTextBoxColumn41
-            // 
-            this.dataGridViewTextBoxColumn41.HeaderText = "Service";
-            this.dataGridViewTextBoxColumn41.Name = "dataGridViewTextBoxColumn41";
-            this.dataGridViewTextBoxColumn41.Width = 150;
-            // 
-            // dataGridViewTextBoxColumn46
-            // 
-            this.dataGridViewTextBoxColumn46.HeaderText = "Start_Time";
-            this.dataGridViewTextBoxColumn46.Name = "dataGridViewTextBoxColumn46";
-            this.dataGridViewTextBoxColumn46.Width = 200;
-            // 
-            // dataGridViewTextBoxColumn47
-            // 
-            this.dataGridViewTextBoxColumn47.HeaderText = "End_Time";
-            this.dataGridViewTextBoxColumn47.Name = "dataGridViewTextBoxColumn47";
-            this.dataGridViewTextBoxColumn47.Width = 200;
-            // 
-            // dataGridViewTextBoxColumn42
-            // 
-            this.dataGridViewTextBoxColumn42.HeaderText = "Est_Time";
-            this.dataGridViewTextBoxColumn42.Name = "dataGridViewTextBoxColumn42";
-            this.dataGridViewTextBoxColumn42.Width = 120;
-            // 
-            // dataGridViewTextBoxColumn43
-            // 
-            this.dataGridViewTextBoxColumn43.HeaderText = "Pro_Time";
-            this.dataGridViewTextBoxColumn43.Name = "dataGridViewTextBoxColumn43";
-            this.dataGridViewTextBoxColumn43.Width = 120;
-            // 
-            // Column30
-            // 
-            this.Column30.HeaderText = "Efficiency";
-            this.Column30.Name = "Column30";
-            // 
-            // dataGridViewTextBoxColumn29
-            // 
-            this.dataGridViewTextBoxColumn29.HeaderText = "Rank";
-            this.dataGridViewTextBoxColumn29.Name = "dataGridViewTextBoxColumn29";
-            this.dataGridViewTextBoxColumn29.Width = 80;
-            // 
-            // dataGridViewTextBoxColumn30
-            // 
-            this.dataGridViewTextBoxColumn30.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
-            this.dataGridViewTextBoxColumn30.HeaderText = "Name";
-            this.dataGridViewTextBoxColumn30.Name = "dataGridViewTextBoxColumn30";
-            // 
-            // Column50
-            // 
-            this.Column50.HeaderText = "Shift";
-            this.Column50.Name = "Column50";
-            this.Column50.Width = 120;
-            // 
-            // dataGridViewTextBoxColumn31
-            // 
-            this.dataGridViewTextBoxColumn31.HeaderText = "First_Login";
-            this.dataGridViewTextBoxColumn31.Name = "dataGridViewTextBoxColumn31";
-            this.dataGridViewTextBoxColumn31.Width = 220;
-            // 
-            // Column40
-            // 
-            this.Column40.HeaderText = "Last_activity";
-            this.Column40.Name = "Column40";
-            this.Column40.Width = 220;
-            // 
-            // dataGridViewTextBoxColumn13
-            // 
-            this.dataGridViewTextBoxColumn13.HeaderText = "Work_Time";
-            this.dataGridViewTextBoxColumn13.Name = "dataGridViewTextBoxColumn13";
-            this.dataGridViewTextBoxColumn13.Width = 130;
-            // 
-            // dataGridViewTextBoxColumn33
-            // 
-            this.dataGridViewTextBoxColumn33.HeaderText = "Total_File";
-            this.dataGridViewTextBoxColumn33.Name = "dataGridViewTextBoxColumn33";
-            this.dataGridViewTextBoxColumn33.Width = 130;
-            // 
-            // dataGridViewTextBoxColumn34
-            // 
-            this.dataGridViewTextBoxColumn34.HeaderText = "Est_Time";
-            this.dataGridViewTextBoxColumn34.Name = "dataGridViewTextBoxColumn34";
-            this.dataGridViewTextBoxColumn34.Width = 120;
-            // 
-            // dataGridViewTextBoxColumn35
-            // 
-            this.dataGridViewTextBoxColumn35.HeaderText = "Pro_Time";
-            this.dataGridViewTextBoxColumn35.Name = "dataGridViewTextBoxColumn35";
-            this.dataGridViewTextBoxColumn35.Width = 120;
-            // 
-            // dataGridViewTextBoxColumn14
-            // 
-            this.dataGridViewTextBoxColumn14.HeaderText = "Rest_Time";
-            this.dataGridViewTextBoxColumn14.Name = "dataGridViewTextBoxColumn14";
-            this.dataGridViewTextBoxColumn14.Width = 120;
-            // 
-            // Column29
-            // 
-            this.Column29.HeaderText = "Efficiency";
-            this.Column29.Name = "Column29";
-            // 
-            // dataGridViewTextBoxColumn37
-            // 
-            this.dataGridViewTextBoxColumn37.HeaderText = "Quality";
-            this.dataGridViewTextBoxColumn37.Name = "dataGridViewTextBoxColumn37";
-            this.dataGridViewTextBoxColumn37.Width = 120;
-            // 
-            // Column1
-            // 
-            this.Column1.HeaderText = "SL";
-            this.Column1.Name = "Column1";
-            this.Column1.Width = 50;
-            // 
-            // Column2
-            // 
-            this.Column2.HeaderText = "Job_ID";
-            this.Column2.Name = "Column2";
-            this.Column2.Width = 250;
-            // 
-            // Column3
-            // 
-            this.Column3.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
-            this.Column3.HeaderText = "Folder";
-            this.Column3.Name = "Column3";
-            // 
-            // Column4
-            // 
-            this.Column4.HeaderText = "Input_amt";
-            this.Column4.Name = "Column4";
-            // 
-            // Column57
-            // 
-            this.Column57.HeaderText = "Output_amt";
-            this.Column57.Name = "Column57";
-            this.Column57.Width = 120;
-            // 
-            // Column6
-            // 
-            this.Column6.HeaderText = "Service";
-            this.Column6.Name = "Column6";
-            this.Column6.Width = 250;
-            // 
-            // Column7
-            // 
-            this.Column7.HeaderText = "Est_Time";
-            this.Column7.Name = "Column7";
-            // 
-            // Column20
-            // 
-            this.Column20.HeaderText = "Pro_Time";
-            this.Column20.Name = "Column20";
-            // 
-            // Column21
-            // 
-            this.Column21.HeaderText = "Incoming";
-            this.Column21.Name = "Column21";
-            this.Column21.Width = 180;
-            // 
-            // Column5
-            // 
-            this.Column5.HeaderText = "Delivery";
-            this.Column5.Name = "Column5";
-            this.Column5.Width = 180;
             // 
             // CsDashboard
             // 

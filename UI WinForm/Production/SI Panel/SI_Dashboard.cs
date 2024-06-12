@@ -1,4 +1,5 @@
-﻿using Skill_PMS.Controller;
+﻿using Microsoft.SqlServer.Management.Smo;
+using Skill_PMS.Controller;
 using Skill_PMS.Data;
 using Skill_PMS.Models;
 using Skill_PMS.UI_WinForm.Common_Panel;
@@ -6,6 +7,7 @@ using Skill_PMS.UI_WinForm.CS_Panel;
 using Skill_PMS.UI_WinForm.Production.Designer;
 using Skill_PMS.UI_WinForm.Production.QC_Panel;
 using System;
+using System.Data.Entity;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Forms;
@@ -16,12 +18,9 @@ namespace Skill_PMS.UI_WinForm.Production.SI_Panel
     {
         private SkillContext _db = new SkillContext();
         private readonly Common _common = new Common();
-        private string _shift;
-        private int _counter = 0;
-        ShiftReport _shiftReport;
         public Performance _performance;
 
-        public static User _user { get; set; }
+        public static Models.User _user { get; set; }
         private static SiDashboard _instance;
 
         public static SiDashboard GetInstance()
@@ -40,8 +39,19 @@ namespace Skill_PMS.UI_WinForm.Production.SI_Panel
 
         private void SI_Dashboard_Load(object sender, EventArgs e)
         {
-            Dtp_NewJobs.Value = DateTime.Now.Date;
+            Dtp_NewJobs.Value = Dtp_Attendence_Date.Value = Dtp_Attendence_To.Value = Dtp_Daily_Report_Date.Value = Dtp_Daily_Report_Date_to.Value = DateTime.Now.Date;
             Dtp_Future_Date.Value = DateTime.Now.Date.AddDays(1);
+
+            var designers = _db.Performances
+                .Join(_db.Users, per => per.Name, user => user.Short_Name, (per, user) => new { per.Name })
+                .OrderBy(x => x.Name).Select(x => x.Name).Distinct().ToList();
+
+            foreach (var designer in designers)
+            {
+                Cmb_Attendence_Designer.Items.Add(designer);
+                Cmb_Daily_Report_Designer.Items.Add(designer);
+            }
+
             this.Text = @"SI Panel - " + _user.Full_Name;
             //_shift = _common.Current_Shift();
 
@@ -329,10 +339,7 @@ namespace Skill_PMS.UI_WinForm.Production.SI_Panel
             Dgv_Production_Error.Rows.Clear();
             _common.Dgv_Size(Dgv_Production_Error, 11);
 
-            var errors = _db.Feedback
-                .OrderByDescending(x => x.Id)
-                .Take(99)
-                .ToList();
+            var errors = _db.Feedback.OrderByDescending(x => x.Id).Take(99).ToList();
 
             var sl = 1;
             foreach (var error in errors)
@@ -341,42 +348,128 @@ namespace Skill_PMS.UI_WinForm.Production.SI_Panel
             //_common.Row_Color_By_Efficiency(Dgv_Production_Error, "Column55");
         }
 
-        private void Check_Performance()
+        private void Check_Daily_Report()
         {
-            var date = _performance.Date;
-            Dgv_Performance.DataSource = null;
-            Dgv_Performance.Rows.Clear();
-            _common.Dgv_Size(Dgv_Performance, 11);
+            Tmr_Count.Stop();
 
-            var performances = (from per in _db.Performances
-                                join user in _db.Users
-                                on per.Name equals user.Short_Name
-                                where per.Date == date & user.Role == "" & per.Shift == _performance.Shift
-                                select new
-                                {
-                                    per.Name,
-                                    per.Shift,
-                                    per.Login,
-                                    per.Logout,
-                                    per.Status,
-                                    per.File,
-                                    per.JobTime,
-                                    per.ProTime,
-                                    per.Efficiency
-                                }).OrderByDescending(x => x.Efficiency).ToList();
+            var name = Cmb_Daily_Report_Designer.Text;
+            if (string.IsNullOrEmpty(name) || name.ToUpper() == "ALL")
+                name = null;
+
+            var date = Dtp_Daily_Report_Date.Value.Date;
+            var date_to = Dtp_Daily_Report_Date_to.Value.Date;
+
+            Dgv_Daily_Report.DataSource = null;
+            Dgv_Daily_Report.Rows.Clear();
+            _common.Dgv_Size(Dgv_Daily_Report, 11);
 
             var sl = 1;
-            foreach (var per in performances)
-            {
-                var start_time = _common.Shift_Time(per.Shift);
-                if (start_time > per.Login)
-                    start_time = per.Login;
 
-                var Capacity = (per.Logout - start_time).TotalMinutes;
-                Dgv_Performance.Rows.Add(sl++, per.Name, per.Shift, per.Login, per.Logout, per.Status, per.File, Math.Round(per.JobTime), Math.Round(per.ProTime), Math.Round(Capacity - per.ProTime), per.Efficiency + "%");
+            if (name != null)
+            {
+                var reports = _db.Logs
+                    .Where(x => x.Date >= date && x.Date <= date_to && x.Name.Contains(name) && x.Status == "Done")
+                    .GroupBy(x => new { x.Name, x.Date })
+                    .Select(group => new
+                    {
+                        group.Key.Name,
+                        group.Key.Date,
+                        File = group.Count(),
+                        TargetTime = group.Sum(x => x.TargetTime),
+                        ProTime = group.Sum(x => x.ProTime)
+                    })
+                    .OrderByDescending(x => x.TargetTime).ToList();
+
+                foreach (var report in reports)
+                    Dgv_Daily_Report.Rows.Add(sl++, report.Name, report.Date, report.File, Math.Round(report.TargetTime), Math.Round(report.ProTime), Math.Round(report.TargetTime / report.ProTime * 100) + "%");
+            }
+            else
+            {
+                var reports = _db.Logs
+                    .Where(x => x.Date >= date && x.Date <= date_to && x.Status == "Done")
+                    .GroupBy(x => new { x.Name, x.Date })
+                    .Select(group => new
+                    {
+                        group.Key.Name,
+                        group.Key.Date,
+                        File = group.Count(),
+                        TargetTime = group.Sum(x => x.TargetTime),
+                        ProTime = group.Sum(x => x.ProTime)
+                    })
+                    .OrderByDescending(x => x.TargetTime).ToList();
+
+                foreach (var report in reports)
+                    Dgv_Daily_Report.Rows.Add(sl++, report.Name, report.Date, report.File, Math.Round(report.TargetTime), Math.Round(report.ProTime), Math.Round(report.TargetTime / report.ProTime * 100) + "%");
             }
 
-            _common.Row_Color_By_Efficiency(Dgv_Performance, "Column13");
+            _common.Row_Color_By_Efficiency(Dgv_Daily_Report, "Column13");
+        }
+
+        private void Check_Attendence()
+        {
+            Tmr_Count.Stop();
+
+            var name = Cmb_Attendence_Designer.Text;
+            if (string.IsNullOrEmpty(name) || name.ToUpper() == "ALL")
+                name = null;
+
+            var date = Dtp_Attendence_Date.Value.Date;
+            var date_to = Dtp_Attendence_To.Value.Date;
+            DGV_Attendence.DataSource = null;
+            DGV_Attendence.Rows.Clear();
+            _common.Dgv_Size(DGV_Attendence, 11);
+
+            var sl = 1;
+            if (name != null)
+            {
+                var performances = _db.Performances
+                        .Join(_db.Users,
+                            per => per.Name,
+                            user => user.Short_Name,
+                            (per, user) => new
+                            {
+                                user.Team,
+                                user.Role,
+                                per.Name,
+                                per.Shift,
+                                per.Date,
+                                per.Login,
+                                per.Logout,
+                                per.Status
+                            })
+                        .Where(x => x.Date >= date && x.Date <= date_to && x.Name.Contains(name) && (x.Role == "" || x.Role == "QC" || x.Role == "SI"))
+                        .OrderBy(x => x.Login)
+                        .ToList();
+
+                foreach (var per in performances)
+                    DGV_Attendence.Rows.Add(sl++, per.Name, per.Team, per.Shift, per.Date.Date, per.Login, per.Logout, per.Status);
+            }
+            else
+            {
+                var performances = _db.Performances
+                        .Join(_db.Users,
+                            per => per.Name,
+                            user => user.Short_Name,
+                            (per, user) => new
+                            {
+                                user.Team,
+                                user.Role,
+                                per.Name,
+                                per.Shift,
+                                per.Date,
+                                per.Login,
+                                per.Logout,
+                                per.Status
+                            })
+                        .Where(x => x.Date >= date && x.Date <= date_to && (x.Role == "" || x.Role == "QC" || x.Role == "SI"))
+                        .OrderBy(x => x.Login)
+                        .ToList();
+
+                foreach (var per in performances)
+                    DGV_Attendence.Rows.Add(sl++, per.Name, per.Team, per.Shift, per.Date.Date, per.Login, per.Logout, per.Status);
+            }
+
+            //_common.Row_Color_By_Efficiency(DGV_Attendence, "Column13");
         }
 
         private void Check_History()
@@ -385,11 +478,7 @@ namespace Skill_PMS.UI_WinForm.Production.SI_Panel
             DgvHistory.Rows.Clear();
             _common.Dgv_Size(DgvHistory, 11);
 
-            var logs = _db.Logs
-                .Where(x => x.Status == "Done")
-                .OrderByDescending(x => x.Id)
-                .Take(99)
-                .ToList();
+            var logs = _db.Logs.Where(x => x.Status == "Done").OrderByDescending(x => x.Id).Take(99).ToList();
 
             var sl = 1;
             foreach (var log in logs)
@@ -472,11 +561,7 @@ namespace Skill_PMS.UI_WinForm.Production.SI_Panel
             Dgv_Future.Rows.Clear();
             _common.Dgv_Size(Dgv_Future, 11);
 
-            var jobs = _db.New_Jobs
-                .Where(x => x.Status == "Done")
-                .OrderByDescending(x => x.Id)
-                .Take(99)
-                .ToList();
+            var jobs = _db.New_Jobs.Where(x => x.Status == "Done").OrderByDescending(x => x.Id).Take(99).ToList();
 
             var sl = 1;
             foreach (var job in jobs)
@@ -525,20 +610,32 @@ namespace Skill_PMS.UI_WinForm.Production.SI_Panel
                         break;
 
                     case 4:
-                        Check_Performance();
-                        break;
-
-                    case 5:
                         Check_History();
                         break;
 
+                    case 5:
+                        Check_Attendence();
+                        break;
+
                     case 6:
-                        Check_Production_Error();
+                        Check_Daily_Report();
                         break;
 
                     case 7:
+                        break;
+
+                    case 8:
+                        Check_Production_Error();
+                        break;
+
+                    case 9:
                         Check_Manual_Job();
                         break;
+
+                    case 10:
+                        break;
+
+                    default: break;
                 }
             }
             catch (Exception)
@@ -618,11 +715,6 @@ namespace Skill_PMS.UI_WinForm.Production.SI_Panel
                     Check_Ready_Job();
                     break;
             }
-        }
-
-        private void Dtp_Date_ValueChanged(object sender, EventArgs e)
-        {
-            //Check_Running_Job();
         }
 
         private void Dgv_Future_CellContentClick(object sender, DataGridViewCellEventArgs e)
@@ -830,11 +922,6 @@ namespace Skill_PMS.UI_WinForm.Production.SI_Panel
             Check_Future_Job();
         }
 
-        private void Dtp_Future_Date_ValueChanged(object sender, EventArgs e)
-        {
-
-        }
-
         private void Dtp_NewJobs_ValueChanged(object sender, EventArgs e)
         {
             double totalWorkload = 0;
@@ -930,31 +1017,6 @@ namespace Skill_PMS.UI_WinForm.Production.SI_Panel
             missingFiles.Show();
         }
 
-        private void Dgv_Performance_CellContentClick(object sender, DataGridViewCellEventArgs e)
-        {
-            if (Dgv_Performance.Columns[Dgv_Performance.CurrentCell.ColumnIndex].HeaderText.Contains("Name"))
-            {
-                if (Dgv_Performance.Rows[e.RowIndex].Cells[e.ColumnIndex].Value.ToString() != "")
-                {
-                    var shift = Dgv_Performance.Rows[e.RowIndex].Cells[2].Value.ToString();
-                    var name = Dgv_Performance.Rows[e.RowIndex].Cells[e.ColumnIndex].Value.ToString();
-                    var date = _common.Shift_Date(DateTime.Now, shift);
-
-                    DialogResult dialogResult = MessageBox.Show("Are you sure want to logout User: "+name+" Shift: "+shift+" ?", "Please confirm what do you want.", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
-                    if (dialogResult == DialogResult.Yes)
-                    {
-                        var performance = _db.Performances.FirstOrDefault(x => x.Name == name & x.Date == date);
-                        if (performance != null)
-                        {
-                            performance.Status = "Logout";
-                            _db.SaveChanges();
-                            Check_Performance();
-                        }
-                    }
-                }
-            }
-        }
-
         private void Btn_Add_Feedback_Click(object sender, EventArgs e)
         {
             var addJob = new Add_Feedback { User = _user };
@@ -1004,6 +1066,51 @@ namespace Skill_PMS.UI_WinForm.Production.SI_Panel
         private void Txt_Ready_Folder_TextChanged(object sender, EventArgs e)
         {
             Check_New_Job();
+        }
+
+        private void DGV_Attendence_CellContentClick(object sender, DataGridViewCellEventArgs e)
+        {
+            if (DGV_Attendence.Columns[DGV_Attendence.CurrentCell.ColumnIndex].HeaderText.Contains("Name"))
+            {
+                if (DGV_Attendence.Rows[e.RowIndex].Cells[e.ColumnIndex].Value.ToString() != "")
+                {
+                    var name = DGV_Attendence.Rows[e.RowIndex].Cells[e.ColumnIndex].Value.ToString();
+                    var dateString = DGV_Attendence.Rows[e.RowIndex].Cells[5].Value.ToString();
+                    DateTime date = DateTime.Parse(dateString).Date;
+
+                    DialogResult dialogResult = MessageBox.Show("Are you sure want to logout User: " + name, "Please confirm what do you want.", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+                    if (dialogResult == DialogResult.Yes)
+                    {
+                        var performance = _db.Performances.FirstOrDefault(x => x.Name == name & x.Date == date);
+                        if (performance != null)
+                        {
+                            performance.Status = "Logout";
+                            _db.SaveChanges();
+                            Check_Attendence();
+                        }
+                    }
+                }
+            }
+        }
+
+        private void Btn_Attendence_Find_Click(object sender, EventArgs e)
+        {
+            Check_Attendence();
+        }
+
+        private void Cmb_Attendence_Designer_TextChanged(object sender, EventArgs e)
+        {
+            Check_Attendence();
+        }
+
+        private void Btn_Daily_Report_Find_Click(object sender, EventArgs e)
+        {
+            Check_Daily_Report();
+        }
+
+        private void Cmb_Daily_Report_Designer_TextChanged(object sender, EventArgs e)
+        {
+            Check_Daily_Report();
         }
     }
 }

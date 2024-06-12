@@ -16,6 +16,7 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using static System.Windows.Forms.VisualStyles.VisualStyleElement.Tab;
 
 namespace Skill_PMS.UI_WinForm.Production.QC_Panel
 {
@@ -25,7 +26,6 @@ namespace Skill_PMS.UI_WinForm.Production.QC_Panel
         public Performance _performance = new Performance();
         QC_Progress _qcProgress;
 
-        Log log = new Log();
         Common common = new Common();
         public NewJob _job = new NewJob();
         public int _fileAmount, _runningJobsId;
@@ -215,7 +215,7 @@ namespace Skill_PMS.UI_WinForm.Production.QC_Panel
 
         void Remove_File(string file)
         {
-            log = _db.Logs.FirstOrDefault(x => x.JobId == _job.JobId & x.Image == file & x.Status == "Running" & x.Name == _user.Short_Name & x.Service == "QC");
+            var log = _db.Logs.FirstOrDefault(x => x.JobId == _job.JobId & x.Image == file & x.Status == "Running" & x.Name == _user.Short_Name & x.Service == "QC");
 
             if (log != null)
             {
@@ -262,29 +262,143 @@ namespace Skill_PMS.UI_WinForm.Production.QC_Panel
             _db = new SkillContext();
             string[] data = (string[])e.Data.GetData(DataFormats.FileDrop);
             _files = data.ToList();
-            Tmr_Open.Start();
+            //Tmr_Open.Start();
+
+            int SL = 1;
+            DGV_Files.DataSource = null;
+            DGV_Files.Rows.Clear();
+            common.Dgv_Size(DGV_Files, 11);
+            _fileAmount = _files.Count();
+
+            Tmr_Count.Start();
+            this.WindowState = FormWindowState.Minimized;
+
+            DateTime now = DateTime.Now;
+            DateTime today = now.Date;
+
+            // Assuming _files contains valid file paths
+            var nonEmptyFiles = _files.Where(file => !string.IsNullOrEmpty(file));
+
+            // Create a list to store existing logs
+            var existingLogs = _db.Logs.Where(x => x.JobId == _job.JobId && x.Name == _user.Short_Name && x.Service == "QC").ToList();
+
+            foreach (string file in nonEmptyFiles)
+            {
+                string fileName = Path.GetFileNameWithoutExtension(file);
+                _pro_files_name.Add(fileName);
+                DGV_Files.Rows.Add(SL++, fileName, "X");
+
+                var log = existingLogs.FirstOrDefault(it => it.Image == fileName);
+
+                if (log == null)
+                {
+                    // Create a new Log record
+                    log = new Log
+                    {
+                        JobId = _job.JobId,
+                        Image = fileName,
+                        Name = _user.Short_Name,
+                        Date = today,
+                        StartTime = now,
+                        EndTime = now,
+                    };
+                    _db.Logs.Add(log);
+                }
+
+                //    // Update existing log
+                log.Service = "QC";
+                log.TargetTime = _job.QcTime;
+                log.Shift = _performance.Shift;
+                log.Status = "Running";
+                log.Up = 0;
+            }
+
+            // Batch save changes to the database
+            _db.SaveChanges();
+
+            TimeSpan timespan = TimeSpan.FromSeconds(_job.QcTime * 60 * _fileAmount);
+            Lbl_Job_Time.Text = "Time " + timespan.ToString(@"h\:mm\:s");
+
+            _db.SaveChanges();
+            DGV_Files.AllowDrop = false;
+            Btn_Save.Enabled = true;
+            Btn_Cancel.Enabled = true;
+            Btn_Pause.Enabled = true;
         }
 
         private void Btn_Save_Click(object sender, EventArgs e)
         {
             Tmr_Count.Stop();
+            var currentTime = DateTime.Now;
+            DateTime today = currentTime.Date;
+            if (_performance.Shift == "Night" & currentTime.ToString("tt").ToUpper() == "AM")
+                today = currentTime.AddDays(-1).Date;
+
             _total_Time /= 60;
             double pro_Time = Math.Round(_total_Time / _fileAmount, 1);
 
             Reset_Process();
             Chenge_Quality_Btn(true);
 
-            _qcProgress = new QC_Progress
-            {
-                _job = _job,
-                _user = _user,
-                _performance = _performance,
-                _pro_files_name = _pro_files_name.ToList(),
-                _fileAmount = _fileAmount,
-                pro_Time = pro_Time,
-            };
+            var existinglog = _db.Logs.Where(x => x.JobId == _job.JobId && x.Status == "Running" && x.Name == _user.Short_Name && x.Service == "QC").ToList();
 
-            _qcProgress.Show();
+            foreach (string file in _pro_files_name)
+            {
+                var log = existinglog.FirstOrDefault(it => it.Image == file);
+
+                if (log != null)
+                {
+                    log.ProTime += pro_Time;
+                    log.EndTime = currentTime;
+                    log.Status = "Done";
+                    log.Quality = 100;
+                    log.Up = 0;
+
+                    if (log.ProTime != 0)
+                    {
+                        log.Efficiency = (int)(log.TargetTime / log.ProTime * 100);
+                    }
+
+                    --_fileAmount;
+                }
+            }
+
+            _db.SaveChanges();
+
+            //My_Job Performance Entry in Performance Table
+            Performance performance = _db.Performances.FirstOrDefault(x => x.Name == _user.Short_Name & x.Date == today);
+
+            performance.File = _db.Logs
+                .Count(x => x.Name == _user.Short_Name & x.StartTime >= _performance.Login & x.StartTime <= currentTime);
+
+            if (performance.File != 0)
+            {
+                performance.JobTime = _db.Logs
+                        .Where(x => x.Name == _user.Short_Name & x.StartTime >= _performance.Login & x.StartTime <= currentTime)
+                        .Sum(x => x.TargetTime);
+
+                performance.ProTime = _db.Logs
+                        .Where(x => x.Name == _user.Short_Name & x.StartTime >= _performance.Login & x.StartTime <= currentTime)
+                        .Sum(x => x.ProTime);
+
+                if (performance.ProTime != 0)
+                    performance.Efficiency = (int)(performance.JobTime / performance.ProTime * 100);
+            }
+
+            performance.Up = 0;
+            _db.SaveChanges();
+
+            //_qcProgress = new QC_Progress
+            //{
+            //    _job = _job,
+            //    _user = _user,
+            //    _performance = _performance,
+            //    _pro_files_name = _pro_files_name.ToList(),
+            //    _fileAmount = _fileAmount,
+            //    pro_Time = pro_Time,
+            //};
+
+            //_qcProgress.Show();
 
             _QC_files_name = _pro_files_name.ToList();
             _pro_files_name.Clear();

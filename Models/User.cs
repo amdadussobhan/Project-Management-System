@@ -23,6 +23,11 @@ namespace Skill_PMS.Models
         public string Shift { get; set; }
         public Boolean IsActive { get; set; }
         public int UP { get; set; }
+        public string Blood { get; set; }
+        public string Gender { get; set; }
+        public string Grade { get; set; }
+        public DateTime Birth_Date { get; set; }
+        public DateTime Join_Date { get; set; }
     }
 }
 
