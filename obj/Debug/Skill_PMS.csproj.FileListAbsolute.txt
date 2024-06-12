@@ -568,3 +568,8 @@ D:\Project\Skill Soft\Skill_PMS_DHK\bin\Debug\System.Diagnostics.DiagnosticSourc
 D:\Project\Skill Soft\Skill_PMS_DHK\bin\Debug\System.IO.Pipelines.xml
 D:\Project\Skill Soft\Skill_PMS_DHK\bin\Debug\System.Threading.Tasks.Extensions.xml
 D:\Project\Skill Soft\Skill_PMS_DHK\obj\Debug\Skill_PMS.Migrations.addedautotimeassign.resources
+D:\Project\Skill Soft\Skill_PMS_DHK\obj\Debug\Skill_PMS.Migrations.Leavetableadded.resources
+D:\Project\Skill Soft\Skill_PMS_DHK\obj\Debug\Skill_PMS.Migrations.AddBirthdateJoindateinUsertable.resources
+D:\Project\Skill Soft\Skill_PMS_DHK\obj\Debug\Skill_PMS.Migrations.Misc_Taskadded.resources
+D:\Project\Skill Soft\Skill_PMS_DHK\obj\Debug\Skill_PMS.UI_WinForm.Production.Designer.Leave_Apply.resources
+D:\Project\Skill Soft\Skill_PMS_DHK\obj\Debug\Skill_PMS.UI_WinForm.Production.Designer.Misc_Task_Add.resources

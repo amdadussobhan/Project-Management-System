@@ -50,5 +50,9 @@ namespace Skill_PMS.Models
         public string QcName { get; set; }
         public int Price_Times_ID { get; set; }
         public int Up { get; set; }
+        public double Medean { get; set; }
+        public double Mode { get; set; }
+        public double Max { get; set; }
+        public double Min { get; set; }
     }
 }

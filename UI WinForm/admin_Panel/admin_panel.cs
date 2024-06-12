@@ -28,7 +28,6 @@ namespace Skill_PMS.UI_WinForm.admin_Panel
         private readonly Common _common = new Common();
         private SkillContext _db = new SkillContext();
         public DateTime _nowTime;
-        int _count = 0;
 
         public AdminPanel()
         {
@@ -45,7 +44,7 @@ namespace Skill_PMS.UI_WinForm.admin_Panel
             return _instance;
         }
 
-        private async void AdminPanel_Load(object sender, EventArgs e)
+        private void AdminPanel_Load(object sender, EventArgs e)
         {
             _nowTime = DateTime.Now;
             var shift = _common.Current_Shift();
@@ -61,8 +60,8 @@ namespace Skill_PMS.UI_WinForm.admin_Panel
             _nowTime = DateTime.Now;
 
             var pending = _db.Logs.Where(x => x.Up == 0 && x.Status == "Done" && x.ProTime != 0 && x.Efficiency != 0).ToList().Count;
-            Lbl_Title.Text = "Total Data Upload : " + pending;
-            Lbl_Title.ForeColor = Color.DarkGreen;
+            Lbl_Title.Text = "Total Data Pending: " + pending;
+            Lbl_Title.ForeColor = Color.Red;
 
             await Task.Run(() => Upload_Users());
             await Task.Run(() => Upload_New_Jobs());
@@ -70,10 +69,10 @@ namespace Skill_PMS.UI_WinForm.admin_Panel
             await Task.Run(() => Upload_Logs());
 
             Thread.Sleep(2222);
-            pending = _db.Logs.Where(x => x.Up == 0 && x.Status == "Done" && x.ProTime != 0 && x.Efficiency != 0).ToList().Count;
-            Lbl_Title.Text = "Total Data Pending: " + pending;
-            Lbl_Title.ForeColor = Color.Red;
-
+            var upload = _db.Logs.Where(x => x.Up == 0 && x.Status == "Done" && x.ProTime != 0 && x.Efficiency != 0).ToList().Count;
+            Lbl_Title.Text = "Total Data Upload : " + (pending - upload);
+            Lbl_Title.ForeColor = Color.DarkGreen;
+            
             Tmr_Count.Start();
         }
 
@@ -161,11 +160,7 @@ namespace Skill_PMS.UI_WinForm.admin_Panel
 
         public void Upload_Logs()
         {
-            var logs = _db.Logs
-                .Where(x => x.Up == 0 && x.Status == "Done" && x.ProTime != 0 && x.Efficiency != 0)
-                .OrderByDescending(x => x.Id)
-                .Take(999)
-                .ToList();
+            var logs = _db.Logs.Where(x => x.Up == 0 && x.Status == "Done" && x.ProTime != 0 && x.Efficiency != 0).OrderByDescending(x => x.Id).Take(999).ToList();
             if (logs.Count == 0)
                 return;
 

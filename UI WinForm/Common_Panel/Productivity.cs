@@ -119,20 +119,27 @@ namespace Skill_PMS.UI_WinForm.Common_Panel
 
         private void DGV_Productivity_CellContentClick(object sender, DataGridViewCellEventArgs e)
         {
-            if (DGV_Productivity.Columns[DGV_Productivity.CurrentCell.ColumnIndex].HeaderText.Contains("Name"))
+            try
             {
-                if (DGV_Productivity.Rows[e.RowIndex].Cells[e.ColumnIndex].Value.ToString() != "")
+                if (DGV_Productivity.Columns[DGV_Productivity.CurrentCell.ColumnIndex].HeaderText.Contains("Name"))
                 {
-                    if (DGV_Productivity.Rows[e.RowIndex].Cells[10].Value.ToString() != "")
+                    if (DGV_Productivity.Rows[e.RowIndex].Cells[e.ColumnIndex].Value.ToString() != "")
                     {
-                        var feedback = Pro_Feedback.GetInstance();
-                        feedback._name = DGV_Productivity.Rows[e.RowIndex].Cells[1].Value.ToString();
-                        feedback._image = DGV_Productivity.Rows[e.RowIndex].Cells[2].Value.ToString();
-                        feedback.User = _user;
-                        feedback._job = _job;
-                        feedback.Show();
+                        if (DGV_Productivity.Rows[e.RowIndex].Cells[10].Value.ToString() != "")
+                        {
+                            var feedback = Pro_Feedback.GetInstance();
+                            feedback._name = DGV_Productivity.Rows[e.RowIndex].Cells[1].Value.ToString();
+                            feedback._image = DGV_Productivity.Rows[e.RowIndex].Cells[2].Value.ToString();
+                            feedback.User = _user;
+                            feedback._job = _job;
+                            feedback.Show();
+                        }
                     }
                 }
+            }
+            catch (Exception)
+            {
+                MessageBox.Show(@"Invalid Selection. Please Click Proper Cell......", @"Invalid Selection.", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
 
@@ -160,23 +167,41 @@ namespace Skill_PMS.UI_WinForm.Common_Panel
 
             string loc = Txt_Location.Text;
 
-            //var logCount = _db.Logs.Where(x => x.JobId == _job.JobId & x.Status == "Running").Count();
-            //if (logCount > 0)
-            //{
-            //    MessageBox.Show(@"Job is Still Running. Please inform production team to finish this job.", @"Job is Still Running.", MessageBoxButtons.OK, MessageBoxIcon.Error);
-            //    return;
-            //}
-
             _job.OutputAmount = file;
             _job.OutputLocation = loc;
             _job.Service = _service;
             _job.ProEnd = DateTime.Now;
             _job.Status = "Ready";
 
-            _job.ProDone = _db.Logs.Where(x => x.JobId == _job.JobId & x.Status == "Done").Select(x => x.Image).Distinct().Count();
+            var jobQuery = _db.Logs.Where(x => x.JobId == _job.JobId && x.Status == "Done");
+
+            _job.ProDone = jobQuery.Select(x => x.Image).Distinct().Count();
 
             if (_job.ProDone > 0)
-                _job.ProTime = Math.Round((_db.Logs.Where(x => x.JobId == _job.JobId & x.Status == "Done").Distinct().Sum(x => x.ProTime) / _job.ProDone), 1);
+            {
+                _job.ProTime = Math.Round((jobQuery.Sum(x => x.ProTime) / _job.ProDone), 1);
+
+                jobQuery = _db.Logs.Where(x => x.JobId == _job.JobId && x.Status == "Done" && !x.Service.Contains("QC"));
+                _job.Max = jobQuery.Max(x => x.ProTime);
+                _job.Min = jobQuery.Min(x => x.ProTime);
+
+                var medeanQuery = jobQuery.OrderBy(x => x.ProTime).Select(x => x.ProTime).Distinct().ToList();
+                int count = medeanQuery.Count();
+
+                if (count%2 == 0)
+                {
+                    double first = medeanQuery.ElementAt((count / 2)-1);
+                    double second = medeanQuery.ElementAt(count / 2);
+
+                    _job.Medean = (first + second) / 2;
+                }
+                else
+                {
+                    _job.Medean = medeanQuery.ElementAt((count-1)/2);
+                }
+
+                _job.Mode = jobQuery.Select(x => x.ProTime).ToList().GroupBy(n => n).OrderByDescending(g => g.Count()).Select(g => g.Key).First();
+            }
 
             var efficiency = 0;
             if (_job.ProTime != 0)

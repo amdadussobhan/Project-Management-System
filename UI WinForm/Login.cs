@@ -24,7 +24,7 @@ namespace Skill_PMS.UI_WinForm
         private readonly Common _common = new Common();
         private readonly SkillContext _db = new SkillContext();
         private string _shift;
-        private string _version = "1.2.9.7";
+        private string _version = "1.3.1.6";
 
         public Login()
         {
@@ -34,7 +34,6 @@ namespace Skill_PMS.UI_WinForm
         private void Login_Load(object sender, EventArgs e)
         {
             this.Text = "Skill_PMS Login_V"+_version;
-            //Cmb_Shift.Text = _common.Current_Shift();
             Check_user();
         }
 
@@ -51,7 +50,7 @@ namespace Skill_PMS.UI_WinForm
 
             if (string.IsNullOrEmpty(_shift))
             {
-                MessageBox.Show(@"Please select Your Working Shift", @"Shift is Empty", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show(@"Please Select Your Working Shift", @"Shift is Empty", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;
             }
 
@@ -104,14 +103,6 @@ namespace Skill_PMS.UI_WinForm
 
             performance.Shift = _user.Shift = _shift;
             performance.Status = "Running";
-
-            // Get the Assembly information and access the informational version
-            //var version = Assembly.GetExecutingAssembly()
-            //                         .GetCustomAttributes<AssemblyInformationalVersionAttribute>()
-            //                         .FirstOrDefault()
-            //                         ?.InformationalVersion;
-
-            //var version = Assembly.GetExecutingAssembly().GetName().Version + "";
             var HostName = Dns.GetHostName() + "";
             var ipAddress = Dns.GetHostAddresses(HostName);
             performance.PC_Name = _version + "_" + HostName + "_" + ipAddress[0] + "_" + ipAddress[1];

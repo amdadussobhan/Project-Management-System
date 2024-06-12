@@ -40,7 +40,7 @@ namespace Skill_PMS.UI_WinForm.CS_Panel
         {
             this.Text = @"CS Panel - " + User.Full_Name;
 
-            //_shift = _common.Current_Shift();
+            _shift = _common.Current_Shift();
             //var date = _common.Shift_Date(DateTime.Now, _shift);
             //_shiftReport = _db.Shift_Reports.FirstOrDefault(x => x.Date == date & x.Shift == _shift & x.Team == "");
 

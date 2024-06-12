@@ -36,8 +36,8 @@ namespace Skill_PMS.UI_WinForm.Production.Designer
         public static double TotalTime;
         public static bool Minimized;
         public List<string> _files;
-        private string _instruction, _jobFolder, _readyFolder, _myFolder, _rawFolder;
-        private string _source, _destination, _shareName;
+        private string _instruction, _jobFolder, _readyFolder, _myFolder;
+        private string _shareName;
 
         public Processing()
         {
@@ -114,6 +114,9 @@ namespace Skill_PMS.UI_WinForm.Production.Designer
             _jobFolder = _job.WorkingLocation;
             if (Directory.Exists(_jobFolder))
                 Process.Start(_jobFolder);
+
+            if (File.Exists(_instruction))
+                Process.Start(_instruction);
         }
         
         private void Check_Service()
@@ -189,8 +192,7 @@ namespace Skill_PMS.UI_WinForm.Production.Designer
 
         private void Cancel_Job()
         {
-            _log = _db.Logs
-                .FirstOrDefault(x => x.JobId == _job.JobId && x.Image == _fileName && x.Status == "Running" && x.Name == User.Short_Name && x.Image == _fileName);
+            _log = _db.Logs.FirstOrDefault(x => x.JobId == _job.JobId && x.Image == _fileName && x.Status == "Running" && x.Name == User.Short_Name && x.Image == _fileName);
 
             if (_log != null)
             {
@@ -202,18 +204,18 @@ namespace Skill_PMS.UI_WinForm.Production.Designer
 
             _db.SaveChanges();
 
-            if (File.Exists(_file))
-            {
-                var path = Path.GetDirectoryName(_filePath);
-                var itemName = Path.GetFileName(_file);
-                _destination = Path.Combine(path ?? string.Empty, itemName);
+            //if (File.Exists(_file))
+            //{
+            //    var path = Path.GetDirectoryName(_filePath);
+            //    var itemName = Path.GetFileName(_file);
+            //    _destination = Path.Combine(path ?? string.Empty, itemName);
 
-                //move back file to my folder
-                if (File.Exists(_destination))
-                    File.Delete(_destination);
+            //    //move back file to my folder
+            //    if (File.Exists(_destination))
+            //        File.Delete(_destination);
 
-                File.Move(_file ?? string.Empty, _destination);
-            }
+            //    File.Move(_file ?? string.Empty, _destination);
+            //}
         }
 
         private void Check_Format()
@@ -439,18 +441,15 @@ namespace Skill_PMS.UI_WinForm.Production.Designer
         private void Processing_Resize(object sender, EventArgs e)
         {
             var counter = Counter.GetInstance();
-            if (this.WindowState == FormWindowState.Minimized && Btn_Pause.Text != "Resume")
+            if (this.WindowState == FormWindowState.Minimized && _proTime > 0)
             {
                 counter.Show();
                 Minimized = true;
             }
             else
-            {
                 Minimized = false;
-            }
 
             Counter.Minimized = Minimized;
-            //Counter.TotalTime = TotalTime;
         }
 
         private void Btn_Pause_Click(object sender, EventArgs e)
@@ -500,8 +499,15 @@ namespace Skill_PMS.UI_WinForm.Production.Designer
         {
             Tmr_Pause.Stop();
             Tmr_Count.Stop();
-            string file = "", /*filePath = "", */ fileName = "", parentFolder = "", rawFolder = "";
-            
+            string file = "";
+
+            _log.ProTime += (Math.Round(_proTime / 60, 1));
+
+            if (_pauseTime > 30)
+                _log.PauseTime += _pauseTime / 60;
+
+            _pauseTime = 0;
+
             if (_files.Count == 0)
             {
                 Pnl_Start_Job.Visible = true;
@@ -511,61 +517,17 @@ namespace Skill_PMS.UI_WinForm.Production.Designer
                 Pnl_Drop.Enabled = true;
                 Btn_Save.Enabled = false;
                 Tmr_Count.Stop();
-
-                if (Directory.Exists(_myFolder))
-                    Process.Start(_myFolder);
+                Tmr_Pause.Stop();
+                _proTime = 0;
             }
             else
             {
                 file = _files[0];
-                this.WindowState = FormWindowState.Minimized;
+                _proTime = 1;
                 Tmr_Count.Start();
                 Tmr_Pause.Start();
+                this.WindowState = FormWindowState.Minimized;
                 Open_File(file);
-
-                //filePath = Path.GetDirectoryName(file);
-                //fileName = Path.GetFileName(file);
-                //parentFolder = new DirectoryInfo(filePath ?? string.Empty).Name;
-
-                //move file to my folder
-                //if (parentFolder != "Processing")
-                //{
-                //rawFolder = filePath + @"\Processing";
-                //    Directory.CreateDirectory(rawFolder);
-                //    filePath = Path.Combine(rawFolder, fileName);
-
-                //    if (File.Exists(filePath))
-                //        File.Delete(filePath);
-
-                //    File.Move(file ?? string.Empty, filePath);
-                //    file = filePath;
-                //    filePath = rawFolder;
-                //}
-
-                //try
-                //{
-                //    var open = new Process
-                //    {
-                //        StartInfo =
-                //        {
-                //            FileName = @"Photoshop",
-                //            Arguments = file ?? string.Empty
-                //        }
-                //    };
-                //    open.Start();
-                //}
-                //catch
-                //{
-                //    var open = new Process
-                //    {
-                //        StartInfo =
-                //        {
-                //            FileName = @"C:\Program Files (x86)\Adobe\Adobe Photoshop CS6\Photoshop.exe",
-                //            Arguments = file ?? string.Empty
-                //        }
-                //    };
-                //    open.Start();
-                //}
             }
 
             var itemName = Path.GetFileNameWithoutExtension(_file) + _ext;
@@ -573,130 +535,51 @@ namespace Skill_PMS.UI_WinForm.Production.Designer
 
             if (Btn_Pause.Enabled)
             {
-                var root = "";
-                var filePath = Path.GetDirectoryName(_file);
-                _parentFolder = new DirectoryInfo(filePath ?? string.Empty).Name;
-                while (_parentFolder != _myService)
-                {
-                    //if (_parentFolder != "Processing")
-                    root = _parentFolder + @"\" + root;
-                    filePath = Path.GetDirectoryName(filePath);
-                    _parentFolder = new DirectoryInfo(filePath ?? string.Empty).Name;
-                }
-
-                var readyFolder = _job.WorkingLocation + @"\" + _myService + "_Done" + @"\" + root;
-
-                if (_log.Remarks == "Share")
-                    readyFolder += @"\Share\" + User.Short_Name;
-
-                Directory.CreateDirectory(readyFolder);
-                var destination = Path.Combine(readyFolder, itemName);
-
                 if (File.Exists(source))
+                {
+                    var root = "";
+                    var filePath = Path.GetDirectoryName(_file);
+                    _parentFolder = new DirectoryInfo(filePath ?? string.Empty).Name;
+                    while (_parentFolder != _myService)
+                    {
+                        //if (_parentFolder != "Processing")
+                        root = _parentFolder + @"\" + root;
+                        filePath = Path.GetDirectoryName(filePath);
+                        _parentFolder = new DirectoryInfo(filePath ?? string.Empty).Name;
+                    }
+
+                    _readyFolder = _job.WorkingLocation + @"\" + _myService + "_Done" + @"\" + root;
+
+                    if (_log.Remarks == "Share")
+                        _readyFolder += @"\Share\" + User.Short_Name;
+
+                    var destination = "";
+                    Directory.CreateDirectory(_readyFolder);
+                    _log.OutputLocation = destination = Path.Combine(_readyFolder, itemName);
                     File.Copy(source, destination, true);
+
+                    var _myDoneFolder = _myFolder + @"\Done\";
+                    Directory.CreateDirectory(_myDoneFolder);
+                    _log.WorkingLocation = destination = Path.Combine(_myDoneFolder, itemName);
+                    File.Move(source, destination);                    
+
+                    if (File.Exists(_file))
+                    {
+                        itemName = Path.GetFileName(_file);
+                        destination = Path.Combine(_myDoneFolder, itemName);
+                        File.Move(_file, destination);
+                    }
+                }
                 else
                     MessageBox.Show(@"Find done file & keep it to Done folder manually...", @"Done file doesn't Exist", MessageBoxButtons.OK, MessageBoxIcon.Error);
-
-                _log.OutputLocation = destination;
-                //_file = "";
             }
-            //else
-            //{
-            //    if (File.Exists(source))
-            //    {
-            //        var path = Path.GetDirectoryName(_filePath);
-            //        var destination = Path.Combine(path ?? string.Empty, itemName);
-
-            //        if (File.Exists(destination))
-            //            File.Delete(destination);
-
-            //        File.Move(source, destination);
-            //    }
-
-
-            //    if (File.Exists(_file))
-            //    {
-            //        var path = Path.GetDirectoryName(_filePath);
-            //        var pauseItemName = Path.GetFileName(_file);
-            //        var destination = Path.Combine(path ?? string.Empty, pauseItemName);
-
-            //        if (File.Exists(destination))
-            //            File.Delete(destination);
-
-            //        File.Move(_file, destination);
-            //    }
-            //}
-
-            //update log Report in Log Table
-            _log.ProTime += (Math.Round(_proTime/60, 1));
 
             if (_log.TargetTime == 0)
                 _log.TargetTime = _log.ProTime;
-
-            //var avg = 0.0;
-
-            //var othersProductions = _db.Logs.Where(x => x.JobId == _job.JobId && x.Type == _log.Type && x.Service == _myService && x.Status == "Done").ToList();
-            //if (othersProductions != null)
-            //{
-            //    var sum = 0.0;
-            //    foreach (var othersProduction in othersProductions)
-            //        sum += othersProduction.ProTime;
-
-            //    var image = othersProductions.Select(x => x.Image).Distinct().Count();
-            //    if (image >0)
-            //        avg = sum / image;
-            //}
-
-            //var factor = 1.0;
-            //if (_log.TargetTime != 0)
-            //    factor = avg / _log.TargetTime;
             
-            //double cp = 0, ret = 0, pre = 0, post = 0;
-
-            //if (_imageTime != null)
-            //{
-            //    cp = Math.Round(avg * _cp_factor, 1);
-            //    ret = Math.Round(avg * _ret_factor, 1);
-            //    pre = Math.Round(avg * _pre_factor, 1);
-            //    post = Math.Round(avg * _post_factor, 1);
-            //}
-
-            //var imageTime = _db.ImageTime.Where(x => x.Job_ID == _job.JobId && x.Type == _imageTime.Type);
-            //foreach (var image in imageTime)
-            //{
-            //    if (_myService.Contains("CP"))
-            //    {
-            //        if (cp > 0)
-            //            image.Clipping_Time = cp;
-            //    }
-
-            //    if (_myService.Contains("RET"))
-            //    {
-            //        if (ret > 0)
-            //            image.Basic_Time = ret;
-            //    }
-
-            //    if (_myService.Contains("LIQ1"))
-            //    {
-            //        if (pre > 0)
-            //            image.Pre_Process = pre;
-            //    }
-
-            //    if (_myService.Contains("LIQ2") || _myService.Contains("MSK") || _myService.Contains("NJ") || _myService.Contains("SHA"))
-            //    {
-            //        if (post > 0)
-            //            image.Post_Process = post;
-            //    }
-            //}
-
-            //_log.TargetTime = Math.Round((_log.TargetTime + _log.ProTime) / 2, 1);
-
             //_log.Support = _proTime / _log.TargetTime * _support;
             _log.EndTime = DateTime.Now;
             _log.Status = "Done";
-
-            if (_pauseTime > 30)
-                _log.PauseTime += _pauseTime/60;
 
             var efficiency = 0;
             efficiency = 0;
@@ -709,10 +592,36 @@ namespace Skill_PMS.UI_WinForm.Production.Designer
                 _log.Efficiency = efficiency;
 
             var job = _db.New_Jobs.FirstOrDefault(x => x.Id == _job.Id);
-            job.ProDone = _db.Logs.Where(x => x.JobId == job.JobId && x.Status == "Done").Select(x => x.Image).Distinct().Count();
+
+            var jobQuery = _db.Logs.Where(x => x.JobId == job.JobId && x.Status == "Done");
+            job.ProDone = jobQuery.Select(x => x.Image).Distinct().Count();
 
             if (job.ProDone > 0)
-                job.ProTime = _db.Logs.Where(x => x.JobId == job.JobId && x.Status == "Done").Distinct().Sum(x => x.ProTime) / job.ProDone;
+            {
+                job.TargetTime = Math.Round(jobQuery.Distinct().Sum(x => x.TargetTime) / job.ProDone, 1);
+                job.ProTime = Math.Round(jobQuery.Distinct().Sum(x => x.ProTime) / job.ProDone, 1);
+
+                jobQuery = _db.Logs.Where(x => x.JobId == job.JobId && x.Status == "Done" && !x.Service.Contains("QC"));
+                job.Max = jobQuery.Max(x => x.ProTime);
+                job.Min = jobQuery.Min(x => x.ProTime);
+
+                var medeanQuery = jobQuery.OrderBy(x => x.ProTime).Select(x => x.ProTime).Distinct().ToList();
+                int count = medeanQuery.Count();
+
+                if (count % 2 == 0)
+                {
+                    double first = medeanQuery.ElementAt((count / 2) - 1);
+                    double second = medeanQuery.ElementAt(count / 2);
+
+                    job.Medean = (first + second) / 2;
+                }
+                else
+                {
+                    job.Medean = medeanQuery.ElementAt((count - 1) / 2);
+                }
+
+                job.Mode = jobQuery.Select(x => x.ProTime).ToList().GroupBy(n => n).OrderByDescending(g => g.Count()).Select(g => g.Key).First();
+            }
 
             if (job.ProTime != 0)
                 efficiency = (int)(job.TargetTime / job.ProTime * 100);
@@ -724,67 +633,16 @@ namespace Skill_PMS.UI_WinForm.Production.Designer
                 efficiency = (int)(job.ActualTime / job.ProTime * 100);
 
             job.ActualEfficiency = efficiency;
-
             _db.SaveChanges();
-
             DateTime currentTime = DateTime.Now;
-            var myJob = _db.My_Jobs.FirstOrDefault(x => x.JobId == _job.JobId && x.Name == User.Short_Name && x.Service == _myService && x.Date == currentTime.Date);
-
-            //Notification
-
-            if (myJob == null)
-            {
-                myJob = new MyJob
-                {
-                    JobId = _job.JobId,
-                    Name = User.Short_Name,
-                    Service = _myService,
-                    Date = currentTime.Date,
-                    StartTime = _log.StartTime
-                };
-                _db.My_Jobs.Add(myJob);
-            }
-
-            var fileCount = myJob.Amount = _db.Logs
-                .Count(x => x.JobId == _job.JobId && x.Name == User.Short_Name && x.Service == _myService &&
-                    x.StartTime >= _performance.Login && x.StartTime <= currentTime);
-
-            double quality;
-            if (fileCount != 0)
-            {
-                myJob.TotalJobTime = _db.Logs
-                    .Where(x => x.JobId == _job.JobId && x.Name == User.Short_Name && x.Service == _myService &&
-                                x.StartTime >= _performance.Login && x.StartTime <= currentTime).Sum(x => x.TargetTime);
-
-                myJob.JobTime = Math.Round(myJob.TotalJobTime / fileCount, 1);
-
-                myJob.TotalProTime = _db.Logs
-                    .Where(x => x.JobId == _job.JobId && x.Name == User.Short_Name && x.Service == _myService &&
-                                x.StartTime >= _performance.Login && x.StartTime <= currentTime).Sum(x => x.ProTime);
-
-                myJob.ProTime = Math.Round(myJob.TotalProTime / fileCount, 1);
-
-                if (myJob.ProTime != 0)
-                    myJob.Efficiency = (int)(myJob.JobTime / myJob.ProTime * 100);
-
-                quality = _db.Logs
-                    .Where(x => x.JobId == _job.JobId && x.Name == User.Short_Name && x.Service == _myService &&
-                                x.StartTime >= _performance.Login && x.StartTime <= currentTime).Average(x => x.Quality);
-
-                myJob.Quality = (int)(quality);
-            }
-
-            myJob.EndTime = currentTime;
-            myJob.Up = 0;
-            //---End Update My_Job Report in My_Job Table
 
             //---Update My_Job Performance in Performance Table
             _performance = _db.Performances.FirstOrDefault(x => x.Id == _performance.Id);
 
-            _performance.File = fileCount = _db.Logs
+            _performance.File = _db.Logs
                 .Count(x => x.Name == User.Short_Name && x.StartTime >= _performance.Login && x.StartTime <= currentTime);
 
-            if (fileCount != 0)
+            if (_performance.File != 0)
             {
                 _performance.JobTime = Math.Round(_db.Logs
                         .Where(x => x.Name == User.Short_Name && x.StartTime >= _performance.Login && x.StartTime <= currentTime)
@@ -797,7 +655,7 @@ namespace Skill_PMS.UI_WinForm.Production.Designer
                 if (_performance.ProTime != 0)
                     _performance.Efficiency = (int)(_performance.JobTime / _performance.ProTime * 100);
 
-                quality = _db.Logs
+                var quality = _db.Logs
                         .Where(x => x.Name == User.Short_Name && x.StartTime >= _performance.Login && x.StartTime <= currentTime)
                         .Average(x => x.Quality);
 
@@ -820,10 +678,6 @@ namespace Skill_PMS.UI_WinForm.Production.Designer
             _db.SaveChanges();
 
             _file = _rawFile = file;
-            //_filePath = filePath;
-            //_fileName = fileName;
-            //_parentFolder = parentFolder;
-            //_rawFolder = rawFolder;
 
             if (_files.Count != 0)
                 Start_File();
@@ -839,54 +693,15 @@ namespace Skill_PMS.UI_WinForm.Production.Designer
             _files = new List<string>((string[])e.Data.GetData(DataFormats.FileDrop));
             _file = _rawFile = _files[0];
             _fileCount = _files.Count;
+            _proTime = 1;
+            _pauseTime = 0;
 
-            this.WindowState = FormWindowState.Minimized;
             Tmr_Count.Start();
             Tmr_Pause.Start();
+            this.WindowState = FormWindowState.Minimized;
 
-            _filePath = Path.GetDirectoryName(_file);
+            _myFolder = _filePath = Path.GetDirectoryName(_file);
             _fileName = Path.GetFileName(_file);
-            //_parentFolder = new DirectoryInfo(_filePath ?? string.Empty).Name;
-
-            //move file to my folder
-            //if (_parentFolder != "Processing")
-            //{
-            //    _rawFolder = _filePath + @"\Processing";
-            //    Directory.CreateDirectory(_rawFolder);
-            //    _filePath = Path.Combine(_rawFolder, _fileName);
-
-            //    if (File.Exists(_filePath))
-            //        File.Delete(_filePath);
-
-            //    File.Move(_file ?? string.Empty, _filePath);
-            //    _file = _filePath;
-            //    _filePath = _rawFolder;
-            //}
-
-            //try
-            //{
-            //    var open = new Process
-            //    {
-            //        StartInfo =
-            //        {
-            //            FileName = @"Photoshop",
-            //            Arguments = _file ?? string.Empty
-            //        }
-            //    };
-            //    open.Start();
-            //}
-            //catch
-            //{
-            //    var open = new Process
-            //    {
-            //        StartInfo =
-            //        {
-            //            FileName = @"C:\Program Files (x86)\Adobe\Adobe Photoshop CS6\Photoshop.exe",
-            //            Arguments = _file ?? string.Empty
-            //        }
-            //    };
-            //    open.Start();
-            //}
 
             Open_File(_file);
             Start_File();
@@ -924,45 +739,53 @@ namespace Skill_PMS.UI_WinForm.Production.Designer
         {
             _db = null;
             _db = new SkillContext();
-            _proTime = 0;
-            _pauseTime = 0;
             _fileName = Path.GetFileNameWithoutExtension(_file);
-            _imageTime = _db.ImageTime.FirstOrDefault(x => x.Job_ID == _job.JobId && x.Image == _fileName);
+            var log = _db.Logs.FirstOrDefault(x => x.JobId == _job.JobId && x.Image == _fileName && x.Name != User.Short_Name && x.Status == "Running");
+            if (log != null)
+            {
+                Tmr_Count.Stop();
+                Tmr_Pause.Stop();
+                _proTime = 0;
+                _pauseTime = 0;
+                Counter.Minimized = false;
+                return;
+            }
 
+            _imageTime = _db.ImageTime.FirstOrDefault(x => x.Job_ID == _job.JobId && x.Image == _fileName);
+            if (_imageTime == null)
+            {
+                Tmr_Count.Stop();
+                Tmr_Pause.Stop();
+                MessageBox.Show(@"Image time is empty. Image time didn't assign, Please contact with Shift Incharge...", @"Image time is empty", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
+
+            _proTime = 1;
+            _pauseTime = 0;
             _support = 0;
             double myTime = 0;
-
-            //_cp_factor = _ret_factor = _pre_factor = _post_factor = 0;
-
-            if (_imageTime != null)
+            
+            if (Chk_Clipping_Path.Checked)
             {
-                if (Chk_Clipping_Path.Checked)
-                {
-                    myTime += _imageTime.Clipping_Time;
+                myTime += _imageTime.Clipping_Time;
 
-                    if ((User.Team == "Clipper") || (User.Team == "Basic" && _job.Team == "Advance") || ((User.Team == "Advance" || User.Team == "Senior") && _job.Team == "Basic"))
-                        _support += _imageTime.Clipping_Time;
-                }
-
-                if (Chk_Basic_Process.Checked)
-                {
-                    myTime += _imageTime.Basic_Time;
-
-                    if ((User.Team == "Basic" && _job.Team == "Advance") || ((User.Team == "Advance" || User.Team == "Senior") && _job.Team == "Basic"))
-                        _support += _imageTime.Clipping_Time;
-                }
-
-                if (Chk_Pre_Process.Checked)
-                    myTime += _imageTime.Pre_Process;
-
-                if (Chk_Post_Process.Checked)
-                    myTime += _imageTime.Post_Process;
-
-                //_cp_factor = _imageTime.Clipping_Time / myTime;
-                //_ret_factor = _imageTime.Basic_Time / myTime;
-                //_pre_factor = _imageTime.Pre_Process / myTime;
-                //_post_factor = _imageTime.Post_Process / myTime;
+                if ((User.Team == "Clipper") || (User.Team == "Basic" && _job.Team == "Advance") || ((User.Team == "Advance" || User.Team == "Senior") && _job.Team == "Basic"))
+                    _support += _imageTime.Clipping_Time;
             }
+
+            if (Chk_Basic_Process.Checked)
+            {
+                myTime += _imageTime.Basic_Time;
+
+                if ((User.Team == "Basic" && _job.Team == "Advance") || ((User.Team == "Advance" || User.Team == "Senior") && _job.Team == "Basic"))
+                    _support += _imageTime.Clipping_Time;
+            }
+
+            if (Chk_Pre_Process.Checked)
+                myTime += _imageTime.Pre_Process;
+
+            if (Chk_Post_Process.Checked)
+                myTime += _imageTime.Post_Process;
 
             _log = _db.Logs.FirstOrDefault(x => x.JobId == _job.JobId && x.Image == _fileName && x.Service == _myService && x.Name == User.Short_Name);
 
@@ -1003,7 +826,6 @@ namespace Skill_PMS.UI_WinForm.Production.Designer
                 _log.Type = _imageTime.Type;
 
             _log.InputLocation = _file;
-            //_log.WorkingLocation = _file;
             _log.ActualTime = Math.Round((_log.TargetTime / _job.TargetTime * _job.ActualTime), 1);
             _log.Revenue = Math.Round((_log.TargetTime / _job.TargetTime * _job.Taka), 1);
 
@@ -1026,7 +848,6 @@ namespace Skill_PMS.UI_WinForm.Production.Designer
             Btn_Save.Enabled = true;
 
             Txt_image.Text = _fileName;
-            //Lbl_Job_Time.Text = @"Job Time: " + Math.Round(myTime, 1);
 
             _files.RemoveAt(0);
             _db.SaveChanges();
@@ -1040,15 +861,12 @@ namespace Skill_PMS.UI_WinForm.Production.Designer
                 return;
             }
 
-            var find = _db.Logs
-                .Where(x => x.JobId == _job.JobId && x.Image == _fileName && x.Service == _myService && x.Name != User.Short_Name && x.Remarks == "Share")
-                .FirstOrDefault();
+            var find = _db.Logs.FirstOrDefault(x => x.JobId == _job.JobId && x.Image == _fileName && x.Service == _myService && x.Name != User.Short_Name && x.Remarks == "Share");
 
             double totalTime = 0;
             if (find != null)
             {
-                totalTime = _db.Logs
-                    .Where(x => x.JobId == _job.JobId && x.Image == _fileName && x.Service == _myService && x.Name != User.Short_Name && x.Remarks == "Share")
+                totalTime = _db.Logs.Where(x => x.JobId == _job.JobId && x.Image == _fileName && x.Service == _myService && x.Name != User.Short_Name && x.Remarks == "Share")
                     .Sum(x => x.TargetTime);
             }
 
@@ -1059,8 +877,7 @@ namespace Skill_PMS.UI_WinForm.Production.Designer
                 return;
             }
 
-            var log = _db.Logs
-                .FirstOrDefault(x => x.JobId == _job.JobId && x.Image == _fileName && x.Service == _myService && x.Name == _shareName & x.Remarks == "Share");
+            var log = _db.Logs.FirstOrDefault(x => x.JobId == _job.JobId && x.Image == _fileName && x.Service == _myService && x.Name == _shareName & x.Remarks == "Share");
 
             if (log == null)
             {
