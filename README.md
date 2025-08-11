@@ -1,5 +1,3 @@
-# Skill_PMS
-
 ![image](https://user-images.githubusercontent.com/10710685/128997761-ecbd224f-e519-4b84-b50f-1418c5fea2fe.png)
 ![image](https://user-images.githubusercontent.com/10710685/128997889-7ecdbba0-b309-43b7-a708-21c55782a463.png)
 ![image](https://user-images.githubusercontent.com/10710685/128997952-eb2a37e5-4433-4e83-8eec-0150ed62e1a4.png)
